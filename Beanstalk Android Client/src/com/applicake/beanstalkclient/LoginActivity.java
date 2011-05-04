@@ -3,14 +3,20 @@ package com.applicake.beanstalkclient;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener {
@@ -19,6 +25,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private EditText domainaccountEditText;
 	private EditText loginEditText;
 	private EditText passwordEditText;
+	private CheckBox remeberMeCheckBox;
 
 	private ProgressDialog progressDialog;
 	private Context mContext;
@@ -27,10 +34,24 @@ public class LoginActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.main);
-		mContext = getApplicationContext();
 		prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+		setContentView(R.layout.main);
+		// auto login with previously stored user data
+		if (prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)
+				&& prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
+			// check credentials validity
+
+			Log.i("checkbox checked", "inside if");
+			String storedDomain = prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
+			String storedLogin = prefs.getString(Constants.USER_LOGIN, "");
+			String storedPassword = prefs.getString(Constants.USER_PASSWORD, "");
+			progressDialog = ProgressDialog.show(this, "Checking login credentials",
+					"Please wait...");
+			new VerifyLoginTask().execute(storedDomain, storedLogin, storedPassword);
+
+		}
+
+		mContext = getApplicationContext();
 
 		Button loginButton = (Button) findViewById(R.id.login_button);
 		loginButton.setOnClickListener(this);
@@ -38,7 +59,25 @@ public class LoginActivity extends Activity implements OnClickListener {
 		domainaccountEditText = (EditText) findViewById(R.id.accountdomain_edittext);
 		loginEditText = (EditText) findViewById(R.id.login_edittext);
 		passwordEditText = (EditText) findViewById(R.id.password_edittext);
+		remeberMeCheckBox = (CheckBox) findViewById(R.id.rememberMeCheckBox);
 
+		InputFilter httpAddressFilter = new InputFilter() {
+
+			@Override
+			public CharSequence filter(CharSequence source, int start, int end,
+					Spanned dest, int dstart, int dend) {
+
+				for (int i = start; i < end; i++) {
+					if (!Character.isLetterOrDigit(source.charAt(i))&&(source.charAt(i)=='-')) {
+						return "";
+					}
+				}
+				return null;
+			}
+
+		};
+		
+		domainaccountEditText.setFilters(new InputFilter[] {httpAddressFilter});
 	}
 
 	@Override
@@ -52,6 +91,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 			progressDialog = ProgressDialog.show(this, "Checking login credentials",
 					"Please wait...");
+			Editor editor = prefs.edit();
+			editor.putBoolean(Constants.REMEBER_ME_CHECKBOX,
+					remeberMeCheckBox.isChecked());
+			editor.commit();
 			new VerifyLoginTask().execute(domain, login, password);
 
 		}
@@ -89,8 +132,23 @@ public class LoginActivity extends Activity implements OnClickListener {
 				editor.putString(Constants.USER_PASSWORD, password);
 				editor.putBoolean(Constants.CREDENTIALS_STORED, true);
 				editor.commit();
-			} else
+
+				Intent intent = new Intent(getApplicationContext(),
+						DashboardActivity.class);
+				startActivity(intent);
+				finish();
+			} else if (result == 302) {
+				GUI.displayMonit(mContext, "Invalid account domain does not exsist");
+			} else if (result == 401) {
+				GUI.displayMonit(mContext, "Invalid username or password");
+			} else if (result == 500) {
+				GUI.displayMonit(mContext,
+						"You must enable Developer API in your Beanstalk account settings");
+			} else if (result == 666) {
+				GUI.displayMonit(mContext, "Internet connection error");
+			} else {
 				GUI.displayMonit(mContext, "Access denied: " + result);
+			}
 
 			// TODO add various messages
 

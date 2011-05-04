@@ -21,19 +21,20 @@
 		<TextView
 			android:text="Account domain: "
 			android:id="@+id/textView4"
-			android:layout_width="75px"
+			android:layout_width="75dp"
 			android:layout_height="wrap_content"
 			></TextView>
 		<EditText
 			android:text="bartosz-filipowicz"
 			android:id="@+id/accountdomain_edittext"
-			android:layout_width="wrap_content"
+			android:textSize="10dp"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"></EditText>
-		<TextView
-			android:text=".beanstalk.com"
-			android:id="@+id/textView5"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"></TextView>
+		<!-- <TextView -->
+		<!-- android:text=".beanstalk.com" -->
+		<!-- android:id="@+id/textView5" -->
+		<!-- android:layout_width="wrap_content" -->
+		<!-- android:layout_height="wrap_content"></TextView> -->
 	</TableRow>
 	<TableRow
 		android:layout_height="wrap_content"
@@ -42,11 +43,12 @@
 		<TextView
 			android:text="Login:"
 			android:id="@+id/textView1"
-			android:layout_width="75px"
+			android:layout_width="75dp"
 			android:layout_height="wrap_content"></TextView>
 		<EditText
 			android:text="bartoszfilipowicz"
 			android:id="@+id/login_edittext"
+			android:textSize="10dp"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"></EditText>
 	</TableRow>
@@ -57,15 +59,27 @@
 		<TextView
 			android:text="Password:"
 			android:id="@+id/textView2"
-			android:layout_width="75px"
+			android:layout_width="75dp"
 			android:layout_height="wrap_content"></TextView>
 		<EditText
 			android:text="applicake9"
 			android:id="@+id/password_edittext"
+			android:textSize="10dp"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:password="true"></EditText>
 	</TableRow>
+	<TableRow
+		android:id="@+id/tableRow6"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent">
+		<CheckBox
+			android:text="Remeber me"
+			android:id="@+id/rememberMeCheckBox"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></CheckBox>
+	</TableRow>
+
 	<TableRow
 		android:layout_height="wrap_content"
 		android:id="@+id/tableRow3"
