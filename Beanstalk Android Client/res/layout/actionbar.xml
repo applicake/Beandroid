@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="@dimen/ActionBarHeight"
+	android:id="@+id/TitleBar"
+	android:background="@color/ActionBarMainColor">
+	<ImageView
+		android:src="@drawable/icon"
+		android:id="@+id/ActionBarHomeIcon"
+		android:layout_height="fill_parent"
+		android:layout_width="@dimen/ActionBarHeight"
+		android:clickable="true"
+		android:onClick="onHomeButtonClick"></ImageView>
+	<TextView
+		android:layout_width="0dp"
+		android:layout_height="fill_parent"
+		android:layout_weight="1"
+		android:id="@+id/ActionBarTitle"
+		></TextView>
+	<ImageButton
+		android:id="@+id/ActionBarRepoButton"
+		android:src="@drawable/icon"
+		android:layout_height="fill_parent"
+		android:layout_width="@dimen/ActionBarHeight"
+		android:clickable="true"
+		android:onClick="onRepositoriesButtonClick"></ImageButton>
+	<ImageView
+		style="@style/ActionBarSeparator"></ImageView>
+	<ImageButton
+		android:id="@+id/ActionBarUsersButton"
+		android:onClick="onUsersButtonClick"
+		android:src="@drawable/icon"
+		android:layout_height="fill_parent"
+		android:layout_width="@dimen/ActionBarHeight"></ImageButton>
+	<ImageView
+		style="@style/ActionBarSeparator"></ImageView>
+	<ImageButton
+		android:id="@+id/ActionBarDeployButton"
+		android:src="@drawable/icon"
+		android:layout_height="fill_parent"
+		android:layout_width="@dimen/ActionBarHeight"
+		android:clickable="true"
+		android:onClick="onDeploymentButtonClick"></ImageButton>
+</LinearLayout>

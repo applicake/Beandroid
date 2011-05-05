@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style
+		name="ActionBarSeparator">
+		<item
+			name="android:layout_height">fill_parent</item>
+		<item
+			name="android:layout_width">1dp</item>
+		<item
+			name="android:background">@color/ActionBarSeparator</item>
+	</style>
+	<style
+		name="ActionBarIcon">
+		<item
+			name="android:layout_height">fill_parent</item>
+		<item
+			name="android:layout_width">@dimen/ActionBarHeight</item>
+	</style>
+
+	<style
+		name="HomeButton">
+		<item
+			name="android:layout_gravity">center_vertical</item>
+		<item
+			name="android:layout_width">fill_parent</item>
+		<item
+			name="android:layout_height">wrap_content</item>
+		<item
+			name="android:layout_weight">1</item>
+		<item
+			name="android:gravity">center_horizontal</item>
+		<item
+			name="android:textSize">@dimen/TextSizeMedium</item>
+		<item
+			name="android:textStyle">bold</item>
+		<item
+			name="android:textColor">@color/ActionBarMainColor</item>
+		<item
+			name="android:background">@null</item>
+	</style>
+
+</resources>

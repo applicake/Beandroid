@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 public abstract class BeanstalkActivity extends Activity {
@@ -95,6 +96,23 @@ public abstract class BeanstalkActivity extends Activity {
 		if (!prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)) clearCredentials();
 	}
 	
+
+	
+	public void onRepositoriesButtonClick(View v) {
+		Toast.makeText(getApplicationContext(), "Repositories button clicked", Toast.LENGTH_SHORT).show();
+	}
+	
+	public void onUsersButtonClick(View v) {
+		Toast.makeText(getApplicationContext(), "Users button clicked", Toast.LENGTH_SHORT).show();
+	}
+	
+	public void onDeploymentButtonClick(View v) {
+		Toast.makeText(getApplicationContext(), "Deployment button clicked", Toast.LENGTH_SHORT).show();
+	}
+	
+	public void onHomeButtonClick(View v) {
+		Toast.makeText(getApplicationContext(), "Home button clicked", Toast.LENGTH_SHORT).show();
+	}
 	
 	
 	

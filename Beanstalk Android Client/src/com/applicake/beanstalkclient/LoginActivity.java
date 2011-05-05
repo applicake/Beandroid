@@ -63,7 +63,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		InputFilter httpAddressFilter = new InputFilter() {
 
-			@Override
 			public CharSequence filter(CharSequence source, int start, int end,
 					Spanned dest, int dstart, int dend) {
 
@@ -80,7 +79,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		domainaccountEditText.setFilters(new InputFilter[] {httpAddressFilter});
 	}
 
-	@Override
+
 	public void onClick(View v) {
 		if (v.getId() == R.id.login_button) {
 
@@ -134,18 +133,18 @@ public class LoginActivity extends Activity implements OnClickListener {
 				editor.commit();
 
 				Intent intent = new Intent(getApplicationContext(),
-						DashboardActivity.class);
+						HomeActivity.class);
 				startActivity(intent);
 				finish();
 			} else if (result == 302) {
-				GUI.displayMonit(mContext, "Invalid account domain does not exsist");
+				GUI.displayMonit(mContext, "Invalid account domain");
 			} else if (result == 401) {
 				GUI.displayMonit(mContext, "Invalid username or password");
 			} else if (result == 500) {
 				GUI.displayMonit(mContext,
 						"You must enable Developer API in your Beanstalk account settings");
 			} else if (result == 666) {
-				GUI.displayMonit(mContext, "Internet connection error");
+				GUI.displayMonit(mContext, "Login process error");
 			} else {
 				GUI.displayMonit(mContext, "Access denied: " + result);
 			}
