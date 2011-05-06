@@ -100,7 +100,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	}
 
-	private class VerifyLoginTask extends AsyncTask<String, Void, Integer> {
+	public class VerifyLoginTask extends AsyncTask<String, Void, Integer> {
 
 		private String domain;
 		private String login;

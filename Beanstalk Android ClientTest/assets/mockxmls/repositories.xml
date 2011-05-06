@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories type="array">
+  <repository>
+    <account-id type="integer">88998</account-id>
+    <anonymous type="boolean">true</anonymous>
+    <color-label>label-orange</color-label>
+    <created-at type="datetime">2011-04-28T11:32:49+02:00</created-at>
+    <id type="integer">205628</id>
+    <last-commit-at type="datetime">2011-04-28T09:32:50Z</last-commit-at>
+    <name>beanstalk</name>
+    <revision type="integer">1</revision>
+    <storage-used-bytes type="integer">59392</storage-used-bytes>
+    <title>beanstalk</title>
+    <type>SubversionRepository</type>
+    <updated-at type="datetime">2011-05-04T09:59:35+02:00</updated-at>
+    <vcs>subversion</vcs>
+  </repository>
+  <repository>
+    <account-id type="integer">88998</account-id>
+    <color-label>label-red</color-label>
+    <created-at type="datetime">2011-05-04T12:30:51+02:00</created-at>
+    <default-branch>master</default-branch>
+    <id type="integer">207784</id>
+    <last-commit-at type="datetime" nil="true"></last-commit-at>
+    <name>test-git-repository</name>
+    <storage-used-bytes type="integer">0</storage-used-bytes>
+    <title>Test Git repository 2</title>
+    <type>GitRepository</type>
+    <updated-at type="datetime">2011-05-04T12:31:59+02:00</updated-at>
+    <vcs>git</vcs>
+  </repository>
+</repositories>

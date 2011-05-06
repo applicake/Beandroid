@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<revision-caches type="array">
+  <revision-cache>
+    <account-id type="integer">88998</account-id>
+    <author>Han Solo</author>
+    <changed-dirs type="yaml">--- []
+
+</changed-dirs>
+    <changed-files type="yaml">--- 
+- - README
+  - :add
+</changed-files>
+    <changed-properties nil="true"></changed-properties>
+    <email>bartek.f+HanSolo@applicake.com</email>
+    <hash-id>aea1c74c112667bb458957778d016a4a66233110</hash-id>
+    <message>Millenium falcon reporting</message>
+    <repository-id type="integer">207784</repository-id>
+    <revision type="integer">aea1c74c</revision>
+    <time type="datetime">2011-05-06T15:00:29+02:00</time>
+    <too-large type="boolean">false</too-large>
+    <user-id type="integer">184072</user-id>
+  </revision-cache>
+  <revision-cache>
+    <account-id type="integer">88998</account-id>
+    <author>admin</author>
+    <changed-dirs type="yaml">--- 
+- - branches/
+  - :add
+- - tags/
+  - :add
+- - trunk/
+  - :add
+</changed-dirs>
+    <changed-files type="yaml">--- []
+
+</changed-files>
+    <changed-properties nil="true"></changed-properties>
+    <email nil="true"></email>
+    <hash-id nil="true"></hash-id>
+    <message>Creating initial repository structure</message>
+    <repository-id type="integer">205628</repository-id>
+    <revision type="integer">1</revision>
+    <time type="datetime">2011-04-28T11:32:50+02:00</time>
+    <too-large type="boolean" nil="true"></too-large>
+    <user-id type="integer" nil="true"></user-id>
+  </revision-cache>
+</revision-caches>

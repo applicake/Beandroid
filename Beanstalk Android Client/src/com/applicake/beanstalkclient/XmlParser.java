@@ -11,41 +11,50 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import com.applicake.beanstalkclient.handlers.ChangesetHandler;
+import android.util.Log;
 
+import com.applicake.beanstalkclient.handlers.ChangesetHandler;
 
 public class XmlParser {
 
-	private XMLReader initializeReader() throws ParserConfigurationException, SAXException {
+	private XMLReader initializeReader() throws ParserConfigurationException,
+			SAXException {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
 		XMLReader xmlReader = parser.getXMLReader();
-		
+
 		return xmlReader;
-		
+
 	}
-	
+
 	public ArrayList<Changeset> parseChangesetList(String xml) {
-		
 		try {
 			XMLReader xmlReader = initializeReader();
-			
+
 			ChangesetHandler changesetHandler = new ChangesetHandler();
-			//set handler
+			// set handler
 			xmlReader.setContentHandler(changesetHandler);
-			//parse
+			// parse
 			StringReader sr = new StringReader(xml);
-			InputSource is = new InputSource (sr);
+			InputSource is = new InputSource(sr);
 			xmlReader.parse(is);
-			
-			return null; //return parsed changeset list
-			
-		}
-		catch (Exception e) {
+
+			return changesetHandler.retrieveChangesetList();
+
+		} catch (Exception e) {
 			// TODO handle exceptions in XML parsing
+			Log.w("XMLexception", e.getMessage());
+
 			return null;
 		}
-		
+	}
+
+	public ArrayList<User> parseUserList(String xml) {
+		return null;
+	}
+
+	public ArrayList<Repository> parseRepositoryList(String xml) {
+		return null;
 	}
 
 }
