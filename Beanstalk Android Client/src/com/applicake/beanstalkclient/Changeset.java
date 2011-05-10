@@ -1,9 +1,12 @@
 package com.applicake.beanstalkclient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Changeset {
+	static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	
 	private int accountId;
 	private String author;
@@ -13,6 +16,12 @@ public class Changeset {
 	private String email;
 	private String hashId;
 	private String message;
+	private int repositoryId;
+	private String revision;
+	private Date time;
+	private boolean tooLarge;
+	private int userId;
+	
 	
 	public int getAccountId() {
 		return accountId;
@@ -74,11 +83,15 @@ public class Changeset {
 	public void setRevision(String revision) {
 		this.revision = revision;
 	}
-	public String getTime() {
+	public Date getTime() {
 		return time;
 	}
-	public void setTime(String time) {
-		this.time = time;
+	public void setTime(String date) {
+		try{
+			this.time = FORMATTER.parse(date.trim());
+		} catch (ParseException e){
+			this.time = new Date(0);
+		}
 	}
 	public boolean isTooLarge() {
 		return tooLarge;
@@ -92,12 +105,7 @@ public class Changeset {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	private int repositoryId;
-	private String revision;
-	private String time;
-	private boolean tooLarge;
-	private int userId;
-	
+
 	
 
 }

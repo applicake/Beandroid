@@ -1,5 +1,6 @@
 package com.applicake.beanstalkclient;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
@@ -11,9 +12,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import android.util.Log;
-
 import com.applicake.beanstalkclient.handlers.ChangesetHandler;
+import com.applicake.beanstalkclient.handlers.RepositoriesHandler;
+import com.applicake.beanstalkclient.handlers.UserHandler;
 
 public class XmlParser {
 
@@ -22,39 +23,59 @@ public class XmlParser {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
 		XMLReader xmlReader = parser.getXMLReader();
-
 		return xmlReader;
 
 	}
 
-	public ArrayList<Changeset> parseChangesetList(String xml) {
-		try {
-			XMLReader xmlReader = initializeReader();
+	public ArrayList<Changeset> parseChangesetList(String xml)
+			throws ParserConfigurationException, SAXException, IOException {
 
-			ChangesetHandler changesetHandler = new ChangesetHandler();
-			// set handler
-			xmlReader.setContentHandler(changesetHandler);
-			// parse
-			StringReader sr = new StringReader(xml);
-			InputSource is = new InputSource(sr);
-			xmlReader.parse(is);
+		XMLReader xmlReader = initializeReader();
 
-			return changesetHandler.retrieveChangesetList();
+		ChangesetHandler changesetHandler = new ChangesetHandler();
+		// set handler
+		xmlReader.setContentHandler(changesetHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
 
-		} catch (Exception e) {
-			// TODO handle exceptions in XML parsing
-			Log.w("XMLexception", e.getMessage());
+		return changesetHandler.retrieveChangesetList();
 
-			return null;
-		}
 	}
 
-	public ArrayList<User> parseUserList(String xml) {
-		return null;
+	public ArrayList<User> parseUserList(String xml) throws ParserConfigurationException,
+			SAXException, IOException {
+
+		XMLReader xmlReader = initializeReader();
+
+		UserHandler userHandler = new UserHandler();
+		// set handler
+		xmlReader.setContentHandler(userHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+
+		return userHandler.retrieveUserList();
+
 	}
 
-	public ArrayList<Repository> parseRepositoryList(String xml) {
-		return null;
+	public ArrayList<Repository> parseRepositoryList(String xml)
+			throws ParserConfigurationException, SAXException, IOException {
+
+		XMLReader xmlReader = initializeReader();
+
+		RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
+		// set handler
+		xmlReader.setContentHandler(repositoriesHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+
+		return repositoriesHandler.retrieveRepositoryList();
+
 	}
 
 }

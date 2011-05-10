@@ -38,11 +38,11 @@ public class ChangesetHandler extends DefaultHandler {
 			}
 
 			if (localName.equals("account-id")) {
-				
+
 				try {
 					changeset.setAccountId(Integer.parseInt(buffer.toString()));
 				} catch (NumberFormatException nfe) {
-					changeset.setAccountId(0);;
+					throw new SAXException(nfe);
 				}
 			}
 
@@ -81,10 +81,9 @@ public class ChangesetHandler extends DefaultHandler {
 			}
 
 			if (localName.equals("revision")) {
-			
+
 				changeset.setRevision(buffer.toString());
-		
-				
+
 			}
 
 			if (localName.equals("time")) {
@@ -101,13 +100,16 @@ public class ChangesetHandler extends DefaultHandler {
 			}
 
 			if (localName.equals("user-id")) {
-				
-				try {
-					changeset.setUserId(Integer.parseInt(buffer.toString()));
-				} catch (NumberFormatException nfe) {
+				if (buffer.length() == 0) {
 					changeset.setUserId(0);
+				} else {
+
+					try {
+						changeset.setUserId(Integer.parseInt(buffer.toString()));
+					} catch (NumberFormatException nfe) {
+						throw new SAXException(nfe);
+					}
 				}
-				
 			}
 
 		}

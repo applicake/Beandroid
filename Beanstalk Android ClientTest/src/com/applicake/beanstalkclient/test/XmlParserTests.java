@@ -4,15 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.XmlParser;
+import com.applicake.beanstalkclient.enums.UserType;
 
-import android.test.AndroidTestCase;
 import android.test.InstrumentationTestCase;
 
 /* Testing XmlParser class
@@ -21,24 +28,32 @@ import android.test.InstrumentationTestCase;
  */
 
 public class XmlParserTests extends InstrumentationTestCase {
-	
+
+	// valid xmls
 	private static final String CHANGESET_XML_ADDRESS = "mockxmls/changesets.xml";
 	private static final String REPOSITORIES_XML_ADDRESS = "mockxmls/repositories.xml";
 	private static final String USERS_XML_ADDRESS = "mockxmls/users.xml";
-	
+
+	// invalid xmls
+	private static final String INVALID_REPOSITORIES_XML_ADDRESS_NFE = "mockxmls/corrupted_nfe_repositories.xml";
+	private static final String INVALID_REPOSITORIES_XML_ADDRESS_DATEFORMAT = "mockxmls/corrupted_dateformat_repositories.xml";
+	private static final String INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE = "mockxmls/corrupted_xmlstructure_repositories.xml";
+
 	private XmlParser xmlParser;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		xmlParser = new XmlParser();
-		
+
 	}
-	
-	public void testParseChangesets() throws IOException {
-		String testXml = convertIStoString(getInstrumentation().getContext().getAssets().open(CHANGESET_XML_ADDRESS));
+
+	public void testParseChangesets() throws IOException, ParserConfigurationException,
+			SAXException {
+		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(CHANGESET_XML_ADDRESS));
 		ArrayList<Changeset> changesetList = xmlParser.parseChangesetList(testXml);
-		
+
 		Changeset changeset1 = changesetList.get(0);
 		assertNotNull("changeset is null", changeset1);
 		assertEquals(88998, changeset1.getAccountId());
@@ -50,10 +65,11 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals("aea1c74c112667bb458957778d016a4a66233110", changeset1.getHashId());
 		assertEquals(207784, changeset1.getRepositoryId());
 		assertEquals("aea1c74c", changeset1.getRevision());
-		assertEquals("2011-05-06T15:00:29+02:00", changeset1.getTime());
+		assertEquals(new Date(111, 4, 06, 13, 00, 29), changeset1.getTime());
+		// assertEquals("2011-05-06T15:00:29+02:00", changeset1.getTime());
 		assertEquals(false, changeset1.isTooLarge());
 		assertEquals(184072, changeset1.getUserId());
-		
+
 		Changeset changeset2 = changesetList.get(1);
 		assertNotNull("changeset is null", changeset2);
 		assertEquals(88998, changeset2.getAccountId());
@@ -65,27 +81,184 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals("", changeset2.getHashId());
 		assertEquals(205628, changeset2.getRepositoryId());
 		assertEquals("1", changeset2.getRevision());
-		assertEquals("2011-04-28T11:32:50+02:00", changeset2.getTime());
+		assertEquals(new Date(111, 3, 28, 9, 32, 50), changeset2.getTime());
+		// assertEquals("2011-04-28T11:32:50+02:00", changeset2.getTime());
 		assertEquals(false, changeset2.isTooLarge());
 		assertEquals(0, changeset2.getUserId());
-		
+
 	}
-	
-	public void testParseUsers() throws IOException{
-		String testXml = convertIStoString(getInstrumentation().getContext().getAssets().open(USERS_XML_ADDRESS));
+
+	public void testParseUsers() throws IOException, ParserConfigurationException,
+			SAXException {
+		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(USERS_XML_ADDRESS));
 		ArrayList<User> userList = xmlParser.parseUserList(testXml);
-		
+
+		User user1 = userList.get(0);
+		assertNotNull("user1 is null", user1);
+		assertEquals(88998, user1.getAccountId());
+		assertEquals(UserType.OWNER, user1.getAdmin());
+		// assertEquals("2011-04-26T09:29:27+02:00", user1.getCreatedAt());
+		assertEquals(new Date(111, 3, 26, 7, 29, 27), user1.getCreatedAt());
+		assertEquals("bartek.f@applicake.com", user1.getEmail());
+		assertEquals("Bartosz", user1.getFirstName());
+		assertEquals(181892, user1.getId());
+		assertEquals("Filipowicz", user1.getLastName());
+		assertEquals("bartoszfilipowicz", user1.getLogin());
+		assertEquals("Warsaw", user1.getTimezone());
+		// assertEquals("2011-05-09T09:10:19+02:00", user1.getUpdatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 10, 19), user1.getUpdatedAt());
+
+		User user2 = userList.get(1);
+		assertNotNull("user2 is null", user2);
+		assertEquals(88998, user2.getAccountId());
+		assertEquals(UserType.ADMIN, user2.getAdmin());
+		// assertEquals("2011-05-09T09:11:21+02:00", user2.getCreatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 11, 21), user2.getCreatedAt());
+		assertEquals("bartek.f+DarthVader@applicake.com", user2.getEmail());
+		assertEquals("Darth", user2.getFirstName());
+		assertEquals(185174, user2.getId());
+		assertEquals("Vader", user2.getLastName());
+		assertEquals("", user2.getLogin());
+		assertEquals("", user2.getTimezone());
+		// assertEquals("2011-05-09T09:11:24+02:00", user2.getUpdatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 11, 24), user2.getUpdatedAt());
+
+		User user3 = userList.get(2);
+		assertNotNull("user3 is null", user3);
+		assertEquals(88998, user3.getAccountId());
+		assertEquals(UserType.USER, user3.getAdmin());
+		// assertEquals("2011-05-04T12:34:31+02:00", user3.getCreatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 34, 31), user3.getCreatedAt());
+		assertEquals("bartek.f+HanSolo@applicake.com", user3.getEmail());
+		assertEquals("Han", user3.getFirstName());
+		assertEquals(184072, user3.getId());
+		assertEquals("Solo", user3.getLastName());
+		assertEquals("testHanSolo", user3.getLogin());
+		assertEquals("", user3.getTimezone());
+		// assertEquals("2011-05-09T09:10:19+02:00<", user3.getUpdatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 10, 19), user3.getUpdatedAt());
+
+		User user4 = userList.get(3);
+		assertNotNull("user4 is null", user4);
+		assertEquals(88998, user4.getAccountId());
+		assertEquals(UserType.USER, user4.getAdmin());
+		// assertEquals("2011-05-09T09:10:46+02:00", user4.getCreatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 10, 46), user4.getCreatedAt());
+		assertEquals("bartek.f+LukeSkywalker@applicake.com", user4.getEmail());
+		assertEquals("Luke", user4.getFirstName());
+		assertEquals(185172, user4.getId());
+		assertEquals("Skywalker", user4.getLastName());
+		assertEquals("", user4.getLogin());
+		assertEquals("", user4.getTimezone());
+		assertEquals(new Date(111, 4, 9, 7, 10, 53), user4.getUpdatedAt());
+		// assertEquals("2011-05-09T09:10:53+02:00", user4.getUpdatedAt());
+
 	}
-	
-	public void  testParseRepositories() throws IOException{
-		String testXml = convertIStoString(getInstrumentation().getContext().getAssets().open(REPOSITORIES_XML_ADDRESS));
+
+	public void testParseRepositories() throws IOException, ParserConfigurationException,
+			SAXException {
+		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(REPOSITORIES_XML_ADDRESS));
 		ArrayList<Repository> repositoryList = xmlParser.parseRepositoryList(testXml);
+
+		Repository repo1 = repositoryList.get(0);
+		assertNotNull("repo1 is null", repo1);
+		assertEquals(88998, repo1.getAccountId());
+		assertEquals(true, repo1.isAnonymous());
+		assertEquals("label-orange", repo1.getColorLabel());
+		// assertEquals("2011-04-28T11:32:49+02:00", repo1.getCreatedAt());
+		assertEquals(new Date(111, 3, 28, 9, 32, 49), repo1.getCreatedAt());
+		assertEquals(205628, repo1.getId());
+		assertEquals(new Date(111, 3, 28, 9, 32, 50), repo1.getLastCommitAt());
+		// assertEquals("2011-04-28T09:32:50Z", repo1.getLastCommitAt());
+		assertEquals("beanstalk", repo1.getName());
+		assertEquals(1, repo1.getRevision());
+		assertEquals(59392, repo1.getStorageUsedBytes());
+		assertEquals("beanstalk", repo1.getTitle());
+		assertEquals("SubversionRepository", repo1.getType());
+		// assertEquals("2011-05-04T09:59:35+02:00" , repo1.getUpdatedAt());
+		assertEquals(new Date(111, 4, 4, 7, 59, 35), repo1.getUpdatedAt());
+		assertEquals("subversion", repo1.getVcs());
+		assertEquals(null, repo1.getDefaultBranch());
+
+		Repository repo2 = repositoryList.get(1);
+		assertNotNull("repo2 is null", repo2);
+		assertEquals(88998, repo2.getAccountId());
+		assertEquals(false, repo2.isAnonymous());
+		assertEquals("label-red", repo2.getColorLabel());
+		// assertEquals("2011-05-04T12:30:51+02:00", repo2.getCreatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 30, 51), repo2.getCreatedAt());
+		assertEquals("master", repo2.getDefaultBranch());
+		assertEquals(207784, repo2.getId());
+		assertEquals(null, repo2.getLastCommitAt());
+		assertEquals("test-git-repository", repo2.getName());
+		assertEquals(0, repo2.getRevision());
+		assertEquals(0, repo2.getStorageUsedBytes());
+		assertEquals("Test Git repository 2", repo2.getTitle());
+		assertEquals("GitRepository", repo2.getType());
+		assertEquals(new Date(111, 4, 4, 10, 31, 59), repo2.getUpdatedAt());
+		// assertEquals("2011-05-04T12:31:59+02:00" , repo2.getUpdatedAt());
+		assertEquals("git", repo2.getVcs());
+
 	}
-	
-	
-	
+
+	// test exception throwing capabilities of XmlParser class
+
+	// the mock xml for this test contains invalid number field
+	// this test should catch an SEXException which encapsulates a
+	// NumberFormatException which is a result of Integer.parseInt failed
+	// parsing
+
+	public void testParserForThrowingNumberFormatExceptions() {
+
+		try {
+			String testXml = convertIStoString(getInstrumentation().getContext()
+					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_NFE));
+			xmlParser.parseRepositoryList(testXml);
+			fail("parseRepositoryList() was supposed to throw an exception");
+		} catch (SAXException se) {
+			assertTrue(se.getException() instanceof NumberFormatException);
+		} catch (Exception e) {
+			fail("SAXException should have beed caught");
+		}
+
+	}
+
+	// the mock xml for this test contains invalid date format
+	// this test should catch an SEXException which encapsulates a
+	// ParseException which is a result of date parsing
+	public void testParserForThrowingDateParsingExceptions() {
+		try {
+			String testXml = convertIStoString(getInstrumentation().getContext()
+					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_DATEFORMAT));
+			xmlParser.parseRepositoryList(testXml);
+			fail("parseRepositoryList() was supposed to throw an exception");
+		} catch (SAXException se) {
+			assertTrue(se.getException() instanceof ParseException);
+		} catch (Exception e) {
+			fail("SAXException should have beed caught");
+		}
+
+	}
+
+	public void testParserForThrowingXMLStructureException() {
+		try {
+			String testXml = convertIStoString(getInstrumentation().getContext()
+					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE));
+			xmlParser.parseRepositoryList(testXml);
+			fail("parseRepositoryList() was supposed to throw an exception");
+		}
+		catch (SAXParseException se) {
+			//valid exception -> test passes if no other exception was thrown
+		} catch (Exception e) {
+
+			fail("Apache parse exception should have been caught");
+		}
+	}
+
 	// Santa's little helper
-	
+
 	// converting InputStream to string
 	public static String convertIStoString(InputStream is) {
 		BufferedReader BR = new BufferedReader(new InputStreamReader(is));
@@ -102,6 +275,5 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 		return sb.toString();
 	}
-	
 
 }
