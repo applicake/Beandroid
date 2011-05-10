@@ -100,9 +100,7 @@ public class ChangesetHandler extends DefaultHandler {
 			}
 
 			if (localName.equals("user-id")) {
-				if (buffer.length() == 0) {
-					changeset.setUserId(0);
-				} else {
+				if (buffer.length() != 0) {
 
 					try {
 						changeset.setUserId(Integer.parseInt(buffer.toString()));

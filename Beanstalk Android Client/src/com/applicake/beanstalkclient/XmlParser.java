@@ -12,7 +12,10 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import com.applicake.beanstalkclient.handlers.AccountHandler;
 import com.applicake.beanstalkclient.handlers.ChangesetHandler;
+import com.applicake.beanstalkclient.handlers.CommentsHandler;
+import com.applicake.beanstalkclient.handlers.PermissionsHandler;
 import com.applicake.beanstalkclient.handlers.RepositoriesHandler;
 import com.applicake.beanstalkclient.handlers.UserHandler;
 
@@ -76,6 +79,54 @@ public class XmlParser {
 
 		return repositoriesHandler.retrieveRepositoryList();
 
+	}
+	
+	public ArrayList<Permission> parsePermissionList(String xml) throws SAXException, IOException, ParserConfigurationException{
+		XMLReader xmlReader = initializeReader();
+
+		PermissionsHandler permissionsHandler = new PermissionsHandler();
+		// set handler
+		xmlReader.setContentHandler(permissionsHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+
+		return permissionsHandler.retrievePermissionList();
+
+		
+		
+	}
+	
+	public Account parseAccountInfo(String xml) throws SAXException, IOException, ParserConfigurationException{
+		XMLReader xmlReader = initializeReader();
+
+		AccountHandler accountHandler = new AccountHandler();
+		// set handler
+		xmlReader.setContentHandler(accountHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+
+		return accountHandler.retrieveAccount();
+
+		
+	}
+
+	public ArrayList<Comment> parseCommentList(String xml) throws SAXException, IOException, ParserConfigurationException {
+		XMLReader xmlReader = initializeReader();
+
+		CommentsHandler commentsHandler = new CommentsHandler();
+		// set handler
+		xmlReader.setContentHandler(commentsHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+
+		return commentsHandler.retrieveCommentList();
+		
 	}
 
 }

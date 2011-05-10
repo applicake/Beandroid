@@ -8,13 +8,15 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import com.applicake.beanstalkclient.Account;
 import com.applicake.beanstalkclient.Changeset;
+import com.applicake.beanstalkclient.Comment;
+import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.XmlParser;
@@ -33,6 +35,11 @@ public class XmlParserTests extends InstrumentationTestCase {
 	private static final String CHANGESET_XML_ADDRESS = "mockxmls/changesets.xml";
 	private static final String REPOSITORIES_XML_ADDRESS = "mockxmls/repositories.xml";
 	private static final String USERS_XML_ADDRESS = "mockxmls/users.xml";
+	private static final String PERMISSIONS_XML_ADDRESS_1 = "mockxmls/permissions/185254.xml";
+	private static final String PERMISSIONS_XML_ADDRESS_2 = "mockxmls/permissions/185174.xml";
+	private static final String ACCOUNT_XML_ADDRESS = "mockxmls/account.xml";
+	private static final String COMMENTS_XML_ADDRESS = "mockxmls/comments.xml";
+	private static final String COMMENTS_XML_ADDRESS_PARTIAL_CHECK = "mockxmls/comments2.xml";
 
 	// invalid xmls
 	private static final String INVALID_REPOSITORIES_XML_ADDRESS_NFE = "mockxmls/corrupted_nfe_repositories.xml";
@@ -203,6 +210,123 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 	}
 
+	// testing Xml parser capability of parsing permissions
+	public void testParsePermissions() throws IOException, ParserConfigurationException,
+			SAXException {
+		String testXml1 = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(PERMISSIONS_XML_ADDRESS_1));
+		ArrayList<Permission> permissionList1 = xmlParser.parsePermissionList(testXml1);
+
+		Permission permission1 = permissionList1.get(0);
+
+		assertNotNull("premission 1 is null", permission1);
+		assertEquals(false, permission1.isFullDeploymentAccess());
+		assertEquals(309214, permission1.getId());
+		assertEquals(207784, permission1.getRepositoryId());
+		assertEquals(0, permission1.getServerEnvironmentId());
+		assertEquals(185254, permission1.getUserId());
+		assertEquals(true, permission1.isReadAccess());
+		assertEquals(true, permission1.isWriteAccess());
+
+		Permission permission2 = permissionList1.get(1);
+
+		assertNotNull("premission 2 is null", permission2);
+		assertEquals(false, permission2.isFullDeploymentAccess());
+		assertEquals(309216, permission2.getId());
+		assertEquals(205628, permission2.getRepositoryId());
+		assertEquals(0, permission2.getServerEnvironmentId());
+		assertEquals(185254, permission2.getUserId());
+		assertEquals(true, permission2.isReadAccess());
+		assertEquals(true, permission2.isWriteAccess());
+
+		// testing user with no permissions or admin/owner user
+		String testXml2 = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(PERMISSIONS_XML_ADDRESS_2));
+		ArrayList<Permission> permissionList2 = xmlParser.parsePermissionList(testXml2);
+
+		assertTrue("This permission arraylist should be empty", permissionList2.isEmpty());
+	}
+
+	// test parsing own account info
+
+	public void testParseAccount() throws IOException, ParserConfigurationException,
+			SAXException {
+		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(ACCOUNT_XML_ADDRESS));
+		Account account = xmlParser.parseAccountInfo(testXml);
+
+		assertNotNull("account is null", account);
+		assertEquals(new Date(111, 3, 26, 7, 29, 27), account.getCreatedAt());
+		assertEquals(88998, account.getId());
+		assertEquals("Bartosz Filipowicz", account.getName());
+		assertEquals(181892, account.getOwnerId());
+		assertEquals(16, account.getPlanId());
+		assertEquals(false, account.isSuspended());
+		assertEquals("bartosz-filipowicz", account.getThirdLevelDomain());
+		assertEquals("International Date Line West", account.getTimeZone());
+		assertEquals(new Date(111, 4, 6, 11, 31, 57), account.getUpdatedAt());
+
+	}
+
+	// test comment parsing
+
+	public void testParseComments() throws IOException, ParserConfigurationException,
+			SAXException {
+		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(COMMENTS_XML_ADDRESS));
+		ArrayList<Comment> commentList = xmlParser.parseCommentList(testXml);
+
+		Comment comment = commentList.get(0);
+
+		assertNotNull("comment is null", comment);
+		assertEquals(88998, comment.getAccountId());
+		assertEquals("bartek.f@applicake.com", comment.getAuthorEmail());
+		assertEquals(181892, comment.getAuthorId());
+		assertEquals("bartoszfilipowicz", comment.getAuthorLogin());
+		assertEquals("Bartosz Filipowicz", comment.getAuthorName());
+		assertEquals("123 nowy komentarz", comment.getBody());
+		assertEquals(new Date(111, 3, 29, 12, 27, 34), comment.getCreatedAt());
+		assertEquals("", comment.getFilePath());
+		assertEquals(17626, comment.getId());
+		assertEquals("", comment.getLineNumber());
+		assertEquals("<p>123 nowy komentarz</p>", comment.getRenderedBody());
+		assertEquals(205628, comment.getRepositoryId());
+		assertEquals("1", comment.getRevision());
+		assertEquals(new Date(111, 3, 29, 12, 27, 34), comment.getUpdatedAt());
+
+		// partial testing of longer comment file
+
+		String testXmlPartial = convertIStoString(getInstrumentation().getContext()
+				.getAssets().open(COMMENTS_XML_ADDRESS_PARTIAL_CHECK));
+		ArrayList<Comment> commentListPartial = xmlParser
+				.parseCommentList(testXmlPartial);
+
+		Comment comment1Partial = commentListPartial.get(0);
+		assertNotNull("comment1Partial is null", comment1Partial);
+		assertEquals(
+				"Whoa, this is the greatest commit ever commited! Keep up the good job!",
+				comment1Partial.getBody());
+		assertEquals(18084, comment1Partial.getId());
+		
+		Comment comment2Partial = commentListPartial.get(1);
+		assertNotNull("comment2Partial is null", comment2Partial);
+		assertEquals(18086, comment2Partial.getId());
+		assertEquals(new Date(111, 4, 10, 10, 2, 35), comment2Partial.getUpdatedAt());
+		
+		Comment comment3Partial = commentListPartial.get(2);
+		assertNotNull("comment3Partial is null", comment3Partial);
+		assertEquals("bartek.f+LukeSkywalker@applicake.com", comment3Partial.getAuthorEmail());
+		assertEquals(new Date(111, 4, 10, 10, 6, 24), comment3Partial.getCreatedAt());
+		
+		Comment comment4Partial = commentListPartial.get(3);
+		assertNotNull("comment2Partial is null", comment4Partial);
+		assertEquals("<p>Luke, I am your father.</p>", comment4Partial.getRenderedBody());
+		assertEquals("aea1c74c112667bb458957778d016a4a66233110", comment4Partial.getRevision());
+		
+		
+
+	}
+
 	// test exception throwing capabilities of XmlParser class
 
 	// the mock xml for this test contains invalid number field
@@ -248,9 +372,8 @@ public class XmlParserTests extends InstrumentationTestCase {
 					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE));
 			xmlParser.parseRepositoryList(testXml);
 			fail("parseRepositoryList() was supposed to throw an exception");
-		}
-		catch (SAXParseException se) {
-			//valid exception -> test passes if no other exception was thrown
+		} catch (SAXParseException se) {
+			// valid exception -> test passes if no other exception was thrown
 		} catch (Exception e) {
 
 			fail("Apache parse exception should have been caught");

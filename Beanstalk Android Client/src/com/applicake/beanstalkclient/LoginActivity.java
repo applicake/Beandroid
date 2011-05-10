@@ -16,8 +16,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener {
 	/** Called when the activity is first created. */

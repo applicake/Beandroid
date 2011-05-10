@@ -23,6 +23,9 @@
 		<activity
 			android:name="HomeActivity">
 		</activity>
+		<activity
+			android:name="DashboardActivity">
+		</activity>
 
 	</application>
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<account>
+  <created-at type="datetime">2011-04-26T09:29:27+02:00</created-at>
+  <id type="integer">88998</id>
+  <name>Bartosz Filipowicz</name>
+  <owner-id type="integer">181892</owner-id>
+  <plan-id type="integer">16</plan-id>
+  <suspended type="boolean">false</suspended>
+  <third-level-domain>bartosz-filipowicz</third-level-domain>
+  <time-zone>International Date Line West</time-zone>
+  <updated-at type="datetime">2011-05-06T13:31:57+02:00</updated-at>
+</account>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comments type="array">
+  <comment>
+    <account-id type="integer">88998</account-id>
+    <author-email>bartek.f@applicake.com</author-email>
+    <author-id type="integer">181892</author-id>
+    <author-login>bartoszfilipowicz</author-login>
+    <author-name>Bartosz Filipowicz</author-name>
+    <body>123 nowy komentarz
+</body>
+    <created-at type="datetime">2011-04-29T14:27:34+02:00</created-at>
+    <file-path></file-path>
+    <id type="integer">17626</id>
+    <line-number></line-number>
+    <rendered-body>&lt;p&gt;123 nowy komentarz&lt;/p&gt;</rendered-body>
+    <repository-id type="integer">205628</repository-id>
+    <revision>1</revision>
+    <updated-at type="datetime">2011-04-29T14:27:34+02:00</updated-at>
+  </comment>
+</comments>

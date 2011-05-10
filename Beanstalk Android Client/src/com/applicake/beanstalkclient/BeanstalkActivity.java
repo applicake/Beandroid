@@ -24,9 +24,9 @@ public abstract class BeanstalkActivity extends Activity {
 		
 	}
 	
-	//action bar handling
+
 	
-	//options menu handling 
+	
 	//inflate menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,7 +35,7 @@ public abstract class BeanstalkActivity extends Activity {
 	    return true;
 	}
 	
-	
+	//options menu handling 
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
 	    switch (item.getItemId()) {
@@ -97,7 +97,7 @@ public abstract class BeanstalkActivity extends Activity {
 	}
 	
 
-	
+	//action bar handling
 	public void onRepositoriesButtonClick(View v) {
 		Toast.makeText(getApplicationContext(), "Repositories button clicked", Toast.LENGTH_SHORT).show();
 	}

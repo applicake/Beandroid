@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<permissions type="array">
+  <permission>
+    <full-deployments-access type="boolean">false</full-deployments-access>
+    <id type="integer">309214</id>
+    <repository-id type="integer">207784</repository-id>
+    <server-environment-id type="integer" nil="true"></server-environment-id>
+    <user-id type="integer">185254</user-id>
+    <read type="boolean">true</read>
+    <write type="boolean">true</write>
+  </permission>
+  <permission>
+    <full-deployments-access type="boolean">false</full-deployments-access>
+    <id type="integer">309216</id>
+    <repository-id type="integer">205628</repository-id>
+    <server-environment-id type="integer" nil="true"></server-environment-id>
+    <user-id type="integer">185254</user-id>
+    <read type="boolean">true</read>
+    <write type="boolean">true</write>
+  </permission>
+</permissions>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comments type="array">
+  <comment>
+    <account-id type="integer">88998</account-id>
+    <author-email>bartek.f@applicake.com</author-email>
+    <author-id type="integer">181892</author-id>
+    <author-login>bartoszfilipowicz</author-login>
+    <author-name>Bartosz Filipowicz</author-name>
+    <body>Whoa, this is the greatest commit ever commited! Keep up the good job!</body>
+    <created-at type="datetime">2011-05-10T12:02:15+02:00</created-at>
+    <file-path></file-path>
+    <id type="integer">18084</id>
+    <line-number></line-number>
+    <rendered-body>&lt;p&gt;Whoa, this is the greatest commit ever commited! Keep up the good job!&lt;/p&gt;</rendered-body>
+    <repository-id type="integer">207784</repository-id>
+    <revision>aea1c74c112667bb458957778d016a4a66233110</revision>
+    <updated-at type="datetime">2011-05-10T12:02:15+02:00</updated-at>
+  </comment>
+  <comment>
+    <account-id type="integer">88998</account-id>
+    <author-email>bartek.f@applicake.com</author-email>
+    <author-id type="integer">181892</author-id>
+    <author-login>bartoszfilipowicz</author-login>
+    <author-name>Bartosz Filipowicz</author-name>
+    <body>Well thanks, buddy!</body>
+    <created-at type="datetime">2011-05-10T12:02:35+02:00</created-at>
+    <file-path></file-path>
+    <id type="integer">18086</id>
+    <line-number></line-number>
+    <rendered-body>&lt;p&gt;Well thanks, buddy!&lt;/p&gt;</rendered-body>
+    <repository-id type="integer">207784</repository-id>
+    <revision>aea1c74c112667bb458957778d016a4a66233110</revision>
+    <updated-at type="datetime">2011-05-10T12:02:35+02:00</updated-at>
+  </comment>
+  <comment>
+    <account-id type="integer">88998</account-id>
+    <author-email>bartek.f+LukeSkywalker@applicake.com</author-email>
+    <author-id type="integer">185172</author-id>
+    <author-login>testLukeSkywalker</author-login>
+    <author-name>Luke Skywalker</author-name>
+    <body>Keep up the good work. The empire will soon fall. </body>
+    <created-at type="datetime">2011-05-10T12:06:24+02:00</created-at>
+    <file-path></file-path>
+    <id type="integer">18088</id>
+    <line-number></line-number>
+    <rendered-body>&lt;p&gt;Keep up the good work. The empire will soon fall.&lt;/p&gt;</rendered-body>
+    <repository-id type="integer">207784</repository-id>
+    <revision>aea1c74c112667bb458957778d016a4a66233110</revision>
+    <updated-at type="datetime">2011-05-10T12:06:24+02:00</updated-at>
+  </comment>
+  <comment>
+    <account-id type="integer">88998</account-id>
+    <author-email>bartek.f+DarthVader@applicake.com</author-email>
+    <author-id type="integer">185174</author-id>
+    <author-login>testDarthVader</author-login>
+    <author-name>Darth Vader</author-name>
+    <body>Luke, I am your father. </body>
+    <created-at type="datetime">2011-05-10T12:06:55+02:00</created-at>
+    <file-path></file-path>
+    <id type="integer">18090</id>
+    <line-number></line-number>
+    <rendered-body>&lt;p&gt;Luke, I am your father.&lt;/p&gt;</rendered-body>
+    <repository-id type="integer">207784</repository-id>
+    <revision>aea1c74c112667bb458957778d016a4a66233110</revision>
+    <updated-at type="datetime">2011-05-10T12:06:55+02:00</updated-at>
+  </comment>
+  <comment>
+    <account-id type="integer">88998</account-id>
+    <author-email>bartek.f+LukeSkywalker@applicake.com</author-email>
+    <author-id type="integer">185172</author-id>
+    <author-login>testLukeSkywalker</author-login>
+    <author-name>Luke Skywalker</author-name>
+    <body>Noooooooooo...</body>
+    <created-at type="datetime">2011-05-10T12:08:18+02:00</created-at>
+    <file-path></file-path>
+    <id type="integer">18092</id>
+    <line-number></line-number>
+    <rendered-body>&lt;p&gt;Noooooooooo&amp;#8230;&lt;/p&gt;</rendered-body>
+    <repository-id type="integer">207784</repository-id>
+    <revision>aea1c74c112667bb458957778d016a4a66233110</revision>
+    <updated-at type="datetime">2011-05-10T12:08:18+02:00</updated-at>
+  </comment>
+  <comment>
+    <account-id type="integer">88998</account-id>
+    <author-email>bartek.f@applicake.com</author-email>
+    <author-id type="integer">181892</author-id>
+    <author-login>bartoszfilipowicz</author-login>
+    <author-name>Bartosz Filipowicz</author-name>
+    <body>MULTI
+LINE
+COMMENT</body>
+    <created-at type="datetime">2011-05-10T12:48:28+02:00</created-at>
+    <file-path></file-path>
+    <id type="integer">18094</id>
+    <line-number></line-number>
+    <rendered-body>&lt;p&gt;&lt;span&gt;MULTI&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;LINE&lt;/span&gt;&lt;br /&gt;
+&lt;span&gt;COMMENT&lt;/span&gt;&lt;/p&gt;</rendered-body>
+    <repository-id type="integer">207784</repository-id>
+    <revision>aea1c74c112667bb458957778d016a4a66233110</revision>
+    <updated-at type="datetime">2011-05-10T12:48:28+02:00</updated-at>
+  </comment>
+</comments>

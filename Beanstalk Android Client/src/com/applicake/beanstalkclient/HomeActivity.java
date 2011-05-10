@@ -1,5 +1,6 @@
 package com.applicake.beanstalkclient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -25,7 +26,9 @@ public class HomeActivity extends BeanstalkActivity{
 	// button handlers
 	
 	public void onHomeDashboardClick(View v){
-		Toast.makeText(getApplicationContext(), "Dashboard clicked", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+		startActivityForResult(intent, 0);
+		
 	}
 
 	public void onHomeRepositoriesClick(View v){

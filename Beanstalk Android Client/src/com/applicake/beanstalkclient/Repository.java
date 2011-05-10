@@ -45,7 +45,7 @@ public class Repository {
 		return createdAt;
 	}
 	public void setCreatedAt(String date) throws ParseException {
-		this.createdAt = FORMATTER.parse(date.trim());;
+		this.createdAt = FORMATTER.parse(date.trim());
 	}
 	public int getId() {
 		return id;
