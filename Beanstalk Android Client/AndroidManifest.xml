@@ -26,6 +26,9 @@
 		<activity
 			android:name="DashboardActivity">
 		</activity>
+		<activity
+			android:name="ChangesetActivity">
+		</activity>
 
 	</application>
 

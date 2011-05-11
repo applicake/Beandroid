@@ -51,16 +51,16 @@ public class ChangesetHandler extends DefaultHandler {
 			}
 
 			if (localName.equals("changed-dirs")) {
-				changeset.setChangedDirs(new ArrayList<YamlEntry>());
+				changeset.setChangedDirs(buffer.toString());
 
 			}
 
 			if (localName.equals("changed-files")) {
-				changeset.setChangedFiles(new ArrayList<YamlEntry>());
+				changeset.setChangedFiles(buffer.toString());
 			}
 
 			if (localName.equals("changed-properties")) {
-				changeset.setChangedProperties(new ArrayList<YamlEntry>());
+				changeset.setChangedProperties(buffer.toString());
 			}
 
 			if (localName.equals("email")) {

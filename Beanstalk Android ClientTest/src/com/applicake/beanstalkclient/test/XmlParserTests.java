@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -65,9 +67,9 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertNotNull("changeset is null", changeset1);
 		assertEquals(88998, changeset1.getAccountId());
 		assertEquals("Han Solo", changeset1.getAuthor());
-		assertNotNull(changeset1.getChangedDirs());
-		assertNotNull(changeset1.getChangedFiles());
-		assertNotNull(changeset1.getChangedProperties());
+		assertEquals("--- []", changeset1.getChangedDirs());
+		assertEquals("--- - - README  - :add", changeset1.getChangedFiles());
+		assertEquals("", changeset1.getChangedProperties());
 		assertEquals("bartek.f+HanSolo@applicake.com", changeset1.getEmail());
 		assertEquals("aea1c74c112667bb458957778d016a4a66233110", changeset1.getHashId());
 		assertEquals(207784, changeset1.getRepositoryId());
@@ -81,9 +83,10 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertNotNull("changeset is null", changeset2);
 		assertEquals(88998, changeset2.getAccountId());
 		assertEquals("admin", changeset2.getAuthor());
-		assertNotNull(changeset2.getChangedDirs());
-		assertNotNull(changeset2.getChangedFiles());
-		assertNotNull(changeset2.getChangedProperties());
+		assertEquals("--- - - branches/  - :add- - tags/  - :add- - trunk/  - :add",
+				changeset2.getChangedDirs());
+		assertEquals("--- []", changeset2.getChangedFiles());
+		assertEquals("", changeset2.getChangedProperties());
 		assertEquals("", changeset2.getEmail());
 		assertEquals("", changeset2.getHashId());
 		assertEquals(205628, changeset2.getRepositoryId());
@@ -210,6 +213,54 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 	}
 
+	public void testParseRepositoriesHashMap() throws IOException,
+			ParserConfigurationException, SAXException {
+		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+				.open(REPOSITORIES_XML_ADDRESS));
+		HashMap<Integer, Repository> repositoryHashMap = xmlParser
+				.parseRepositoryHashMap(testXml);
+
+		Repository repo1 = repositoryHashMap.get(205628);
+		assertNotNull("repo1 is null", repo1);
+		assertEquals(88998, repo1.getAccountId());
+		assertEquals(true, repo1.isAnonymous());
+		assertEquals("label-orange", repo1.getColorLabel());
+		// assertEquals("2011-04-28T11:32:49+02:00", repo1.getCreatedAt());
+		assertEquals(new Date(111, 3, 28, 9, 32, 49), repo1.getCreatedAt());
+		assertEquals(205628, repo1.getId());
+		assertEquals(new Date(111, 3, 28, 9, 32, 50), repo1.getLastCommitAt());
+		// assertEquals("2011-04-28T09:32:50Z", repo1.getLastCommitAt());
+		assertEquals("beanstalk", repo1.getName());
+		assertEquals(1, repo1.getRevision());
+		assertEquals(59392, repo1.getStorageUsedBytes());
+		assertEquals("beanstalk", repo1.getTitle());
+		assertEquals("SubversionRepository", repo1.getType());
+		// assertEquals("2011-05-04T09:59:35+02:00" , repo1.getUpdatedAt());
+		assertEquals(new Date(111, 4, 4, 7, 59, 35), repo1.getUpdatedAt());
+		assertEquals("subversion", repo1.getVcs());
+		assertEquals(null, repo1.getDefaultBranch());
+
+		Repository repo2 = repositoryHashMap.get(207784);
+		assertNotNull("repo2 is null", repo2);
+		assertEquals(88998, repo2.getAccountId());
+		assertEquals(false, repo2.isAnonymous());
+		assertEquals("label-red", repo2.getColorLabel());
+		// assertEquals("2011-05-04T12:30:51+02:00", repo2.getCreatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 30, 51), repo2.getCreatedAt());
+		assertEquals("master", repo2.getDefaultBranch());
+		assertEquals(207784, repo2.getId());
+		assertEquals(null, repo2.getLastCommitAt());
+		assertEquals("test-git-repository", repo2.getName());
+		assertEquals(0, repo2.getRevision());
+		assertEquals(0, repo2.getStorageUsedBytes());
+		assertEquals("Test Git repository 2", repo2.getTitle());
+		assertEquals("GitRepository", repo2.getType());
+		assertEquals(new Date(111, 4, 4, 10, 31, 59), repo2.getUpdatedAt());
+		// assertEquals("2011-05-04T12:31:59+02:00" , repo2.getUpdatedAt());
+		assertEquals("git", repo2.getVcs());
+
+	}
+
 	// testing Xml parser capability of parsing permissions
 	public void testParsePermissions() throws IOException, ParserConfigurationException,
 			SAXException {
@@ -307,23 +358,23 @@ public class XmlParserTests extends InstrumentationTestCase {
 				"Whoa, this is the greatest commit ever commited! Keep up the good job!",
 				comment1Partial.getBody());
 		assertEquals(18084, comment1Partial.getId());
-		
+
 		Comment comment2Partial = commentListPartial.get(1);
 		assertNotNull("comment2Partial is null", comment2Partial);
 		assertEquals(18086, comment2Partial.getId());
 		assertEquals(new Date(111, 4, 10, 10, 2, 35), comment2Partial.getUpdatedAt());
-		
+
 		Comment comment3Partial = commentListPartial.get(2);
 		assertNotNull("comment3Partial is null", comment3Partial);
-		assertEquals("bartek.f+LukeSkywalker@applicake.com", comment3Partial.getAuthorEmail());
+		assertEquals("bartek.f+LukeSkywalker@applicake.com",
+				comment3Partial.getAuthorEmail());
 		assertEquals(new Date(111, 4, 10, 10, 6, 24), comment3Partial.getCreatedAt());
-		
+
 		Comment comment4Partial = commentListPartial.get(3);
 		assertNotNull("comment2Partial is null", comment4Partial);
 		assertEquals("<p>Luke, I am your father.</p>", comment4Partial.getRenderedBody());
-		assertEquals("aea1c74c112667bb458957778d016a4a66233110", comment4Partial.getRevision());
-		
-		
+		assertEquals("aea1c74c112667bb458957778d016a4a66233110",
+				comment4Partial.getRevision());
 
 	}
 

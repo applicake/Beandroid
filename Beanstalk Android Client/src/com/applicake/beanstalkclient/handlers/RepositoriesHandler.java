@@ -2,6 +2,7 @@ package com.applicake.beanstalkclient.handlers;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -138,6 +139,14 @@ public class RepositoriesHandler extends DefaultHandler {
 
 	public ArrayList<Repository> retrieveRepositoryList() {
 		return repositoryList;
+	}
+
+	public HashMap<Integer, Repository> retrieveRepositoryHashMap() {
+		HashMap<Integer, Repository> repoHashMap = new HashMap<Integer, Repository>();
+		for (Repository r : repositoryList){
+			repoHashMap.put(r.getId(), r);
+		}
+		return repoHashMap;
 	}
 
 }

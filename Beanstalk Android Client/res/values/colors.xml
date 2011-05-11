@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ActionBarSeparator">#ffffff</color>
-    <color name="ActionBarMainColor">#5AB07F</color>
-    <color name="ApplicationBackground">#ffffff</color>
+	<color
+		name="ActionBarSeparator">#ffffff</color>
+	<color
+		name="ActionBarMainColor">#5AB07F</color>
+	<color
+		name="ApplicationBackground">#ffffff</color>
+	<color
+		name="orange">#ff5500</color>
+	<color
+		name="white">#ffffff</color>
+	<color
+		name="gray">#999999</color>
+	<color
+		name="red">#F54E4E</color>
+	<color
+		name="yellow">#FAEF98</color>
+	<color
+		name="green">#82E03A</color>
+	<color
+		name="blue">#0066cc</color>
+	<color
+		name="pink">#E0ABDF</color>
+
+
 </resources>

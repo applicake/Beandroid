@@ -1,5 +1,6 @@
 package com.applicake.beanstalkclient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -21,6 +22,8 @@ public class HttpRetriever {
 	private final String HTTP_PREFIX = "https://";
 	private final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
 	private final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
+	private final String REPOSITORY_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
+	
 
 	public int checkCredentials(String domain, String username, String password) {
 
@@ -33,37 +36,27 @@ public class HttpRetriever {
 		final HttpParams params = new BasicHttpParams();
 		httpClient.setParams(params);
 		HttpClientParams.setRedirecting(params, false);
-
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-		Log.i("before try", auth_http);
 
 		try {
 			// parsing
 			HttpResponse getResponse = httpClient.execute(getRequest);
-
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
-			Log.i("return code", String.valueOf(statusCode));
 			if (statusCode == HttpStatus.SC_OK) {
-
-				Log.i("getResponse", EntityUtils.toString(getResponse.getEntity())
-						.toString());
 				return statusCode;
 			}
-
 			return statusCode;
 
-		} catch (Exception e) {
-			Log.e("in exception", e.toString(), e);
-
-			// exception handling
+		} catch (Exception e) { // TODO exception handling
 			getRequest.abort();
 			return 666; // exception before returning a value
 		}
 
 	}
-	
-	public String getActivityListXML(String domain, String username, String password) {
+
+	public String getActivityListXML(String domain, String username, String password)
+			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
@@ -76,32 +69,76 @@ public class HttpRetriever {
 		HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-		
 
 		try {
 			// parsing
 			HttpResponse getResponse = httpClient.execute(getRequest);
-
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
-			Log.i("return code", String.valueOf(statusCode));
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
-			}
+			} else
+				throw new Exception("Http connection error");
 
-			return null;
-
-		} catch (Exception e) {
-			Log.e("in exception", e.toString(), e);
-
-			// exception handling
+		} catch (IOException io) {
+			// TODO handle various HTTP exceptions
 			getRequest.abort();
-			return "666"; // exception before returning a value
+			throw new HttpRetreiverException("Http parsing IOException");
+		} catch (Exception e) {
+			getRequest.abort();
+			e.printStackTrace();
+			throw new HttpRetreiverException("Http parsing exception");
+
 		}
 
 	}
-	
-	
-	
+	public String getRepositoryListXML(String domain, String username, String password)
+			throws HttpRetreiverException {
+
+		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
+				username, password);
+
+		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_SUFFIX;
+
+		HttpGet getRequest = new HttpGet(activity_http);
+		final HttpParams params = new BasicHttpParams();
+		httpClient.setParams(params);
+		HttpClientParams.setRedirecting(params, false);
+
+		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+
+		try {
+			// parsing
+			HttpResponse getResponse = httpClient.execute(getRequest);
+			// response code
+			int statusCode = getResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				return EntityUtils.toString(getResponse.getEntity());
+			} else
+				throw new Exception("Http connection error");
+
+		} catch (IOException io) {
+			// TODO handle various HTTP exceptions
+			getRequest.abort();
+			throw new HttpRetreiverException("Http parsing IOException");
+		} catch (Exception e) {
+			getRequest.abort();
+			e.printStackTrace();
+			throw new HttpRetreiverException("Http parsing exception");
+
+		}
+
+	}
+
+	public class HttpRetreiverException extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public HttpRetreiverException(String message) {
+			super(message);
+		}
+	}
 
 }

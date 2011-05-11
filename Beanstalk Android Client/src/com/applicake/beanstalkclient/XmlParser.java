@@ -3,6 +3,8 @@ package com.applicake.beanstalkclient;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -79,6 +81,23 @@ public class XmlParser {
 
 		return repositoriesHandler.retrieveRepositoryList();
 
+	}
+
+	public HashMap<Integer, Repository> parseRepositoryHashMap(String xml)
+	throws ParserConfigurationException, SAXException, IOException {
+		
+		XMLReader xmlReader = initializeReader();
+		
+		RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
+		// set handler
+		xmlReader.setContentHandler(repositoriesHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+		
+		return repositoriesHandler.retrieveRepositoryHashMap();
+		
 	}
 	
 	public ArrayList<Permission> parsePermissionList(String xml) throws SAXException, IOException, ParserConfigurationException{

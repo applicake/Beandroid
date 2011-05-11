@@ -1,72 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
+	android:layout_height="80dp"
 	android:orientation="horizontal">
-	<LinearLayout
-		android:background="@color/ActionBarMainColor"
+	<View
+		android:id="@+id/colorLabel"
+		android:background="@color/blue"
 		android:layout_width="15dp"
 		android:layout_height="fill_parent"
-		android:id="@+id/colorLabel"></LinearLayout>
+		android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true" ></View>
 	<ImageView
+		android:src="@drawable/icon"
 		android:layout_width="wrap_content"
 		android:id="@+id/userGravatar"
-		android:src="@drawable/icon"
-		android:layout_height="wrap_content"></ImageView>
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:id="@+id/tableRow1"
-		android:layout_height="fill_parent"
-		android:orientation="vertical">
-		<TableRow
-			android:layout_height="wrap_content"
-			android:id="@+id/tableRow2"
-			android:layout_width="fill_parent">
-			<TextView
-				android:id="@+id/reposiotryName"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:text="TextView"
-				android:layout_weight="7"></TextView>
-			<TextView
-				android:id="@+id/date"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:text="10-10-2010"
-				android:textSize="10sp"
-				android:gravity="right"
-				android:layout_weight="3"></TextView>
-		</TableRow>
-		<TableRow
-			android:layout_height="wrap_content"
-			android:id="@+id/tableRow3"
-			android:layout_width="fill_parent">
-			<TextView
-				android:id="@+id/hash"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:text="TextView"
-				android:layout_weight="7"></TextView>
-			<TextView
-				android:text="14:43"
-				android:id="@+id/time"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:textSize="8sp"
-				android:gravity="right"
-				android:layout_weight="2"></TextView>
-		</TableRow>
-		<TableRow
-			android:layout_width="fill_parent"
-			android:id="@+id/tableRow4"
-			android:layout_height="wrap_content">
-			<TextView
-				android:text="Commit text abra kadabra 123 123"
-				android:id="@+id/commitMessage"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"></TextView>
-		</TableRow>
-	</LinearLayout>
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/colorLabel"
+		android:layout_centerInParent="true"></ImageView>
 
-</LinearLayout>
+	<TableRow
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:id="@+id/topRow"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_alignParentTop="true">
+		<TextView
+			android:layout_weight="7"
+			android:text="TextView"
+			android:layout_height="wrap_content"
+			android:layout_width="0dp"
+			android:id="@+id/reposiotryName"></TextView>
+		<TextView
+			android:gravity="right"
+			android:textSize="10sp"
+			android:text="10-10-2010"
+			android:layout_width="0dp"
+			android:layout_weight="3"
+			android:layout_height="wrap_content"
+			android:id="@+id/date"></TextView>
+	</TableRow>
+	<TableRow
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:id="@+id/middleRow"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_below="@id/topRow">
+		<TextView
+			android:text="TextView"
+			android:layout_width="0dp"
+			android:layout_weight="7"
+			android:layout_height="wrap_content"
+			android:id="@+id/hash"></TextView>
+		<TextView
+			android:gravity="right"
+			android:textSize="8sp"
+			android:text="14:43"
+			android:layout_width="0dp"
+			android:layout_weight="2"
+			android:layout_height="wrap_content"
+			android:id="@+id/time"></TextView>
+	</TableRow>
+
+	<TableRow
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:id="@+id/tableRow4"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_below="@id/middleRow">
+		>
+		<TextView
+			android:text="Commit text abra kadabra 123 123"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/commitMessage"></TextView>
+	</TableRow>
+
+
+</RelativeLayout>
