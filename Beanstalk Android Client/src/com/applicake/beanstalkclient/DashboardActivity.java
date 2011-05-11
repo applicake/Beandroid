@@ -58,9 +58,6 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		
 	}
 
-	
-	
-	
 	public class DownloadChangesetListTask extends AsyncTask<String, Void, ArrayList<Changeset>> {
 
 		private String domain;

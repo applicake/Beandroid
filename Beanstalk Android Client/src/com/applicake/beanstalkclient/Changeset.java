@@ -3,11 +3,8 @@ package com.applicake.beanstalkclient;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.representer.Representer;
 
 public class Changeset implements Serializable {
 	/**
