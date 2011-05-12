@@ -23,10 +23,7 @@ public abstract class BeanstalkActivity extends Activity {
 //		setContentView(R.layout.main_blank);
 		
 	}
-	
 
-	
-	
 	//inflate menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,7 +45,7 @@ public abstract class BeanstalkActivity extends Activity {
 	        return true;
 	    case R.id.exit:
 	    	Toast.makeText(getApplicationContext(), "exit", Toast.LENGTH_SHORT).show();
-	    	exit();
+	    	exitApplication();
 	    	return true;
 	    default:
 	        return true;
@@ -72,7 +69,7 @@ public abstract class BeanstalkActivity extends Activity {
 		finish();
 	}
 	//closing all activities mechanism 
-	public void exit(){
+	public void exitApplication(){
 		setResult(Constants.CLOSE_ALL_ACTIVITIES);
 		finish();
 	}
@@ -83,18 +80,21 @@ public abstract class BeanstalkActivity extends Activity {
 	    switch(resultCode)
 	    {
 	    case Constants.CLOSE_ALL_ACTIVITIES:
+	    	if (!prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)) clearCredentials();
 	        setResult(Constants.CLOSE_ALL_ACTIVITIES);
 	        finish();
 	    }
 
-		super.onActivityResult(requestCode, resultCode, data);
+//		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (!prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)) clearCredentials();
+		
 	}
+	
+	
 	
 
 	//action bar handling
@@ -114,10 +114,4 @@ public abstract class BeanstalkActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "Home button clicked", Toast.LENGTH_SHORT).show();
 	}
 	
-	
-	
-	
-	
-	
-
 }

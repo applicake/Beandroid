@@ -65,7 +65,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 					Spanned dest, int dstart, int dend) {
 
 				for (int i = start; i < end; i++) {
-					if (!Character.isLetterOrDigit(source.charAt(i))&&(source.charAt(i)=='-')) {
+					if (!Character.isLetterOrDigit(source.charAt(i))
+							&& (source.charAt(i) == '-')) {
 						return "";
 					}
 				}
@@ -73,10 +74,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 			}
 
 		};
-		
-		domainaccountEditText.setFilters(new InputFilter[] {httpAddressFilter});
-	}
 
+		domainaccountEditText.setFilters(new InputFilter[] { httpAddressFilter });
+	}
 
 	public void onClick(View v) {
 		if (v.getId() == R.id.login_button) {
@@ -95,7 +95,28 @@ public class LoginActivity extends Activity implements OnClickListener {
 			new VerifyLoginTask().execute(domain, login, password);
 
 		}
+	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (resultCode) {
+		case Constants.CLOSE_ALL_ACTIVITIES:
+			if (!prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false))
+				clearCredentials();
+			setResult(Constants.CLOSE_ALL_ACTIVITIES);
+			finish();
+		}
+
+	}
+	
+	public void clearCredentials(){
+		Editor editor = prefs.edit();
+		editor.putBoolean(Constants.CREDENTIALS_STORED, false);
+		editor.putString(Constants.USER_ACCOUNT_DOMAIN, "");
+		editor.putString(Constants.USER_LOGIN, "");
+		editor.putString(Constants.USER_PASSWORD, "");
+		editor.putBoolean(Constants.REMEBER_ME_CHECKBOX, false);
+		editor.commit();
 	}
 
 	public class VerifyLoginTask extends AsyncTask<String, Void, Integer> {
@@ -130,10 +151,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 				editor.putBoolean(Constants.CREDENTIALS_STORED, true);
 				editor.commit();
 
-				Intent intent = new Intent(getApplicationContext(),
-						HomeActivity.class);
-				startActivity(intent);
-				finish();
+				Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+				startActivityForResult(intent, 0);
+			
 			} else if (result == 302) {
 				GUI.displayMonit(mContext, "Invalid account domain");
 			} else if (result == 401) {

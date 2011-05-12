@@ -53,7 +53,13 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Intent intent = new Intent(mContext, ChangesetActivity.class);
-		intent.putExtra("changeset", changesetArray.get(arg2));
+		Changeset changeset = changesetArray.get(arg2);
+		intent.putParcelableArrayListExtra(Constants.CHANGEDFILES_ARRAYLIST, changeset.getChangedFiles());
+		intent.putParcelableArrayListExtra(Constants.CHANGEDDIRS_ARRAYLIST, changeset.getChangedDirs());
+		intent.putExtra(Constants.COMMIT_USERNAME, changeset.getAuthor());
+		intent.putExtra(Constants.COMMIT_MESSAGE, changeset.getMessage());
+		intent.putExtra(Constants.COMMIT_REPOSITORY_ID, changeset.getRepositoryId());
+		intent.putExtra(Constants.COMMIT_REVISION_ID, changeset.getHashId() == "" ? changeset.getRevision(): changeset.getHashId());
 		startActivityForResult(intent, 0);
 		
 	}

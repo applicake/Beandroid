@@ -2,4 +2,5 @@
 <resources>
     <dimen name="ActionBarHeight">45dip</dimen>
     <dimen name="TextSizeMedium">16sp</dimen>
+    <dimen name="LargeTextSize">18sp</dimen>
 </resources>

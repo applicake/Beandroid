@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.TimeZone;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -23,8 +25,10 @@ import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.XmlParser;
 import com.applicake.beanstalkclient.enums.UserType;
+import com.applicake.beanstalkclient.utils.DateInTimezoneConverter;
 
 import android.test.InstrumentationTestCase;
+import android.widget.ToggleButton;
 
 /* Testing XmlParser class
  * parsing repositories list, users list, changesets
@@ -49,11 +53,15 @@ public class XmlParserTests extends InstrumentationTestCase {
 	private static final String INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE = "mockxmls/corrupted_xmlstructure_repositories.xml";
 
 	private XmlParser xmlParser;
+	private TimeZone defaultTimeZone;
+	private Calendar calendar;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		xmlParser = new XmlParser();
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+		calendar = Calendar.getInstance();
 
 	}
 
@@ -67,13 +75,15 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertNotNull("changeset is null", changeset1);
 		assertEquals(88998, changeset1.getAccountId());
 		assertEquals("Han Solo", changeset1.getAuthor());
-		assertEquals("--- []", changeset1.getChangedDirs());
-		assertEquals("--- - - README  - :add", changeset1.getChangedFiles());
-		assertEquals("", changeset1.getChangedProperties());
+		//testing moved to YamlTesting
+//		assertEquals("--- []", changeset1.getChangedDirs());
+//		assertEquals("--- - - README  - :add", changeset1.getChangedFiles());
+//		assertEquals("", changeset1.getChangedProperties());
 		assertEquals("bartek.f+HanSolo@applicake.com", changeset1.getEmail());
 		assertEquals("aea1c74c112667bb458957778d016a4a66233110", changeset1.getHashId());
 		assertEquals(207784, changeset1.getRepositoryId());
 		assertEquals("aea1c74c", changeset1.getRevision());
+		calendar.set(2011, 4, 06, 13, 00, 29);
 		assertEquals(new Date(111, 4, 06, 13, 00, 29), changeset1.getTime());
 		// assertEquals("2011-05-06T15:00:29+02:00", changeset1.getTime());
 		assertEquals(false, changeset1.isTooLarge());
@@ -83,10 +93,11 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertNotNull("changeset is null", changeset2);
 		assertEquals(88998, changeset2.getAccountId());
 		assertEquals("admin", changeset2.getAuthor());
-		assertEquals("--- - - branches/  - :add- - tags/  - :add- - trunk/  - :add",
-				changeset2.getChangedDirs());
-		assertEquals("--- []", changeset2.getChangedFiles());
-		assertEquals("", changeset2.getChangedProperties());
+		//testing moved to YamlTesting
+//		assertEquals("--- - - branches/  - :add- - tags/  - :add- - trunk/  - :add",
+//				changeset2.getChangedDirs());
+//		assertEquals("--- []", changeset2.getChangedFiles());
+//		assertEquals("", changeset2.getChangedProperties());
 		assertEquals("", changeset2.getEmail());
 		assertEquals("", changeset2.getHashId());
 		assertEquals(205628, changeset2.getRepositoryId());
@@ -449,5 +460,9 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 		return sb.toString();
 	}
+
+//	public Date toDefaultTZ(Date date) {
+//		return DateInTimezoneConverter.getDateInTimeZone(date, defaultTimeZone);
+//	}
 
 }

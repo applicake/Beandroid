@@ -3,7 +3,10 @@ package com.applicake.beanstalkclient;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import com.applicake.beanstalkclient.utils.CustomYamlParser;
 
 
 public class Changeset implements Serializable {
@@ -13,12 +16,13 @@ public class Changeset implements Serializable {
 	private static final long serialVersionUID = -2632263283471491397L;
 
 	static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	static CustomYamlParser yamlParser = new CustomYamlParser();
 
 	private int accountId;
 	private String author;
-	private String changedDirs;
-	private String changedFiles;
-	private String changedProperties;
+	private ArrayList<YamlEntry> changedDirs;
+	private ArrayList<YamlEntry> changedFiles;
+	private ArrayList<YamlEntry> changedProperties;
 	private String email;
 	private String hashId;
 	private String message;
@@ -44,28 +48,29 @@ public class Changeset implements Serializable {
 		this.author = author;
 	}
 
-	public String getChangedDirs() {
+	public ArrayList<YamlEntry> getChangedDirs() {
 		return changedDirs;
 	}
 
 	public void setChangedDirs(String yaml) {
-		this.changedDirs = yaml;
+		
+		this.changedDirs = yamlParser.parseEntriesList(yaml);
 	}
 
-	public String getChangedFiles() {
+	public ArrayList<YamlEntry> getChangedFiles() {
 		return changedFiles;
 	}
 
 	public void setChangedFiles(String yaml) {
-		this.changedFiles = yaml;
+		this.changedFiles = yamlParser.parseEntriesList(yaml);
 	}
 
-	public String getChangedProperties() {
+	public ArrayList<YamlEntry> getChangedProperties() {
 		return changedProperties;
 	}
 
 	public void setChangedProperties(String yaml) {
-		changedProperties = yaml;
+		changedProperties = yamlParser.parseEntriesList(yaml);
 	}
 
 	public String getEmail() {

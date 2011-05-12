@@ -67,7 +67,24 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 			messageTextView.setText(changeset.getMessage());
 
 			View colorLabel = (View) view.findViewById(R.id.colorLabel);
-			colorLabel.setBackgroundResource(R.color.red);
+			if (repository.getColorLabel().equals("label-white")){
+				colorLabel.setBackgroundResource(R.color.white);
+			} else if (repository.getColorLabel().equals("label-red")){
+				colorLabel.setBackgroundResource(R.color.red);
+			} else if (repository.getColorLabel().equals("label-yellow")){
+				colorLabel.setBackgroundResource(R.color.yellow);
+			} else if (repository.getColorLabel().equals("label-blue")){
+				colorLabel.setBackgroundResource(R.color.blue);
+			} else if (repository.getColorLabel().equals("label-orange")){
+				colorLabel.setBackgroundResource(R.color.orange);
+			} else if (repository.getColorLabel().equals("label-pink")){
+				colorLabel.setBackgroundResource(R.color.pink);
+			} else if (repository.getColorLabel().equals("label-green")){
+				colorLabel.setBackgroundResource(R.color.green);
+			} else if (repository.getColorLabel().equals("label-grey")){
+				colorLabel.setBackgroundResource(R.color.gray);
+			} 
+			
 		}
 
 		return view;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<include
+		layout="@layout/actionbar" />
+	<TextView
+		android:layout_width="fill_parent"
+		android:id="@+id/userName"
+		android:layout_height="wrap_content"></TextView>
+	<TextView
+		android:layout_width="fill_parent"
+		android:id="@+id/commitMessage"
+		android:layout_height="wrap_content"></TextView>
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tableRow1">
+		<Button
+			android:text="Changeset"
+			android:padding="5dp"
+			android:layout_weight="1"
+			android:id="@+id/changesetButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"></Button>
+		<Button
+			android:text="Comments"
+			android:padding="5dp"
+			android:layout_weight="1"
+			android:id="@+id/commentsButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"></Button>
+	</TableRow>
+
+	<ListView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/changesList"></ListView>
+	<ListView
+		android:layout_height="wrap_content"
+		android:id="@+id/commentsList"
+		android:layout_width="fill_parent"
+		android:visibility="gone"></ListView>
+</LinearLayout>

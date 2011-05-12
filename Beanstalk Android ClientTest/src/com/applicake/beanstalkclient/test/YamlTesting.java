@@ -49,12 +49,9 @@ public class YamlTesting extends InstrumentationTestCase {
 				.parseChangesetList(testXml);
 		Changeset changeset1 = changesetList.get(0);
 
-		ArrayList<YamlEntry> yamlListChangeset1Dirs = yamlParser
-				.parseEntriesList(changeset1.getChangedDirs());
-		ArrayList<YamlEntry> yamlListChangeset1Files = yamlParser
-				.parseEntriesList(changeset1.getChangedFiles());
-		ArrayList<YamlEntry> yamlListChangeset1Properties = yamlParser
-				.parseEntriesList(changeset1.getChangedProperties());
+		ArrayList<YamlEntry> yamlListChangeset1Dirs = changeset1.getChangedDirs();
+		ArrayList<YamlEntry> yamlListChangeset1Files = changeset1.getChangedFiles();
+		ArrayList<YamlEntry> yamlListChangeset1Properties = changeset1.getChangedProperties();
 
 		assertTrue(yamlListChangeset1Dirs.isEmpty());
 		assertEquals("README", yamlListChangeset1Files.get(0).getValue());
@@ -62,12 +59,9 @@ public class YamlTesting extends InstrumentationTestCase {
 		assertTrue(yamlListChangeset1Properties.isEmpty());
 
 		Changeset changeset2 = changesetList.get(1);
-		ArrayList<YamlEntry> yamlListChangeset2Dirs = yamlParser
-				.parseEntriesList(changeset2.getChangedDirs());
-		ArrayList<YamlEntry> yamlListChangeset2Files = yamlParser
-				.parseEntriesList(changeset2.getChangedFiles());
-		ArrayList<YamlEntry> yamlListChangeset2Properties = yamlParser
-				.parseEntriesList(changeset2.getChangedProperties());
+		ArrayList<YamlEntry> yamlListChangeset2Dirs = changeset2.getChangedDirs();
+		ArrayList<YamlEntry> yamlListChangeset2Files = changeset2.getChangedFiles();
+		ArrayList<YamlEntry> yamlListChangeset2Properties = changeset2.getChangedProperties();
 
 		assertEquals(3, yamlListChangeset2Dirs.size());
 		assertEquals("branches/", yamlListChangeset2Dirs.get(0).getValue());

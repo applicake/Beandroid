@@ -16,9 +16,22 @@ public class Constants {
 	
 	//activity result codes
 	
-	public static final int CLOSE_ALL_ACTIVITIES = 0;
+	public static final int CLOSE_ALL_ACTIVITIES = 1996;
 	
 	public static final HashMap<String,Integer> COLOR_LABELS_HASH_MAP = new HashMap<String,Integer>();
+
+	//names for extras passed via intents
+	
+	static final String CHANGESET_ENTRY = "changeset_entry";
+	static final String CHANGEDFILES_ARRAYLIST = "changed_files_array";
+	static final String CHANGEDDIRS_ARRAYLIST = "changed_dirs_array";
+
+	static final String COMMIT_USERNAME = "commit_username";
+	static final String COMMIT_MESSAGE = "commit_message";
+
+	public static final String COMMIT_REPOSITORY_ID = "commit_repository_id";
+
+	public static final String COMMIT_REVISION_ID = "commit_revision_id";
 	{
 		COLOR_LABELS_HASH_MAP.put("label-red", R.color.red);
 		COLOR_LABELS_HASH_MAP.put("label-orange", R.color.orange);

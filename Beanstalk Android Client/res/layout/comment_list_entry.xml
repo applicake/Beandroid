@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_alignParentLeft="true"
+		android:id="@+id/topRow"
+		android:layout_height="wrap_content">
+		<ImageView
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:id="@+id/userGravatar"
+			android:layout_height="wrap_content"
+			android:src="@drawable/icon"
+			android:layout_width="wrap_content"></ImageView>
+		<TextView
+			android:layout_toRightOf="@id/userGravatar"
+			android:id="@+id/userName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<TextView
+			android:id="@+id/commentDate"
+			android:layout_toRightOf="@id/userGravatar"
+			android:layout_below="@id/userName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+	</RelativeLayout>
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_below="@id/topRow"
+		android:layout_alignParentLeft="true"
+		android:layout_height="wrap_content"
+		android:id="@+id/commentBody"></TextView>
+</RelativeLayout>
