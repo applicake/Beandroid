@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="ActionBarHeight">45dip</dimen>
+    <dimen name="ActionBarHeight">45dp</dimen>
     <dimen name="TextSizeMedium">16sp</dimen>
     <dimen name="LargeTextSize">18sp</dimen>
+    <dimen name="ColorLabelCornerRadius">2dp</dimen>
+    <dimen name="MediumTextSize">15sp</dimen>
+    <dimen name="SmallTextSize">12sp</dimen>
 </resources>

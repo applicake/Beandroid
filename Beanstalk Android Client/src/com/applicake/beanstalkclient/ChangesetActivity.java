@@ -8,9 +8,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.http.params.HttpParams;
 import org.xml.sax.SAXException;
 
-import com.applicake.beanstalkclient.HttpRetriever.HttpRetreiverException;
 import com.applicake.beanstalkclient.adapters.ChangesAdapter;
 import com.applicake.beanstalkclient.adapters.CommentAdapter;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
 import android.content.Intent;
 import android.os.AsyncTask;

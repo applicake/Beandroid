@@ -15,6 +15,7 @@
 		android:layout_height="wrap_content"></TextView>
 	<View
 		android:id="@+id/state"
+		android:background="@drawable/changeset_labels"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentRight="true"
 		android:layout_width="60dp"

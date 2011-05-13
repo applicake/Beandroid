@@ -23,9 +23,9 @@ import com.applicake.beanstalkclient.Comment;
 import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
-import com.applicake.beanstalkclient.XmlParser;
 import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.DateInTimezoneConverter;
+import com.applicake.beanstalkclient.utils.XmlParser;
 
 import android.test.InstrumentationTestCase;
 import android.widget.ToggleButton;

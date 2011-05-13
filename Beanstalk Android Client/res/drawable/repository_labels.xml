@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+		android:maxLevel="0"
+		android:drawable="@drawable/label_white" />
+	<item
+		android:maxLevel="1"
+		android:drawable="@drawable/label_red" />
+	<item
+		android:maxLevel="2"
+		android:drawable="@drawable/label_orange" />
+	<item
+		android:maxLevel="3"
+		android:drawable="@drawable/label_yellow" />
+	<item
+		android:maxLevel="4"
+		android:drawable="@drawable/label_green" />
+	<item
+		android:maxLevel="5"
+		android:drawable="@drawable/label_blue" />
+	<item
+		android:maxLevel="6"
+		android:drawable="@drawable/label_pink" />
+	<item
+		android:maxLevel="7"
+		android:drawable="@drawable/label_grey" />
+</level-list>

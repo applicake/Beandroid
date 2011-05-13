@@ -9,6 +9,7 @@
 	<TextView
 		android:layout_width="fill_parent"
 		android:id="@+id/userName"
+		android:textStyle="bold"	
 		android:layout_height="wrap_content"></TextView>
 	<TextView
 		android:layout_width="fill_parent"

@@ -12,9 +12,9 @@
 			android:layout_alignParentLeft="true"
 			android:layout_centerVertical="true"
 			android:id="@+id/userGravatar"
-			android:layout_height="wrap_content"
+			android:layout_height="35dp"
 			android:src="@drawable/icon"
-			android:layout_width="wrap_content"></ImageView>
+			android:layout_width="35dp"></ImageView>
 		<TextView
 			android:layout_toRightOf="@id/userGravatar"
 			android:id="@+id/userName"

@@ -3,6 +3,7 @@ package com.applicake.beanstalkclient.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,13 +43,17 @@ public class ChangesAdapter extends ArrayAdapter<YamlEntry> {
 
 			View changesetTag = (View) view.findViewById(R.id.state);
 			String property = changeEntry.getProperty();
+			Log.w("Change property", property);
 			if (property.equals("add")) {
-				changesetTag.setBackgroundResource(R.color.green);
+				changesetTag.getBackground().setLevel(0);
+//				changesetTag.setBackgroundResource(R.color.green);
 			} else if (property.equals("edit")) {
-				changesetTag.setBackgroundResource(R.color.orange);
+				changesetTag.getBackground().setLevel(1);
+//				changesetTag.setBackgroundResource(R.color.orange);
 
-			} else if (property.equals("remove")) {
-				changesetTag.setBackgroundResource(R.color.red);
+			} else if (property.equals("delete")) {
+				changesetTag.getBackground().setLevel(2);
+//				changesetTag.setBackgroundResource(R.color.red);
 			}
 
 		}

@@ -33,13 +33,15 @@ public class Constants {
 
 	public static final String COMMIT_REVISION_ID = "commit_revision_id";
 	{
-		COLOR_LABELS_HASH_MAP.put("label-red", R.color.red);
-		COLOR_LABELS_HASH_MAP.put("label-orange", R.color.orange);
-		COLOR_LABELS_HASH_MAP.put("label-pink", R.color.pink);
-		COLOR_LABELS_HASH_MAP.put("label-green", R.color.green);
-		COLOR_LABELS_HASH_MAP.put("label-blue", R.color.blue);
-		COLOR_LABELS_HASH_MAP.put("label-grey", R.color.gray);
-		COLOR_LABELS_HASH_MAP.put("label-yellow", R.color.yellow);
+		COLOR_LABELS_HASH_MAP.put("label-white", 0);
+		COLOR_LABELS_HASH_MAP.put("label-red", 1);
+		COLOR_LABELS_HASH_MAP.put("label-orange", 2);
+		COLOR_LABELS_HASH_MAP.put("label-yellow", 3);
+		COLOR_LABELS_HASH_MAP.put("label-green", 4);
+		COLOR_LABELS_HASH_MAP.put("label-blue", 5);
+		COLOR_LABELS_HASH_MAP.put("label-pink", 6);
+		COLOR_LABELS_HASH_MAP.put("label-grey", 7);
+		
 	};
 	
 	

@@ -8,9 +8,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.Changeset;
-import com.applicake.beanstalkclient.XmlParser;
 import com.applicake.beanstalkclient.YamlEntry;
 import com.applicake.beanstalkclient.utils.CustomYamlParser;
+import com.applicake.beanstalkclient.utils.XmlParser;
 
 import android.test.AndroidTestCase;
 import android.test.InstrumentationTestCase;

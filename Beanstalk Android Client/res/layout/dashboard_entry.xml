@@ -6,16 +6,15 @@
 	android:orientation="horizontal">
 	<View
 		android:id="@+id/colorLabel"
-		android:background="@color/blue"
+		android:background="@drawable/repository_labels"
 		android:layout_width="15dp"
 		android:layout_height="80dp"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true" ></View>
 	<ImageView
-		android:src="@drawable/icon"
-		android:layout_width="wrap_content"
+		android:layout_width="60dp"
+		android:layout_height="60dp"
 		android:id="@+id/userGravatar"
-		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/colorLabel"
 		android:layout_centerInParent="true"></ImageView>
 
@@ -27,7 +26,6 @@
 		android:layout_alignParentTop="true">
 		<TextView
 			android:layout_weight="7"
-			android:text="TextView"
 			android:layout_height="wrap_content"
 			android:layout_width="0dp"
 			android:id="@+id/reposiotryName"></TextView>
@@ -55,7 +53,6 @@
 		<TextView
 			android:gravity="right"
 			android:textSize="8sp"
-			android:text="14:43"
 			android:layout_width="0dp"
 			android:layout_weight="2"
 			android:layout_height="wrap_content"
@@ -70,7 +67,6 @@
 		android:layout_below="@id/middleRow">
 		>
 		<TextView
-			android:text="Commit text abra kadabra 123 123"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/commitMessage"></TextView>

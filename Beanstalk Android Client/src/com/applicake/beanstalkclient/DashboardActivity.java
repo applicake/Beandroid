@@ -8,8 +8,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.applicake.beanstalkclient.HttpRetriever.HttpRetreiverException;
 import com.applicake.beanstalkclient.adapters.ChangesetAdapter;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
 import android.app.ProgressDialog;
 import android.content.Context;

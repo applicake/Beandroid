@@ -6,22 +6,22 @@
 		name="ActionBarMainColor">#5AB07F</color>
 	<color
 		name="ApplicationBackground">#ffffff</color>
-	<color
-		name="orange">#ff5500</color>
+
+
 	<color
 		name="white">#ffffff</color>
 	<color
-		name="gray">#999999</color>
-	<color
 		name="red">#F54E4E</color>
+	<color
+		name="orange">#ff5500</color>
 	<color
 		name="yellow">#FAEF98</color>
 	<color
 		name="green">#82E03A</color>
 	<color
-		name="blue">#0066cc</color>
+		name="blue">#45ADE6</color>
 	<color
 		name="pink">#E0ABDF</color>
-
-
+	<color
+		name="grey">#999999</color>
 </resources>

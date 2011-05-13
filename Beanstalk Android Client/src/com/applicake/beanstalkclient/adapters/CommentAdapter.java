@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
 import com.applicake.beanstalkclient.Comment;
 import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.utils.GravatarDowloader;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
 
@@ -45,6 +47,9 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 		Comment comment = commentsArray.get(position);
 
 		if (comment != null) {
+			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
+			GravatarDowloader.getInstance().download(comment.getAuthorEmail(), userGravatar);
+			
 			TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
 			userNameTextView.setText(comment.getAuthorName());
 

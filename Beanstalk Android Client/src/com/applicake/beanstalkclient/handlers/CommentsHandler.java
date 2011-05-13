@@ -128,9 +128,9 @@ public class CommentsHandler extends DefaultHandler {
 		buffer.append(ch, start, length);
 	}
 
-	public ArrayList<Comment> retrieveCommentList() throws SAXException {
-		if (commentList == null)
-			throw new SAXException("Error while parsing comment list");
+	public ArrayList<Comment> retrieveCommentList() {
+		if (commentList == null) return new ArrayList<Comment>();
+//			throw new SAXException("Error while parsing comment list");
 		return commentList;
 
 	}

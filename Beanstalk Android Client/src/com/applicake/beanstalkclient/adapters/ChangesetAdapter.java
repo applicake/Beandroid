@@ -8,12 +8,14 @@ import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.utils.GravatarDowloader;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,6 +51,9 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 		Repository repository = repoMap.get(changeset.getRepositoryId());
 
 		if (changeset != null) {
+			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
+			GravatarDowloader.getInstance().download(changeset.getEmail(), userGravatar);
+			
 			TextView repositoryNameTextView = (TextView) view
 					.findViewById(R.id.reposiotryName);
 			repositoryNameTextView.setText(repository.getTitle());
@@ -67,23 +72,7 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 			messageTextView.setText(changeset.getMessage());
 
 			View colorLabel = (View) view.findViewById(R.id.colorLabel);
-			if (repository.getColorLabel().equals("label-white")){
-				colorLabel.setBackgroundResource(R.color.white);
-			} else if (repository.getColorLabel().equals("label-red")){
-				colorLabel.setBackgroundResource(R.color.red);
-			} else if (repository.getColorLabel().equals("label-yellow")){
-				colorLabel.setBackgroundResource(R.color.yellow);
-			} else if (repository.getColorLabel().equals("label-blue")){
-				colorLabel.setBackgroundResource(R.color.blue);
-			} else if (repository.getColorLabel().equals("label-orange")){
-				colorLabel.setBackgroundResource(R.color.orange);
-			} else if (repository.getColorLabel().equals("label-pink")){
-				colorLabel.setBackgroundResource(R.color.pink);
-			} else if (repository.getColorLabel().equals("label-green")){
-				colorLabel.setBackgroundResource(R.color.green);
-			} else if (repository.getColorLabel().equals("label-grey")){
-				colorLabel.setBackgroundResource(R.color.gray);
-			} 
+			colorLabel.getBackground().setLevel(repository.getColorLabelNo());
 			
 		}
 
