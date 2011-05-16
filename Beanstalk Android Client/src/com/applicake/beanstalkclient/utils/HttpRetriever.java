@@ -1,8 +1,6 @@
 package com.applicake.beanstalkclient.utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -16,13 +14,10 @@ import org.apache.http.util.EntityUtils;
 
 import com.applicake.beanstalkclient.Constants;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-
 public class HttpRetriever {
 
-	private DefaultHttpClient httpClient = new DefaultHttpClient();
+	private final DefaultHttpClient httpClient = new DefaultHttpClient();
 	private final String HTTP_PREFIX = "https://";
 	private final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
 	private final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
@@ -62,12 +57,12 @@ public class HttpRetriever {
 
 	}
 
-	public String getActivityListXML(String domain, String username, String password)
+	public String getActivityListXML(SharedPreferences prefs)
 			throws HttpRetreiverException {
 
-		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
-				username, password);
-
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+		
 		String activity_http = HTTP_PREFIX + domain + ACTIVITY_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
@@ -100,11 +95,11 @@ public class HttpRetriever {
 
 	}
 
-	public String getRepositoryListXML(String domain, String username, String password)
+	public String getRepositoryListXML(SharedPreferences prefs)
 			throws HttpRetreiverException {
 
-		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
-				username, password);
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
 
 		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_SUFFIX;
 
@@ -177,14 +172,14 @@ public class HttpRetriever {
 
 	}
 
-	public String getCommentsListForRevisionXML(SharedPreferences prefs, String params2, String revision)
+	public String getCommentsListForRevisionXML(SharedPreferences prefs, String repoId, String revision)
 	throws HttpRetreiverException {
 		
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 		
 		String activity_http = HTTP_PREFIX + domain + COMMENTS_HTTP_MIDDLE
-		+ String.valueOf(params2) + COMMENTS_HTTP_SUFFIX + COMMENTS_REVISION_HTTP_SUFFIX + revision;
+		+ String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX + COMMENTS_REVISION_HTTP_SUFFIX + revision;
 		
 		HttpGet getRequest = new HttpGet(activity_http);
 		final HttpParams params = new BasicHttpParams();
@@ -216,7 +211,7 @@ public class HttpRetriever {
 		
 	}
 
-	public class HttpRetreiverException extends Exception {
+	public static class HttpRetreiverException extends Exception {
 		/**
 		 * 
 		 */
@@ -229,15 +224,16 @@ public class HttpRetriever {
 
 	// helper
 
-	private UsernamePasswordCredentials getCredentialsFromPreferences(
+	private static UsernamePasswordCredentials getCredentialsFromPreferences(
 			SharedPreferences prefs) {
 		return new UsernamePasswordCredentials(prefs.getString(Constants.USER_LOGIN, ""),
 				prefs.getString(Constants.USER_PASSWORD, ""));
 
 	}
 
-	private String getAccountDomain(SharedPreferences prefs) {
+	private static String getAccountDomain(SharedPreferences prefs) {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
 	}
+
 
 }

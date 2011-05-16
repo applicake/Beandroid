@@ -2,9 +2,11 @@ package com.applicake.beanstalkclient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class Repository {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Repository implements Parcelable{
 	static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	static SimpleDateFormat FORMATTER_NOTIMEZONE = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -12,17 +14,75 @@ public class Repository {
 	private int accountId;
 	private boolean anonymous;
 	private String colorLabel;
-	private Date createdAt;
+	private long createdAt;
 	private int id;
-	private Date lastCommitAt;
+	private long lastCommitAt;
 	private String name;
 	private int revision;
 	private int storageUsedBytes;
 	private String title;
 	private String type;
-	private Date updatedAt;
+	private long updatedAt;
 	private String vcs;
 	private String defaultBranch;
+	
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(accountId);
+		dest.writeString(String.valueOf(anonymous));
+		dest.writeString(colorLabel);
+		dest.writeLong(createdAt);
+		dest.writeInt(id);
+		dest.writeLong(lastCommitAt);
+		dest.writeString(name);
+		dest.writeInt(revision);
+		dest.writeInt(storageUsedBytes);
+		dest.writeString(title);
+		dest.writeString(type);
+		dest.writeLong(updatedAt);
+		dest.writeString(vcs);
+		dest.writeString(defaultBranch);
+	}
+	
+	public Repository() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Repository(Parcel in) {
+		this.accountId = in.readInt();
+		this.anonymous = Boolean.getBoolean(in.readString());
+		this.colorLabel = in.readString();
+		this.createdAt = in.readLong();
+		this.id = in.readInt();
+		this.lastCommitAt = in.readLong();
+		this.name = in.readString();
+		this.revision = in.readInt();
+		this.storageUsedBytes = in.readInt();
+		this.title = in.readString();
+		this.type = in.readString();
+		this.updatedAt = in.readLong();
+		this.vcs = in.readString();
+		this.defaultBranch = in.readString();
+	}
+	
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+	
+	public static final Parcelable.Creator<Repository> CREATOR = new Parcelable.Creator<Repository>() {
+		public Repository createFromParcel(Parcel in) {
+			return new Repository(in);
+		}
+
+		public Repository[] newArray(int size) {
+			return new Repository[size];
+		}
+	};
 
 	public int getAccountId() {
 		return accountId;
@@ -48,12 +108,12 @@ public class Repository {
 		this.colorLabel = colorLabel;
 	}
 
-	public Date getCreatedAt() {
+	public long getCreatedAt() {
 		return createdAt;
 	}
 
 	public void setCreatedAt(String date) throws ParseException {
-		this.createdAt = FORMATTER.parse(date.trim());
+		this.createdAt = FORMATTER.parse(date.trim()).getTime();
 	}
 
 	public int getId() {
@@ -64,12 +124,12 @@ public class Repository {
 		this.id = id;
 	}
 
-	public Date getLastCommitAt() {
+	public long getLastCommitAt() {
 		return lastCommitAt;
 	}
 
 	public void setLastCommitAt(String date) throws ParseException {
-		this.lastCommitAt = FORMATTER_NOTIMEZONE.parse(date.trim());
+		this.lastCommitAt = FORMATTER_NOTIMEZONE.parse(date.trim()).getTime();
 	}
 
 	public String getName() {
@@ -112,12 +172,12 @@ public class Repository {
 		this.type = type;
 	}
 
-	public Date getUpdatedAt() {
+	public long getUpdatedAt() {
 		return updatedAt;
 	}
 
 	public void setUpdatedAt(String date) throws ParseException {
-		this.updatedAt = FORMATTER.parse(date.trim());
+		this.updatedAt = FORMATTER.parse(date.trim()).getTime();
 	}
 
 	public String getVcs() {
@@ -156,5 +216,7 @@ public class Repository {
 		}
 		return 0;
 	}
+
+
 
 }

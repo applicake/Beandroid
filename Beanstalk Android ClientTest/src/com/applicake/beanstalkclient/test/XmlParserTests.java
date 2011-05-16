@@ -189,9 +189,9 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals(true, repo1.isAnonymous());
 		assertEquals("label-orange", repo1.getColorLabel());
 		// assertEquals("2011-04-28T11:32:49+02:00", repo1.getCreatedAt());
-		assertEquals(new Date(111, 3, 28, 9, 32, 49), repo1.getCreatedAt());
+		assertEquals(new Date(111, 3, 28, 9, 32, 49).getTime(), repo1.getCreatedAt());
 		assertEquals(205628, repo1.getId());
-		assertEquals(new Date(111, 3, 28, 9, 32, 50), repo1.getLastCommitAt());
+		assertEquals(new Date(111, 3, 28, 9, 32, 50).getTime(), repo1.getLastCommitAt());
 		// assertEquals("2011-04-28T09:32:50Z", repo1.getLastCommitAt());
 		assertEquals("beanstalk", repo1.getName());
 		assertEquals(1, repo1.getRevision());
@@ -199,7 +199,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals("beanstalk", repo1.getTitle());
 		assertEquals("SubversionRepository", repo1.getType());
 		// assertEquals("2011-05-04T09:59:35+02:00" , repo1.getUpdatedAt());
-		assertEquals(new Date(111, 4, 4, 7, 59, 35), repo1.getUpdatedAt());
+		assertEquals(new Date(111, 4, 4, 7, 59, 35).getTime(), repo1.getUpdatedAt());
 		assertEquals("subversion", repo1.getVcs());
 		assertEquals(null, repo1.getDefaultBranch());
 
@@ -209,16 +209,16 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals(false, repo2.isAnonymous());
 		assertEquals("label-red", repo2.getColorLabel());
 		// assertEquals("2011-05-04T12:30:51+02:00", repo2.getCreatedAt());
-		assertEquals(new Date(111, 4, 4, 10, 30, 51), repo2.getCreatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 30, 51).getTime(), repo2.getCreatedAt());
 		assertEquals("master", repo2.getDefaultBranch());
 		assertEquals(207784, repo2.getId());
-		assertEquals(null, repo2.getLastCommitAt());
+		assertEquals(0, repo2.getLastCommitAt());
 		assertEquals("test-git-repository", repo2.getName());
 		assertEquals(0, repo2.getRevision());
 		assertEquals(0, repo2.getStorageUsedBytes());
 		assertEquals("Test Git repository 2", repo2.getTitle());
 		assertEquals("GitRepository", repo2.getType());
-		assertEquals(new Date(111, 4, 4, 10, 31, 59), repo2.getUpdatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 31, 59).getTime(), repo2.getUpdatedAt());
 		// assertEquals("2011-05-04T12:31:59+02:00" , repo2.getUpdatedAt());
 		assertEquals("git", repo2.getVcs());
 
@@ -237,9 +237,9 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals(true, repo1.isAnonymous());
 		assertEquals("label-orange", repo1.getColorLabel());
 		// assertEquals("2011-04-28T11:32:49+02:00", repo1.getCreatedAt());
-		assertEquals(new Date(111, 3, 28, 9, 32, 49), repo1.getCreatedAt());
+		assertEquals(new Date(111, 3, 28, 9, 32, 49).getTime(), repo1.getCreatedAt());
 		assertEquals(205628, repo1.getId());
-		assertEquals(new Date(111, 3, 28, 9, 32, 50), repo1.getLastCommitAt());
+		assertEquals(new Date(111, 3, 28, 9, 32, 50).getTime(), repo1.getLastCommitAt());
 		// assertEquals("2011-04-28T09:32:50Z", repo1.getLastCommitAt());
 		assertEquals("beanstalk", repo1.getName());
 		assertEquals(1, repo1.getRevision());
@@ -247,7 +247,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals("beanstalk", repo1.getTitle());
 		assertEquals("SubversionRepository", repo1.getType());
 		// assertEquals("2011-05-04T09:59:35+02:00" , repo1.getUpdatedAt());
-		assertEquals(new Date(111, 4, 4, 7, 59, 35), repo1.getUpdatedAt());
+		assertEquals(new Date(111, 4, 4, 7, 59, 35).getTime(), repo1.getUpdatedAt());
 		assertEquals("subversion", repo1.getVcs());
 		assertEquals(null, repo1.getDefaultBranch());
 
@@ -257,16 +257,16 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals(false, repo2.isAnonymous());
 		assertEquals("label-red", repo2.getColorLabel());
 		// assertEquals("2011-05-04T12:30:51+02:00", repo2.getCreatedAt());
-		assertEquals(new Date(111, 4, 4, 10, 30, 51), repo2.getCreatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 30, 51).getTime(), repo2.getCreatedAt());
 		assertEquals("master", repo2.getDefaultBranch());
 		assertEquals(207784, repo2.getId());
-		assertEquals(null, repo2.getLastCommitAt());
+		assertEquals(0, repo2.getLastCommitAt());
 		assertEquals("test-git-repository", repo2.getName());
 		assertEquals(0, repo2.getRevision());
 		assertEquals(0, repo2.getStorageUsedBytes());
 		assertEquals("Test Git repository 2", repo2.getTitle());
 		assertEquals("GitRepository", repo2.getType());
-		assertEquals(new Date(111, 4, 4, 10, 31, 59), repo2.getUpdatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 31, 59).getTime(), repo2.getUpdatedAt());
 		// assertEquals("2011-05-04T12:31:59+02:00" , repo2.getUpdatedAt());
 		assertEquals("git", repo2.getVcs());
 

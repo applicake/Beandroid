@@ -14,12 +14,16 @@ import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,6 +38,8 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 	private boolean commentListParsed;
 	private int repoId;
 	private String revisionId;
+	private EditText newCommentBody;
+	private Button submitButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,13 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		changesList = (ListView) findViewById(R.id.changesList);
 		changesList.setAdapter(changesAdapter);
+		
+		View footerView = ((LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_list_footer, null, false);
+		commentList.addFooterView(footerView);
+		
+		newCommentBody = (EditText) footerView.findViewById(R.id.newCommentBody);
+		submitButton = (Button) footerView.findViewById(R.id.submitButton);
+		submitButton.setOnClickListener(this);
 
 		if (changesArray != null && !changesArray.isEmpty()) {
 			changesAdapter.notifyDataSetChanged();
@@ -101,6 +114,17 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				new ParseCommentListTask().execute(String.valueOf(repoId), revisionId);
 				commentListParsed = true;
 			}
+		} else if (v.getId() == submitButton.getId()){
+			//TODO send comment via XML
+			
+			String newCommentBodyString = newCommentBody.getText().toString();
+			if (newCommentBodyString.trim().length() == 0){
+				GUI.displayMonit(getApplicationContext(), "You must enter comment body");
+			} else {
+				GUI.displayMonit(getApplicationContext(), newCommentBodyString.trim());
+			}
+			
+			
 		}
 
 	}
@@ -109,7 +133,6 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		@Override
 		protected void onPreExecute() {
-			
 
 		}
 
@@ -156,6 +179,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				}
 
 			}
+			
 			commentAdapter.notifyDataSetChanged();
 
 		}

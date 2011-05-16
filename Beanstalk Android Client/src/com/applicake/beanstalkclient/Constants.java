@@ -32,6 +32,8 @@ public class Constants {
 	public static final String COMMIT_REPOSITORY_ID = "commit_repository_id";
 
 	public static final String COMMIT_REVISION_ID = "commit_revision_id";
+
+	public static final String REPOSITORY = "repository";
 	{
 		COLOR_LABELS_HASH_MAP.put("label-white", 0);
 		COLOR_LABELS_HASH_MAP.put("label-red", 1);

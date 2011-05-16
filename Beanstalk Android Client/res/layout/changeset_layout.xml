@@ -3,18 +3,21 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:background="@color/ApplicationBackground">
 	<include
 		layout="@layout/actionbar" />
 	<TextView
 		android:layout_width="fill_parent"
 		android:id="@+id/userName"
-		android:textStyle="bold"	
-		android:layout_height="wrap_content"></TextView>
+		android:textStyle="bold"
+		android:layout_height="wrap_content"
+		android:textColor="@color/ApplicationText"></TextView>
 	<TextView
 		android:layout_width="fill_parent"
 		android:id="@+id/commitMessage"
-		android:layout_height="wrap_content"></TextView>
+		android:layout_height="wrap_content"
+		android:textColor="@color/ApplicationText"></TextView>
 	<TableRow
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -34,14 +37,19 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"></Button>
 	</TableRow>
-
 	<ListView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/changesList"></ListView>
+		android:id="@+id/changesList"
+		android:cacheColorHint="#00000000"
+		android:background="@color/ApplicationBackground"></ListView>
+
 	<ListView
 		android:layout_height="wrap_content"
 		android:id="@+id/commentsList"
 		android:layout_width="fill_parent"
-		android:visibility="gone"></ListView>
+		android:cacheColorHint="#00000000"
+		android:background="@color/ApplicationBackground"></ListView>
+
+
 </LinearLayout>

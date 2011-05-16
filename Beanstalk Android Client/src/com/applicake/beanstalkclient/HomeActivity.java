@@ -32,7 +32,8 @@ public class HomeActivity extends BeanstalkActivity{
 	}
 
 	public void onHomeRepositoriesClick(View v){
-		Toast.makeText(getApplicationContext(), "Repositories clicked", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), RepositoriesActivity.class);
+		startActivityForResult(intent, 0);
 	}
 	
 	public void onHomeUsersClick(View v){

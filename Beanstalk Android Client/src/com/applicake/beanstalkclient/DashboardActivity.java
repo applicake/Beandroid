@@ -16,10 +16,8 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -44,18 +42,14 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		changesetList.setAdapter(changesetAdapter);
 		changesetList.setOnItemClickListener(this);
 		
-		String accountDomain = this.prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
-		String login = this.prefs.getString(Constants.USER_LOGIN, "");
-		String password = this.prefs.getString(Constants.USER_PASSWORD, "");
-	
-		new DownloadChangesetListTask().execute(accountDomain, login, password);
+		new DownloadChangesetListTask().execute();
 		
 	}
 	
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int itemNumber, long arg3) {
 		Intent intent = new Intent(mContext, ChangesetActivity.class);
-		Changeset changeset = changesetArray.get(arg2);
+		Changeset changeset = changesetArray.get(itemNumber);
 		intent.putParcelableArrayListExtra(Constants.CHANGEDFILES_ARRAYLIST, changeset.getChangedFiles());
 		intent.putParcelableArrayListExtra(Constants.CHANGEDDIRS_ARRAYLIST, changeset.getChangedDirs());
 		intent.putExtra(Constants.COMMIT_USERNAME, changeset.getAuthor());
@@ -66,11 +60,8 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		
 	}
 
-	public class DownloadChangesetListTask extends AsyncTask<String, Void, ArrayList<Changeset>> {
+	public class DownloadChangesetListTask extends AsyncTask<Void, Void, ArrayList<Changeset>> {
 
-		private String domain;
-		private String login;
-		private String password;
 		private HashMap<Integer, Repository> repositoryMap;
 		
 		@Override
@@ -81,16 +72,12 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		}
 
 		@Override
-		protected ArrayList<Changeset> doInBackground(String... params) {
-
-			domain = params[0];
-			login = params[1];
-			password = params[2];
+		protected ArrayList<Changeset> doInBackground(Void... params) {
 			
 			try {
 				HttpRetriever httpRetriever = new HttpRetriever();
-				String xmlRepoList = httpRetriever.getRepositoryListXML(domain, login, password);
-				String xmlChangesetList = httpRetriever.getActivityListXML(domain, login, password);
+				String xmlRepoList = httpRetriever.getRepositoryListXML(prefs);
+				String xmlChangesetList = httpRetriever.getActivityListXML(prefs);
 				XmlParser xmlParser = new XmlParser();
 				// parsing repository list
 				repositoryMap = xmlParser.parseRepositoryHashMap(xmlRepoList);

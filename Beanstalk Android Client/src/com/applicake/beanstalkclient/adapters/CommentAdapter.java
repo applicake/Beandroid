@@ -1,7 +1,5 @@
 package com.applicake.beanstalkclient.adapters;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
@@ -24,14 +22,15 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
 	private Context context;
 	private List<Comment> commentsArray;
-	private SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm");
 	private Spanned spannedText;
+	static int rowColorSwapper;
 
 	public CommentAdapter(Context context, int textViewResourceId,
 			List<Comment> commentsArray) {
 		super(context, textViewResourceId);
 		this.context = context;
 		this.commentsArray = commentsArray;
+		rowColorSwapper = 0;
 
 	}
 
@@ -62,7 +61,14 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 			commentBodyTextView.setText(spannedText, BufferType.SPANNABLE);
 
 		}
-
+		
+		if ((rowColorSwapper % 2) == 0) {
+			view.getBackground().setLevel(0);
+		} else {
+			view.getBackground().setLevel(1);
+		}
+		rowColorSwapper++;
+		
 		return view;
 	}
 

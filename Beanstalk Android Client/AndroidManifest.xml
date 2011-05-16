@@ -29,6 +29,15 @@
 		<activity
 			android:name="ChangesetActivity">
 		</activity>
+		<activity
+			android:name="RepositoriesActivity">
+		</activity>
+		<activity
+			android:name="CreateNewRepositoryActivity">
+		</activity>
+		<activity
+			android:name="RepositoryDetailsActivity">
+		</activity>
 
 	</application>
 
