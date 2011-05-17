@@ -1,7 +1,5 @@
 package com.applicake.beanstalkclient;
 
-import java.util.HashMap;
-
 public class Constants {
 	
 	public static final String SHARED_PREFERENCES = "shared_preferences";
@@ -17,8 +15,6 @@ public class Constants {
 	//activity result codes
 	
 	public static final int CLOSE_ALL_ACTIVITIES = 1996;
-	
-	public static final HashMap<String,Integer> COLOR_LABELS_HASH_MAP = new HashMap<String,Integer>();
 
 	//names for extras passed via intents
 	
@@ -34,19 +30,12 @@ public class Constants {
 	public static final String COMMIT_REVISION_ID = "commit_revision_id";
 
 	public static final String REPOSITORY = "repository";
-	{
-		COLOR_LABELS_HASH_MAP.put("label-white", 0);
-		COLOR_LABELS_HASH_MAP.put("label-red", 1);
-		COLOR_LABELS_HASH_MAP.put("label-orange", 2);
-		COLOR_LABELS_HASH_MAP.put("label-yellow", 3);
-		COLOR_LABELS_HASH_MAP.put("label-green", 4);
-		COLOR_LABELS_HASH_MAP.put("label-blue", 5);
-		COLOR_LABELS_HASH_MAP.put("label-pink", 6);
-		COLOR_LABELS_HASH_MAP.put("label-grey", 7);
-		
-	};
-	
-	
-	//color labels
 
+	public static final String REPOSITORY_ID = "repository id";
+
+	public static final String REPOSITORY_NAME = "repository name";
+	public static final String REPOSITORY_COLOR_NO = "repository color number";
+
+	public static final String REPOSITORY_TITLE = "repository title";
+	
 }

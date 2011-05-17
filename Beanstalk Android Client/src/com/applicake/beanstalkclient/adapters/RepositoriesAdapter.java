@@ -1,7 +1,6 @@
 package com.applicake.beanstalkclient.adapters;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import android.content.Context;

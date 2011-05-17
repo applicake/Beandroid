@@ -58,7 +58,6 @@ public class GravatarDowloader {
 					h = "0" + h;
 				hexString.append(h);
 			}
-			Log.w("gravatarId", hexString.toString());
 			return hexString.toString();
 
 		} catch (NoSuchAlgorithmException e) {

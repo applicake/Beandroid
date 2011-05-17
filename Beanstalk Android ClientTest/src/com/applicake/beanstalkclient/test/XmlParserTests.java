@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.TimeZone;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -24,11 +23,9 @@ import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.enums.UserType;
-import com.applicake.beanstalkclient.utils.DateInTimezoneConverter;
 import com.applicake.beanstalkclient.utils.XmlParser;
 
 import android.test.InstrumentationTestCase;
-import android.widget.ToggleButton;
 
 /* Testing XmlParser class
  * parsing repositories list, users list, changesets
@@ -53,7 +50,6 @@ public class XmlParserTests extends InstrumentationTestCase {
 	private static final String INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE = "mockxmls/corrupted_xmlstructure_repositories.xml";
 
 	private XmlParser xmlParser;
-	private TimeZone defaultTimeZone;
 	private Calendar calendar;
 
 	@Override

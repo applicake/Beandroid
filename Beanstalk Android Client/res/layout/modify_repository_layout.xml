@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<include
+		layout="@layout/actionbar"
+		android:layout_alignParentTop="true"
+		android:id="@+id/actionbar" />
+	<TextView
+		android:text="Modify repository structure"
+		android:id="@+id/title"
+		android:layout_below="@id/actionbar"
+		android:layout_centerHorizontal="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+
+	<TextView
+		android:text="name:"
+		android:id="@+id/nameLabel"
+		android:layout_below="@id/title"
+		android:layout_centerHorizontal="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+	<EditText
+		android:id="@+id/nameEditText"
+		android:layout_below="@id/nameLabel"
+		android:layout_width="fill_parent"
+		android:layout_centerHorizontal="true"
+		android:layout_height="wrap_content"></EditText>
+
+	<TextView
+		android:text="title:"
+		android:id="@+id/titleLabel"
+		android:layout_below="@id/nameEditText"
+		android:layout_centerHorizontal="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+	<EditText
+		android:id="@+id/titleEditText"
+		android:layout_below="@id/titleLabel"
+		android:layout_width="fill_parent"
+		android:layout_centerHorizontal="true"
+		android:layout_height="wrap_content"></EditText>
+	<TextView
+		android:text="color label:"
+		android:id="@+id/colorLabelLabel"
+		android:layout_below="@id/titleEditText"
+		android:layout_centerHorizontal="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+	<Button
+		android:text="green"
+		android:id="@+id/colorLabelButton"
+		android:layout_below="@id/colorLabelLabel"
+		android:layout_centerHorizontal="true"
+		android:layout_width="100dp"
+		android:layout_height="wrap_content"></Button>
+	<Button
+		android:text="Save changes"
+		android:id="@+id/saveChangesButton"
+		android:layout_below="@id/colorLabelButton"
+		android:layout_alignParentRight="true"
+		android:layout_width="100dp"
+		android:layout_height="wrap_content"></Button>
+
+</RelativeLayout>

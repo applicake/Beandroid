@@ -38,6 +38,9 @@
 		<activity
 			android:name="RepositoryDetailsActivity">
 		</activity>
+		<activity
+			android:name="RepositoryCommitsActivity">
+		</activity>
 
 	</application>
 

@@ -5,15 +5,17 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.http.params.HttpParams;
 import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.adapters.ChangesAdapter;
 import com.applicake.beanstalkclient.adapters.CommentAdapter;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,7 +25,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,11 +41,13 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 	private String revisionId;
 	private EditText newCommentBody;
 	private Button submitButton;
+	private Context mContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.changeset_layout);
+		mContext = this;
 		Intent acitivyIntent = getIntent();
 
 		commentListParsed = false;
@@ -80,10 +83,12 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		changesList = (ListView) findViewById(R.id.changesList);
 		changesList.setAdapter(changesAdapter);
-		
-		View footerView = ((LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_list_footer, null, false);
+
+		View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
+				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_list_footer,
+				null, false);
 		commentList.addFooterView(footerView);
-		
+
 		newCommentBody = (EditText) footerView.findViewById(R.id.newCommentBody);
 		submitButton = (Button) footerView.findViewById(R.id.submitButton);
 		submitButton.setOnClickListener(this);
@@ -114,25 +119,28 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				new ParseCommentListTask().execute(String.valueOf(repoId), revisionId);
 				commentListParsed = true;
 			}
-		} else if (v.getId() == submitButton.getId()){
-			//TODO send comment via XML
-			
+		} else if (v.getId() == submitButton.getId()) {
+			// TODO send comment via XML
+
 			String newCommentBodyString = newCommentBody.getText().toString();
-			if (newCommentBodyString.trim().length() == 0){
+			if (newCommentBodyString.trim().length() == 0) {
 				GUI.displayMonit(getApplicationContext(), "You must enter comment body");
 			} else {
-				GUI.displayMonit(getApplicationContext(), newCommentBodyString.trim());
+				new SendCommentTask().execute(newCommentBodyString);
 			}
-			
-			
+
 		}
 
 	}
 
 	public class ParseCommentListTask extends AsyncTask<String, Void, ArrayList<Comment>> {
 
+		ProgressDialog progressDialog;
+
 		@Override
 		protected void onPreExecute() {
+			progressDialog = ProgressDialog.show(mContext, "Please wait...",
+					"downloading comments");
 
 		}
 
@@ -165,6 +173,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		@Override
 		protected void onPostExecute(ArrayList<Comment> result) {
+			progressDialog.cancel();
 			commentArray = result;
 			commentAdapter = new CommentAdapter(getApplicationContext(),
 					R.layout.comment_list_entry, commentArray);
@@ -179,9 +188,50 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				}
 
 			}
-			
+
 			commentAdapter.notifyDataSetChanged();
 
+		}
+
+	}
+
+	public class SendCommentTask extends AsyncTask<String, Void, Void> {
+
+		ProgressDialog progressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			progressDialog = ProgressDialog.show(mContext, "Please wait...",
+					"sending comment");
+			super.onPreExecute();
+		}
+
+		protected Void doInBackground(String... params) {
+
+			String commentBody = params[0];
+			XmlCreator xmlCreator = new XmlCreator();
+			HttpSender httpSender = new HttpSender();
+			try {
+				String commentXml = xmlCreator.createCommentXML(revisionId, commentBody);
+				httpSender.sendCommentXML(prefs, commentXml, String.valueOf(repoId));
+
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			progressDialog.cancel();
+			super.onPostExecute(result);
 		}
 
 	}
