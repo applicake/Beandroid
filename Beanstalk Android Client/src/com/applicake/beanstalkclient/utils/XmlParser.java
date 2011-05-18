@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -151,6 +150,21 @@ public class XmlParser {
 		xmlReader.parse(is);
 
 		return commentsHandler.retrieveCommentList();
+		
+	}
+
+	public Comment parseComment(String xml) throws SAXException, IOException, ParserConfigurationException {
+		XMLReader xmlReader = initializeReader();
+		
+		CommentsHandler commentsHandler = new CommentsHandler();
+		// set handler
+		xmlReader.setContentHandler(commentsHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+		
+		return commentsHandler.retrieveComment();
 		
 	}
 

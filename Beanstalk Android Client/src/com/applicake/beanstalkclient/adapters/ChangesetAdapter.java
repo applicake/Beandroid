@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.applicake.beanstalkclient.Changeset;
-import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.utils.GravatarDowloader;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ChangesetAdapter extends ArrayAdapter<Changeset> {
@@ -64,7 +62,6 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 			TextView userNameTextView = (TextView) view.findViewById(R.id.hash);
 			userNameTextView.setText(changeset.getAuthor());
 
-			// temporary
 			TextView timeTextView = (TextView) view.findViewById(R.id.time);
 			timeTextView.setText(timeFormatter.format(changeset.getTime()));
 

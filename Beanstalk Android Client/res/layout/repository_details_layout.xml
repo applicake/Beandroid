@@ -131,13 +131,4 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"></Button>
 
-	<Button
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonDeleteRepository"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/buttonModifyProperties"
-		android:text="Delete repository"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
-
 </RelativeLayout>

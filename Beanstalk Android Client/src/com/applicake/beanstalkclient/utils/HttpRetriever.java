@@ -20,6 +20,7 @@ public class HttpRetriever {
 	private final DefaultHttpClient httpClient = new DefaultHttpClient();
 	private final String HTTP_PREFIX = "https://";
 	private final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
+	private final String USERS_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
 	private final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
 	private final String SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/repository.xml?repository_id=";
 	private final String REPOSITORY_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
@@ -57,6 +58,45 @@ public class HttpRetriever {
 		}
 
 	}
+	
+
+	public String getUserListXML(SharedPreferences prefs) throws HttpRetreiverException {
+		
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+		
+		String auth_http = HTTP_PREFIX + domain + USERS_HTTP_SUFFIX;
+
+		HttpGet getRequest = new HttpGet(auth_http);
+		final HttpParams params = new BasicHttpParams();
+		httpClient.setParams(params);
+		HttpClientParams.setRedirecting(params, false);
+		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+
+		try {
+			// parsing
+			HttpResponse getResponse = httpClient.execute(getRequest);
+			// response code
+			int statusCode = getResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				return EntityUtils.toString(getResponse.getEntity());
+			} else
+				throw new Exception("Http connection error");
+
+		} catch (IOException io) {
+			// TODO handle various HTTP exceptions
+			getRequest.abort();
+			throw new HttpRetreiverException("Http parsing IOException");
+		} catch (Exception e) {
+			getRequest.abort();
+			e.printStackTrace();
+			throw new HttpRetreiverException("Http parsing exception");
+
+		}
+	}
+
+	
+	
 
 	public String getActivityListXML(SharedPreferences prefs)
 			throws HttpRetreiverException {
@@ -273,6 +313,7 @@ public class HttpRetriever {
 	private static String getAccountDomain(SharedPreferences prefs) {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
 	}
+
 
 
 }

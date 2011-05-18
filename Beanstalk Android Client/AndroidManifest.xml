@@ -41,6 +41,15 @@
 		<activity
 			android:name="RepositoryCommitsActivity">
 		</activity>
+		<activity
+			android:name="RepositoryModifyPropertiesActivity">
+		</activity>
+		<activity
+			android:name="UserActivity">
+		</activity>
+		<activity
+			android:name="UserDetailsActivity">
+		</activity>
 
 	</application>
 

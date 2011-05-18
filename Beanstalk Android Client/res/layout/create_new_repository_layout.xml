@@ -2,7 +2,8 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent"
+	android:background="@color/ApplicationBackground">
 	<include
 		layout="@layout/actionbar"
 		android:layout_alignParentTop="true"
@@ -14,7 +15,6 @@
 		android:layout_centerHorizontal="true"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"></TextView>
-
 	<TextView
 		android:text="name:"
 		android:id="@+id/nameLabel"
@@ -72,18 +72,18 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"></TextView>
 	<Button
-		android:text="green"
+		android:background="@drawable/repository_labels"
 		android:id="@+id/colorLabelButton"
 		android:layout_below="@id/colorLabelLabel"
 		android:layout_centerHorizontal="true"
 		android:layout_width="100dp"
-		android:layout_height="wrap_content"></Button>
+		android:layout_height="50dp"></Button>
 	<Button
 		android:text="Create!"
 		android:id="@+id/createButton"
 		android:layout_below="@id/colorLabelButton"
 		android:layout_alignParentRight="true"
-		android:layout_width="100dp"
+		android:layout_width="150dp"
 		android:layout_height="wrap_content"></Button>
 
 </RelativeLayout>

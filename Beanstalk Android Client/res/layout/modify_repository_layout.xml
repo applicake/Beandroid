@@ -2,7 +2,8 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent"
+	android:background="@color/ApplicationBackground">
 	<include
 		layout="@layout/actionbar"
 		android:layout_alignParentTop="true"
@@ -13,29 +14,17 @@
 		android:layout_below="@id/actionbar"
 		android:layout_centerHorizontal="true"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-
-	<TextView
-		android:text="name:"
-		android:id="@+id/nameLabel"
-		android:layout_below="@id/title"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-	<EditText
-		android:id="@+id/nameEditText"
-		android:layout_below="@id/nameLabel"
-		android:layout_width="fill_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_height="wrap_content"></EditText>
+		android:layout_height="wrap_content"
+		android:textColor="@color/ApplicationText"></TextView>
 
 	<TextView
 		android:text="title:"
 		android:id="@+id/titleLabel"
-		android:layout_below="@id/nameEditText"
+		android:layout_below="@id/title"
 		android:layout_centerHorizontal="true"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		android:layout_height="wrap_content"
+		android:textColor="@color/ApplicationText"></TextView>
 	<EditText
 		android:id="@+id/titleEditText"
 		android:layout_below="@id/titleLabel"
@@ -48,20 +37,21 @@
 		android:layout_below="@id/titleEditText"
 		android:layout_centerHorizontal="true"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		android:layout_height="wrap_content"
+		android:textColor="@color/ApplicationText"></TextView>
 	<Button
-		android:text="green"
 		android:id="@+id/colorLabelButton"
+		android:background="@drawable/repository_labels"
 		android:layout_below="@id/colorLabelLabel"
 		android:layout_centerHorizontal="true"
 		android:layout_width="100dp"
-		android:layout_height="wrap_content"></Button>
+		android:layout_height="50dp"></Button>
 	<Button
 		android:text="Save changes"
 		android:id="@+id/saveChangesButton"
 		android:layout_below="@id/colorLabelButton"
 		android:layout_alignParentRight="true"
-		android:layout_width="100dp"
+		android:layout_width="150dp"
 		android:layout_height="wrap_content"></Button>
 
 </RelativeLayout>

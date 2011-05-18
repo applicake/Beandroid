@@ -73,8 +73,6 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 		
 	}
 
-	
-	
 
 	public class DownloadChangesetListTask extends
 			AsyncTask<String, Void, ArrayList<Repository>> {

@@ -45,13 +45,11 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements OnCl
 		Button usersPermissionsButton = (Button) findViewById(R.id.buttonUsersPermissions);
 		Button deploymentButton = (Button) findViewById(R.id.buttonDeployment);
 		Button modifyPropertiesButton = (Button) findViewById(R.id.buttonModifyProperties);
-		Button deleteRepositoryButton = (Button) findViewById(R.id.buttonDeleteRepository);
 		
 		viewCommitsButton.setOnClickListener(this);
 		usersPermissionsButton.setOnClickListener(this);
 		deploymentButton.setOnClickListener(this);
 		modifyPropertiesButton.setOnClickListener(this);
-		deleteRepositoryButton.setOnClickListener(this);
 		
 	}
 
@@ -78,12 +76,12 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements OnCl
 		
 		if (v.getId() == R.id.buttonModifyProperties){
 			Intent intent = new Intent(getApplicationContext(), RepositoryModifyPropertiesActivity.class);
+			intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
+			intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
+			intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
 			startActivityForResult(intent, 0);
 		}
 		
-		if (v.getId() == R.id.buttonDeleteRepository){
-			GUI.displayMonit(getApplicationContext(), "r u sure?");
-		}
 		
 	}
 

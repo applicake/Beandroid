@@ -37,7 +37,8 @@ public class HomeActivity extends BeanstalkActivity{
 	}
 	
 	public void onHomeUsersClick(View v){
-		Toast.makeText(getApplicationContext(), "Users clicked", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+		startActivityForResult(intent, 0);
 	}
 	
 	public void onHomeDeploymentClick(View v){

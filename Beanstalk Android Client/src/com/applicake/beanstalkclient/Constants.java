@@ -37,5 +37,7 @@ public class Constants {
 	public static final String REPOSITORY_COLOR_NO = "repository color number";
 
 	public static final String REPOSITORY_TITLE = "repository title";
+
+	public static final String USER = "user_parcel";
 	
 }

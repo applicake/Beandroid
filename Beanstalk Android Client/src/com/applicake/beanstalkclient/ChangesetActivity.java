@@ -11,6 +11,7 @@ import com.applicake.beanstalkclient.adapters.ChangesAdapter;
 import com.applicake.beanstalkclient.adapters.CommentAdapter;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
@@ -195,7 +196,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 	}
 
-	public class SendCommentTask extends AsyncTask<String, Void, Void> {
+	public class SendCommentTask extends AsyncTask<String, Void, String> {
 
 		ProgressDialog progressDialog;
 
@@ -206,14 +207,15 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			super.onPreExecute();
 		}
 
-		protected Void doInBackground(String... params) {
+		protected String doInBackground(String... params) {
 
 			String commentBody = params[0];
 			XmlCreator xmlCreator = new XmlCreator();
 			HttpSender httpSender = new HttpSender();
 			try {
 				String commentXml = xmlCreator.createCommentXML(revisionId, commentBody);
-				httpSender.sendCommentXML(prefs, commentXml, String.valueOf(repoId));
+				return httpSender.sendCommentXML(prefs, commentXml, String.valueOf(repoId));
+				
 
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
@@ -224,13 +226,37 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (HttpSenderException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return null;
+		
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(String result) {
 			progressDialog.cancel();
+			XmlParser xmlParser = new XmlParser();
+			try {
+				Comment comment = xmlParser.parseComment(result);
+				commentArray.add(comment);
+				commentAdapter.add(comment);
+				commentAdapter.notifyDataSetChanged();
+				
+				
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			super.onPostExecute(result);
 		}
 

@@ -7,6 +7,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
@@ -26,9 +27,11 @@ public class HttpSender {
 	private final String HTTP_PREFIX = "https://";
 	private final String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
 	private final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
+	private final String REPOSITORY_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
+	private final String REPOSITORY_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
 	
 	
-	public void sendCommentXML(SharedPreferences prefs, String xml, String repoId) throws UnsupportedEncodingException{
+	public String sendCommentXML(SharedPreferences prefs, String xml, String repoId) throws UnsupportedEncodingException, HttpSenderException{
 		
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -41,25 +44,118 @@ public class HttpSender {
 		httpClient.setParams(params);
 		HttpClientParams.setRedirecting(params, false);
 		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		postRequest.addHeader("Content-Type", "application/xml");
 		
 		//add xml entity
 		StringEntity se = new StringEntity(xml,"UTF-8");
 		postRequest.setEntity(se);
 		
+		//TODO throw exceptions if an error occurs
+		try {
+			HttpResponse postResponse = httpClient.execute(postRequest);
+			Log.w("postRequestXml", xml);
+			String entity = EntityUtils.toString(postResponse.getEntity());
+			Log.w("postResponse", entity);
+			if (postResponse.getStatusLine().getStatusCode() == 201) {
+				return entity;
+			} else {
+				throw new HttpSenderException("Incorrect response from server");
+			}
+
+		} catch (ClientProtocolException e) {
+			postRequest.abort();
+			e.printStackTrace();
+			throw new HttpSenderException("Client protocol exception");
+		} catch (IOException e) {
+			postRequest.abort();
+			e.printStackTrace();
+			throw new HttpSenderException("IOException");
+		}
 		
+	}
+	
+	public int sendCreateNewRepostiroyXML(SharedPreferences prefs, String xml) throws UnsupportedEncodingException, HttpSenderException{
+		
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+		
+		//create POST request with address
+		HttpPost postRequest = new HttpPost(HTTP_PREFIX + domain + REPOSITORY_CREATE_HTTP_SUFFIX);
+		
+		//add auth headers
+		final HttpParams params = new BasicHttpParams();
+		httpClient.setParams(params);
+		HttpClientParams.setRedirecting(params, false);
+		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		postRequest.addHeader("Content-Type", "application/xml");
+		
+		//add xml entity
+		StringEntity se = new StringEntity(xml,"UTF-8");
+		postRequest.setEntity(se);
 		
 		//TODO throw exceptions if an error occurs
 		try {
 			HttpResponse postResponse = httpClient.execute(postRequest);
-			
 			Log.w("postRequestXml", xml);
-			Log.w("postResponse", EntityUtils.toString(postResponse.getEntity()));
+			String entity = EntityUtils.toString(postResponse.getEntity());
+			Log.w("postResponse", entity);
+			if (postResponse.getStatusLine().getStatusCode() == 201) {
+				return 201;
+			} else {
+				throw new HttpSenderException("Incorrect response from server");
+			}
+			
 		} catch (ClientProtocolException e) {
 			postRequest.abort();
 			e.printStackTrace();
+			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
 			postRequest.abort();
 			e.printStackTrace();
+			throw new HttpSenderException("IOException");
+		}
+		
+	}
+	
+	public int sendUpdateRepositoryXML(SharedPreferences prefs, String xml, String repoId) throws UnsupportedEncodingException, HttpSenderException{
+		
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+		
+		//create PUT request with address
+		HttpPut putRequest = new HttpPut(HTTP_PREFIX + domain + REPOSITORY_UPDATE_HTTP_MIDDLE + repoId + ".xml");
+		
+		//add auth headers
+		final HttpParams params = new BasicHttpParams();
+		httpClient.setParams(params);
+		HttpClientParams.setRedirecting(params, false);
+		putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		putRequest.addHeader("Content-Type", "application/xml");
+		
+		//add xml entity
+		StringEntity se = new StringEntity(xml,"UTF-8");
+		putRequest.setEntity(se);
+		
+		//TODO throw exceptions if an error occurs
+		try {
+			HttpResponse postResponse = httpClient.execute(putRequest);
+			Log.w("postRequestXml", xml);
+			String entity = EntityUtils.toString(postResponse.getEntity());
+			Log.w("postResponse", entity);
+			if (postResponse.getStatusLine().getStatusCode() == 200) {
+				return 200;
+			} else {
+				throw new HttpSenderException("Incorrect response from server");
+			}
+			
+		} catch (ClientProtocolException e) {
+			putRequest.abort();
+			e.printStackTrace();
+			throw new HttpSenderException("Client protocol exception");
+		} catch (IOException e) {
+			putRequest.abort();
+			e.printStackTrace();
+			throw new HttpSenderException("IOException");
 		}
 		
 	}
@@ -74,6 +170,17 @@ public class HttpSender {
 
 	private static String getAccountDomain(SharedPreferences prefs) {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
+	}
+	
+	public class HttpSenderException extends Exception{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 9190064875608806066L;
+
+		public HttpSenderException(String message){
+			super(message);
+		}
 	}
 
 

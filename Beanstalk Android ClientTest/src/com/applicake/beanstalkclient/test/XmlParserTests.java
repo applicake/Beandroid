@@ -116,7 +116,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals(88998, user1.getAccountId());
 		assertEquals(UserType.OWNER, user1.getAdmin());
 		// assertEquals("2011-04-26T09:29:27+02:00", user1.getCreatedAt());
-		assertEquals(new Date(111, 3, 26, 7, 29, 27), user1.getCreatedAt());
+		assertEquals(new Date(111, 3, 26, 7, 29, 27).getTime(), user1.getCreatedAt());
 		assertEquals("bartek.f@applicake.com", user1.getEmail());
 		assertEquals("Bartosz", user1.getFirstName());
 		assertEquals(181892, user1.getId());
@@ -124,14 +124,14 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals("bartoszfilipowicz", user1.getLogin());
 		assertEquals("Warsaw", user1.getTimezone());
 		// assertEquals("2011-05-09T09:10:19+02:00", user1.getUpdatedAt());
-		assertEquals(new Date(111, 4, 9, 7, 10, 19), user1.getUpdatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 10, 19).getTime(), user1.getUpdatedAt());
 
 		User user2 = userList.get(1);
 		assertNotNull("user2 is null", user2);
 		assertEquals(88998, user2.getAccountId());
 		assertEquals(UserType.ADMIN, user2.getAdmin());
 		// assertEquals("2011-05-09T09:11:21+02:00", user2.getCreatedAt());
-		assertEquals(new Date(111, 4, 9, 7, 11, 21), user2.getCreatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 11, 21).getTime(), user2.getCreatedAt());
 		assertEquals("bartek.f+DarthVader@applicake.com", user2.getEmail());
 		assertEquals("Darth", user2.getFirstName());
 		assertEquals(185174, user2.getId());
@@ -139,14 +139,14 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals("", user2.getLogin());
 		assertEquals("", user2.getTimezone());
 		// assertEquals("2011-05-09T09:11:24+02:00", user2.getUpdatedAt());
-		assertEquals(new Date(111, 4, 9, 7, 11, 24), user2.getUpdatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 11, 24).getTime(), user2.getUpdatedAt());
 
 		User user3 = userList.get(2);
 		assertNotNull("user3 is null", user3);
 		assertEquals(88998, user3.getAccountId());
 		assertEquals(UserType.USER, user3.getAdmin());
 		// assertEquals("2011-05-04T12:34:31+02:00", user3.getCreatedAt());
-		assertEquals(new Date(111, 4, 4, 10, 34, 31), user3.getCreatedAt());
+		assertEquals(new Date(111, 4, 4, 10, 34, 31).getTime(), user3.getCreatedAt());
 		assertEquals("bartek.f+HanSolo@applicake.com", user3.getEmail());
 		assertEquals("Han", user3.getFirstName());
 		assertEquals(184072, user3.getId());
@@ -154,21 +154,21 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertEquals("testHanSolo", user3.getLogin());
 		assertEquals("", user3.getTimezone());
 		// assertEquals("2011-05-09T09:10:19+02:00<", user3.getUpdatedAt());
-		assertEquals(new Date(111, 4, 9, 7, 10, 19), user3.getUpdatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 10, 19).getTime(), user3.getUpdatedAt());
 
 		User user4 = userList.get(3);
 		assertNotNull("user4 is null", user4);
 		assertEquals(88998, user4.getAccountId());
 		assertEquals(UserType.USER, user4.getAdmin());
 		// assertEquals("2011-05-09T09:10:46+02:00", user4.getCreatedAt());
-		assertEquals(new Date(111, 4, 9, 7, 10, 46), user4.getCreatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 10, 46).getTime(), user4.getCreatedAt());
 		assertEquals("bartek.f+LukeSkywalker@applicake.com", user4.getEmail());
 		assertEquals("Luke", user4.getFirstName());
 		assertEquals(185172, user4.getId());
 		assertEquals("Skywalker", user4.getLastName());
 		assertEquals("", user4.getLogin());
 		assertEquals("", user4.getTimezone());
-		assertEquals(new Date(111, 4, 9, 7, 10, 53), user4.getUpdatedAt());
+		assertEquals(new Date(111, 4, 9, 7, 10, 53).getTime(), user4.getUpdatedAt());
 		// assertEquals("2011-05-09T09:10:53+02:00", user4.getUpdatedAt());
 
 	}

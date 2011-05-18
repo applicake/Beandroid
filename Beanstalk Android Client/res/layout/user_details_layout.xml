@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/ApplicationBackground">
+	
+	<include
+		layout="@layout/actionbar"
+		android:id="@+id/actionbar"
+		android:layout_alignParentTop="true" />
+
+	<ImageView
+		android:layout_width="60dp"
+		android:layout_height="60dp"
+		android:id="@+id/userGravatar"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@id/actionbar"
+		android:layout_margin="10dp"></ImageView>
+
+	<TextView
+		android:id="@+id/userName"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_below="@id/actionbar"
+		android:layout_width="wrap_content"
+		android:textColor="@color/ApplicationText"
+		android:textSize="@dimen/MediumTextSize"
+		android:textStyle="bold"
+		android:layout_height="wrap_content"></TextView>
+
+	<TextView
+		android:text="ADMIN"
+		android:background="@drawable/label_red"
+		android:visibility="gone"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="2dp"
+		android:gravity="center"
+		android:layout_width="60dp"
+		android:layout_height="18dp"
+		android:layout_alignParentRight="true"
+		android:layout_below="@id/actionbar"
+		android:id="@+id/adminLabel"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationBackground"></TextView>
+
+	<TextView
+		android:text="OWNER"
+		android:background="@drawable/label_green"
+		android:visibility="gone"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="2dp"
+		android:gravity="center"
+		android:layout_width="60dp"
+		android:layout_height="18dp"
+		android:layout_alignParentRight="true"
+		android:layout_below="@id/actionbar"
+		android:id="@+id/ownerLabel"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationBackground"></TextView>
+
+	<TextView
+		android:id="@+id/userLogin"
+		android:textColor="@color/ApplicationText"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_below="@id/userName"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="@dimen/MediumTextSize"></TextView>
+
+	<TextView
+		android:id="@+id/userEmail"
+		android:textColor="@color/ApplicationText"
+		android:textSize="@dimen/MediumTextSize"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_below="@id/userLogin"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+
+	<Button
+		android:layout_marginTop="30dp"
+		android:drawableLeft="@drawable/icon"
+		android:id="@+id/buttonUserPermissions"
+		android:layout_below="@id/userEmail"
+		android:text="User permissions"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"></Button>
+
+	<Button
+		android:drawableLeft="@drawable/icon"
+		android:id="@+id/buttonModifyProperties"
+		android:layout_below="@id/buttonUserPermissions"
+		android:text="User permissions"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"></Button>
+
+	<Button
+		android:drawableLeft="@drawable/icon"
+		android:id="@+id/buttonDeleteUser"
+		android:layout_below="@id/buttonModifyProperties"
+		android:text="Delete user"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"></Button>
+
+
+
+</RelativeLayout>

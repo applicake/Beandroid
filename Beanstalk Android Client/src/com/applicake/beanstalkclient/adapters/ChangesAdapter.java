@@ -46,17 +46,11 @@ public class ChangesAdapter extends ArrayAdapter<YamlEntry> {
 			Log.w("Change property", property);
 			if (property.equals("add")) {
 				changesetTag.getBackground().setLevel(0);
-//				changesetTag.setText("added");
-//				changesetTag.setBackgroundResource(R.color.green);
 			} else if (property.equals("edit")) {
 				changesetTag.getBackground().setLevel(1);
-//				changesetTag.setText("modified");
-//				changesetTag.setBackgroundResource(R.color.orange);
 
 			} else if (property.equals("delete")) {
 				changesetTag.getBackground().setLevel(2);
-//				changesetTag.setText("removed");
-//				changesetTag.setBackgroundResource(R.color.red);
 			}
 
 		}

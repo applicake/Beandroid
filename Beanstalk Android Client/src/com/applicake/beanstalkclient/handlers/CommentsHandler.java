@@ -32,7 +32,7 @@ public class CommentsHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		if (comment != null) {
-			if (localName.equals("comment")) {
+			if ((commentList != null) && localName.equals("comment")) {
 				commentList.add(comment);
 			}
 
@@ -133,5 +133,9 @@ public class CommentsHandler extends DefaultHandler {
 //			throw new SAXException("Error while parsing comment list");
 		return commentList;
 
+	}
+
+	public Comment retrieveComment() {
+		return comment;
 	}
 }

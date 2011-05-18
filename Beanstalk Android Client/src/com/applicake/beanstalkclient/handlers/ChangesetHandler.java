@@ -7,7 +7,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.applicake.beanstalkclient.Changeset;
-import com.applicake.beanstalkclient.YamlEntry;
 
 public class ChangesetHandler extends DefaultHandler {
 
