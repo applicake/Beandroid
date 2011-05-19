@@ -13,16 +13,15 @@ public class XmlCreator {
 	private StringWriter writer;
 
 	public XmlCreator() {
-		
-		
 
 	}
 
-	public String createCommentXML(String revisionId, String commentBody) throws IllegalArgumentException, IllegalStateException, IOException {
+	public String createCommentXML(String revisionId, String commentBody)
+			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer = Xml.newSerializer();
 		writer = new StringWriter();
 		serializer.setOutput(writer);
-//		serializer.startDocument("UTF-8", null);
+		// serializer.startDocument("UTF-8", null);
 		// open
 		serializer.startTag("", "comment");
 
@@ -33,110 +32,220 @@ public class XmlCreator {
 
 		serializer.endTag("", "comment");
 		serializer.endDocument();
-		
+
 		return writer.toString();
 
 	}
 
-
 	public String createGitRepositoryCreationXML(String name, String title,
-			String colorLabel) throws IllegalArgumentException, IllegalStateException, IOException {
+			String colorLabel) throws IllegalArgumentException, IllegalStateException,
+			IOException {
 		serializer = Xml.newSerializer();
 		writer = new StringWriter();
 		serializer.setOutput(writer);
 		serializer.startDocument("UTF-8", null);
 		// open
 		serializer.startTag("", "repository");
-		
+
 		addName(name);
 		addType("git");
 		addTitle(title);
 		addColorLabel(colorLabel);
-		
+
 		serializer.endTag("", "repository");
 		serializer.endDocument();
 		return writer.toString();
 	}
-	
+
 	public String createSVNRepositoryCreationXML(String name, String title,
-			String colorLabel, boolean b) throws IllegalArgumentException, IllegalStateException, IOException {
-		
+			String colorLabel, boolean b) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+
 		serializer = Xml.newSerializer();
 		writer = new StringWriter();
 		serializer.setOutput(writer);
-		
+
 		serializer.startDocument("UTF-8", null);
 		serializer.startTag("", "repository");
-		
+
 		addName(name);
 		addType("subversion");
 		addTitle(title);
 		addCreateStructure(b);
 		addColorLabel(colorLabel);
-		
+
 		serializer.endTag("", "repository");
 		serializer.endDocument();
 		return writer.toString();
-		
-	}
-	
 
-	public String createRepositoryModifyXML(String title, String colorLabel) throws IllegalArgumentException, IllegalStateException, IOException {
-		
+	}
+
+	public String createRepositoryModifyXML(String title, String colorLabel)
+			throws IllegalArgumentException, IllegalStateException, IOException {
+
 		serializer = Xml.newSerializer();
 		writer = new StringWriter();
 		serializer.setOutput(writer);
-		
+
 		serializer.startDocument("UTF-8", null);
 		serializer.startTag("", "repository");
-		
-	
+
 		addTitle(title);
 		addColorLabel(colorLabel);
-		
+
 		serializer.endTag("", "repository");
 		serializer.endDocument();
 		return writer.toString();
-		
+
 	}
 
+	public String createPasswordChangeXML(String password)
+			throws IllegalArgumentException, IllegalStateException, IOException {
 
-	
+		serializer = Xml.newSerializer();
+		writer = new StringWriter();
+		serializer.setOutput(writer);
 
+		serializer.startDocument("UTF-8", null);
+		serializer.startTag("", "user");
 
-	private void addCreateStructure(boolean b) throws IllegalArgumentException, IllegalStateException, IOException {
+		addPassword(password);
+
+		serializer.endTag("", "user");
+		serializer.endDocument();
+		return writer.toString();
+	}
+
+	public String createPropertiesChangeXML(String firstName, String lastName,
+			String email, boolean admin) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+
+		serializer = Xml.newSerializer();
+		writer = new StringWriter();
+		serializer.setOutput(writer);
+
+		serializer.startDocument("UTF-8", null);
+		serializer.startTag("", "user");
+
+		addFirstName(firstName);
+		addLastName(lastName);
+		addEmail(email);
+		addAdmin(admin ? "1" : "");
+
+		serializer.endTag("", "user");
+		serializer.endDocument();
+		return writer.toString();
+	}
+
+	public String createNewUserXML(String login, String firstName, String lastName,
+			String email, boolean admin, String password)
+			throws IllegalArgumentException, IllegalStateException, IOException {
+
+		serializer = Xml.newSerializer();
+		writer = new StringWriter();
+		serializer.setOutput(writer);
+
+		serializer.startDocument("UTF-8", null);
+		serializer.startTag("", "user");
+
+		addLogin(login);
+		addFirstName(firstName);
+		addLastName(lastName);
+		addEmail(email);
+		addAdmin(admin ? "1" : "");
+		addPassword(password);
+
+		serializer.endTag("", "user");
+		serializer.endDocument();
+		return writer.toString();
+	}
+
+	private void addLogin(String login) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+
+		serializer.startTag("", "login");
+		serializer.text(login);
+		serializer.endTag("", "login");
+
+	}
+
+	private void addAdmin(String admin) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+
+		serializer.startTag("", "admin");
+		serializer.text(admin);
+		serializer.endTag("", "admin");
+
+	}
+
+	private void addEmail(String email) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+		serializer.startTag("", "email");
+		serializer.text(email);
+		serializer.endTag("", "email");
+	}
+
+	private void addLastName(String lastName) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+		serializer.startTag("", "last_name");
+		serializer.text(lastName);
+		serializer.endTag("", "last_name");
+
+	}
+
+	private void addFirstName(String firstName) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+		serializer.startTag("", "first_name");
+		serializer.text(firstName);
+		serializer.endTag("", "first_name");
+
+	}
+
+	private void addPassword(String password) throws IllegalArgumentException,
+			IllegalStateException, IOException {
+		serializer.startTag("", "password");
+		serializer.text(password);
+		serializer.endTag("", "password");
+
+	}
+
+	private void addCreateStructure(boolean b) throws IllegalArgumentException,
+			IllegalStateException, IOException {
 		serializer.startTag("", "create_structure");
 		serializer.attribute("", "type", "boolean");
 		serializer.text(String.valueOf(b));
 		serializer.endTag("", "create_structure");
-		
+
 	}
 
-	private void addColorLabel(String colorLabel) throws IllegalArgumentException, IllegalStateException, IOException {
+	private void addColorLabel(String colorLabel) throws IllegalArgumentException,
+			IllegalStateException, IOException {
 		serializer.startTag("", "color_label");
 		serializer.text(colorLabel);
 		serializer.endTag("", "color_label");
-		
+
 	}
 
-	private void addTitle(String title) throws IllegalArgumentException, IllegalStateException, IOException {
+	private void addTitle(String title) throws IllegalArgumentException,
+			IllegalStateException, IOException {
 		serializer.startTag("", "title");
 		serializer.text(title);
 		serializer.endTag("", "title");
-		
+
 	}
 
-	private void addType(String type) throws IllegalArgumentException, IllegalStateException, IOException {
+	private void addType(String type) throws IllegalArgumentException,
+			IllegalStateException, IOException {
 		serializer.startTag("", "type_id");
 		serializer.text(type);
 		serializer.endTag("", "type_id");
-		
+
 	}
 
 	private void addRevision(String revId) throws IllegalArgumentException,
 			IllegalStateException, IOException {
 		serializer.startTag("", "revision");
-//		serializer.attribute("", "type", "integer");
+		// serializer.attribute("", "type", "integer");
 		serializer.text(revId);
 		serializer.endTag("", "revision");
 	}
@@ -161,12 +270,12 @@ public class XmlCreator {
 		serializer.text(lineNumeber);
 		serializer.endTag("", "line-number");
 	}
-	
-	private void addName(String name) throws IllegalArgumentException, IllegalStateException, IOException{
+
+	private void addName(String name) throws IllegalArgumentException,
+			IllegalStateException, IOException {
 		serializer.startTag("", "name");
 		serializer.text(name);
 		serializer.endTag("", "name");
 	}
-
 
 }

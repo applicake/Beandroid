@@ -47,6 +47,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 				Context.LAYOUT_INFLATER_SERVICE)).inflate(
 				R.layout.add_user_footer, null, false);
 		footerView.setOnClickListener(this);
+		
 		userList.addFooterView(footerView);
 		
 		userList.setAdapter(userAdapter);
@@ -59,7 +60,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		startActivityForResult(new Intent(mContext, UserCreateNewActivity.class), 0);
 		
 	}
 

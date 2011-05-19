@@ -89,7 +89,7 @@
 		android:drawableLeft="@drawable/icon"
 		android:id="@+id/buttonModifyProperties"
 		android:layout_below="@id/buttonUserPermissions"
-		android:text="User permissions"
+		android:text="Modify properties"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"></Button>
 
@@ -100,7 +100,5 @@
 		android:text="Delete user"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"></Button>
-
-
 
 </RelativeLayout>

@@ -50,6 +50,12 @@
 		<activity
 			android:name="UserDetailsActivity">
 		</activity>
+		<activity
+			android:name="UserModifyPropertiesActivity">
+		</activity>
+		<activity
+			android:name="UserCreateNewActivity">
+		</activity>
 
 	</application>
 

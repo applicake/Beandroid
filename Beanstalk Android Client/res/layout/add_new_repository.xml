@@ -3,8 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="80dp"
-	android:paddingLeft="30dp"
-	>
+	android:paddingLeft="30dp">
 	<TextView
 		android:text="+"
 		android:id="@+id/plusSign"
@@ -21,4 +20,12 @@
 		android:layout_centerVertical="true"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"></TextView>
+	<TextView
+		android:text="available repositories: to be implemented"
+		android:paddingRight="5dp"
+		android:layout_alignParentRight="true"
+		android:layout_below="@id/plusSign"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="@dimen/SmallTextSize"></TextView>
 </RelativeLayout>
