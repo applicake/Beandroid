@@ -274,6 +274,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		String testXml1 = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(PERMISSIONS_XML_ADDRESS_1));
 		ArrayList<Permission> permissionList1 = xmlParser.parsePermissionList(testXml1);
+		
 
 		Permission permission1 = permissionList1.get(0);
 
@@ -303,6 +304,12 @@ public class XmlParserTests extends InstrumentationTestCase {
 		ArrayList<Permission> permissionList2 = xmlParser.parsePermissionList(testXml2);
 
 		assertTrue("This permission arraylist should be empty", permissionList2.isEmpty());
+		
+		// hashmap parsing tests
+		HashMap<Integer, Permission> permissionHashMap1 = xmlParser.parsePermissionHashMap(testXml1);
+		assertEquals(207784, permissionHashMap1.get(207784).getRepositoryId());
+		
+		
 	}
 
 	// test parsing own account info

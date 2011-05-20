@@ -91,6 +91,9 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 	public void onClick(View v) {
 		
 		if (v.getId() == R.id.buttonUserPermissions){
+			Intent intent = new Intent(getApplicationContext(), UserPermissionsActivity.class);
+			intent.putExtra(Constants.USER_ID, String.valueOf(user.getId()));
+			startActivityForResult(intent, 0);
 	
 		}
 		

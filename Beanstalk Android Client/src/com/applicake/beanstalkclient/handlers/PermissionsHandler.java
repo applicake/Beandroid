@@ -1,12 +1,14 @@
 package com.applicake.beanstalkclient.handlers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.applicake.beanstalkclient.Permission;
+import com.applicake.beanstalkclient.Repository;
 
 public class PermissionsHandler extends DefaultHandler {
 
@@ -36,7 +38,7 @@ public class PermissionsHandler extends DefaultHandler {
 				permissionList.add(permission);
 			}
 
-			if (localName.equals("full-deployment-access")) {
+			if (localName.equals("full-deployments-access")) {
 				permission
 						.setFullDeploymentAccess(Boolean.parseBoolean(buffer.toString()));
 			}
@@ -101,5 +103,13 @@ public class PermissionsHandler extends DefaultHandler {
 			throw new SAXException("Error while parsing permission list");
 		return permissionList;
 
+	}
+
+	public HashMap<Integer, Permission> retrievePermissionHashMap() {
+		HashMap<Integer, Permission> repoHashMap = new HashMap<Integer, Permission>();
+		for (Permission r : permissionList){
+			repoHashMap.put(r.getRepositoryId(), r);
+		}
+		return repoHashMap;
 	}
 }

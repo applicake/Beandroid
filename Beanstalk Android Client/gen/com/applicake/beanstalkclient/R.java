@@ -54,7 +54,8 @@ public final class R {
         public static final int label_remove=0x7f02000d;
         public static final int label_white=0x7f02000e;
         public static final int label_yellow=0x7f02000f;
-        public static final int repository_labels=0x7f020010;
+        public static final int permission_labels=0x7f020010;
+        public static final int repository_labels=0x7f020011;
     }
     public static final class id {
         public static final int ActionBarDeployButton=0x7f0a0005;
@@ -96,9 +97,11 @@ public final class R {
         public static final int commitMessage=0x7f0a0008;
         public static final int createButton=0x7f0a002b;
         public static final int date=0x7f0a002f;
+        public static final int deploymentLabel=0x7f0a006e;
+        public static final int deploymentPermission=0x7f0a006c;
         public static final int emailEditText=0x7f0a005d;
         public static final int emailLabel=0x7f0a005c;
-        public static final int exit=0x7f0a006c;
+        public static final int exit=0x7f0a0073;
         public static final int hash=0x7f0a0031;
         public static final int lastCommit=0x7f0a0048;
         public static final int lastNameEditText=0x7f0a005b;
@@ -107,7 +110,7 @@ public final class R {
         public static final int loginLabel=0x7f0a0058;
         public static final int login_button=0x7f0a003e;
         public static final int login_edittext=0x7f0a0039;
-        public static final int logout=0x7f0a006b;
+        public static final int logout=0x7f0a0072;
         public static final int middleRow=0x7f0a0030;
         public static final int nameEditText=0x7f0a0023;
         public static final int nameLabel=0x7f0a0022;
@@ -124,19 +127,23 @@ public final class R {
         public static final int repoCreatedAt=0x7f0a004f;
         public static final int repoLastCommit=0x7f0a0050;
         public static final int repoName=0x7f0a0047;
+        public static final int repoPermission=0x7f0a006d;
         public static final int repoRevision=0x7f0a0051;
         public static final int repoStorageUsed=0x7f0a0052;
         public static final int repoTitle=0x7f0a004d;
         public static final int repoType=0x7f0a004e;
         public static final int repoUpdatedAt=0x7f0a0053;
         public static final int reposiotryName=0x7f0a002e;
+        public static final int reposiotryTitle=0x7f0a006a;
         public static final int repositoriesList=0x7f0a004a;
+        public static final int repositoryLabel=0x7f0a006f;
+        public static final int repositoryName=0x7f0a006b;
         public static final int retypePasswordEditText=0x7f0a0044;
         public static final int retypePasswordLabel=0x7f0a0043;
         public static final int revisionTextView=0x7f0a004b;
         public static final int saveButton=0x7f0a0045;
         public static final int saveChangesButton=0x7f0a003f;
-        public static final int settings=0x7f0a006a;
+        public static final int settings=0x7f0a0071;
         public static final int state=0x7f0a000f;
         public static final int structureCheckBox=0x7f0a0028;
         public static final int submitButton=0x7f0a001f;
@@ -164,6 +171,7 @@ public final class R {
         public static final int userGravatar=0x7f0a001b;
         public static final int userLogin=0x7f0a0064;
         public static final int userName=0x7f0a0007;
+        public static final int userPermissionsList=0x7f0a0070;
         public static final int usersList=0x7f0a0068;
         public static final int value=0x7f0a000e;
     }
@@ -185,18 +193,21 @@ public final class R {
         public static final int main=0x7f03000e;
         public static final int modify_repository_layout=0x7f03000f;
         public static final int password_change_dialog=0x7f030010;
-        public static final int repo_name_header=0x7f030011;
-        public static final int repositories_entry=0x7f030012;
-        public static final int repositories_layout=0x7f030013;
-        public static final int repository_changeset_entry=0x7f030014;
-        public static final int repository_changesets_activity_layout=0x7f030015;
-        public static final int repository_details_layout=0x7f030016;
-        public static final int show_more_commits_footer=0x7f030017;
-        public static final int user_create_new_layout=0x7f030018;
-        public static final int user_details_layout=0x7f030019;
-        public static final int user_list_entry=0x7f03001a;
-        public static final int user_list_layout=0x7f03001b;
-        public static final int user_modify_properties_layout=0x7f03001c;
+        public static final int permissions_modify_layout=0x7f030011;
+        public static final int repo_name_header=0x7f030012;
+        public static final int repositories_entry=0x7f030013;
+        public static final int repositories_layout=0x7f030014;
+        public static final int repository_changeset_entry=0x7f030015;
+        public static final int repository_changesets_activity_layout=0x7f030016;
+        public static final int repository_details_layout=0x7f030017;
+        public static final int show_more_commits_footer=0x7f030018;
+        public static final int user_create_new_layout=0x7f030019;
+        public static final int user_details_layout=0x7f03001a;
+        public static final int user_list_entry=0x7f03001b;
+        public static final int user_list_layout=0x7f03001c;
+        public static final int user_modify_properties_layout=0x7f03001d;
+        public static final int user_permissions_entry=0x7f03001e;
+        public static final int user_permissions_layout=0x7f03001f;
     }
     public static final class menu {
         public static final int options_menu=0x7f090000;

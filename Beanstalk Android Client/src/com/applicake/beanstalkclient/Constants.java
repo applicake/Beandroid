@@ -39,5 +39,7 @@ public class Constants {
 	public static final String REPOSITORY_TITLE = "repository title";
 
 	public static final String USER = "user_parcel";
+
+	public static final String USER_ID = "user_id";
 	
 }

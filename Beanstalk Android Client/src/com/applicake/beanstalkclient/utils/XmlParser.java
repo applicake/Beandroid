@@ -117,8 +117,21 @@ public class XmlParser {
 		xmlReader.parse(is);
 
 		return permissionsHandler.retrievePermissionList();
-
 		
+	}
+	
+	public HashMap<Integer, Permission> parsePermissionHashMap(String xml) throws SAXException, IOException, ParserConfigurationException{
+		XMLReader xmlReader = initializeReader();
+		
+		PermissionsHandler permissionsHandler = new PermissionsHandler();
+		// set handler
+		xmlReader.setContentHandler(permissionsHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+		
+		return permissionsHandler.retrievePermissionHashMap();
 		
 	}
 	

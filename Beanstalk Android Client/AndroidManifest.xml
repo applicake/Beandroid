@@ -56,6 +56,9 @@
 		<activity
 			android:name="UserCreateNewActivity">
 		</activity>
+		<activity
+			android:name="UserPermissionsActivity">
+		</activity>
 
 	</application>
 
