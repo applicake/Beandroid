@@ -27,7 +27,7 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 public class UserPermissionsActivity extends BeanstalkActivity implements
 		OnItemClickListener {
 
-	private String userId;
+	private User user;
 	private Context mContext;
 	private ProgressDialog progressDialog;
 	private ArrayList<Repository> repositoriesArray;
@@ -41,7 +41,7 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_permissions_layout);
-		userId = getIntent().getStringExtra(Constants.USER_ID);
+		user = getIntent().getParcelableExtra(Constants.USER);
 
 		mContext = this;
 		repositoriesList = (ListView) findViewById(R.id.userPermissionsList);
@@ -59,11 +59,24 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int itemNumber, long arg3) {
 		if (itemNumber < repositoriesArray.size()) {
-			Intent intent = new Intent(mContext, RepositoryDetailsActivity.class);
-			intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
+			Intent intent = new Intent(mContext, PermissionModifyActivity.class);
+			Repository repository = repositoriesArray.get(itemNumber);
+			intent.putExtra(Constants.REPOSITORY, repository);
+			intent.putExtra(Constants.USER, user);
+			if (repoIdToPermission.containsKey(repository.getId())){
+				intent.putExtra(Constants.PERMISSION, repoIdToPermission.get(repository.getId()));
+			} 
 			startActivityForResult(intent, 0);
 		}
 
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Constants.REFRESH_ACTIVITY){
+			new DownloadRepositoryListTask().execute();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	public class DownloadRepositoryListTask extends AsyncTask<String, Void, Integer> {
@@ -89,9 +102,9 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 				
 
 				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(prefs,
-						userId);
+						String.valueOf(user.getId()));
 				Log.w("permission xml", permissionsXml);
-				repoIdToPermission = xmlParser.parsePermissionHashMap(permissionsXml);
+				repoIdToPermission = xmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
 			} catch (HttpRetreiverException e) {
 				// TODO generate http parsing exception handling
 				e.printStackTrace();

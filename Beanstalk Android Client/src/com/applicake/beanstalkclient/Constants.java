@@ -41,5 +41,9 @@ public class Constants {
 	public static final String USER = "user_parcel";
 
 	public static final String USER_ID = "user_id";
+
+	public static final int REFRESH_ACTIVITY = 313;
+
+	public static final String PERMISSION = "permission";
 	
 }

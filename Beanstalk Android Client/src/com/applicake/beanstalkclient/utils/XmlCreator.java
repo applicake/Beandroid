@@ -159,6 +159,68 @@ public class XmlCreator {
 		serializer.endDocument();
 		return writer.toString();
 	}
+	
+	public String createPermissionXML(String userId, String repoId, boolean repoRead,
+			boolean repoWrite, boolean deploymentAccess)
+	throws IllegalArgumentException, IllegalStateException, IOException {
+		
+		serializer = Xml.newSerializer();
+		writer = new StringWriter();
+		serializer.setOutput(writer);
+		
+		serializer.startDocument("UTF-8", null);
+		serializer.startTag("", "permission");
+		
+		addUserId(userId);
+		addRepoId(repoId);
+		addRepoReadAccess(repoRead);
+		addRepoWriteAccess(repoWrite);
+		addDeploymentAccess(deploymentAccess);
+		
+		serializer.endTag("", "permission");
+		serializer.endDocument();
+		return writer.toString();
+	}
+
+	private void addDeploymentAccess(boolean deploymentAccess) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "full-deployments-access");
+		serializer.attribute("", "type", "boolean");
+		serializer.text(String.valueOf(deploymentAccess));
+		serializer.endTag("", "full-deployments-access");
+		
+	}
+
+	private void addRepoWriteAccess(boolean repoWrite) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "write");
+		serializer.attribute("", "type", "boolean");
+		serializer.text(String.valueOf(repoWrite));
+		serializer.endTag("", "write");
+		
+	}
+
+	private void addRepoReadAccess(boolean repoRead) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "read");
+		serializer.attribute("", "type", "boolean");
+		serializer.text(String.valueOf(repoRead));
+		serializer.endTag("", "read");
+		
+	}
+
+	private void addRepoId(String repoId) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "repository-id");
+		serializer.attribute("", "type", "integer");
+		serializer.text(String.valueOf(repoId));
+		serializer.endTag("", "repository-id");
+		
+	}
+
+	private void addUserId(String userId) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "user-id");
+		serializer.attribute("", "type", "integer");
+		serializer.text(String.valueOf(userId));
+		serializer.endTag("", "user-id");
+		
+	}
 
 	private void addLogin(String login) throws IllegalArgumentException,
 			IllegalStateException, IOException {

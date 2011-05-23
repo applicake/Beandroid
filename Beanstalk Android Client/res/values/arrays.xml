@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="repository_types">
-        <item>Subversion</item>
-        <item>Git</item>
-    </string-array>
+	<string-array
+		name="repository_types">
+		<item>Subversion</item>
+		<item>Git</item>
+	</string-array>
+
+
+
+	<string-array
+		name="repoAccessLevels">
+		<item>No access</item>
+		<item>Read-only</item>
+		<item>Read/Write</item>
+	</string-array>
+
+
+
+	<string-array
+		name="deploymentAccessLevels">
+		<item>Read-only</item>
+		<item>Read/Write</item>
+	</string-array>
 </resources>

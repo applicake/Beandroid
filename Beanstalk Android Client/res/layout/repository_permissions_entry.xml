@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="60dp"
+	android:orientation="horizontal"
+	android:paddingRight="5dp"
+	android:background="@color/ApplicationBackground">
+	<ImageView
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:id="@+id/userGravatar"
+		android:layout_centerVertical="true"
+		android:layout_margin="10dp"
+		android:layout_alignParentLeft="true"></ImageView>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/userName"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_alignParentTop="true"
+		android:layout_marginTop="5dp"
+		android:textSize="@dimen/MediumTextSize"
+		android:textColor="@color/ApplicationText"></TextView>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/userGravatar"
+		android:layout_below="@id/userName"
+		android:id="@+id/userEmail"
+		android:textSize="@dimen/SmallTextSize"></TextView>
+
+	<TextView
+		android:visibility="gone"
+		android:gravity="center"
+		android:text="deployment"
+		android:layout_height="wrap_content"
+		android:layout_width="60dp"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:id="@+id/deploymentPermission"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationText"></TextView>
+
+	<TextView
+		android:visibility="gone"
+		android:gravity="center"
+		android:text="access"
+		android:layout_height="wrap_content"
+		android:layout_width="50dp"
+		android:id="@+id/repoPermission"
+		android:layout_toLeftOf="@id/deploymentPermission"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationText"></TextView>
+
+	<TextView
+		android:visibility="gone"
+		android:id="@+id/deploymentLabel"
+		android:background="@drawable/permission_labels"
+		android:layout_width="50dp"
+		android:layout_height="15dp"
+		android:layout_alignRight="@id/deploymentPermission"
+		android:padding="2dp"
+		android:layout_below="@id/deploymentPermission"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationText"
+		android:gravity="center"></TextView>
+
+	<TextView
+		android:visibility="gone"
+		android:id="@+id/repositoryLabel"
+		android:background="@drawable/permission_labels"
+		android:layout_width="50dp"
+		android:layout_height="15dp"
+		android:layout_alignLeft="@id/repoPermission"
+		android:padding="2dp"
+		android:layout_below="@id/repoPermission"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationText"
+		android:gravity="center"></TextView>
+
+	<ProgressBar
+
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_alignParentRight="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		style="@android:style/Widget.ProgressBar.Small.Inverse"
+		android:id="@+id/loadingBar"
+		android:visibility="visible"></ProgressBar>
+
+
+
+
+</RelativeLayout>

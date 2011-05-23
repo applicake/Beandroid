@@ -19,7 +19,6 @@ public class UserPermissionsAdapter extends ArrayAdapter<Repository> {
 	private Context context;
 	private List<Repository> repositoriesArray;
 	private Map<Integer, Permission> repoIdToPermissionMap;
-	private boolean isAdmin;
 	
 	public void setRepoIdToPermissionMap(Map<Integer, Permission> repoIdToPermissionMap){
 		this.repoIdToPermissionMap = repoIdToPermissionMap;

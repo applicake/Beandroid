@@ -120,7 +120,7 @@ public class XmlParser {
 		
 	}
 	
-	public HashMap<Integer, Permission> parsePermissionHashMap(String xml) throws SAXException, IOException, ParserConfigurationException{
+	public HashMap<Integer, Permission> parseRepoIdToPermissionHashMap(String xml) throws SAXException, IOException, ParserConfigurationException{
 		XMLReader xmlReader = initializeReader();
 		
 		PermissionsHandler permissionsHandler = new PermissionsHandler();
@@ -134,6 +134,7 @@ public class XmlParser {
 		return permissionsHandler.retrievePermissionHashMap();
 		
 	}
+	
 	
 	public Account parseAccountInfo(String xml) throws SAXException, IOException, ParserConfigurationException{
 		XMLReader xmlReader = initializeReader();

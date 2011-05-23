@@ -306,7 +306,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertTrue("This permission arraylist should be empty", permissionList2.isEmpty());
 		
 		// hashmap parsing tests
-		HashMap<Integer, Permission> permissionHashMap1 = xmlParser.parsePermissionHashMap(testXml1);
+		HashMap<Integer, Permission> permissionHashMap1 = xmlParser.parseRepoIdToPermissionHashMap(testXml1);
 		assertEquals(207784, permissionHashMap1.get(207784).getRepositoryId());
 		
 		

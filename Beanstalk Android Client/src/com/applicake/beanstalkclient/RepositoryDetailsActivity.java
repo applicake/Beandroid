@@ -66,7 +66,8 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements OnCl
 		}
 		
 		if (v.getId() == R.id.buttonUsersPermissions){
-			Intent intent = new Intent(getApplicationContext(), RepositoryUserPermissionsActivity.class);
+			Intent intent = new Intent(getApplicationContext(), RepositoryUsersPermissionsActivity.class);
+			intent.putExtra(Constants.REPOSITORY, repository);
 			startActivityForResult(intent, 0);
 		}
 		
