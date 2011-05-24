@@ -43,8 +43,8 @@ import android.util.Log;
 
 public class HttpRetriever {
 
-	private final DefaultHttpClient httpClient = new DefaultHttpClient();
-	// private final DefaultHttpClient httpClient = getNewHttpClient();
+	private static final DefaultHttpClient httpClient = new DefaultHttpClient();
+//	 private final DefaultHttpClient httpClient = getNewHttpClient();
 	private final String HTTP_PREFIX = "https://";
 	private final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
 	private final String USERS_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
@@ -56,68 +56,67 @@ public class HttpRetriever {
 	private final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
 	private final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
-	// public class MySSLSocketFactory extends SSLSocketFactory {
-	// SSLContext sslContext = SSLContext.getInstance("TLS");
-	//
-	// public MySSLSocketFactory(KeyStore truststore) throws
-	// NoSuchAlgorithmException, KeyManagementException, KeyStoreException,
-	// UnrecoverableKeyException {
-	// super(truststore);
-	//
-	// TrustManager tm = new X509TrustManager() {
-	// public void checkClientTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public void checkServerTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public X509Certificate[] getAcceptedIssuers() {
-	// return null;
-	// }
-	// };
-	//
-	// sslContext.init(null, new TrustManager[] { tm }, null);
-	// }
-	//
-	// public Socket createSocket(Socket socket, String host, int port, boolean
-	// autoClose) throws IOException, UnknownHostException {
-	// return sslContext.getSocketFactory().createSocket(socket, host, port,
-	// autoClose);
-	// }
-	//
-	// @Override
-	// public Socket createSocket() throws IOException {
-	// return sslContext.getSocketFactory().createSocket();
-	// }
-	// }
-	//
-	// public DefaultHttpClient getNewHttpClient() {
-	// try {
-	// KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-	// trustStore.load(null, null);
-	//
-	// SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-	// sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-	//
-	// HttpParams params = new BasicHttpParams();
-	// HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-	// HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-	//
-	// SchemeRegistry registry = new SchemeRegistry();
-	// registry.register(new Scheme("http",
-	// PlainSocketFactory.getSocketFactory(), 80));
-	// registry.register(new Scheme("https", sf, 443));
-	//
-	// ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
-	// registry);
-	//
-	// return new DefaultHttpClient(ccm, params);
-	// } catch (Exception e) {
-	// return new DefaultHttpClient();
-	// }
-	// }
+//	public class MySSLSocketFactory extends SSLSocketFactory {
+//		SSLContext sslContext = SSLContext.getInstance("TLS");
+//
+//		public MySSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException,
+//				KeyManagementException, KeyStoreException, UnrecoverableKeyException {
+//			super(truststore);
+//
+//			TrustManager tm = new X509TrustManager() {
+//				public void checkClientTrusted(X509Certificate[] chain, String authType)
+//						throws CertificateException {
+//				}
+//
+//				public void checkServerTrusted(X509Certificate[] chain, String authType)
+//						throws CertificateException {
+//				}
+//
+//				public X509Certificate[] getAcceptedIssuers() {
+//					return null;
+//				}
+//			};
+//
+//			sslContext.init(null, new TrustManager[] { tm }, null);
+//		}
+//
+//		public Socket createSocket(Socket socket, String host, int port, boolean autoClose)
+//				throws IOException, UnknownHostException {
+//			return sslContext.getSocketFactory().createSocket(socket, host, port,
+//					autoClose);
+//		}
+//
+//		@Override
+//		public Socket createSocket() throws IOException {
+//			return sslContext.getSocketFactory().createSocket();
+//		}
+//	}
+//
+//	public DefaultHttpClient getNewHttpClient() {
+//		try {
+//			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+//			trustStore.load(null, null);
+//
+//			SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+//			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+//
+//			HttpParams params = new BasicHttpParams();
+//			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+//			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+//
+//			SchemeRegistry registry = new SchemeRegistry();
+//			registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(),
+//					80));
+//			registry.register(new Scheme("https", sf, 443));
+//
+//			ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
+//					registry);
+//
+//			return new DefaultHttpClient(ccm, params);
+//		} catch (Exception e) {
+//			return new DefaultHttpClient();
+//		}
+//	}
 
 	public int checkCredentials(String domain, String username, String password) {
 
@@ -400,7 +399,7 @@ public class HttpRetriever {
 			HttpResponse getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
-			Log.w("status code", String.valueOf(statusCode));
+//			Log.w("status code", String.valueOf(statusCode));
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
@@ -409,6 +408,7 @@ public class HttpRetriever {
 		} catch (IOException io) {
 			// TODO handle various HTTP exceptions
 			getRequest.abort();
+			io.printStackTrace();
 			throw new HttpRetreiverException("Http parsing IOException");
 		} catch (Exception e) {
 			getRequest.abort();

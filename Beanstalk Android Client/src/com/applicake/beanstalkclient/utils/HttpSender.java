@@ -58,7 +58,7 @@ import android.util.Log;
 public class HttpSender {
 
 	private final DefaultHttpClient httpClient = new DefaultHttpClient();
-	// private final DefaultHttpClient httpClient = getNewHttpClient();
+//	private final DefaultHttpClient httpClient = getNewHttpClient();
 	private final static String HTTPS_PREFIX = "https://";
 	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
 	private final static String COMMENTS_HTTP_SUFFIX = "/comments.xml";
@@ -70,68 +70,67 @@ public class HttpSender {
 	private final static String PERMISSION_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions.xml";
 	private final static String PERMISSION_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/permissions/";
 
-	// public class MySSLSocketFactory extends SSLSocketFactory {
-	// SSLContext sslContext = SSLContext.getInstance("TLS");
-	//
-	// public MySSLSocketFactory(KeyStore truststore) throws
-	// NoSuchAlgorithmException, KeyManagementException, KeyStoreException,
-	// UnrecoverableKeyException {
-	// super(truststore);
-	//
-	// TrustManager tm = new X509TrustManager() {
-	// public void checkClientTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public void checkServerTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public X509Certificate[] getAcceptedIssuers() {
-	// return null;
-	// }
-	// };
-	//
-	// sslContext.init(null, new TrustManager[] { tm }, null);
-	// }
-	//
-	// public Socket createSocket(Socket socket, String host, int port, boolean
-	// autoClose) throws IOException, UnknownHostException {
-	// return sslContext.getSocketFactory().createSocket(socket, host, port,
-	// autoClose);
-	// }
-	//
-	// @Override
-	// public Socket createSocket() throws IOException {
-	// return sslContext.getSocketFactory().createSocket();
-	// }
-	// }
-	//
-	// public DefaultHttpClient getNewHttpClient() {
-	// try {
-	// KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-	// trustStore.load(null, null);
-	//
-	// SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-	// sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-	//
-	// HttpParams params = new BasicHttpParams();
-	// HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-	// HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-	//
-	// SchemeRegistry registry = new SchemeRegistry();
-	// registry.register(new Scheme("http",
-	// PlainSocketFactory.getSocketFactory(), 80));
-	// registry.register(new Scheme("https", sf, 443));
-	//
-	// ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
-	// registry);
-	//
-	// return new DefaultHttpClient(ccm, params);
-	// } catch (Exception e) {
-	// return new DefaultHttpClient();
-	// }
-	// }
+//	public class MySSLSocketFactory extends SSLSocketFactory {
+//		SSLContext sslContext = SSLContext.getInstance("TLS");
+//
+//		public MySSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException,
+//				KeyManagementException, KeyStoreException, UnrecoverableKeyException {
+//			super(truststore);
+//
+//			TrustManager tm = new X509TrustManager() {
+//				public void checkClientTrusted(X509Certificate[] chain, String authType)
+//						throws CertificateException {
+//				}
+//
+//				public void checkServerTrusted(X509Certificate[] chain, String authType)
+//						throws CertificateException {
+//				}
+//
+//				public X509Certificate[] getAcceptedIssuers() {
+//					return null;
+//				}
+//			};
+//
+//			sslContext.init(null, new TrustManager[] { tm }, null);
+//		}
+//
+//		public Socket createSocket(Socket socket, String host, int port, boolean autoClose)
+//				throws IOException, UnknownHostException {
+//			return sslContext.getSocketFactory().createSocket(socket, host, port,
+//					autoClose);
+//		}
+//
+//		@Override
+//		public Socket createSocket() throws IOException {
+//			return sslContext.getSocketFactory().createSocket();
+//		}
+//	}
+//
+//	public DefaultHttpClient getNewHttpClient() {
+//		try {
+//			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+//			trustStore.load(null, null);
+//
+//			SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+//			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+//
+//			HttpParams params = new BasicHttpParams();
+//			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+//			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+//
+//			SchemeRegistry registry = new SchemeRegistry();
+//			registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(),
+//					80));
+//			registry.register(new Scheme("https", sf, 443));
+//
+//			ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
+//					registry);
+//
+//			return new DefaultHttpClient(ccm, params);
+//		} catch (Exception e) {
+//			return new DefaultHttpClient();
+//		}
+//	}
 
 	public String sendCommentXML(SharedPreferences prefs, String xml, String repoId)
 			throws UnsupportedEncodingException, HttpSenderException {
@@ -409,12 +408,13 @@ public class HttpSender {
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 
-		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
+//		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
 
 		// create DELETE request with address
 		HttpDelete deleteRequest = new HttpDelete(HTTPS_PREFIX + domain
 				+ PERMISSION_DELETE_HTTP_MIDDLE + permissionId + ".xml");
 		deleteRequest.addHeader("Content-Type", "application/xml");
+		deleteRequest.addHeader("Accept", "application/xml");
 		deleteRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		Log.w("deleteRequest", deleteRequest.getURI().toString());

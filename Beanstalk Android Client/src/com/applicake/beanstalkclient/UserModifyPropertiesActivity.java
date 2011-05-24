@@ -187,6 +187,7 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 			progressDialog.cancel();
 			if (result == 200) {
 				GUI.displayMonit(mContext, "user properties were modified!");
+				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 
 			}

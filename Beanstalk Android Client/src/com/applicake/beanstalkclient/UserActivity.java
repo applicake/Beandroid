@@ -24,7 +24,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class UserActivity extends BeanstalkActivity implements OnItemClickListener, OnClickListener {
+public class UserActivity extends BeanstalkActivity implements OnItemClickListener,
+		OnClickListener {
 
 	private UserAdapter userAdapter;
 	private ArrayList<User> userArray;
@@ -42,35 +43,40 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 
 		ListView userList = (ListView) findViewById(R.id.usersList);
 
-
 		View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE)).inflate(
-				R.layout.add_user_footer, null, false);
+				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_user_footer, null,
+				false);
 		footerView.setOnClickListener(this);
-		
+
 		userList.addFooterView(footerView);
-		
+
 		userList.setAdapter(userAdapter);
 		userList.setOnItemClickListener(this);
-
 
 		new DownloadUsersListTask().execute();
 
 	}
 	
 	@Override
-	public void onClick(View v) {
-		startActivityForResult(new Intent(mContext, UserCreateNewActivity.class), 0);
-		
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Constants.REFRESH_ACTIVITY){
+			new DownloadUsersListTask().execute();
+		}
 	}
 
+	@Override
+	public void onClick(View v) {
+		startActivityForResult(new Intent(mContext, UserCreateNewActivity.class), 0);
+
+	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int itemNumber, long arg3) {
-		 Intent intent = new Intent(mContext, UserDetailsActivity.class);
-		 User user = userArray.get(itemNumber);
-		 intent.putExtra(Constants.USER, user);
-		 startActivityForResult(intent, 0);
+		Intent intent = new Intent(mContext, UserDetailsActivity.class);
+		User user = userArray.get(itemNumber);
+		intent.putExtra(Constants.USER, user);
+		startActivityForResult(intent, 0);
 
 	}
 
@@ -112,6 +118,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 
 		@Override
 		protected void onPostExecute(ArrayList<User> parsedArray) {
+			progressDialog.cancel();
 			userArray = parsedArray;
 
 			if (userArray != null && !userArray.isEmpty()) {
@@ -123,8 +130,8 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 				}
 			}
 
-			userAdapter.notifyDataSetChanged();
-			progressDialog.cancel();
+//			userAdapter.notifyDataSetChanged();
+
 
 		}
 

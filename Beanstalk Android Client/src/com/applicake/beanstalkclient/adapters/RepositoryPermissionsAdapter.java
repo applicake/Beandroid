@@ -37,9 +37,8 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 	private final Context context;
 	private Repository repository;
 	private List<User> userArray;
-	private Map<Integer, Permission> userIdToPermissionMap;
+	private Map<Integer, Permission> userIdToPermissionMap = new HashMap<Integer, Permission>();
 	private SharedPreferences prefs;
-
 
 	public RepositoryPermissionsAdapter(Context context, SharedPreferences prefs,
 			Repository repository, int textViewResourceId, List<User> userArray) {
@@ -55,13 +54,13 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
+		// View view = convertView;
 
-		if (view == null) {
-			LayoutInflater vi = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = vi.inflate(R.layout.repository_permissions_entry, null);
-		}
+		// if (view == null) {
+		LayoutInflater vi = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = vi.inflate(R.layout.repository_permissions_entry, null);
+		// }
 
 		User user = userArray.get(position);
 
@@ -76,12 +75,15 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
 			userEmailTextView.setText(email);
 
-			
 			new DownloadPermissionsTask().execute(String.valueOf(user.getId()), view);
 
 		}
 
 		return view;
+	}
+
+	public Map<Integer, Permission> getUserIdToPermissionMap() {
+		return userIdToPermissionMap;
 	}
 
 	public class DownloadPermissionsTask extends
@@ -92,12 +94,13 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 		private TextView deploymentPermissionLabel;
 		private TextView repoPermissionTitle;
 		private TextView deploymentPermissionTitle;
-		
+		private String userId;
+
 		@Override
 		protected HashMap<Integer, Permission> doInBackground(Object... params) {
-			String userId = (String) params[0];
+			userId = (String) params[0];
 			View view = (View) params[1];
-			
+
 			loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
 
 			repoPermissionLabel = (TextView) view.findViewById(R.id.repositoryLabel);
@@ -107,14 +110,15 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			repoPermissionTitle = (TextView) view.findViewById(R.id.repoPermission);
 			deploymentPermissionTitle = (TextView) view
 					.findViewById(R.id.deploymentPermission);
-			
-			
+
+			Log.w("user ID", userId);
 
 			XmlParser xmlParser = new XmlParser();
 
 			try {
 				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(
 						prefs, userId);
+				Log.w("user permission xml", permissionsXml);
 
 				return xmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
 			} catch (HttpRetreiverException e) {
@@ -146,10 +150,12 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			deploymentPermissionLabel.setVisibility(View.VISIBLE);
 			repoPermissionTitle.setVisibility(View.VISIBLE);
 			deploymentPermissionTitle.setVisibility(View.VISIBLE);
-			
-			if (result.containsKey(repository.getId())){
+
+			if (result.containsKey(repository.getId())) {
 				Permission permission = result.get(repository.getId());
-				
+				// add permission to userid -> permission hashmap
+				userIdToPermissionMap.put(Integer.valueOf(userId), permission);
+
 				if (permission.isReadAccess()) {
 					if (permission.isWriteAccess()) {
 						repoPermissionLabel.setText("write");
@@ -170,12 +176,10 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			} else {
 				repoPermissionLabel.setText("no access");
 				repoPermissionLabel.getBackground().setLevel(2);
-				
+
 				deploymentPermissionLabel.setText("read");
 				deploymentPermissionLabel.getBackground().setLevel(2);
 			}
-
-			
 
 		}
 

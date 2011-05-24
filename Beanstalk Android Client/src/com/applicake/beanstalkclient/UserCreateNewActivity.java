@@ -102,6 +102,7 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 			progressDialog.cancel();
 			if (result == 201) {
 				GUI.displayMonit(mContext, "user was created!");
+				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 
 			}

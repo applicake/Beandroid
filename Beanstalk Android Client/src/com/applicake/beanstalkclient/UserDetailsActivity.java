@@ -68,6 +68,12 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 	}
 	
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Constants.REFRESH_ACTIVITY) setResult(resultCode);
+	}
+	
+	@Override
 	protected Dialog onCreateDialog(int id) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Are you sure you want to delete this user?")

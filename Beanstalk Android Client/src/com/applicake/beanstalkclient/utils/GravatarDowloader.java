@@ -67,9 +67,7 @@ public class GravatarDowloader {
 	}
 
 	public void download(String userEmail, ImageView targetImageView) {
-		// String url = "http://www.gravatar.com/avatar.php?gravatar_id=" +
-		// "ecf8bae08b0796b80c1fbc385c140702"
-		// + "&size=60&d=mm";
+
 		String url = "http://www.gravatar.com/avatar.php?gravatar_id=" + md5(userEmail)
 				+ "&size=80&d=mm";
 		resetPurgeTimer();
