@@ -1,5 +1,6 @@
 package com.applicake.beanstalkclient;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import android.app.AlertDialog;
@@ -130,12 +131,25 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 		@Override
 		protected Integer doInBackground(Void... params) {
 			try {
-				return new HttpSender().sendDeleteUserRequest(prefs, String.valueOf(user.getId()));
+//				return new HttpSender().sendDeleteUserRequest(prefs, String.valueOf(user.getId()));
+				return new HttpSender().sendHackDeleteUserRequest(prefs, String.valueOf(user.getId()));
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return 0;
 			} catch (HttpSenderException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return 0;
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return 0;
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return 0;
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return 0;

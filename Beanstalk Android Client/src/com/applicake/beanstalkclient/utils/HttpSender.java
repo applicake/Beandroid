@@ -484,6 +484,48 @@ public class HttpSender {
 		}
 
 	}
+	
+	public int sendHackDeleteUserRequest(SharedPreferences prefs, String userId)
+	throws HttpSenderException, IllegalArgumentException, IllegalStateException, IOException {
+		
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+		
+		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
+		
+		// create DELETE request with address
+		HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain
+				+ USER_DELETE_HTTP_MIDDLE + userId + ".xml");
+		
+		postRequest.addHeader("Content-Type", "application/xml");
+		postRequest.addHeader("Accept", "application/xml");
+		
+		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		
+		String xml = new XmlCreator().createDeleteHack();
+		StringEntity se = new StringEntity(xml, "UTF-8");
+		postRequest.setEntity(se);
+		
+
+		
+		Log.w("deleteRequestxml", xml);
+		Log.w("deleteRequest", postRequest.getURI().toString());
+		
+		// TODO throw exceptions if an error occurs
+		try {
+			httpClient.execute(postRequest);
+			return 200;
+			
+			
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			throw new HttpSenderException("Client protocol exception");
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new HttpSenderException("IOException");
+		}
+		
+	}
 
 	private static UsernamePasswordCredentials getCredentialsFromPreferences(
 			SharedPreferences prefs) {
