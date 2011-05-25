@@ -65,6 +65,7 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 		User user = userArray.get(position);
 
 		if (user != null) {
+
 			String email = user.getEmail();
 			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
 			GravatarDowloader.getInstance().download(email, userGravatar);
@@ -74,8 +75,20 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 			TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
 			userEmailTextView.setText(email);
+			
+			if (user.getAdmin() == UserType.USER) {
+			
+				new DownloadPermissionsTask().execute(String.valueOf(user.getId()), view);
+			} else if (user.getAdmin() == UserType.ADMIN) {
+				
+				((ProgressBar) view.findViewById(R.id.loadingBar)).setVisibility(View.GONE);
+				((TextView) view.findViewById(R.id.adminLabel)).setVisibility(View.VISIBLE);
 
-			new DownloadPermissionsTask().execute(String.valueOf(user.getId()), view);
+			} else if (user.getAdmin() == UserType.OWNER) {
+				
+				((ProgressBar) view.findViewById(R.id.loadingBar)).setVisibility(View.GONE);
+				((TextView) view.findViewById(R.id.ownerLabel)).setVisibility(View.VISIBLE);
+			}
 
 		}
 

@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.adapters.RepositoriesAdapter;
+import com.applicake.beanstalkclient.enums.Plans;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
@@ -22,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class RepositoriesActivity extends BeanstalkActivity implements OnItemClickListener, OnClickListener {
 
@@ -30,6 +32,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 	public ArrayList<Repository> repositoriesArray;
 	public RepositoriesAdapter repositoriesAdapter;
 	public ListView repositoriesList;
+	public TextView repositoriesLeftCounter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +52,17 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 		repositoriesList.setAdapter(repositoriesAdapter);
 		repositoriesList.setOnItemClickListener(this);
 		
-
+		repositoriesLeftCounter = (TextView) footerView.findViewById(R.id.repositoryCounter);
 
 		// changesetList.setOnItemClickListener(this);
 		new DownloadChangesetListTask().execute();
 
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Constants.REFRESH_ACTIVITY) new DownloadChangesetListTask().execute();
 	}
 	
 	@Override
@@ -91,8 +100,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
 			try {
 				String repositoriesXml = httpRetriever.getRepositoryListXML(prefs);
-				XmlParser xmlParser = new XmlParser();
-				return xmlParser.parseRepositoryList(repositoriesXml);
+				return XmlParser.parseRepositoryList(repositoriesXml);
 			} catch (HttpRetreiverException e) {
 				// TODO generate http parsing exception handling
 				e.printStackTrace();
@@ -126,7 +134,11 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
 			}
 
-			repositoriesAdapter.notifyDataSetChanged();
+//			repositoriesAdapter.notifyDataSetChanged();
+			
+			int repositoriesInPlan = Plans.getPlanById(prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfRepos();
+			int numberLeft = repositoriesInPlan - repositoriesArray.size();
+			repositoriesLeftCounter.setText("available repositories: "+ String.valueOf(numberLeft)+"/"+String.valueOf(repositoriesInPlan));
 
 		}
 

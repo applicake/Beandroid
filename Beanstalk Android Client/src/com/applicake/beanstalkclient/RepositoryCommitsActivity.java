@@ -2,7 +2,6 @@ package com.applicake.beanstalkclient;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -20,8 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.applicake.beanstalkclient.DashboardActivity.DownloadChangesetListTask;
-import com.applicake.beanstalkclient.adapters.ChangesetAdapter;
 import com.applicake.beanstalkclient.adapters.RepositoryChangesetAdapter;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
@@ -101,9 +98,8 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements OnIt
 			try {
 				HttpRetriever httpRetriever = new HttpRetriever();
 				String xmlChangesetList = httpRetriever.getChangesetForReposiotoryXML(prefs, repoId);
-				XmlParser xmlParser = new XmlParser();
 				//parsing changeset list
-				return xmlParser.parseChangesetList(xmlChangesetList);
+				return XmlParser.parseChangesetList(xmlChangesetList);
 				//TODO better implementation of exception handling
 			} catch (ParserConfigurationException e) {
 				GUI.displayMonit(mContext, "An error occured while paring Changeset list");

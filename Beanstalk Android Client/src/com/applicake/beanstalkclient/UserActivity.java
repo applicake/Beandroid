@@ -8,6 +8,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.adapters.UserAdapter;
+import com.applicake.beanstalkclient.enums.Plans;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
@@ -23,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class UserActivity extends BeanstalkActivity implements OnItemClickListener,
 		OnClickListener {
@@ -31,6 +33,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 	private ArrayList<User> userArray;
 	private ProgressDialog progressDialog;
 	private Context mContext;
+	private TextView userLeftCounter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,12 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_user_footer, null,
 				false);
 		footerView.setOnClickListener(this);
-
+		
 		userList.addFooterView(footerView);
-
 		userList.setAdapter(userAdapter);
 		userList.setOnItemClickListener(this);
 
+		userLeftCounter = (TextView) footerView.findViewById(R.id.userCounter);
 		new DownloadUsersListTask().execute();
 
 	}
@@ -95,9 +98,8 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 			try {
 				HttpRetriever httpRetriever = new HttpRetriever();
 				String xmlUserList = httpRetriever.getUserListXML(prefs);
-				XmlParser xmlParser = new XmlParser();
 				// parsing users list
-				return xmlParser.parseUserList(xmlUserList);
+				return XmlParser.parseUserList(xmlUserList);
 				// TODO better implementation of exception handling
 			} catch (ParserConfigurationException e) {
 				GUI.displayMonit(mContext, "An error occured while paring Changeset list");
@@ -129,6 +131,9 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 					userAdapter.add(userArray.get(i));
 				}
 			}
+			int usersInPlan = Plans.getPlanById(prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfUsers();
+			int numberLeft = usersInPlan - userArray.size();
+			userLeftCounter.setText("available users: "+ String.valueOf(numberLeft)+"/"+String.valueOf(usersInPlan));
 
 //			userAdapter.notifyDataSetChanged();
 

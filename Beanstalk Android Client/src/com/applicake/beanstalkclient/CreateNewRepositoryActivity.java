@@ -153,6 +153,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 	public void onClick(View v) {
 		if (v.getId() == R.id.createButton) {
 			new SendRepositoryCreateTask().execute();
+			
 		}
 
 		if (v.getId() == R.id.colorLabelButton) {
@@ -218,6 +219,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 			progressDialog.cancel();
 			if (result == 201) {
 				GUI.displayMonit(mContext, "reposiotry was created successfully!");
+				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 			}
 

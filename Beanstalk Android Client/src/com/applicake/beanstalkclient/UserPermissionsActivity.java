@@ -97,14 +97,13 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 			try {
 				String repositoriesXml = httpRetriever.getRepositoryListXML(prefs);
-				XmlParser xmlParser = new XmlParser();
-				repositoriesArray = xmlParser.parseRepositoryList(repositoriesXml);
+				repositoriesArray = XmlParser.parseRepositoryList(repositoriesXml);
 				
 
 				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(prefs,
 						String.valueOf(user.getId()));
 				Log.w("permission xml", permissionsXml);
-				repoIdToPermission = xmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
+				repoIdToPermission = XmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
 			} catch (HttpRetreiverException e) {
 				// TODO generate http parsing exception handling
 				e.printStackTrace();
@@ -129,7 +128,7 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 			if (result == 1) {
 				repositoriesAdapter.setRepoIdToPermissionMap(repoIdToPermission);
 				if (repositoriesArray != null && !repositoriesArray.isEmpty()) {
-					repositoriesAdapter.notifyDataSetChanged();
+//					repositoriesAdapter.notifyDataSetChanged();
 					repositoriesAdapter.clear();
 
 					for (int i = 0; i < repositoriesArray.size(); i++) {

@@ -1,7 +1,6 @@
 package com.applicake.beanstalkclient.utils;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import com.applicake.beanstalkclient.YamlEntry;
 

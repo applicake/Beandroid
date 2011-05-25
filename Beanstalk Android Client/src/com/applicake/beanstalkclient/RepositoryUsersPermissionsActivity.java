@@ -2,8 +2,6 @@ package com.applicake.beanstalkclient;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -14,17 +12,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter;
-import com.applicake.beanstalkclient.adapters.UserPermissionsAdapter;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
@@ -101,9 +94,8 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 			try {
 				HttpRetriever httpRetriever = new HttpRetriever();
 				String xmlUserList = httpRetriever.getUserListXML(prefs);
-				XmlParser xmlParser = new XmlParser();
 				// parsing users list
-				return xmlParser.parseUserList(xmlUserList);
+				return XmlParser.parseUserList(xmlUserList);
 				// TODO better implementation of exception handling
 			} catch (ParserConfigurationException e) {
 				GUI.displayMonit(mContext, "An error occured while paring Changeset list");

@@ -3,8 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="60dp"
-	android:paddingLeft="30dp"
-	>
+	android:paddingLeft="30dp">
 	<TextView
 		android:text="+"
 		android:id="@+id/plusSign"
@@ -24,12 +23,12 @@
 		android:textSize="@dimen/LargeTextSize"
 		android:textColor="@color/ApplicationText"></TextView>
 	<TextView
-		android:text="available users: to be implemented"
-		android:paddingRight="5dp"
+		android:id="@+id/userCounter"
+		android:layout_marginRight="10dp"
 		android:layout_alignParentRight="true"
 		android:layout_below="@id/plusSign"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textSize="@dimen/SmallTextSize"></TextView>
-		
+
 </RelativeLayout>

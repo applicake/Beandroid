@@ -45,5 +45,7 @@ public class Constants {
 	public static final int REFRESH_ACTIVITY = 313;
 
 	public static final String PERMISSION = "permission";
+
+	public static final String ACCOUNT_PLAN = "account_plan_preference";
 	
 }

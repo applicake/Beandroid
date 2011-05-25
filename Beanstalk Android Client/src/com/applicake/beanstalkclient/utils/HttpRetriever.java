@@ -43,82 +43,111 @@ import android.util.Log;
 
 public class HttpRetriever {
 
-	private static final DefaultHttpClient httpClient = new DefaultHttpClient();
-//	 private final DefaultHttpClient httpClient = getNewHttpClient();
+	public static DefaultHttpClient getClient() {
+		DefaultHttpClient ret = null;
+
+		// sets up parameters
+		final HttpParams params = new BasicHttpParams();
+		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+		HttpProtocolParams.setContentCharset(params, "utf-8");
+		HttpClientParams.setRedirecting(params, false);
+		params.setBooleanParameter("http.protocol.expect-continue", false);
+
+		// registers schemes for both http and https
+		SchemeRegistry registry = new SchemeRegistry();
+		registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+		final SSLSocketFactory sslSocketFactory = SSLSocketFactory.getSocketFactory();
+		sslSocketFactory
+				.setHostnameVerifier(SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+		registry.register(new Scheme("https", sslSocketFactory, 443));
+
+		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
+				registry);
+		ret = new DefaultHttpClient(manager, params);
+		return ret;
+	}
+
+	final DefaultHttpClient httpClient = getClient();
+
 	private final String HTTP_PREFIX = "https://";
-	private final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
+	private final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
 	private final String USERS_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
 	private final String PERMISSIONS_FOR_USER_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions/";
 	private final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
 	private final String SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/repository.xml?repository_id=";
 	private final String REPOSITORY_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
+	private final String REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
 	private final String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
 	private final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
 	private final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
-//	public class MySSLSocketFactory extends SSLSocketFactory {
-//		SSLContext sslContext = SSLContext.getInstance("TLS");
-//
-//		public MySSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException,
-//				KeyManagementException, KeyStoreException, UnrecoverableKeyException {
-//			super(truststore);
-//
-//			TrustManager tm = new X509TrustManager() {
-//				public void checkClientTrusted(X509Certificate[] chain, String authType)
-//						throws CertificateException {
-//				}
-//
-//				public void checkServerTrusted(X509Certificate[] chain, String authType)
-//						throws CertificateException {
-//				}
-//
-//				public X509Certificate[] getAcceptedIssuers() {
-//					return null;
-//				}
-//			};
-//
-//			sslContext.init(null, new TrustManager[] { tm }, null);
-//		}
-//
-//		public Socket createSocket(Socket socket, String host, int port, boolean autoClose)
-//				throws IOException, UnknownHostException {
-//			return sslContext.getSocketFactory().createSocket(socket, host, port,
-//					autoClose);
-//		}
-//
-//		@Override
-//		public Socket createSocket() throws IOException {
-//			return sslContext.getSocketFactory().createSocket();
-//		}
-//	}
-//
-//	public DefaultHttpClient getNewHttpClient() {
-//		try {
-//			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-//			trustStore.load(null, null);
-//
-//			SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-//			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-//
-//			HttpParams params = new BasicHttpParams();
-//			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-//			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-//
-//			SchemeRegistry registry = new SchemeRegistry();
-//			registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(),
-//					80));
-//			registry.register(new Scheme("https", sf, 443));
-//
-//			ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
-//					registry);
-//
-//			return new DefaultHttpClient(ccm, params);
-//		} catch (Exception e) {
-//			return new DefaultHttpClient();
-//		}
-//	}
+	// COMMENTED PART FOR DEBUGGING VIA CHARLES PROXY
+	// public class MySSLSocketFactory extends SSLSocketFactory {
+	// SSLContext sslContext = SSLContext.getInstance("TLS");
+	//
+	// public MySSLSocketFactory(KeyStore truststore) throws
+	// NoSuchAlgorithmException,
+	// KeyManagementException, KeyStoreException, UnrecoverableKeyException {
+	// super(truststore);
+	//
+	// TrustManager tm = new X509TrustManager() {
+	// public void checkClientTrusted(X509Certificate[] chain, String authType)
+	// throws CertificateException {
+	// }
+	//
+	// public void checkServerTrusted(X509Certificate[] chain, String authType)
+	// throws CertificateException {
+	// }
+	//
+	// public X509Certificate[] getAcceptedIssuers() {
+	// return null;
+	// }
+	// };
+	//
+	// sslContext.init(null, new TrustManager[] { tm }, null);
+	// }
+	//
+	// public Socket createSocket(Socket socket, String host, int port, boolean
+	// autoClose)
+	// throws IOException, UnknownHostException {
+	// return sslContext.getSocketFactory().createSocket(socket, host, port,
+	// autoClose);
+	// }
+	//
+	// @Override
+	// public Socket createSocket() throws IOException {
+	// return sslContext.getSocketFactory().createSocket();
+	// }
+	// }
+	//
+	// public DefaultHttpClient getNewHttpClient() {
+	// try {
+	// KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+	// trustStore.load(null, null);
+	//
+	// SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+	// sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+	//
+	// HttpParams params = new BasicHttpParams();
+	// HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+	// HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+	//
+	// SchemeRegistry registry = new SchemeRegistry();
+	// registry.register(new Scheme("http",
+	// PlainSocketFactory.getSocketFactory(),
+	// 80));
+	// registry.register(new Scheme("https", sf, 443));
+	//
+	// ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
+	// registry);
+	//
+	// return new DefaultHttpClient(ccm, params);
+	// } catch (Exception e) {
+	// return new DefaultHttpClient();
+	// }
+	// }
 
-	public int checkCredentials(String domain, String username, String password) {
+	public String checkCredentials(String domain, String username, String password) throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
@@ -126,9 +155,9 @@ public class HttpRetriever {
 		String auth_http = HTTP_PREFIX + domain + AUTH_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -137,14 +166,15 @@ public class HttpRetriever {
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
-				return statusCode;
+				return EntityUtils.toString(getResponse.getEntity());
 			}
-			return statusCode;
+			throw new HttpRetreiverException(String.valueOf(statusCode));
 
 		} catch (Exception e) { // TODO exception handling
 			e.printStackTrace();
 			getRequest.abort();
-			return 666; // exception before returning a value
+			throw new HttpRetreiverException("666");
+			
 		}
 
 	}
@@ -157,9 +187,9 @@ public class HttpRetriever {
 		String auth_http = HTTP_PREFIX + domain + USERS_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -193,9 +223,9 @@ public class HttpRetriever {
 		String activity_http = HTTP_PREFIX + domain + ACTIVITY_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -232,9 +262,9 @@ public class HttpRetriever {
 				+ SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX + repoId;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -270,9 +300,9 @@ public class HttpRetriever {
 		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -298,6 +328,44 @@ public class HttpRetriever {
 		}
 
 	}
+	
+	public String getRepositoryXML(SharedPreferences prefs, int repoId)
+	throws HttpRetreiverException {
+		
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+		
+		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_MIDDLE + String.valueOf(repoId) + ".xml";
+		
+		HttpGet getRequest = new HttpGet(activity_http);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
+		
+		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		
+		try {
+			// parsing
+			HttpResponse getResponse = httpClient.execute(getRequest);
+			// response code
+			int statusCode = getResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				return EntityUtils.toString(getResponse.getEntity());
+			} else
+				throw new Exception("Http connection error");
+			
+		} catch (IOException io) {
+			// TODO handle various HTTP exceptions
+			getRequest.abort();
+			throw new HttpRetreiverException("Http parsing IOException");
+		} catch (Exception e) {
+			getRequest.abort();
+			e.printStackTrace();
+			throw new HttpRetreiverException("Http parsing exception");
+			
+		}
+		
+	}
 
 	public String getCommentsListXML(SharedPreferences prefs, String repoId)
 			throws HttpRetreiverException {
@@ -309,9 +377,9 @@ public class HttpRetriever {
 				+ String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -349,9 +417,9 @@ public class HttpRetriever {
 				+ COMMENTS_REVISION_HTTP_SUFFIX + revision;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+//		HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -388,9 +456,9 @@ public class HttpRetriever {
 				+ String.valueOf(userId) + ".xml";
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
+//		final HttpParams params = new BasicHttpParams();
+//		httpClient.setParams(params);
+		
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -399,7 +467,7 @@ public class HttpRetriever {
 			HttpResponse getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
-//			Log.w("status code", String.valueOf(statusCode));
+			// Log.w("status code", String.valueOf(statusCode));
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
@@ -429,6 +497,7 @@ public class HttpRetriever {
 			super(message);
 		}
 	}
+
 
 	// helper
 

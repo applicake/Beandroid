@@ -2,7 +2,6 @@ package com.applicake.beanstalkclient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import android.os.Parcel;
 import android.os.Parcelable;

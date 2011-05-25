@@ -1,6 +1,14 @@
 package com.applicake.beanstalkclient;
 
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -126,6 +134,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 		private String domain;
 		private String login;
 		private String password;
+		
+		private Account account;
 
 		@Override
 		protected Integer doInBackground(String... params) {
@@ -134,22 +144,41 @@ public class LoginActivity extends Activity implements OnClickListener {
 			login = params[1];
 			password = params[2];
 			HttpRetriever httpRetriever = new HttpRetriever();
-			int loginAttemptResult = httpRetriever.checkCredentials(domain, login,
-					password);
-
-			return loginAttemptResult;
+			String loginAttemptResultxml;
+			try {
+				loginAttemptResultxml = httpRetriever.checkCredentials(domain, login,
+						password);
+				
+				account = XmlParser.parseAccountInfo(loginAttemptResultxml);
+				
+			} catch (HttpRetreiverException e) {
+				return Integer.parseInt(e.getMessage());
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return 200;
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.cancel();
 
-			if (result == 200) {
+			if ((result == 200) && (account != null)) {
+				
 				GUI.displayMonit(mContext, "Access granted");
 				Editor editor = prefs.edit();
 				editor.putString(Constants.USER_ACCOUNT_DOMAIN, domain);
 				editor.putString(Constants.USER_LOGIN, login);
 				editor.putString(Constants.USER_PASSWORD, password);
+				editor.putInt(Constants.ACCOUNT_PLAN, account.getPlanId());
 				editor.putBoolean(Constants.CREDENTIALS_STORED, true);
 				editor.commit();
 

@@ -28,6 +28,12 @@ public class RepositoriesHandler extends DefaultHandler {
 		if (localName == "repository") {
 			repository = new Repository();
 		}
+		if (localName == "subversion-repository") {
+			repository = new Repository();
+		}
+		if (localName == "git-repository") {
+			repository = new Repository();
+		}
 
 	}
 
@@ -36,6 +42,16 @@ public class RepositoriesHandler extends DefaultHandler {
 			throws SAXException {
 		if (repository != null) {
 			if (localName == "repository") {
+				if (repositoryList != null) {
+					repositoryList.add(repository);
+				}
+			}
+			if (localName == "subversion-repository") {
+				if (repositoryList != null) {
+					repositoryList.add(repository);
+				}
+			}
+			if (localName == "git-repository") {
 				if (repositoryList != null) {
 					repositoryList.add(repository);
 				}
@@ -147,6 +163,10 @@ public class RepositoriesHandler extends DefaultHandler {
 			repoHashMap.put(r.getId(), r);
 		}
 		return repoHashMap;
+	}
+	
+	public Repository retrieveRepository(){
+		return repository;
 	}
 
 }

@@ -57,7 +57,33 @@ import android.util.Log;
 
 public class HttpSender {
 
-	private final DefaultHttpClient httpClient = new DefaultHttpClient();
+//	HttpClientParams.setRedirecting(params, false);
+	
+	public static DefaultHttpClient getClient() {
+        DefaultHttpClient ret = null;
+
+        //sets up parameters
+        HttpParams params = new BasicHttpParams();
+        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+        HttpProtocolParams.setContentCharset(params, "utf-8");
+        params.setBooleanParameter("http.protocol.expect-continue", false);
+
+        //registers schemes for both http and https
+        SchemeRegistry registry = new SchemeRegistry();
+        registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+        final SSLSocketFactory sslSocketFactory = SSLSocketFactory.getSocketFactory();
+        sslSocketFactory.setHostnameVerifier(SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+        registry.register(new Scheme("https", sslSocketFactory, 443));
+
+        ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params, registry);
+        ret = new DefaultHttpClient(manager, params);
+        return ret;
+    }
+
+	final DefaultHttpClient httpClient = getClient();
+
+	
+//	private final DefaultHttpClient httpClient = new DefaultHttpClient();
 //	private final DefaultHttpClient httpClient = getNewHttpClient();
 	private final static String HTTPS_PREFIX = "https://";
 	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
@@ -143,9 +169,6 @@ public class HttpSender {
 				+ repoId + COMMENTS_HTTP_SUFFIX);
 
 		// add auth headers
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
 		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 		postRequest.addHeader("Content-Type", "application/xml");
 
@@ -188,9 +211,6 @@ public class HttpSender {
 				+ REPOSITORY_CREATE_HTTP_SUFFIX);
 
 		// add auth headers
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
 		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 		postRequest.addHeader("Content-Type", "application/xml");
 
@@ -233,9 +253,6 @@ public class HttpSender {
 				+ REPOSITORY_UPDATE_HTTP_MIDDLE + repoId + ".xml");
 
 		// add auth headers
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
 		putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 		putRequest.addHeader("Content-Type", "application/xml");
 
@@ -278,9 +295,6 @@ public class HttpSender {
 				+ userId + ".xml");
 
 		// add auth headers
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
 		putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 		putRequest.addHeader("Content-Type", "application/xml");
 
@@ -323,9 +337,6 @@ public class HttpSender {
 				+ USER_CREATE_HTTP_SUFFIX);
 
 		// add auth headers
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
 		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 		postRequest.addHeader("Content-Type", "application/xml");
 
@@ -368,9 +379,6 @@ public class HttpSender {
 				+ PERMISSION_CREATE_HTTP_SUFFIX);
 
 		// add auth headers
-		final HttpParams params = new BasicHttpParams();
-		httpClient.setParams(params);
-		HttpClientParams.setRedirecting(params, false);
 		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 		postRequest.addHeader("Content-Type", "application/xml");
 
@@ -442,49 +450,6 @@ public class HttpSender {
 	}
 
 
-	public int sendAlternativeDeletePermissionRequest(SharedPreferences prefs,
-			String permissionId) throws HttpSenderException, IOException {
-
-		String domain = getAccountDomain(prefs);
-
-		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
-
-		// create DELETE request with address
-		HttpDelete deleteRequest = new HttpDelete(HTTPS_PREFIX + domain
-				+ PERMISSION_DELETE_HTTP_MIDDLE + permissionId + ".xml");
-		
-
-		URL url = new URL(HTTPS_PREFIX + domain + PERMISSION_DELETE_HTTP_MIDDLE
-				+ permissionId + ".xml");
-		HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-		httpCon.setDoOutput(true);
-		httpCon.setRequestProperty("Content-Type", "application/xml");
-		httpCon.setRequestMethod("DELETE");
-		setCredentialsFromPreferences(prefs);
-		
-
-		// TODO throw exceptions if an error occurs
-		try {
-			httpCon.connect();
-			return httpCon.getResponseCode();
-			// String entity = EntityUtils.toString(deleteResponse.getEntity());
-			// Log.w("postResponse", entity);
-			// if (deleteResponse.getStatusLine().getStatusCode() == 200) {
-			// return 200;
-			// } else {
-			// throw new HttpSenderException("Incorrect response from server");
-			// }
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new HttpSenderException("IOException");
-		}
-
-	}
-
 	public int sendDeleteUserRequest(SharedPreferences prefs, String userId)
 			throws UnsupportedEncodingException, HttpSenderException {
 
@@ -496,13 +461,9 @@ public class HttpSender {
 		// create DELETE request with address
 		HttpDelete deleteRequest = new HttpDelete(HTTPS_PREFIX + domain
 				+ USER_DELETE_HTTP_MIDDLE + userId + ".xml");
-		// deleteRequest.addHeader("Host", domain + ".beanstalkapp.com");
-		// deleteRequest.addHeader("User-Agent",
-		// "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:2.0) Gecko/20100101 Firefox/4.0");
-		// deleteRequest.addHeader("Content-Type", "application/xml");
-		// deleteRequest.addHeader("Accept", "application/xml");
-		// deleteRequest.addHeader("Keep-Alive", "115");
-		// deleteRequest.addHeader("Content-Length", "0");
+
+		 deleteRequest.addHeader("Content-Type", "application/xml");
+		 deleteRequest.addHeader("Accept", "application/xml");
 
 		deleteRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -512,13 +473,7 @@ public class HttpSender {
 		try {
 			httpClient.execute(deleteRequest);
 			return 200;
-			// String entity = EntityUtils.toString(deleteResponse.getEntity());
-			// Log.w("postResponse", entity);
-			// if (deleteResponse.getStatusLine().getStatusCode() == 200) {
-			// return 200;
-			// } else {
-			// throw new HttpSenderException("Incorrect response from server");
-			// }
+
 
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
@@ -537,18 +492,6 @@ public class HttpSender {
 
 	}
 
-	// httpsurlconnection auth
-	private static void setCredentialsFromPreferences(
-			final SharedPreferences prefs) {
-		
-
-		Authenticator.setDefault (new Authenticator() {
-		    protected PasswordAuthentication getPasswordAuthentication() {
-		        return new PasswordAuthentication (prefs.getString(Constants.USER_LOGIN, ""), prefs.getString(Constants.USER_PASSWORD, "").toCharArray());
-		    }
-		});
-		
-	}
 
 	private static String getAccountDomain(SharedPreferences prefs) {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
@@ -558,7 +501,7 @@ public class HttpSender {
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 9190064875608806066L;
+		private static final long serialVersionUID = 1L;
 
 		public HttpSenderException(String message) {
 			super(message);

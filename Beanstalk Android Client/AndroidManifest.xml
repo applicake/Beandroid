@@ -8,10 +8,13 @@
 
 	<application
 		android:icon="@drawable/icon"
-		android:label="@string/app_name">
+		android:label="@string/app_name"
+		android:debuggable="true"
+		>
 		<activity
 			android:name=".LoginActivity"
-			android:label="@string/app_name">
+			android:label="@string/app_name"
+			android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
 				<action
 					android:name="android.intent.action.MAIN" />
@@ -21,49 +24,64 @@
 		</activity>
 
 		<activity
-			android:name="HomeActivity">
+			android:name="HomeActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="DashboardActivity">
+			android:name="DashboardActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="ChangesetActivity">
+			android:name="ChangesetActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="RepositoriesActivity">
+			android:name="RepositoriesActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="CreateNewRepositoryActivity">
+			android:name="CreateNewRepositoryActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="RepositoryDetailsActivity">
+			android:name="RepositoryDetailsActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="RepositoryCommitsActivity">
+			android:name="RepositoryCommitsActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="RepositoryModifyPropertiesActivity">
+			android:name="RepositoryModifyPropertiesActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="UserActivity">
+			android:name="UserActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="UserDetailsActivity">
+			android:name="UserDetailsActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="UserModifyPropertiesActivity">
+			android:name="UserModifyPropertiesActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="UserCreateNewActivity">
+			android:name="UserCreateNewActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="UserPermissionsActivity">
+			android:name="UserPermissionsActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="PermissionModifyActivity">
+			android:name="PermissionModifyActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
-			android:name="RepositoryUsersPermissionsActivity">
+			android:name="RepositoryUsersPermissionsActivity"
+			android:configChanges="orientation|keyboardHidden">
 		</activity>
 
 	</application>

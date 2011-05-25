@@ -10,8 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -48,13 +46,12 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 			
 		} else if (userType == UserType.OWNER){
 			findViewById(R.id.ownerLabel).setVisibility(View.VISIBLE);
-			findViewById(R.id.adminLabel).setVisibility(View.GONE);
+			findViewById(R.id.buttonDeleteUser).setVisibility(View.GONE);
 		}
 		
 		((TextView) findViewById(R.id.userName)).setText(user.getFirstName() + " " + user.getLastName());
 		((TextView) findViewById(R.id.userLogin)).setText(user.getLogin());
 		((TextView) findViewById(R.id.userEmail)).setText(user.getEmail());
-		
 		
 		// add button listeners 
 		Button userPermissionsButton = (Button) findViewById(R.id.buttonUserPermissions);
@@ -97,9 +94,14 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 	public void onClick(View v) {
 		
 		if (v.getId() == R.id.buttonUserPermissions){
-			Intent intent = new Intent(getApplicationContext(), UserPermissionsActivity.class);
-			intent.putExtra(Constants.USER, user);
-			startActivityForResult(intent, 0);
+			if ((user.getAdmin() != UserType.USER)){
+				GUI.displayMonit(mContext, "Owner and admins have full access to all repositories and deployment environments");
+			} else {
+				Intent intent = new Intent(getApplicationContext(), UserPermissionsActivity.class);
+				intent.putExtra(Constants.USER, user);
+				startActivityForResult(intent, 0);
+			}
+
 	
 		}
 		

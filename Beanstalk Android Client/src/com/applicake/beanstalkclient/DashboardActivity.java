@@ -67,8 +67,8 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(mContext, "Loading Activity list",
-			"Please wait...");
+			progressDialog = ProgressDialog.show(mContext, "Please wait...",
+			"Loading activity list...");
 		}
 
 		@Override
@@ -78,11 +78,10 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 				HttpRetriever httpRetriever = new HttpRetriever();
 				String xmlRepoList = httpRetriever.getRepositoryListXML(prefs);
 				String xmlChangesetList = httpRetriever.getActivityListXML(prefs);
-				XmlParser xmlParser = new XmlParser();
 				// parsing repository list
-				repositoryMap = xmlParser.parseRepositoryHashMap(xmlRepoList);
+				repositoryMap = XmlParser.parseRepositoryHashMap(xmlRepoList);
 				//parsing changeset list
-				return xmlParser.parseChangesetList(xmlChangesetList);
+				return XmlParser.parseChangesetList(xmlChangesetList);
 				//TODO better implementation of exception handling
 			} catch (ParserConfigurationException e) {
 				GUI.displayMonit(mContext, "An error occured while paring Changeset list");

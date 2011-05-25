@@ -186,6 +186,7 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 			progressDialog.cancel();
 			if (result == 200) {
 				GUI.displayMonit(mContext, "reposiotry properties were modified!");
+				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 			}
 

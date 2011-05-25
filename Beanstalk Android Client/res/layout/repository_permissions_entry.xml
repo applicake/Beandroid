@@ -82,7 +82,6 @@
 		android:gravity="center"></TextView>
 
 	<ProgressBar
-
 		android:layout_marginTop="10dp"
 		android:layout_marginRight="10dp"
 		android:layout_alignParentRight="true"
@@ -91,8 +90,35 @@
 		style="@android:style/Widget.ProgressBar.Small.Inverse"
 		android:id="@+id/loadingBar"
 		android:visibility="visible"></ProgressBar>
+		
+			<TextView
+		android:text="ADMIN"
+		android:background="@drawable/label_red"
+		android:visibility="gone"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="10dp"
+		android:gravity="center"
+		android:layout_width="60dp"
+		android:layout_height="18dp"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:id="@+id/adminLabel"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationBackground"></TextView>
 
-
-
+	<TextView
+		android:text="OWNER"
+		android:background="@drawable/label_green"
+		android:visibility="gone"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="10dp"
+		android:gravity="center"
+		android:layout_width="60dp"
+		android:layout_height="18dp"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:id="@+id/ownerLabel"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationBackground"></TextView>
 
 </RelativeLayout>

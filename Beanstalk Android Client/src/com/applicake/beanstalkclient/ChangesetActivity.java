@@ -153,8 +153,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			try {
 				String commentsXml = httpRetriever.getCommentsListForRevisionXML(prefs,
 						params[0], params[1]);
-				XmlParser xmlParser = new XmlParser();
-				return xmlParser.parseCommentList(commentsXml);
+				return XmlParser.parseCommentList(commentsXml);
 			} catch (HttpRetreiverException e) {
 				// TODO generate http parsing exception handling
 				e.printStackTrace();
@@ -214,8 +213,8 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			HttpSender httpSender = new HttpSender();
 			try {
 				String commentXml = xmlCreator.createCommentXML(revisionId, commentBody);
-				return httpSender.sendCommentXML(prefs, commentXml, String.valueOf(repoId));
-				
+				return httpSender.sendCommentXML(prefs, commentXml,
+						String.valueOf(repoId));
 
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
@@ -231,20 +230,18 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				e.printStackTrace();
 			}
 			return null;
-		
+
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 			progressDialog.cancel();
-			XmlParser xmlParser = new XmlParser();
 			try {
-				Comment comment = xmlParser.parseComment(result);
+				Comment comment = XmlParser.parseComment(result);
 				commentArray.add(comment);
 				commentAdapter.add(comment);
 				commentAdapter.notifyDataSetChanged();
-				
-				
+
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -255,8 +252,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
 			super.onPostExecute(result);
 		}
 

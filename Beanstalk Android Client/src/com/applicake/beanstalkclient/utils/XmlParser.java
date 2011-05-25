@@ -28,7 +28,7 @@ import com.applicake.beanstalkclient.handlers.UserHandler;
 
 public class XmlParser {
 
-	private XMLReader initializeReader() throws ParserConfigurationException,
+	private static XMLReader initializeReader() throws ParserConfigurationException,
 			SAXException {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -37,7 +37,7 @@ public class XmlParser {
 
 	}
 
-	public ArrayList<Changeset> parseChangesetList(String xml)
+	public static ArrayList<Changeset> parseChangesetList(String xml)
 			throws ParserConfigurationException, SAXException, IOException {
 
 		XMLReader xmlReader = initializeReader();
@@ -54,7 +54,7 @@ public class XmlParser {
 
 	}
 
-	public ArrayList<User> parseUserList(String xml) throws ParserConfigurationException,
+	public static ArrayList<User> parseUserList(String xml) throws ParserConfigurationException,
 			SAXException, IOException {
 
 		XMLReader xmlReader = initializeReader();
@@ -71,7 +71,7 @@ public class XmlParser {
 
 	}
 
-	public ArrayList<Repository> parseRepositoryList(String xml)
+	public static ArrayList<Repository> parseRepositoryList(String xml)
 			throws ParserConfigurationException, SAXException, IOException {
 
 		XMLReader xmlReader = initializeReader();
@@ -87,8 +87,25 @@ public class XmlParser {
 		return repositoriesHandler.retrieveRepositoryList();
 
 	}
+	
+	public static Repository parseRepository(String xml)
+	throws ParserConfigurationException, SAXException, IOException {
+		
+		XMLReader xmlReader = initializeReader();
+		
+		RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
+		// set handler
+		xmlReader.setContentHandler(repositoriesHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+		
+		return repositoriesHandler.retrieveRepository();
+		
+	}
 
-	public HashMap<Integer, Repository> parseRepositoryHashMap(String xml)
+	public static HashMap<Integer, Repository> parseRepositoryHashMap(String xml)
 	throws ParserConfigurationException, SAXException, IOException {
 		
 		XMLReader xmlReader = initializeReader();
@@ -105,7 +122,7 @@ public class XmlParser {
 		
 	}
 	
-	public ArrayList<Permission> parsePermissionList(String xml) throws SAXException, IOException, ParserConfigurationException{
+	public static ArrayList<Permission> parsePermissionList(String xml) throws SAXException, IOException, ParserConfigurationException{
 		XMLReader xmlReader = initializeReader();
 
 		PermissionsHandler permissionsHandler = new PermissionsHandler();
@@ -120,7 +137,7 @@ public class XmlParser {
 		
 	}
 	
-	public HashMap<Integer, Permission> parseRepoIdToPermissionHashMap(String xml) throws SAXException, IOException, ParserConfigurationException{
+	public static HashMap<Integer, Permission> parseRepoIdToPermissionHashMap(String xml) throws SAXException, IOException, ParserConfigurationException{
 		XMLReader xmlReader = initializeReader();
 		
 		PermissionsHandler permissionsHandler = new PermissionsHandler();
@@ -136,7 +153,7 @@ public class XmlParser {
 	}
 	
 	
-	public Account parseAccountInfo(String xml) throws SAXException, IOException, ParserConfigurationException{
+	public static Account parseAccountInfo(String xml) throws SAXException, IOException, ParserConfigurationException{
 		XMLReader xmlReader = initializeReader();
 
 		AccountHandler accountHandler = new AccountHandler();
@@ -152,7 +169,7 @@ public class XmlParser {
 		
 	}
 
-	public ArrayList<Comment> parseCommentList(String xml) throws SAXException, IOException, ParserConfigurationException {
+	public static ArrayList<Comment> parseCommentList(String xml) throws SAXException, IOException, ParserConfigurationException {
 		XMLReader xmlReader = initializeReader();
 
 		CommentsHandler commentsHandler = new CommentsHandler();
@@ -167,7 +184,7 @@ public class XmlParser {
 		
 	}
 
-	public Comment parseComment(String xml) throws SAXException, IOException, ParserConfigurationException {
+	public static Comment parseComment(String xml) throws SAXException, IOException, ParserConfigurationException {
 		XMLReader xmlReader = initializeReader();
 		
 		CommentsHandler commentsHandler = new CommentsHandler();
