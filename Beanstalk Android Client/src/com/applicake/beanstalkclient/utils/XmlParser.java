@@ -22,6 +22,7 @@ import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.handlers.AccountHandler;
 import com.applicake.beanstalkclient.handlers.ChangesetHandler;
 import com.applicake.beanstalkclient.handlers.CommentsHandler;
+import com.applicake.beanstalkclient.handlers.ErrorHandler;
 import com.applicake.beanstalkclient.handlers.PermissionsHandler;
 import com.applicake.beanstalkclient.handlers.RepositoriesHandler;
 import com.applicake.beanstalkclient.handlers.UserHandler;
@@ -196,6 +197,21 @@ public class XmlParser {
 		xmlReader.parse(is);
 		
 		return commentsHandler.retrieveComment();
+		
+	}
+	
+	public static ArrayList<String> parseErrors(String xml) throws IOException, ParserConfigurationException, SAXException {
+		XMLReader xmlReader = initializeReader();
+		
+		ErrorHandler errorHandler = new ErrorHandler();
+		// set handler
+		xmlReader.setContentHandler(errorHandler);
+		// parse
+		StringReader sr = new StringReader(xml);
+		InputSource is = new InputSource(sr);
+		xmlReader.parse(is);
+		
+		return errorHandler.retrieveErrorList();
 		
 	}
 

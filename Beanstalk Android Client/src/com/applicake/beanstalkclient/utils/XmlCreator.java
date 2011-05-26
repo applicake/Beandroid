@@ -116,7 +116,7 @@ public class XmlCreator {
 		return writer.toString();
 	}
 
-	public String createPropertiesChangeXML(String firstName, String lastName,
+	public String createUserPropertiesChangeXML(String firstName, String lastName,
 			String email, boolean admin) throws IllegalArgumentException,
 			IllegalStateException, IOException {
 
@@ -136,6 +136,7 @@ public class XmlCreator {
 		serializer.endDocument();
 		return writer.toString();
 	}
+
 
 	public String createNewUserXML(String login, String firstName, String lastName,
 			String email, boolean admin, String password)
@@ -181,22 +182,7 @@ public class XmlCreator {
 		serializer.endDocument();
 		return writer.toString();
 	}
-	
-	public String createDeleteHack() throws IllegalArgumentException, IllegalStateException, IOException{
 
-		serializer = Xml.newSerializer();
-		writer = new StringWriter();
-		serializer.setOutput(writer);
-		
-		serializer.startDocument("UTF-8", null);
-		serializer.startTag("", "_method");
-		
-		serializer.text("delete");
-		
-		serializer.endTag("", "_method");
-		serializer.endDocument();
-		return writer.toString();
-	}
 
 	private void addDeploymentAccess(boolean deploymentAccess) throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "full-deployments-access");

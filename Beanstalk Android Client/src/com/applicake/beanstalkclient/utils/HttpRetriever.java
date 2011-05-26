@@ -19,6 +19,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.params.HttpClientParams;
@@ -147,7 +148,8 @@ public class HttpRetriever {
 	// }
 	// }
 
-	public String checkCredentials(String domain, String username, String password) throws HttpRetreiverException {
+	public String checkCredentials(String domain, String username, String password)
+			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
@@ -155,9 +157,9 @@ public class HttpRetriever {
 		String auth_http = HTTP_PREFIX + domain + AUTH_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -170,11 +172,15 @@ public class HttpRetriever {
 			}
 			throw new HttpRetreiverException(String.valueOf(statusCode));
 
-		} catch (Exception e) { // TODO exception handling
-			e.printStackTrace();
+		} catch (ClientProtocolException cpe) { // TODO exception handling
+			cpe.printStackTrace();
 			getRequest.abort();
 			throw new HttpRetreiverException("666");
 			
+		} catch (IOException ioe) { // TODO exception handling
+			ioe.printStackTrace();
+			getRequest.abort();
+			throw new HttpRetreiverException("666");
 		}
 
 	}
@@ -187,9 +193,9 @@ public class HttpRetriever {
 		String auth_http = HTTP_PREFIX + domain + USERS_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -223,9 +229,9 @@ public class HttpRetriever {
 		String activity_http = HTTP_PREFIX + domain + ACTIVITY_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -262,9 +268,9 @@ public class HttpRetriever {
 				+ SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX + repoId;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -300,9 +306,9 @@ public class HttpRetriever {
 		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -328,22 +334,23 @@ public class HttpRetriever {
 		}
 
 	}
-	
+
 	public String getRepositoryXML(SharedPreferences prefs, int repoId)
-	throws HttpRetreiverException {
-		
+			throws HttpRetreiverException {
+
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
-		
-		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_MIDDLE + String.valueOf(repoId) + ".xml";
-		
+
+		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_MIDDLE
+				+ String.valueOf(repoId) + ".xml";
+
 		HttpGet getRequest = new HttpGet(activity_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
-		
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
+
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-		
+
 		try {
 			// parsing
 			HttpResponse getResponse = httpClient.execute(getRequest);
@@ -353,7 +360,7 @@ public class HttpRetriever {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
 				throw new Exception("Http connection error");
-			
+
 		} catch (IOException io) {
 			// TODO handle various HTTP exceptions
 			getRequest.abort();
@@ -362,9 +369,9 @@ public class HttpRetriever {
 			getRequest.abort();
 			e.printStackTrace();
 			throw new HttpRetreiverException("Http parsing exception");
-			
+
 		}
-		
+
 	}
 
 	public String getCommentsListXML(SharedPreferences prefs, String repoId)
@@ -377,9 +384,9 @@ public class HttpRetriever {
 				+ String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -417,9 +424,9 @@ public class HttpRetriever {
 				+ COMMENTS_REVISION_HTTP_SUFFIX + revision;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-//		HttpClientParams.setRedirecting(params, false);
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
+		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -456,9 +463,8 @@ public class HttpRetriever {
 				+ String.valueOf(userId) + ".xml";
 
 		HttpGet getRequest = new HttpGet(activity_http);
-//		final HttpParams params = new BasicHttpParams();
-//		httpClient.setParams(params);
-		
+		// final HttpParams params = new BasicHttpParams();
+		// httpClient.setParams(params);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -497,7 +503,6 @@ public class HttpRetriever {
 			super(message);
 		}
 	}
-
 
 	// helper
 

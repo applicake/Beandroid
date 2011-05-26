@@ -47,5 +47,7 @@ public class Constants {
 	public static final String PERMISSION = "permission";
 
 	public static final String ACCOUNT_PLAN = "account_plan_preference";
+
+	public static final int CLOSE_ALL_BUT_LOGOUT = 1997;
 	
 }

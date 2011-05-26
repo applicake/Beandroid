@@ -21,10 +21,12 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.NoHttpResponseException;
+import org.apache.http.ParseException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -49,6 +51,7 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.Constants;
 
@@ -57,34 +60,35 @@ import android.util.Log;
 
 public class HttpSender {
 
-//	HttpClientParams.setRedirecting(params, false);
-	
+	// HttpClientParams.setRedirecting(params, false);
+
 	public static DefaultHttpClient getClient() {
-        DefaultHttpClient ret = null;
+		DefaultHttpClient ret = null;
 
-        //sets up parameters
-        HttpParams params = new BasicHttpParams();
-        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-        HttpProtocolParams.setContentCharset(params, "utf-8");
-        params.setBooleanParameter("http.protocol.expect-continue", false);
+		// sets up parameters
+		HttpParams params = new BasicHttpParams();
+		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+		HttpProtocolParams.setContentCharset(params, "utf-8");
+		params.setBooleanParameter("http.protocol.expect-continue", false);
 
-        //registers schemes for both http and https
-        SchemeRegistry registry = new SchemeRegistry();
-        registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-        final SSLSocketFactory sslSocketFactory = SSLSocketFactory.getSocketFactory();
-        sslSocketFactory.setHostnameVerifier(SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
-        registry.register(new Scheme("https", sslSocketFactory, 443));
+		// registers schemes for both http and https
+		SchemeRegistry registry = new SchemeRegistry();
+		registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+		final SSLSocketFactory sslSocketFactory = SSLSocketFactory.getSocketFactory();
+		sslSocketFactory
+				.setHostnameVerifier(SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+		registry.register(new Scheme("https", sslSocketFactory, 443));
 
-        ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params, registry);
-        ret = new DefaultHttpClient(manager, params);
-        return ret;
-    }
+		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
+				registry);
+		ret = new DefaultHttpClient(manager, params);
+		return ret;
+	}
 
 	final DefaultHttpClient httpClient = getClient();
 
-	
-//	private final DefaultHttpClient httpClient = new DefaultHttpClient();
-//	private final DefaultHttpClient httpClient = getNewHttpClient();
+	// private final DefaultHttpClient httpClient = new DefaultHttpClient();
+	// private final DefaultHttpClient httpClient = getNewHttpClient();
 	private final static String HTTPS_PREFIX = "https://";
 	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
 	private final static String COMMENTS_HTTP_SUFFIX = "/comments.xml";
@@ -96,67 +100,70 @@ public class HttpSender {
 	private final static String PERMISSION_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions.xml";
 	private final static String PERMISSION_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/permissions/";
 
-//	public class MySSLSocketFactory extends SSLSocketFactory {
-//		SSLContext sslContext = SSLContext.getInstance("TLS");
-//
-//		public MySSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException,
-//				KeyManagementException, KeyStoreException, UnrecoverableKeyException {
-//			super(truststore);
-//
-//			TrustManager tm = new X509TrustManager() {
-//				public void checkClientTrusted(X509Certificate[] chain, String authType)
-//						throws CertificateException {
-//				}
-//
-//				public void checkServerTrusted(X509Certificate[] chain, String authType)
-//						throws CertificateException {
-//				}
-//
-//				public X509Certificate[] getAcceptedIssuers() {
-//					return null;
-//				}
-//			};
-//
-//			sslContext.init(null, new TrustManager[] { tm }, null);
-//		}
-//
-//		public Socket createSocket(Socket socket, String host, int port, boolean autoClose)
-//				throws IOException, UnknownHostException {
-//			return sslContext.getSocketFactory().createSocket(socket, host, port,
-//					autoClose);
-//		}
-//
-//		@Override
-//		public Socket createSocket() throws IOException {
-//			return sslContext.getSocketFactory().createSocket();
-//		}
-//	}
-//
-//	public DefaultHttpClient getNewHttpClient() {
-//		try {
-//			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-//			trustStore.load(null, null);
-//
-//			SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-//			sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-//
-//			HttpParams params = new BasicHttpParams();
-//			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-//			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-//
-//			SchemeRegistry registry = new SchemeRegistry();
-//			registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(),
-//					80));
-//			registry.register(new Scheme("https", sf, 443));
-//
-//			ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
-//					registry);
-//
-//			return new DefaultHttpClient(ccm, params);
-//		} catch (Exception e) {
-//			return new DefaultHttpClient();
-//		}
-//	}
+	// public class MySSLSocketFactory extends SSLSocketFactory {
+	// SSLContext sslContext = SSLContext.getInstance("TLS");
+	//
+	// public MySSLSocketFactory(KeyStore truststore) throws
+	// NoSuchAlgorithmException,
+	// KeyManagementException, KeyStoreException, UnrecoverableKeyException {
+	// super(truststore);
+	//
+	// TrustManager tm = new X509TrustManager() {
+	// public void checkClientTrusted(X509Certificate[] chain, String authType)
+	// throws CertificateException {
+	// }
+	//
+	// public void checkServerTrusted(X509Certificate[] chain, String authType)
+	// throws CertificateException {
+	// }
+	//
+	// public X509Certificate[] getAcceptedIssuers() {
+	// return null;
+	// }
+	// };
+	//
+	// sslContext.init(null, new TrustManager[] { tm }, null);
+	// }
+	//
+	// public Socket createSocket(Socket socket, String host, int port, boolean
+	// autoClose)
+	// throws IOException, UnknownHostException {
+	// return sslContext.getSocketFactory().createSocket(socket, host, port,
+	// autoClose);
+	// }
+	//
+	// @Override
+	// public Socket createSocket() throws IOException {
+	// return sslContext.getSocketFactory().createSocket();
+	// }
+	// }
+	//
+	// public DefaultHttpClient getNewHttpClient() {
+	// try {
+	// KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+	// trustStore.load(null, null);
+	//
+	// SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+	// sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+	//
+	// HttpParams params = new BasicHttpParams();
+	// HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+	// HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+	//
+	// SchemeRegistry registry = new SchemeRegistry();
+	// registry.register(new Scheme("http",
+	// PlainSocketFactory.getSocketFactory(),
+	// 80));
+	// registry.register(new Scheme("https", sf, 443));
+	//
+	// ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
+	// registry);
+	//
+	// return new DefaultHttpClient(ccm, params);
+	// } catch (Exception e) {
+	// return new DefaultHttpClient();
+	// }
+	// }
 
 	public String sendCommentXML(SharedPreferences prefs, String xml, String repoId)
 			throws UnsupportedEncodingException, HttpSenderException {
@@ -308,10 +315,18 @@ public class HttpSender {
 			Log.w("postRequestXml", xml);
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
-			if (postResponse.getStatusLine().getStatusCode() == 200) {
-				return 200;
+			int statusCode = postResponse.getStatusLine().getStatusCode();
+
+			if (statusCode == 422) {
+				StringBuilder sb = new StringBuilder();
+				for (String s : XmlParser.parseErrors(entity)) {
+					sb.append(s);
+					sb.append("\n");
+				}
+
+				throw new HttpSenderException(sb.toString());
 			} else {
-				throw new HttpSenderException("Incorrect response from server");
+				return statusCode;
 			}
 
 		} catch (ClientProtocolException e) {
@@ -322,7 +337,20 @@ public class HttpSender {
 			putRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new HttpSenderException("ParseException");
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new HttpSenderException("ParserConfigurationException");
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new HttpSenderException("SAXException");
 		}
+		
 
 	}
 
@@ -416,28 +444,26 @@ public class HttpSender {
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 
-//		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
+		// HttpConnectionParams.setConnectionTimeout(httpClient.getParams(),
+		// 20000);
 
 		// create DELETE request with address
-		HttpDelete deleteRequest = new HttpDelete(HTTPS_PREFIX + domain
+		HttpPost deleteRequest = new HttpPost(HTTPS_PREFIX + domain
 				+ PERMISSION_DELETE_HTTP_MIDDLE + permissionId + ".xml");
+
+		deleteRequest.addHeader("X-HTTP-Method-Override", "delete");
 		deleteRequest.addHeader("Content-Type", "application/xml");
 		deleteRequest.addHeader("Accept", "application/xml");
+
 		deleteRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		Log.w("deleteRequest", deleteRequest.getURI().toString());
 
 		// TODO throw exceptions if an error occurs
 		try {
-			httpClient.execute(deleteRequest);
-			return 200;
-			// String entity = EntityUtils.toString(deleteResponse.getEntity());
-			// Log.w("postResponse", entity);
-			// if (deleteResponse.getStatusLine().getStatusCode() == 200) {
-			// return 200;
-			// } else {
-			// throw new HttpSenderException("Incorrect response from server");
-			// }
+			HttpResponse response = httpClient.execute(deleteRequest);
+
+			return response.getStatusLine().getStatusCode();
 
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
@@ -448,7 +474,6 @@ public class HttpSender {
 		}
 
 	}
-
 
 	public int sendDeleteUserRequest(SharedPreferences prefs, String userId)
 			throws UnsupportedEncodingException, HttpSenderException {
@@ -459,11 +484,12 @@ public class HttpSender {
 		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
 
 		// create DELETE request with address
-		HttpDelete deleteRequest = new HttpDelete(HTTPS_PREFIX + domain
+		HttpPost deleteRequest = new HttpPost(HTTPS_PREFIX + domain
 				+ USER_DELETE_HTTP_MIDDLE + userId + ".xml");
 
-		 deleteRequest.addHeader("Content-Type", "application/xml");
-		 deleteRequest.addHeader("Accept", "application/xml");
+		deleteRequest.addHeader("X-HTTP-Method-Override", "delete");
+		deleteRequest.addHeader("Content-Type", "application/xml");
+		deleteRequest.addHeader("Accept", "application/xml");
 
 		deleteRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -471,9 +497,8 @@ public class HttpSender {
 
 		// TODO throw exceptions if an error occurs
 		try {
-			httpClient.execute(deleteRequest);
-			return 200;
-
+			HttpResponse response = httpClient.execute(deleteRequest);
+			return response.getStatusLine().getStatusCode();
 
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
@@ -484,48 +509,52 @@ public class HttpSender {
 		}
 
 	}
-	
-	public int sendHackDeleteUserRequest(SharedPreferences prefs, String userId)
-	throws HttpSenderException, IllegalArgumentException, IllegalStateException, IOException {
-		
-		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
-		String domain = getAccountDomain(prefs);
-		
-		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
-		
-		// create DELETE request with address
-		HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain
-				+ USER_DELETE_HTTP_MIDDLE + userId + ".xml");
-		
-		postRequest.addHeader("Content-Type", "application/xml");
-		postRequest.addHeader("Accept", "application/xml");
-		
-		postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-		
-		String xml = new XmlCreator().createDeleteHack();
-		StringEntity se = new StringEntity(xml, "UTF-8");
-		postRequest.setEntity(se);
-		
 
-		
-		Log.w("deleteRequestxml", xml);
-		Log.w("deleteRequest", postRequest.getURI().toString());
-		
-		// TODO throw exceptions if an error occurs
-		try {
-			httpClient.execute(postRequest);
-			return 200;
-			
-			
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new HttpSenderException("IOException");
-		}
-		
-	}
+	// public int sendHackDeleteUserRequest(SharedPreferences prefs, String
+	// userId)
+	// throws HttpSenderException, IllegalArgumentException,
+	// IllegalStateException, IOException {
+	//
+	// UsernamePasswordCredentials credentials =
+	// getCredentialsFromPreferences(prefs);
+	// String domain = getAccountDomain(prefs);
+	//
+	// HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
+	//
+	// // create DELETE request with address
+	// HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain
+	// + USER_DELETE_HTTP_MIDDLE + userId + ".xml");
+	//
+	// postRequest.addHeader("Content-Type", "application/xml");
+	// postRequest.addHeader("Accept", "application/xml");
+	//
+	// postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8",
+	// false));
+	//
+	// String xml = new XmlCreator().createDeleteHack();
+	// StringEntity se = new StringEntity(xml, "UTF-8");
+	// postRequest.setEntity(se);
+	//
+	//
+	//
+	// Log.w("deleteRequestxml", xml);
+	// Log.w("deleteRequest", postRequest.getURI().toString());
+	//
+	// // TODO throw exceptions if an error occurs
+	// try {
+	// httpClient.execute(postRequest);
+	// return 200;
+	//
+	//
+	// } catch (ClientProtocolException e) {
+	// e.printStackTrace();
+	// throw new HttpSenderException("Client protocol exception");
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// throw new HttpSenderException("IOException");
+	// }
+	//
+	// }
 
 	private static UsernamePasswordCredentials getCredentialsFromPreferences(
 			SharedPreferences prefs) {
@@ -533,7 +562,6 @@ public class HttpSender {
 				prefs.getString(Constants.USER_PASSWORD, ""));
 
 	}
-
 
 	private static String getAccountDomain(SharedPreferences prefs) {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");

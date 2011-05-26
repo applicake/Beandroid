@@ -66,6 +66,7 @@ public abstract class BeanstalkActivity extends Activity {
 		clearCredentials();
 		Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 		startActivity(intent);
+		setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
 		finish();
 	}
 	//closing all activities mechanism 
@@ -83,19 +84,28 @@ public abstract class BeanstalkActivity extends Activity {
 	    	if (!prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)) clearCredentials();
 	        setResult(Constants.CLOSE_ALL_ACTIVITIES);
 	        finish();
+	        break;
+	    case Constants.CLOSE_ALL_BUT_LOGOUT:
+	    	setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
+	    	finish();
 	    }
+	   
+	    	
 
 //		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	@Override
 	protected void onDestroy() {
+		cancelAllDownloadTasks();
 		super.onDestroy();
 		
 	}
 	
-	
-	
+	protected void cancelAllDownloadTasks(){
+		
+	}
+
 
 	//action bar handling
 	public void onRepositoriesButtonClick(View v) {

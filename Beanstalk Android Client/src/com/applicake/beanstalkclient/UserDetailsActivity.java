@@ -103,7 +103,6 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 				startActivityForResult(intent, 0);
 			}
 
-	
 		}
 		
 		if (v.getId() == R.id.buttonModifyProperties){
@@ -127,12 +126,10 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 			super.onPreExecute();
 		}
 		
-
 		@Override
 		protected Integer doInBackground(Void... params) {
 			try {
-//				return new HttpSender().sendDeleteUserRequest(prefs, String.valueOf(user.getId()));
-				return new HttpSender().sendHackDeleteUserRequest(prefs, String.valueOf(user.getId()));
+				return new HttpSender().sendDeleteUserRequest(prefs, String.valueOf(user.getId()));
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -149,10 +146,6 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return 0;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return 0;
 			}
 			
 		}
@@ -166,7 +159,6 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 				finish();
 			} 
 			
-
 			super.onPostExecute(result);
 		}
 		

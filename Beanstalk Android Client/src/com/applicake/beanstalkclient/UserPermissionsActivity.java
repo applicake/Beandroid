@@ -35,6 +35,7 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 	private Map<Integer, Permission> repoIdToPermission;
 	private UserPermissionsAdapter repositoriesAdapter;
 	private ListView repositoriesList;
+	private DownloadRepositoryListTask task;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,8 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 		repositoriesList.setAdapter(repositoriesAdapter);
 		repositoriesList.setOnItemClickListener(this);
 
-		new DownloadRepositoryListTask().execute();
+		task = new DownloadRepositoryListTask();
+		task.execute();
 
 	}
 
@@ -74,9 +76,16 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Constants.REFRESH_ACTIVITY){
-			new DownloadRepositoryListTask().execute();
+			task = new DownloadRepositoryListTask();
+			task.execute();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
+	protected void cancelAllDownloadTasks() {
+		if (task != null) task.cancel(true);
+		super.cancelAllDownloadTasks();
 	}
 
 	public class DownloadRepositoryListTask extends AsyncTask<String, Void, Integer> {
@@ -141,6 +150,12 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 			repositoriesAdapter.notifyDataSetChanged();
 
+		}
+		
+		@Override
+		protected void onCancelled() {
+			progressDialog.cancel();
+			super.onCancelled();
 		}
 
 	}

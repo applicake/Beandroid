@@ -144,6 +144,8 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 	public class SendUserPropertiesTask extends AsyncTask<Void, Void, Integer> {
 
 		ProgressDialog progressDialog;
+		//temporary
+		String errorMessage = "";
 
 		@Override
 		protected void onPreExecute() {
@@ -157,12 +159,12 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 			XmlCreator xmlCreator = new XmlCreator();
 			HttpSender httpSender = new HttpSender();
 			try {
-				String userPasswordModificationXml = xmlCreator
-						.createPropertiesChangeXML(nameEditText.getText().toString()
+				String userModificationXml = xmlCreator
+						.createUserPropertiesChangeXML(nameEditText.getText().toString()
 								.trim(), lastNameEditText.getText().toString().trim(),
 								emailEditText.getText().toString().trim(),
 								adminCheckBox.isChecked());
-				return httpSender.sendUpdateUserXML(prefs, userPasswordModificationXml,
+				return httpSender.sendUpdateUserXML(prefs, userModificationXml,
 						String.valueOf(user.getId()));
 
 			} catch (IllegalArgumentException e) {
@@ -175,10 +177,10 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			}
-			return null;
+			return 0;
 
 		}
 
@@ -186,11 +188,15 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 		protected void onPostExecute(Integer result) {
 			progressDialog.cancel();
 			if (result == 200) {
+				
 				GUI.displayMonit(mContext, "user properties were modified!");
 				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 
+			} else if (result == 0){
+				GUI.displayMonit(mContext, errorMessage);
 			}
+			
 
 			super.onPostExecute(result);
 		}
