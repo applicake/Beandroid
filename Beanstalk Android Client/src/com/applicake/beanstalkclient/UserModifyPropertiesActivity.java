@@ -2,6 +2,7 @@ package com.applicake.beanstalkclient;
 
 import java.io.IOException;
 import com.applicake.beanstalkclient.enums.UserType;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;

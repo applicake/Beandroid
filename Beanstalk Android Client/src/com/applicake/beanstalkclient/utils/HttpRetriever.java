@@ -1,29 +1,14 @@
 package com.applicake.beanstalkclient.utils;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.params.HttpClientParams;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -34,7 +19,6 @@ import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import com.applicake.beanstalkclient.Constants;
@@ -45,7 +29,7 @@ import android.util.Log;
 public class HttpRetriever {
 
 	public static DefaultHttpClient getClient() {
-		DefaultHttpClient ret = null;
+		DefaultHttpClient httpClient = null;
 
 		// sets up parameters
 		final HttpParams params = new BasicHttpParams();
@@ -64,8 +48,8 @@ public class HttpRetriever {
 
 		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
 				registry);
-		ret = new DefaultHttpClient(manager, params);
-		return ret;
+		httpClient = new DefaultHttpClient(manager, params);
+		return httpClient;
 	}
 
 	final DefaultHttpClient httpClient = getClient();
@@ -82,71 +66,6 @@ public class HttpRetriever {
 	private final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
 	private final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
-	// COMMENTED PART FOR DEBUGGING VIA CHARLES PROXY
-	// public class MySSLSocketFactory extends SSLSocketFactory {
-	// SSLContext sslContext = SSLContext.getInstance("TLS");
-	//
-	// public MySSLSocketFactory(KeyStore truststore) throws
-	// NoSuchAlgorithmException,
-	// KeyManagementException, KeyStoreException, UnrecoverableKeyException {
-	// super(truststore);
-	//
-	// TrustManager tm = new X509TrustManager() {
-	// public void checkClientTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public void checkServerTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public X509Certificate[] getAcceptedIssuers() {
-	// return null;
-	// }
-	// };
-	//
-	// sslContext.init(null, new TrustManager[] { tm }, null);
-	// }
-	//
-	// public Socket createSocket(Socket socket, String host, int port, boolean
-	// autoClose)
-	// throws IOException, UnknownHostException {
-	// return sslContext.getSocketFactory().createSocket(socket, host, port,
-	// autoClose);
-	// }
-	//
-	// @Override
-	// public Socket createSocket() throws IOException {
-	// return sslContext.getSocketFactory().createSocket();
-	// }
-	// }
-	//
-	// public DefaultHttpClient getNewHttpClient() {
-	// try {
-	// KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-	// trustStore.load(null, null);
-	//
-	// SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-	// sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-	//
-	// HttpParams params = new BasicHttpParams();
-	// HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-	// HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-	//
-	// SchemeRegistry registry = new SchemeRegistry();
-	// registry.register(new Scheme("http",
-	// PlainSocketFactory.getSocketFactory(),
-	// 80));
-	// registry.register(new Scheme("https", sf, 443));
-	//
-	// ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
-	// registry);
-	//
-	// return new DefaultHttpClient(ccm, params);
-	// } catch (Exception e) {
-	// return new DefaultHttpClient();
-	// }
-	// }
 
 	public String checkCredentials(String domain, String username, String password)
 			throws HttpRetreiverException {
@@ -157,9 +76,6 @@ public class HttpRetriever {
 		String auth_http = HTTP_PREFIX + domain + AUTH_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -220,19 +136,16 @@ public class HttpRetriever {
 		}
 	}
 
-	public String getActivityListXML(SharedPreferences prefs)
+	public String getActivityListXML(SharedPreferences prefs, int pageNumber)
 			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 
-		String activity_http = HTTP_PREFIX + domain + ACTIVITY_HTTP_SUFFIX;
-
+		String activity_http = HTTP_PREFIX + domain + ACTIVITY_HTTP_SUFFIX + "?page=" + String.valueOf(pageNumber);
+		Log.w("Beansdroid", activity_http);
+		
 		HttpGet getRequest = new HttpGet(activity_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
-
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -268,10 +181,6 @@ public class HttpRetriever {
 				+ SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX + repoId;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
-
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -414,16 +323,18 @@ public class HttpRetriever {
 	}
 
 	public String getCommentsListForRevisionXML(SharedPreferences prefs, String repoId,
-			String revision) throws HttpRetreiverException {
+			String revision, int pageNumber) throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 
-		String activity_http = HTTP_PREFIX + domain + COMMENTS_HTTP_MIDDLE
+		String comments_http = HTTP_PREFIX + domain + COMMENTS_HTTP_MIDDLE
 				+ String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX
-				+ COMMENTS_REVISION_HTTP_SUFFIX + revision;
+				+ COMMENTS_REVISION_HTTP_SUFFIX + revision + "&page=" + String.valueOf(pageNumber);
+		
+		Log.w("request address", comments_http);
 
-		HttpGet getRequest = new HttpGet(activity_http);
+		HttpGet getRequest = new HttpGet(comments_http);
 		// final HttpParams params = new BasicHttpParams();
 		// httpClient.setParams(params);
 		// HttpClientParams.setRedirecting(params, false);

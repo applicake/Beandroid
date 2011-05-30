@@ -1,6 +1,8 @@
 package com.applicake.beanstalkclient;
 
 import java.io.IOException;
+
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
@@ -56,6 +58,7 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 	public class SendUserCreateTask extends AsyncTask<Void, Void, Integer> {
 
 		ProgressDialog progressDialog;
+		String errorMessage;
 
 		@Override
 		protected void onPreExecute() {
@@ -69,29 +72,28 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 			XmlCreator xmlCreator = new XmlCreator();
 			HttpSender httpSender = new HttpSender();
 			try {
-				String userCreateXml = xmlCreator.createNewUserXML(
-						loginEditText.getText().toString().trim(), 
-						nameEditText.getText().toString().trim(), 
-						lastNameEditText.getText().toString().trim(),
+				String userCreateXml = xmlCreator.createNewUserXML(loginEditText
+						.getText().toString().trim(), nameEditText.getText().toString()
+						.trim(), lastNameEditText.getText().toString().trim(),
 						emailEditText.getText().toString().trim(),
-						adminCheckBox.isChecked(), 
-						passwordEditText.getText().toString().trim());
+						adminCheckBox.isChecked(), passwordEditText.getText().toString()
+								.trim());
 				return httpSender.sendCreateUserXML(prefs, userCreateXml);
 
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
+				errorMessage = "error";
 				e.printStackTrace();
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+				errorMessage = "error";
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				errorMessage = "Unexpected IO error";
 				e.printStackTrace();
 			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			}
-			return null;
+			return 0;
 
 		}
 
@@ -103,6 +105,8 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 
+			} else if (result == 0){
+				GUI.displayMonit(mContext, errorMessage);
 			}
 
 			super.onPostExecute(result);

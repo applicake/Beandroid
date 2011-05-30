@@ -41,16 +41,19 @@ public class ChangesAdapter extends ArrayAdapter<YamlEntry> {
 			TextView valueTextView = (TextView) view.findViewById(R.id.value);
 			valueTextView.setText(changeEntry.getValue());
 
-			View changesetTag = (View) view.findViewById(R.id.state);
+			TextView changesetTag = (TextView) view.findViewById(R.id.state);
 			String property = changeEntry.getProperty();
 			Log.w("Change property", property);
 			if (property.equals("add")) {
 				changesetTag.getBackground().setLevel(0);
+				changesetTag.setText("added");
 			} else if (property.equals("edit")) {
 				changesetTag.getBackground().setLevel(1);
+				changesetTag.setText("modified");
 
 			} else if (property.equals("delete")) {
 				changesetTag.getBackground().setLevel(2);
+				changesetTag.setText("removed");
 			}
 
 		}

@@ -60,10 +60,8 @@ import android.util.Log;
 
 public class HttpSender {
 
-	// HttpClientParams.setRedirecting(params, false);
-
 	public static DefaultHttpClient getClient() {
-		DefaultHttpClient ret = null;
+		DefaultHttpClient httpClient = null;
 
 		// sets up parameters
 		HttpParams params = new BasicHttpParams();
@@ -81,14 +79,11 @@ public class HttpSender {
 
 		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
 				registry);
-		ret = new DefaultHttpClient(manager, params);
-		return ret;
+		httpClient = new DefaultHttpClient(manager, params);
+		return httpClient;
 	}
 
 	final DefaultHttpClient httpClient = getClient();
-
-	// private final DefaultHttpClient httpClient = new DefaultHttpClient();
-	// private final DefaultHttpClient httpClient = getNewHttpClient();
 	private final static String HTTPS_PREFIX = "https://";
 	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
 	private final static String COMMENTS_HTTP_SUFFIX = "/comments.xml";
@@ -99,71 +94,6 @@ public class HttpSender {
 	private final static String USER_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
 	private final static String PERMISSION_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions.xml";
 	private final static String PERMISSION_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/permissions/";
-
-	// public class MySSLSocketFactory extends SSLSocketFactory {
-	// SSLContext sslContext = SSLContext.getInstance("TLS");
-	//
-	// public MySSLSocketFactory(KeyStore truststore) throws
-	// NoSuchAlgorithmException,
-	// KeyManagementException, KeyStoreException, UnrecoverableKeyException {
-	// super(truststore);
-	//
-	// TrustManager tm = new X509TrustManager() {
-	// public void checkClientTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public void checkServerTrusted(X509Certificate[] chain, String authType)
-	// throws CertificateException {
-	// }
-	//
-	// public X509Certificate[] getAcceptedIssuers() {
-	// return null;
-	// }
-	// };
-	//
-	// sslContext.init(null, new TrustManager[] { tm }, null);
-	// }
-	//
-	// public Socket createSocket(Socket socket, String host, int port, boolean
-	// autoClose)
-	// throws IOException, UnknownHostException {
-	// return sslContext.getSocketFactory().createSocket(socket, host, port,
-	// autoClose);
-	// }
-	//
-	// @Override
-	// public Socket createSocket() throws IOException {
-	// return sslContext.getSocketFactory().createSocket();
-	// }
-	// }
-	//
-	// public DefaultHttpClient getNewHttpClient() {
-	// try {
-	// KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-	// trustStore.load(null, null);
-	//
-	// SSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-	// sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-	//
-	// HttpParams params = new BasicHttpParams();
-	// HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-	// HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
-	//
-	// SchemeRegistry registry = new SchemeRegistry();
-	// registry.register(new Scheme("http",
-	// PlainSocketFactory.getSocketFactory(),
-	// 80));
-	// registry.register(new Scheme("https", sf, 443));
-	//
-	// ClientConnectionManager ccm = new ThreadSafeClientConnManager(params,
-	// registry);
-	//
-	// return new DefaultHttpClient(ccm, params);
-	// } catch (Exception e) {
-	// return new DefaultHttpClient();
-	// }
-	// }
 
 	public String sendCommentXML(SharedPreferences prefs, String xml, String repoId)
 			throws UnsupportedEncodingException, HttpSenderException {
@@ -189,7 +119,17 @@ public class HttpSender {
 			Log.w("postRequestXml", xml);
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
-			if (postResponse.getStatusLine().getStatusCode() == 201) {
+			int statusCode = postResponse.getStatusLine().getStatusCode();
+			
+			if (statusCode == 422) {
+				StringBuilder sb = new StringBuilder();
+				for (String s : XmlParser.parseErrors(entity)) {
+					sb.append(s);
+					sb.append("\n");
+				}
+
+				throw new HttpSenderException(sb.toString());
+			} else if (statusCode == 201){
 				return entity;
 			} else {
 				throw new HttpSenderException("Incorrect response from server");
@@ -203,6 +143,14 @@ public class HttpSender {
 			postRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
+		} catch (ParserConfigurationException e) {
+			postRequest.abort();
+			e.printStackTrace();
+			throw new HttpSenderException("Parser configuration exception");
+		} catch (SAXException e) {
+			postRequest.abort();
+			e.printStackTrace();
+			throw new HttpSenderException(e.getMessage());
 		}
 
 	}
@@ -231,10 +179,18 @@ public class HttpSender {
 			Log.w("postRequestXml", xml);
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
-			if (postResponse.getStatusLine().getStatusCode() == 201) {
-				return 201;
+			int statusCode = postResponse.getStatusLine().getStatusCode();
+			
+			if (statusCode == 422) {
+				StringBuilder sb = new StringBuilder();
+				for (String s : XmlParser.parseErrors(entity)) {
+					sb.append(s);
+					sb.append("\n");
+				}
+
+				throw new HttpSenderException(sb.toString());
 			} else {
-				throw new HttpSenderException("Incorrect response from server");
+				return statusCode;
 			}
 
 		} catch (ClientProtocolException e) {
@@ -245,6 +201,12 @@ public class HttpSender {
 			postRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			throw new HttpSenderException("Parser configuration error");
+		} catch (SAXException e) {
+			e.printStackTrace();
+			throw new HttpSenderException(e.getMessage());
 		}
 
 	}
@@ -273,10 +235,18 @@ public class HttpSender {
 			Log.w("postRequestXml", xml);
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
-			if (postResponse.getStatusLine().getStatusCode() == 200) {
-				return 200;
+			int statusCode = postResponse.getStatusLine().getStatusCode();
+			
+			if (statusCode == 422) {
+				StringBuilder sb = new StringBuilder();
+				for (String s : XmlParser.parseErrors(entity)) {
+					sb.append(s);
+					sb.append("\n");
+				}
+
+				throw new HttpSenderException(sb.toString());
 			} else {
-				throw new HttpSenderException("Incorrect response from server");
+				return statusCode;
 			}
 
 		} catch (ClientProtocolException e) {
@@ -287,6 +257,14 @@ public class HttpSender {
 			putRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new HttpSenderException("Parse configuration error");
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new HttpSenderException(e.getMessage());
 		}
 
 	}
@@ -350,7 +328,6 @@ public class HttpSender {
 			e.printStackTrace();
 			throw new HttpSenderException("SAXException");
 		}
-		
 
 	}
 

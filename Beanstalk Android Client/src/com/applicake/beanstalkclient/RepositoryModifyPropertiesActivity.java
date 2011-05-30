@@ -3,6 +3,7 @@ package com.applicake.beanstalkclient;
 import java.io.IOException;
 
 import com.applicake.beanstalkclient.enums.ColorLabels;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
@@ -145,6 +146,7 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 	public class SendRepositoryPropertiesTask extends AsyncTask<Void, Void, Integer> {
 
 		ProgressDialog progressDialog;
+		String errorMessage;
 
 		@Override
 		protected void onPreExecute() {
@@ -165,19 +167,19 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 						repostitoryModificationXml, String.valueOf(repoId));
 
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			}
-			return null;
+			return 0;
 
 		}
 
@@ -188,9 +190,12 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 				GUI.displayMonit(mContext, "reposiotry properties were modified!");
 				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
+			} else if ((result == 0) && (errorMessage != null)) {
+				GUI.displayMonit(mContext, errorMessage);
+			} else {
+				GUI.displayMonit(mContext, "Unexpected error, please try again later");
 			}
 
-			super.onPostExecute(result);
 		}
 
 	}

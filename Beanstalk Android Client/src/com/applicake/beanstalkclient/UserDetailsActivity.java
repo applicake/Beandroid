@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.enums.UserType;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.GravatarDowloader;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;

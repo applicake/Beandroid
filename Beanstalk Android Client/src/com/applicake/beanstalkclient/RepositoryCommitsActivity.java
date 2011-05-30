@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.applicake.beanstalkclient.adapters.RepositoryChangesetAdapter;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;

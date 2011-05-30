@@ -6,8 +6,8 @@
 		android:drawable="@drawable/label_add" />
 	<item
 		android:maxLevel="1"
-		android:drawable="@drawable/label_remove" />
+		android:drawable="@drawable/label_edit" />
 	<item
 		android:maxLevel="2"
-		android:drawable="@drawable/label_edit" />
+		android:drawable="@drawable/label_remove" />
 </level-list>

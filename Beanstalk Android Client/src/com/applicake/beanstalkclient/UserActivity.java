@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.adapters.UserAdapter;
 import com.applicake.beanstalkclient.enums.Plans;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;

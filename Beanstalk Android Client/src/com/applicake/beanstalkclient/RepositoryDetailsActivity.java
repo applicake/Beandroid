@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
