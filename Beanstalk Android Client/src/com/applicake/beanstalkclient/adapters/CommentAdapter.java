@@ -20,17 +20,17 @@ import com.applicake.beanstalkclient.utils.GravatarDowloader;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
 
-	private Context context;
 	private List<Comment> commentsArray;
 	private Spanned spannedText;
+	private LayoutInflater mInflater;
 	static int rowColorSwapper;
 
 	public CommentAdapter(Context context, int textViewResourceId,
 			List<Comment> commentsArray) {
-		super(context, textViewResourceId);
-		this.context = context;
+		super(context, textViewResourceId, commentsArray);
 		this.commentsArray = commentsArray;
 		rowColorSwapper = 0;
+		mInflater = LayoutInflater.from(context);
 
 	}
 
@@ -38,17 +38,16 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 		View view = convertView;
 
 		if (view == null) {
-			LayoutInflater vi = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = vi.inflate(R.layout.comment_list_entry, null);
+			view = mInflater.inflate(R.layout.comment_list_entry, null);
 		}
 
 		Comment comment = commentsArray.get(position);
 
 		if (comment != null) {
 			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
-			GravatarDowloader.getInstance().download(comment.getAuthorEmail(), userGravatar);
-			
+			GravatarDowloader.getInstance().download(comment.getAuthorEmail(),
+					userGravatar);
+
 			TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
 			userNameTextView.setText(comment.getAuthorName());
 
@@ -61,14 +60,14 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 			commentBodyTextView.setText(spannedText, BufferType.SPANNABLE);
 
 		}
-		
+
 		if ((rowColorSwapper % 2) == 0) {
 			view.getBackground().setLevel(0);
 		} else {
 			view.getBackground().setLevel(1);
 		}
 		rowColorSwapper++;
-		
+
 		return view;
 	}
 

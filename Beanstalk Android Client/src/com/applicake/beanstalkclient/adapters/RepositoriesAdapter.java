@@ -16,7 +16,7 @@ import com.applicake.beanstalkclient.Repository;
 
 public class RepositoriesAdapter extends ArrayAdapter<Repository> {
 
-	private Context context;
+	private LayoutInflater mInflater;
 	private List<Repository> repositoriesArray;
 	private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -24,7 +24,7 @@ public class RepositoriesAdapter extends ArrayAdapter<Repository> {
 	public RepositoriesAdapter(Context context, int textViewResourceId,
 			List<Repository> repositoriesArray) {
 		super(context, textViewResourceId, repositoriesArray);
-		this.context = context;
+		mInflater = LayoutInflater.from(context);
 		this.repositoriesArray = repositoriesArray;
 	}
 
@@ -32,9 +32,7 @@ public class RepositoriesAdapter extends ArrayAdapter<Repository> {
 		View view = convertView;
 
 		if (view == null) {
-			LayoutInflater vi = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = vi.inflate(R.layout.repositories_entry, null);
+			view = mInflater.inflate(R.layout.repositories_entry, null);
 		}
 
 		Repository repository = repositoriesArray.get(position);

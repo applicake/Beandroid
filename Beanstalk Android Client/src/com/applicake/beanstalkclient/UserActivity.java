@@ -51,7 +51,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_user_footer, null,
 				false);
 		footerView.setOnClickListener(this);
-		
+
 		userList.addFooterView(footerView);
 		userList.setAdapter(userAdapter);
 		userList.setOnItemClickListener(this);
@@ -60,11 +60,11 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 		new DownloadUsersListTask().execute();
 
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Constants.REFRESH_ACTIVITY){
+		if (resultCode == Constants.REFRESH_ACTIVITY) {
 			new DownloadUsersListTask().execute();
 		}
 	}
@@ -122,22 +122,18 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 		@Override
 		protected void onPostExecute(ArrayList<User> parsedArray) {
 			progressDialog.cancel();
-			userArray = parsedArray;
+			userArray.clear();
+			userArray.addAll(parsedArray);
 
-			if (userArray != null && !userArray.isEmpty()) {
-				userAdapter.notifyDataSetChanged();
-				userAdapter.clear();
+			userAdapter.notifyDataSetChanged();
 
-				for (int i = 0; i < userArray.size(); i++) {
-					userAdapter.add(userArray.get(i));
-				}
-			}
-			int usersInPlan = Plans.getPlanById(prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfUsers();
+			int usersInPlan = Plans.getPlanById(prefs.getInt(Constants.ACCOUNT_PLAN, 0))
+					.getNumberOfUsers();
 			int numberLeft = usersInPlan - userArray.size();
-			userLeftCounter.setText("available users: "+ String.valueOf(numberLeft)+"/"+String.valueOf(usersInPlan));
+			userLeftCounter.setText("available users: " + String.valueOf(numberLeft)
+					+ "/" + String.valueOf(usersInPlan));
 
-//			userAdapter.notifyDataSetChanged();
-
+			// userAdapter.notifyDataSetChanged();
 
 		}
 

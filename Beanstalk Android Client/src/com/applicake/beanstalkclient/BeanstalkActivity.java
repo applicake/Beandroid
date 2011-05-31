@@ -109,19 +109,26 @@ public abstract class BeanstalkActivity extends Activity {
 
 	//action bar handling
 	public void onRepositoriesButtonClick(View v) {
-		Toast.makeText(getApplicationContext(), "Repositories button clicked", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), RepositoriesActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivityForResult(intent, 0);
 	}
 	
 	public void onUsersButtonClick(View v) {
-		Toast.makeText(getApplicationContext(), "Users button clicked", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivityForResult(intent, 0);
 	}
 	
 	public void onDeploymentButtonClick(View v) {
+
 		Toast.makeText(getApplicationContext(), "Deployment button clicked", Toast.LENGTH_SHORT).show();
 	}
 	
 	public void onHomeButtonClick(View v) {
-		Toast.makeText(getApplicationContext(), "Home button clicked", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivityForResult(intent, 0);
 	}
 	
 }

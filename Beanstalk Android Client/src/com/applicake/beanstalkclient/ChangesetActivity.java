@@ -36,7 +36,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 	private ListView changesList;
 	private Button changesetButton;
 	private Button commentsButton;
-	private ArrayList<Comment> commentArray = new ArrayList<Comment>();
+	private ArrayList<Comment> commentsArray;
 	private ListView commentList;
 	private CommentAdapter commentAdapter;
 	private boolean commentListParsed;
@@ -48,19 +48,19 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 	// loading more comments
 	public static final int NUMBER_OF_ENTRIES_PER_PAGE = 15;
-	private boolean listMightHaveMoreItems = false;
 	private int lastLoadedPage = 0;
-	private View headerView;
-	private ProgressBar headerProgressBar;
-	private TextView headerBodyText;
+	private View footerRefreshButtonView;
+	private ProgressBar footerRefreshProgressBar;
+	private TextView footerRefreshBodyText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// loadinig initial data and layout
 		setContentView(R.layout.changeset_layout);
 		mContext = this;
 		Intent acitivyIntent = getIntent();
-
 		commentListParsed = false;
 		repoId = acitivyIntent.getIntExtra(Constants.COMMIT_REPOSITORY_ID, 0);
 		revisionId = acitivyIntent.getStringExtra(Constants.COMMIT_REVISION_ID);
@@ -84,55 +84,48 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		ArrayList<YamlEntry> changesArray = new ArrayList<YamlEntry>(changedFilesArray);
 		changesArray.addAll(changedDirsArray);
 
-		// handle comments list and adapter
-		commentList = (ListView) findViewById(R.id.commentsList);
-
-		View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_list_footer,
-				null, false);
-		commentList.addFooterView(footerView);
-
-		
-		commentAdapter = new CommentAdapter(this,
-				R.layout.comment_list_entry, commentArray);
-
-		// adding header view and assigning its elements
-		headerView = ((LayoutInflater) getApplicationContext().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_list_header,
-				null, false);
-
-		headerProgressBar = (ProgressBar) headerView
-				.findViewById(R.id.commentsDownloadProgressBar);
-		headerBodyText = (TextView) headerView.findViewById(R.id.refreshWidgetBody);
-		headerView.setOnClickListener(this);
-		commentList.addHeaderView(headerView);
-
-
-		newCommentBody = (EditText) footerView.findViewById(R.id.newCommentBody);
-		submitButton = (Button) footerView.findViewById(R.id.submitButton);
-		submitButton.setOnClickListener(this);
-		
-		commentList.setAdapter(commentAdapter);
-
 		// handle changes list and adapter
+		changesList = (ListView) findViewById(R.id.changesList);
+
 		ChangesAdapter changesAdapter = new ChangesAdapter(this,
 				R.layout.changeset_list_entry, changesArray);
 
-		changesList = (ListView) findViewById(R.id.changesList);
 		changesList.setAdapter(changesAdapter);
 		changesList.setEnabled(false);
 
+		// handle comments list and adapter
+		commentList = (ListView) findViewById(R.id.commentsList);
+		commentsArray = new ArrayList<Comment>();
+		commentAdapter = new CommentAdapter(mContext, R.layout.comment_list_entry,
+				commentsArray);
 
-		if (changesArray != null && !changesArray.isEmpty()) {
-			changesAdapter.notifyDataSetChanged();
-			changesAdapter.clear();
+		// adding refresh footer view and assigning its elements
+		footerRefreshButtonView = ((LayoutInflater) getApplicationContext()
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
+				R.layout.comment_list_footer_refresh, commentList, false);
 
-			for (int i = 0; i < changesArray.size(); i++) {
-				changesAdapter.add(changesArray.get(i));
-			}
-		}
+		footerRefreshProgressBar = (ProgressBar) footerRefreshButtonView
+				.findViewById(R.id.commentsDownloadProgressBar);
+		footerRefreshBodyText = (TextView) footerRefreshButtonView
+				.findViewById(R.id.refreshWidgetBody);
+		footerRefreshButtonView.setOnClickListener(this);
 
-		changesAdapter.notifyDataSetChanged();
+		// adding input footer view with comment input box and assigning its elements
+		View footerCommentInputView = ((LayoutInflater) getApplicationContext()
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
+				R.layout.comment_list_footer, commentList, false);
+
+		newCommentBody = (EditText) footerCommentInputView
+				.findViewById(R.id.newCommentBody);
+		submitButton = (Button) footerCommentInputView.findViewById(R.id.submitButton);
+		submitButton.setOnClickListener(this);
+
+		commentList.addFooterView(footerRefreshButtonView);
+		commentList.addFooterView(footerCommentInputView);
+		commentList.setAdapter(commentAdapter);
+		
+		footerRefreshButtonView.setEnabled(false);
+		footerRefreshButtonView.setClickable(false);
 
 	}
 
@@ -142,7 +135,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			changesList.setVisibility(View.VISIBLE);
 			commentList.setVisibility(View.GONE);
 
-		} else if (v.getId() == headerView.getId()) {
+		} else if (v.getId() == footerRefreshButtonView.getId()) {
 			new ParseMoreCommentListTask().execute(String.valueOf(repoId), revisionId);
 
 		} else if (v.getId() == commentsButton.getId()) {
@@ -166,15 +159,6 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 	}
 
 	public class ParseCommentListTask extends AsyncTask<String, Void, ArrayList<Comment>> {
-
-		ProgressDialog progressDialog;
-
-		@Override
-		protected void onPreExecute() {
-			progressDialog = ProgressDialog.show(mContext, "Please wait...",
-					"downloading comments");
-
-		}
 
 		@Override
 		protected ArrayList<Comment> doInBackground(String... params) {
@@ -208,23 +192,17 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		@Override
 		protected void onPostExecute(ArrayList<Comment> result) {
-			progressDialog.cancel();
-			commentArray = result;
-
-			if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE) {
-				headerProgressBar.setVisibility(View.GONE);
-				listMightHaveMoreItems = false;
-			} else {
-				listMightHaveMoreItems = true;
-			}
+			commentsArray.addAll(result);
+			footerRefreshProgressBar.setVisibility(View.GONE);
+			footerRefreshButtonView.setEnabled(true);
+			footerRefreshButtonView.setClickable(true);
+			footerRefreshBodyText.setText("Click here do download more comments");
+			
+			// determine whether there are more comments to be downloaded; if so
+			// - display header button
+			if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE)
+				commentList.removeFooterView(footerRefreshButtonView);
 			lastLoadedPage = 1;
-
-			// commentArray = result;
-			if (commentArray != null && !commentArray.isEmpty()) {
-				for (int i = 0; i < commentArray.size(); i++) {
-					commentAdapter.add(commentArray.get(i));
-				}
-			}
 			commentAdapter.notifyDataSetChanged();
 
 		}
@@ -236,10 +214,10 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		@Override
 		protected void onPreExecute() {
-			headerProgressBar.setVisibility(View.VISIBLE);
-			headerBodyText.setText("Downloading more comments...");
-			headerView.setEnabled(false);
-			headerView.setClickable(false);
+			footerRefreshProgressBar.setVisibility(View.VISIBLE);
+			footerRefreshBodyText.setText("Downloading more comments...");
+			footerRefreshButtonView.setEnabled(false);
+			footerRefreshButtonView.setClickable(false);
 		}
 
 		@Override
@@ -275,26 +253,17 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		@Override
 		protected void onPostExecute(ArrayList<Comment> result) {
-
-			if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE)
-				headerView.setVisibility(View.GONE);
-			// listMightHaveMoreItems = false;
-			// } else {
-			// listMightHaveMoreItems = true;
-			// }
 			lastLoadedPage++;
 
-			for (Comment comment : commentArray) {
-				result.add(comment);
+			if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE) {
+				commentList.removeFooterView(footerRefreshButtonView);
+			} else {
+				footerRefreshProgressBar.setVisibility(View.GONE);
+				footerRefreshBodyText.setText("Press here to download more comments");
+				footerRefreshButtonView.setEnabled(true);
+				footerRefreshButtonView.setClickable(true);
 			}
-			commentArray = result;
-
-			if (commentArray != null && !commentArray.isEmpty()) {
-				commentAdapter.clear();
-				for (int i = 0; i < commentArray.size(); i++) {
-					commentAdapter.add(commentArray.get(i));
-				}
-			}
+			commentsArray.addAll(result);
 			commentAdapter.notifyDataSetChanged();
 
 		}
@@ -347,8 +316,8 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 				try {
 					Comment comment = XmlParser.parseComment(result);
-					commentArray.add(comment);
-					commentAdapter.add(comment);
+					commentsArray.add(comment);
+					// commentAdapter.add(comment);
 					commentAdapter.notifyDataSetChanged();
 
 				} catch (SAXException e) {

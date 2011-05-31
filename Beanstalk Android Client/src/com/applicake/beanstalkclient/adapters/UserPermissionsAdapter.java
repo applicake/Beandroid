@@ -16,11 +16,11 @@ import com.applicake.beanstalkclient.Repository;
 
 public class UserPermissionsAdapter extends ArrayAdapter<Repository> {
 
-	private Context context;
 	private List<Repository> repositoriesArray;
 	private Map<Integer, Permission> repoIdToPermissionMap;
-	
-	public void setRepoIdToPermissionMap(Map<Integer, Permission> repoIdToPermissionMap){
+	private LayoutInflater mInflater;
+
+	public void setRepoIdToPermissionMap(Map<Integer, Permission> repoIdToPermissionMap) {
 		this.repoIdToPermissionMap = repoIdToPermissionMap;
 	}
 
@@ -28,19 +28,13 @@ public class UserPermissionsAdapter extends ArrayAdapter<Repository> {
 			List<Repository> repositoriesArray,
 			Map<Integer, Permission> repoIdToPermissionMap) {
 		super(context, textViewResourceId, repositoriesArray);
-		this.context = context;
+		mInflater = LayoutInflater.from(context);
 		this.repositoriesArray = repositoriesArray;
 		this.repoIdToPermissionMap = repoIdToPermissionMap;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
-
-		if (view == null) {
-			LayoutInflater vi = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = vi.inflate(R.layout.user_permissions_entry, null);
-		}
+		View view = mInflater.inflate(R.layout.user_permissions_entry, null);
 
 		Repository repository = repositoriesArray.get(position);
 		Permission permission;
@@ -62,7 +56,6 @@ public class UserPermissionsAdapter extends ArrayAdapter<Repository> {
 					.findViewById(R.id.repositoryLabel);
 			TextView deploymentPermissionLabel = (TextView) view
 					.findViewById(R.id.deploymentLabel);
-	
 
 			if (repoIdToPermissionMap.containsKey(repository.getId())) {
 				permission = repoIdToPermissionMap.get(repository.getId());
@@ -87,7 +80,7 @@ public class UserPermissionsAdapter extends ArrayAdapter<Repository> {
 			} else {
 				repoPermissionLabel.setText("no access");
 				repoPermissionLabel.getBackground().setLevel(2);
-				
+
 				deploymentPermissionLabel.setText("read");
 				deploymentPermissionLabel.getBackground().setLevel(2);
 			}

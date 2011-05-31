@@ -120,16 +120,16 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements OnIt
 
 		@Override
 		protected void onPostExecute(ArrayList<Changeset> changesetParserArray) {
-			changesetArray = changesetParserArray;
+			changesetArray.addAll(changesetParserArray);
 			
-			if (changesetArray != null && !changesetArray.isEmpty()) {
-				changesetAdapter.notifyDataSetChanged();
-				changesetAdapter.clear();
-				
-				for (int i = 0; i < changesetArray.size(); i++) {
-					changesetAdapter.add(changesetArray.get(i));
-				}
-			}
+//			if (changesetArray != null && !changesetArray.isEmpty()) {
+//				changesetAdapter.notifyDataSetChanged();
+//				changesetAdapter.clear();
+//				
+//				for (int i = 0; i < changesetArray.size(); i++) {
+//					changesetAdapter.add(changesetArray.get(i));
+//				}
+//			}
 			
 			changesetAdapter.notifyDataSetChanged();
 			progressDialog.cancel();

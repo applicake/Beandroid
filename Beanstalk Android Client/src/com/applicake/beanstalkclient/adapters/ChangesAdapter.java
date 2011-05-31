@@ -15,13 +15,13 @@ import com.applicake.beanstalkclient.YamlEntry;
 
 public class ChangesAdapter extends ArrayAdapter<YamlEntry> {
 
-	private Context context;
+	private LayoutInflater mInflater;
 	private List<YamlEntry> changesArray;
 
 	public ChangesAdapter(Context context, int textViewResourceId,
 			List<YamlEntry> changesArray) {
-		super(context, textViewResourceId);
-		this.context = context;
+		super(context, textViewResourceId, changesArray);
+		mInflater = LayoutInflater.from(context);
 		this.changesArray = changesArray;
 
 	}
@@ -30,9 +30,7 @@ public class ChangesAdapter extends ArrayAdapter<YamlEntry> {
 		View view = convertView;
 
 		if (view == null) {
-			LayoutInflater vi = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = vi.inflate(R.layout.changeset_list_entry, null);
+			view = mInflater.inflate(R.layout.changeset_list_entry, null);
 		}
 
 		YamlEntry changeEntry = changesArray.get(position);

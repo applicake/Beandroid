@@ -8,7 +8,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.applicake.beanstalkclient.Permission;
-import com.applicake.beanstalkclient.Repository;
 
 public class PermissionsHandler extends DefaultHandler {
 
@@ -107,7 +106,7 @@ public class PermissionsHandler extends DefaultHandler {
 
 	public HashMap<Integer, Permission> retrievePermissionHashMap() {
 		HashMap<Integer, Permission> repoHashMap = new HashMap<Integer, Permission>();
-		for (Permission r : permissionList){
+		for (Permission r : permissionList) {
 			repoHashMap.put(r.getRepositoryId(), r);
 		}
 		return repoHashMap;

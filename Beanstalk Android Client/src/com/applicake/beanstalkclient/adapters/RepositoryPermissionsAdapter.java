@@ -19,7 +19,6 @@ import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -34,17 +33,17 @@ import android.widget.TextView;
 
 public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
-	private final Context context;
 	private Repository repository;
 	private List<User> userArray;
 	private Map<Integer, Permission> userIdToPermissionMap = new HashMap<Integer, Permission>();
 	private SharedPreferences prefs;
+	private LayoutInflater mInflater;
 
 	public RepositoryPermissionsAdapter(Context context, SharedPreferences prefs,
 			Repository repository, int textViewResourceId, List<User> userArray) {
 		super(context, textViewResourceId, userArray);
 		this.repository = repository;
-		this.context = context;
+		mInflater = LayoutInflater.from(context);
 		this.prefs = prefs;
 		this.userArray = userArray;
 	}
@@ -54,13 +53,9 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// View view = convertView;
 
-		// if (view == null) {
-		LayoutInflater vi = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = vi.inflate(R.layout.repository_permissions_entry, null);
-		// }
+		View view = mInflater.inflate(R.layout.repository_permissions_entry, parent,
+				false);
 
 		User user = userArray.get(position);
 
@@ -75,19 +70,23 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 			TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
 			userEmailTextView.setText(email);
-			
+
 			if (user.getAdmin() == UserType.USER) {
-			
+
 				new DownloadPermissionsTask().execute(String.valueOf(user.getId()), view);
 			} else if (user.getAdmin() == UserType.ADMIN) {
-				
-				((ProgressBar) view.findViewById(R.id.loadingBar)).setVisibility(View.GONE);
-				((TextView) view.findViewById(R.id.adminLabel)).setVisibility(View.VISIBLE);
+
+				((ProgressBar) view.findViewById(R.id.loadingBar))
+						.setVisibility(View.GONE);
+				((TextView) view.findViewById(R.id.adminLabel))
+						.setVisibility(View.VISIBLE);
 
 			} else if (user.getAdmin() == UserType.OWNER) {
-				
-				((ProgressBar) view.findViewById(R.id.loadingBar)).setVisibility(View.GONE);
-				((TextView) view.findViewById(R.id.ownerLabel)).setVisibility(View.VISIBLE);
+
+				((ProgressBar) view.findViewById(R.id.loadingBar))
+						.setVisibility(View.GONE);
+				((TextView) view.findViewById(R.id.ownerLabel))
+						.setVisibility(View.VISIBLE);
 			}
 
 		}
@@ -126,14 +125,12 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 			Log.w("user ID", userId);
 
-			XmlParser xmlParser = new XmlParser();
-
 			try {
 				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(
 						prefs, userId);
 				Log.w("user permission xml", permissionsXml);
 
-				return xmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
+				return XmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
 			} catch (HttpRetreiverException e) {
 				// TODO generate http parsing exception handling
 				e.printStackTrace();

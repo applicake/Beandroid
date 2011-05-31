@@ -17,23 +17,22 @@ import android.widget.TextView;
 
 public class UserAdapter extends ArrayAdapter<User> {
 
-	private Context context;
+	
 	private List<User> userArray;
+	private LayoutInflater mInflater;
 
 	public UserAdapter(Context context, int textViewResourceId, List<User> userArray) {
 		super(context, textViewResourceId, userArray);
-		this.context = context;
+		mInflater = LayoutInflater.from(context);
 		this.userArray = userArray;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// View view = convertView;
+		View view = convertView;
 
-		// if (view == null) {
-		LayoutInflater vi = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = vi.inflate(R.layout.user_list_entry, null);
-		// }
+		if (view == null) {
+			view = mInflater.inflate(R.layout.user_list_entry, null);
+		}
 
 		User user = userArray.get(position);
 

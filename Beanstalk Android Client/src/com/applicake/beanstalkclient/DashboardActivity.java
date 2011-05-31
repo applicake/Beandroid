@@ -37,11 +37,10 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 	// never-ending list implementation fields
 	private boolean loading = true;
 	private boolean listMightHaveMoreItems = false;
-	private int lastLoadedPage = 0;
-
+	private int lastLoadedPage = 1;
 	private View footerView;
-	
-	
+
+	private ListView changesetList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +49,14 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		setContentView(R.layout.dashboard_activity_layout);
 		
 		mContext = this;
+		
+		changesetList = (ListView) findViewById(R.id.changesetList);
 		changesetArray = new ArrayList<Changeset>();
 		changesetAdapter = new ChangesetAdapter(this, R.layout.dashboard_entry, changesetArray);
-		
-		ListView changesetList = (ListView) findViewById(R.id.changesetList);
-		
+	
 		footerView = ((LayoutInflater) getApplicationContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.dashboard_activity_footer,
-				null, false);
+				changesetList, false);
 		footerView.setEnabled(false);
 		changesetList.addFooterView(footerView);
 		
@@ -146,21 +145,22 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		@Override
 		protected void onPostExecute(ArrayList<Changeset> changesetParserArray) {
 			loading = false;
-			lastLoadedPage = 1;
+//			lastLoadedPage = 1;
 			if (changesetParserArray.size() < NUMBER_OF_ENTRIES_PER_PAGE){
-				footerView.setVisibility(View.GONE);
+				changesetList.removeFooterView(footerView);
+//				footerView.setVisibility(View.GONE);
 				listMightHaveMoreItems = false;
 			} else {
 				listMightHaveMoreItems = true;
 			}
-			changesetArray = changesetParserArray;
+			changesetArray.addAll(changesetParserArray);
 			changesetAdapter.setRepoHashMap(repositoryMap);
-			
-			if (changesetArray != null && !changesetArray.isEmpty()) {
-				for (int i = 0; i < changesetArray.size(); i++) {
-					changesetAdapter.add(changesetArray.get(i));
-				}
-			}
+//			
+//			if (changesetArray != null && !changesetArray.isEmpty()) {
+//				for (int i = 0; i < changesetArray.size(); i++) {
+//					changesetAdapter.add(changesetArray.get(i));
+//				}
+//			}
 			changesetAdapter.notifyDataSetChanged();
 //			progressDialog.cancel();
 		}
@@ -203,8 +203,9 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 
 		@Override
 		protected void onPostExecute(ArrayList<Changeset> changesetParserArray) {	
-			loading = false;
 			lastLoadedPage++;
+			loading = false;
+			
 			
 			if (changesetParserArray.size() < NUMBER_OF_ENTRIES_PER_PAGE){
 				footerView.setVisibility(View.GONE);
@@ -216,16 +217,11 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 			
 			if (changesetParserArray != null && !changesetParserArray.isEmpty()) {
 				for (Changeset ch : changesetParserArray) {
-					changesetAdapter.add(ch);
 					changesetArray.add(ch);
 				}
 			}
 			changesetAdapter.notifyDataSetChanged();
 		}
 	}
-
-
-
-
 
 }

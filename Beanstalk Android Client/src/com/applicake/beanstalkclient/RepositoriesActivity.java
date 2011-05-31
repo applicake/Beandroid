@@ -120,21 +120,22 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
 		@Override
 		protected void onPostExecute(ArrayList<Repository> result) {
-			repositoriesArray = result;
+			repositoriesArray.clear();
+			repositoriesArray.addAll(result);
 			progressDialog.cancel();
-
+			
 			// commentArray = result;
-			if (repositoriesArray != null && !repositoriesArray.isEmpty()) {
-				repositoriesAdapter.notifyDataSetChanged();
-				repositoriesAdapter.clear();
+//			if (repositoriesArray != null && !repositoriesArray.isEmpty()) {
+//				repositoriesAdapter.notifyDataSetChanged();
+//				repositoriesAdapter.clear();
+//
+//				for (int i = 0; i < repositoriesArray.size(); i++) {
+//					repositoriesAdapter.add(repositoriesArray.get(i));
+//				}
+//
+//			}
 
-				for (int i = 0; i < repositoriesArray.size(); i++) {
-					repositoriesAdapter.add(repositoriesArray.get(i));
-				}
-
-			}
-
-//			repositoriesAdapter.notifyDataSetChanged();
+			repositoriesAdapter.notifyDataSetChanged();
 			
 			int repositoriesInPlan = Plans.getPlanById(prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfRepos();
 			int numberLeft = repositoriesInPlan - repositoriesArray.size();

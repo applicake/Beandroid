@@ -65,26 +65,28 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 			Repository repository = repositoriesArray.get(itemNumber);
 			intent.putExtra(Constants.REPOSITORY, repository);
 			intent.putExtra(Constants.USER, user);
-			if (repoIdToPermission.containsKey(repository.getId())){
-				intent.putExtra(Constants.PERMISSION, repoIdToPermission.get(repository.getId()));
-			} 
+			if (repoIdToPermission.containsKey(repository.getId())) {
+				intent.putExtra(Constants.PERMISSION,
+						repoIdToPermission.get(repository.getId()));
+			}
 			startActivityForResult(intent, 0);
 		}
 
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == Constants.REFRESH_ACTIVITY){
+		if (resultCode == Constants.REFRESH_ACTIVITY) {
 			task = new DownloadRepositoryListTask();
 			task.execute();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	@Override
 	protected void cancelAllDownloadTasks() {
-		if (task != null) task.cancel(true);
+		if (task != null)
+			task.cancel(true);
 		super.cancelAllDownloadTasks();
 	}
 
@@ -106,13 +108,14 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 			try {
 				String repositoriesXml = httpRetriever.getRepositoryListXML(prefs);
-				repositoriesArray = XmlParser.parseRepositoryList(repositoriesXml);
-				
+				repositoriesArray.clear();
+				repositoriesArray.addAll(XmlParser.parseRepositoryList(repositoriesXml));
 
-				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(prefs,
-						String.valueOf(user.getId()));
+				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(
+						prefs, String.valueOf(user.getId()));
 				Log.w("permission xml", permissionsXml);
-				repoIdToPermission = XmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
+				repoIdToPermission = XmlParser
+						.parseRepoIdToPermissionHashMap(permissionsXml);
 			} catch (HttpRetreiverException e) {
 				// TODO generate http parsing exception handling
 				e.printStackTrace();
@@ -136,22 +139,12 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 			if (result == 1) {
 				repositoriesAdapter.setRepoIdToPermissionMap(repoIdToPermission);
-				if (repositoriesArray != null && !repositoriesArray.isEmpty()) {
-//					repositoriesAdapter.notifyDataSetChanged();
-					repositoriesAdapter.clear();
-
-					for (int i = 0; i < repositoriesArray.size(); i++) {
-						repositoriesAdapter.add(repositoriesArray.get(i));
-					}
-
-				}
-
 			}
 
 			repositoriesAdapter.notifyDataSetChanged();
 
 		}
-		
+
 		@Override
 		protected void onCancelled() {
 			progressDialog.cancel();

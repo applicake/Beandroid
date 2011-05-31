@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class RepositoryChangesetAdapter extends ArrayAdapter<Changeset> {
 
-	private Context context;
+	private LayoutInflater mInflater;
 	private List<Changeset> changesetArray;
 	private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 	private SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm");
@@ -25,7 +25,7 @@ public class RepositoryChangesetAdapter extends ArrayAdapter<Changeset> {
 	public RepositoryChangesetAdapter(Context context, int textViewResourceId,
 			List<Changeset> changesetArray) {
 		super(context, textViewResourceId, changesetArray);
-		this.context = context;
+		mInflater = LayoutInflater.from(context);
 		this.changesetArray = changesetArray;
 	}
 
@@ -33,9 +33,7 @@ public class RepositoryChangesetAdapter extends ArrayAdapter<Changeset> {
 		View view = convertView;
 
 		if (view == null) {
-			LayoutInflater vi = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = vi.inflate(R.layout.repository_changeset_entry, null);
+			view = mInflater.inflate(R.layout.repository_changeset_entry, null);
 		}
 
 		Changeset changeset = changesetArray.get(position);
