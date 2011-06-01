@@ -14,8 +14,10 @@ import com.applicake.beanstalkclient.utils.XmlParser;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mContext = this;
 		prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
 		setContentView(R.layout.main);
 		// auto login with previously stored user data
@@ -54,13 +57,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 			String storedDomain = prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
 			String storedLogin = prefs.getString(Constants.USER_LOGIN, "");
 			String storedPassword = prefs.getString(Constants.USER_PASSWORD, "");
-			progressDialog = ProgressDialog.show(this, "Checking login credentials",
-					"Please wait...");
 			new VerifyLoginTask().execute(storedDomain, storedLogin, storedPassword);
 
 		}
 
-		mContext = getApplicationContext();
+		
 
 		Button loginButton = (Button) findViewById(R.id.login_button);
 		loginButton.setOnClickListener(this);
@@ -97,8 +98,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 			String password = passwordEditText.getText().toString();
 			String domain = domainaccountEditText.getText().toString();
 
-			progressDialog = ProgressDialog.show(this, "Checking login credentials",
-					"Please wait...");
 			Editor editor = prefs.edit();
 			editor.putBoolean(Constants.REMEBER_ME_CHECKBOX,
 					remeberMeCheckBox.isChecked());
@@ -119,8 +118,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 
 	}
-	
-	public void clearCredentials(){
+
+	public void clearCredentials() {
 		Editor editor = prefs.edit();
 		editor.putBoolean(Constants.CREDENTIALS_STORED, false);
 		editor.putString(Constants.USER_ACCOUNT_DOMAIN, "");
@@ -135,8 +134,27 @@ public class LoginActivity extends Activity implements OnClickListener {
 		private String domain;
 		private String login;
 		private String password;
-		
+
 		private Account account;
+
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
+
+		@Override
+		protected void onPreExecute() {
+			progressDialog = ProgressDialog.show(mContext, "Checking login credentials",
+					"Please wait...");
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Logging in task was cancelled");
+				}
+			});
+			super.onPreExecute();
+		}
 
 		@Override
 		protected Integer doInBackground(String... params) {
@@ -149,9 +167,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 			try {
 				loginAttemptResultxml = httpRetriever.checkCredentials(domain, login,
 						password);
-				
+
 				account = XmlParser.parseAccountInfo(loginAttemptResultxml);
-				
+
 			} catch (HttpRetreiverException e) {
 				return Integer.parseInt(e.getMessage());
 			} catch (SAXException e) {
@@ -164,16 +182,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			return 200;
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 
 			if ((result == 200) && (account != null)) {
-				
+
 				GUI.displayMonit(mContext, "Access granted");
 				Editor editor = prefs.edit();
 				editor.putString(Constants.USER_ACCOUNT_DOMAIN, domain);
@@ -185,7 +203,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 				Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 				startActivityForResult(intent, 0);
-			
+
 			} else if (result == 302) {
 				GUI.displayMonit(mContext, "Invalid account domain");
 			} else if (result == 401) {

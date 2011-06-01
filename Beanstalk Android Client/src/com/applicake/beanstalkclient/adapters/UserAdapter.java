@@ -28,11 +28,8 @@ public class UserAdapter extends ArrayAdapter<User> {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
-
-		if (view == null) {
-			view = mInflater.inflate(R.layout.user_list_entry, null);
-		}
+		
+		View view = mInflater.inflate(R.layout.user_list_entry, null);
 
 		User user = userArray.get(position);
 

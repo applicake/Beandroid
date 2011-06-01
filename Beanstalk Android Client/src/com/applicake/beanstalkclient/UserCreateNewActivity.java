@@ -1,14 +1,19 @@
 package com.applicake.beanstalkclient;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import com.applicake.beanstalkclient.adapters.SpinnerTimezoneAdapter;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.RailsTimezones;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class UserCreateNewActivity extends BeanstalkActivity implements OnClickListener {
 	private Button createButton;
@@ -25,9 +31,11 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 	private EditText nameEditText;
 	private EditText lastNameEditText;
 	private EditText emailEditText;
-	private EditText timezoneEditText;
+	private Spinner timezoneSpinner;
 	private CheckBox adminCheckBox;
 	private EditText passwordEditText;
+	private ArrayList<String> popupValuesList;
+	private ArrayList<String> spinnerValuesList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +47,13 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 		nameEditText = (EditText) findViewById(R.id.nameEditText);
 		lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
 		emailEditText = (EditText) findViewById(R.id.emailEditText);
-		timezoneEditText = (EditText) findViewById(R.id.timezoneEditText);
+		popupValuesList = RailsTimezones.getDetailedRailsTimezonesArrayList();
+		spinnerValuesList = RailsTimezones.listOfRailsTimezones();
+
+		timezoneSpinner
+				.setAdapter(new SpinnerTimezoneAdapter(this,
+						android.R.layout.simple_spinner_item, popupValuesList,
+						spinnerValuesList));
 		passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 		adminCheckBox = (CheckBox) findViewById(R.id.adminCheckBox);
 		createButton = (Button) findViewById(R.id.createButton);
@@ -59,11 +73,24 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 
 		ProgressDialog progressDialog;
 		String errorMessage;
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"creating user");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Data sending task was cancelled");
+				}
+			});
+
 			super.onPreExecute();
 		}
 
@@ -76,6 +103,7 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 						.getText().toString().trim(), nameEditText.getText().toString()
 						.trim(), lastNameEditText.getText().toString().trim(),
 						emailEditText.getText().toString().trim(),
+						spinnerValuesList.get(timezoneSpinner.getSelectedItemPosition()),
 						adminCheckBox.isChecked(), passwordEditText.getText().toString()
 								.trim());
 				return httpSender.sendCreateUserXML(prefs, userCreateXml);
@@ -99,13 +127,13 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result == 201) {
 				GUI.displayMonit(mContext, "user was created!");
 				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 
-			} else if (result == 0){
+			} else if (result == 0) {
 				GUI.displayMonit(mContext, errorMessage);
 			}
 

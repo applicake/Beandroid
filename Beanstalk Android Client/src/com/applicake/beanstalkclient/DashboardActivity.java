@@ -110,8 +110,6 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		protected void onPreExecute() {
 			super.onPreExecute();
 			loading = true;
-//			progressDialog = ProgressDialog.show(mContext, "Please wait...",
-//			"Loading activity list...");
 		}
 
 		@Override
@@ -145,24 +143,17 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		@Override
 		protected void onPostExecute(ArrayList<Changeset> changesetParserArray) {
 			loading = false;
-//			lastLoadedPage = 1;
 			if (changesetParserArray.size() < NUMBER_OF_ENTRIES_PER_PAGE){
 				changesetList.removeFooterView(footerView);
-//				footerView.setVisibility(View.GONE);
 				listMightHaveMoreItems = false;
 			} else {
 				listMightHaveMoreItems = true;
 			}
 			changesetArray.addAll(changesetParserArray);
 			changesetAdapter.setRepoHashMap(repositoryMap);
-//			
-//			if (changesetArray != null && !changesetArray.isEmpty()) {
-//				for (int i = 0; i < changesetArray.size(); i++) {
-//					changesetAdapter.add(changesetArray.get(i));
-//				}
-//			}
+
 			changesetAdapter.notifyDataSetChanged();
-//			progressDialog.cancel();
+
 		}
 	}
 	
@@ -172,8 +163,6 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		protected void onPreExecute() {
 			super.onPreExecute();
 			loading = true;
-//			progressDialog = ProgressDialog.show(mContext, "Please wait...",
-//			"Loading activity list...");
 		}
 
 		@Override
@@ -208,7 +197,7 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 			
 			
 			if (changesetParserArray.size() < NUMBER_OF_ENTRIES_PER_PAGE){
-				footerView.setVisibility(View.GONE);
+				changesetList.removeFooterView(footerView);
 				listMightHaveMoreItems = false;
 			} else {
 				listMightHaveMoreItems = true;

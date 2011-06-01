@@ -19,7 +19,9 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -110,7 +112,8 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				.findViewById(R.id.refreshWidgetBody);
 		footerRefreshButtonView.setOnClickListener(this);
 
-		// adding input footer view with comment input box and assigning its elements
+		// adding input footer view with comment input box and assigning its
+		// elements
 		View footerCommentInputView = ((LayoutInflater) getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
 				R.layout.comment_list_footer, commentList, false);
@@ -123,7 +126,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		commentList.addFooterView(footerRefreshButtonView);
 		commentList.addFooterView(footerCommentInputView);
 		commentList.setAdapter(commentAdapter);
-		
+
 		footerRefreshButtonView.setEnabled(false);
 		footerRefreshButtonView.setClickable(false);
 
@@ -197,7 +200,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			footerRefreshButtonView.setEnabled(true);
 			footerRefreshButtonView.setClickable(true);
 			footerRefreshBodyText.setText("Click here do download more comments");
-			
+
 			// determine whether there are more comments to be downloaded; if so
 			// - display header button
 			if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE)
@@ -275,10 +278,22 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		ProgressDialog progressDialog;
 		String errorMessage = null;
 
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
+
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"sending comment");
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Logging in task was cancelled");
+				}
+			});
 			super.onPreExecute();
 		}
 
@@ -311,7 +326,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		@Override
 		protected void onPostExecute(String result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result != null) {
 
 				try {

@@ -8,7 +8,9 @@ import org.xml.sax.SAXException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -27,8 +29,8 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		OnClickListener {
 
-	private Context mContext; 
-	
+	private Context mContext;
+
 	private Repository repository;
 	private View colorLabel;
 	private TextView repoName;
@@ -47,7 +49,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.repository_details_layout);
 		repository = getIntent().getParcelableExtra(Constants.REPOSITORY);
-		
+
 		mContext = this;
 
 		colorLabel = findViewById(R.id.colorLabel);
@@ -60,7 +62,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		repoRevision = (TextView) findViewById(R.id.repoRevision);
 		repoStorageUsed = (TextView) findViewById(R.id.repoStorageUsed);
 		repoUpdatedAt = (TextView) findViewById(R.id.repoUpdatedAt);
-		
+
 		loadRepositoryData();
 
 		// add button listeners
@@ -77,7 +79,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 	}
 
 	public void loadRepositoryData() {
-		
+
 		colorLabel.getBackground().setLevel(repository.getColorLabelNo());
 		repoName.setText(repository.getName());
 		repoType.setText(repository.getType().equals("SubversionRepository") ? "SVN"
@@ -97,14 +99,14 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 				+ DateFormat.format(dateFormat, repository.getUpdatedAt()));
 
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Constants.REFRESH_ACTIVITY) {
 			setResult(resultCode);
 			new DownloadRepositoryInfo().execute();
-			
+
 		}
 	}
 
@@ -142,20 +144,39 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		}
 
 	}
-	
-	public class DownloadRepositoryInfo extends AsyncTask<Void, Void, Boolean>{
-		
+
+	public class DownloadRepositoryInfo extends AsyncTask<Void, Void, Boolean> {
+
 		Repository refreshedRepository;
-		ProgressDialog progressDialog = ProgressDialog.show(mContext, "Please wait", "repository data is being refreshed");
+
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
+		ProgressDialog progressDialog;
 		
+		protected void onPreExecute() {
+			progressDialog = ProgressDialog.show(mContext, "Please wait",
+					"Repository data is being refreshed");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Download task was cancelled");
+				}
+			});
+		};
+
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			try {
-				String repositoryXml = new HttpRetriever().getRepositoryXML(prefs, repository.getId());
+				String repositoryXml = new HttpRetriever().getRepositoryXML(prefs,
+						repository.getId());
 				repository = XmlParser.parseRepository(repositoryXml);
 			} catch (HttpRetreiverException e) {
 				// TODO Auto-generated catch block
-				
+
 				e.printStackTrace();
 				cancel(true);
 			} catch (ParserConfigurationException e) {
@@ -173,16 +194,16 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 			}
 			return true;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Boolean result) {
-			progressDialog.cancel();
-			if (result){
+			progressDialog.dismiss();
+			if (result) {
 				loadRepositoryData();
-				
+
 			}
 		}
-		
+
 	}
 
 }

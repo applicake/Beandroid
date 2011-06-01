@@ -117,7 +117,7 @@ public class XmlCreator {
 	}
 
 	public String createUserPropertiesChangeXML(String firstName, String lastName,
-			String email, boolean admin) throws IllegalArgumentException,
+			String email, String timezone, boolean admin) throws IllegalArgumentException,
 			IllegalStateException, IOException {
 
 		serializer = Xml.newSerializer();
@@ -130,6 +130,7 @@ public class XmlCreator {
 		addFirstName(firstName);
 		addLastName(lastName);
 		addEmail(email);
+		addTimezone(timezone);
 		addAdmin(admin ? "1" : "");
 
 		serializer.endTag("", "user");
@@ -138,8 +139,9 @@ public class XmlCreator {
 	}
 
 
+
 	public String createNewUserXML(String login, String firstName, String lastName,
-			String email, boolean admin, String password)
+			String email, String timezone, boolean admin, String password)
 			throws IllegalArgumentException, IllegalStateException, IOException {
 
 		serializer = Xml.newSerializer();
@@ -153,6 +155,7 @@ public class XmlCreator {
 		addFirstName(firstName);
 		addLastName(lastName);
 		addEmail(email);
+		addTimezone(timezone);
 		addAdmin(admin ? "1" : "");
 		addPassword(password);
 
@@ -181,6 +184,14 @@ public class XmlCreator {
 		serializer.endTag("", "permission");
 		serializer.endDocument();
 		return writer.toString();
+	}
+	
+
+	private void addTimezone(String timezone) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "timezone");
+		serializer.text(timezone);
+		serializer.endTag("", "timezone");
+		
 	}
 
 

@@ -11,6 +11,8 @@ import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -167,11 +169,25 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 	public class SendRepositoryCreateTask extends AsyncTask<Void, Void, Integer> {
 
 		ProgressDialog progressDialog;
+		
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"creating repository");
+			
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Logging in task was cancelled");
+				}
+			});
+			super.onPreExecute();
 			super.onPreExecute();
 		}
 
@@ -217,7 +233,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result == 201) {
 				GUI.displayMonit(mContext, "reposiotry was created successfully!");
 				setResult(Constants.REFRESH_ACTIVITY);

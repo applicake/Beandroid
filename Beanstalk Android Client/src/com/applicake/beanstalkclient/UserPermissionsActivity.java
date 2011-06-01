@@ -10,7 +10,9 @@ import org.xml.sax.SAXException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.applicake.beanstalkclient.adapters.UserPermissionsAdapter;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
@@ -93,12 +96,25 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 	public class DownloadRepositoryListTask extends AsyncTask<String, Void, Integer> {
 
 		private static final int SUCCESSFUL_PARSING = 1;
+		
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(mContext, "Loading Repository list",
 					"Please wait...");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Data sending task was cancelled");
+				}
+			});
 		}
 
 		@Override
@@ -135,7 +151,7 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 
 			if (result == 1) {
 				repositoriesAdapter.setRepoIdToPermissionMap(repoIdToPermission);
@@ -143,12 +159,6 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 			repositoriesAdapter.notifyDataSetChanged();
 
-		}
-
-		@Override
-		protected void onCancelled() {
-			progressDialog.cancel();
-			super.onCancelled();
 		}
 
 	}

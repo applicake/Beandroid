@@ -1,134 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@color/ApplicationBackground">
-	<include
-		layout="@layout/actionbar"
-		android:id="@+id/actionbar"
-		android:layout_alignParentTop="true" />
-
-	<View
-		android:id="@+id/colorLabel"
-		android:layout_below="@id/actionbar"
-		android:layout_alignParentLeft="true"
+	<RelativeLayout
+		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_width="15dp"
-		android:layout_marginRight="5dp"
-		android:background="@drawable/repository_labels">
-	</View>
-	<TableRow
-		android:id="@+id/topRow"
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:layout_toRightOf="@+id/colorLabel"
-		android:layout_below="@id/actionbar">
+		android:background="@color/ApplicationBackground">
+		<include
+			layout="@layout/actionbar"
+			android:id="@+id/actionbar"
+			android:layout_alignParentTop="true" />
+
+		<View
+			android:id="@+id/colorLabel"
+			android:layout_below="@id/actionbar"
+			android:layout_alignParentLeft="true"
+			android:layout_height="fill_parent"
+			android:layout_width="15dp"
+			android:layout_marginRight="5dp"
+			android:background="@drawable/repository_labels">
+		</View>
+		<TableRow
+			android:id="@+id/topRow"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_toRightOf="@+id/colorLabel"
+			android:layout_below="@id/actionbar">
+			<TextView
+				android:id="@+id/repoTitle"
+				android:layout_weight="7"
+				android:layout_width="0dp"
+				android:textColor="@color/ApplicationText"
+				android:textSize="@dimen/MediumTextSize"
+				android:textStyle="bold"
+				android:layout_height="wrap_content"></TextView>
+			<TextView
+				android:id="@+id/repoType"
+				android:layout_weight="2"
+				android:gravity="right"
+				android:paddingRight="3dp"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"></TextView>
+
+		</TableRow>
 		<TextView
-			android:id="@+id/repoTitle"
-			android:layout_weight="7"
-			android:layout_width="0dp"
+			android:id="@+id/repoName"
 			android:textColor="@color/ApplicationText"
-			android:textSize="@dimen/MediumTextSize"
-			android:textStyle="bold"
+			android:textSize="@dimen/SmallTextSize"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/topRow"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
+
 		<TextView
-			android:id="@+id/repoType"
-			android:layout_weight="2"
-			android:gravity="right"
-			android:paddingRight="3dp"
-			android:layout_width="0dp"
+			android:id="@+id/repoCreatedAt"
+			android:textColor="@color/ApplicationText"
+			android:textSize="@dimen/SmallTextSize"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repoName"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
 
-	</TableRow>
-	<TextView
-		android:id="@+id/repoName"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/SmallTextSize"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/topRow"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		<TextView
+			android:id="@+id/repoLastCommit"
+			android:textColor="@color/ApplicationText"
+			android:textSize="@dimen/SmallTextSize"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repoCreatedAt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
 
-	<TextView
-		android:id="@+id/repoCreatedAt"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/SmallTextSize"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repoName"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		<TextView
+			android:id="@+id/repoRevision"
+			android:textColor="@color/ApplicationText"
+			android:textSize="@dimen/SmallTextSize"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repoLastCommit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
 
-	<TextView
-		android:id="@+id/repoLastCommit"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/SmallTextSize"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repoCreatedAt"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		<TextView
+			android:id="@+id/repoStorageUsed"
+			android:textColor="@color/ApplicationText"
+			android:textSize="@dimen/SmallTextSize"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repoRevision"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
 
-	<TextView
-		android:id="@+id/repoRevision"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/SmallTextSize"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repoLastCommit"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		<TextView
+			android:id="@+id/repoUpdatedAt"
+			android:textColor="@color/ApplicationText"
+			android:textSize="@dimen/SmallTextSize"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repoStorageUsed"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
 
-	<TextView
-		android:id="@+id/repoStorageUsed"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/SmallTextSize"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repoRevision"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		<Button
+			android:drawableLeft="@drawable/icon"
+			android:id="@+id/buttonViewCommits"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repoUpdatedAt"
+			android:text="View Commits"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"></Button>
 
-	<TextView
-		android:id="@+id/repoUpdatedAt"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/SmallTextSize"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repoStorageUsed"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+		<Button
+			android:drawableLeft="@drawable/icon"
+			android:id="@+id/buttonUsersPermissions"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/buttonViewCommits"
+			android:text="Users/Permissions"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"></Button>
 
-	<Button
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonViewCommits"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repoUpdatedAt"
-		android:text="View Commits"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
+		<Button
+			android:drawableLeft="@drawable/icon"
+			android:id="@+id/buttonDeployment"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/buttonUsersPermissions"
+			android:text="Deployment"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"></Button>
 
-	<Button
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonUsersPermissions"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/buttonViewCommits"
-		android:text="Users/Permissions"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
+		<Button
+			android:drawableLeft="@drawable/icon"
+			android:id="@+id/buttonModifyProperties"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/buttonDeployment"
+			android:text="Modify properties"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"></Button>
 
-	<Button
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonDeployment"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/buttonUsersPermissions"
-		android:text="Deployment"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
-
-	<Button
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonModifyProperties"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/buttonDeployment"
-		android:text="Modify properties"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
-
-</RelativeLayout>
+	</RelativeLayout>
+</ScrollView>

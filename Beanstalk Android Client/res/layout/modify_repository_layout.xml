@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@color/ApplicationBackground">
-	<include
-		layout="@layout/actionbar"
-		android:layout_alignParentTop="true"
-		android:id="@+id/actionbar" />
-	<TextView
-		android:text="Modify repository structure"
-		android:id="@+id/title"
-		android:layout_below="@id/actionbar"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textColor="@color/ApplicationText"></TextView>
+	<RelativeLayout
 
-	<TextView
-		android:text="title:"
-		android:id="@+id/titleLabel"
-		android:layout_below="@id/title"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textColor="@color/ApplicationText"></TextView>
-	<EditText
-		android:id="@+id/titleEditText"
-		android:layout_below="@id/titleLabel"
 		android:layout_width="fill_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_height="wrap_content"></EditText>
-	<TextView
-		android:text="color label:"
-		android:id="@+id/colorLabelLabel"
-		android:layout_below="@id/titleEditText"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textColor="@color/ApplicationText"></TextView>
-	<Button
-		android:id="@+id/colorLabelButton"
-		android:background="@drawable/repository_labels"
-		android:layout_below="@id/colorLabelLabel"
-		android:layout_centerHorizontal="true"
-		android:layout_width="100dp"
-		android:layout_height="50dp"></Button>
-	<Button
-		android:text="Save changes"
-		android:id="@+id/saveChangesButton"
-		android:layout_below="@id/colorLabelButton"
-		android:layout_alignParentRight="true"
-		android:layout_width="150dp"
-		android:layout_height="wrap_content"></Button>
+		android:layout_height="fill_parent"
+		android:background="@color/ApplicationBackground">
+		<include
+			layout="@layout/actionbar"
+			android:layout_alignParentTop="true"
+			android:id="@+id/actionbar" />
+		<TextView
+			android:text="Modify repository structure"
+			android:id="@+id/title"
+			android:layout_below="@id/actionbar"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/ApplicationText"></TextView>
 
-</RelativeLayout>
+		<TextView
+			android:text="title:"
+			android:id="@+id/titleLabel"
+			android:layout_below="@id/title"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/ApplicationText"></TextView>
+		<EditText
+			android:id="@+id/titleEditText"
+			android:layout_below="@id/titleLabel"
+			android:layout_width="fill_parent"
+			android:layout_centerHorizontal="true"
+			android:layout_height="wrap_content"></EditText>
+		<TextView
+			android:text="color label:"
+			android:id="@+id/colorLabelLabel"
+			android:layout_below="@id/titleEditText"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/ApplicationText"></TextView>
+		<Button
+			android:id="@+id/colorLabelButton"
+			android:background="@drawable/repository_labels"
+			android:layout_below="@id/colorLabelLabel"
+			android:layout_centerHorizontal="true"
+			android:layout_width="100dp"
+			android:layout_height="50dp"></Button>
+		<Button
+			android:text="Save changes"
+			android:id="@+id/saveChangesButton"
+			android:layout_below="@id/colorLabelButton"
+			android:layout_alignParentRight="true"
+			android:layout_width="150dp"
+			android:layout_height="wrap_content"></Button>
+
+	</RelativeLayout>
+</ScrollView>

@@ -16,7 +16,9 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -85,12 +87,24 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 	}
 
 	public class DownloadUsersListTask extends AsyncTask<Void, Void, ArrayList<User>> {
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(mContext, "Loading user list",
 					"Please wait...");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Download task was cancelled");
+				}
+			});
 		}
 
 		@Override
@@ -121,7 +135,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 
 		@Override
 		protected void onPostExecute(ArrayList<User> parsedArray) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			userArray.clear();
 			userArray.addAll(parsedArray);
 

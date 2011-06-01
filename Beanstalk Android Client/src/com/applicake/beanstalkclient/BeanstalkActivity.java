@@ -88,6 +88,9 @@ public abstract class BeanstalkActivity extends Activity {
 	    case Constants.CLOSE_ALL_BUT_LOGOUT:
 	    	setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
 	    	finish();
+	    	break;
+	    case Constants.CLEAR_STACK_UP_TO_HOME:
+	    	finish();
 	    }
 	   
 	    	
@@ -111,13 +114,17 @@ public abstract class BeanstalkActivity extends Activity {
 	public void onRepositoriesButtonClick(View v) {
 		Intent intent = new Intent(getApplicationContext(), RepositoriesActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		setResult(Constants.CLEAR_STACK_UP_TO_HOME);
 		startActivityForResult(intent, 0);
+		if (!(this instanceof HomeActivity))finish();
 	}
 	
 	public void onUsersButtonClick(View v) {
 		Intent intent = new Intent(getApplicationContext(), UserActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		setResult(Constants.CLEAR_STACK_UP_TO_HOME);
 		startActivityForResult(intent, 0);
+		if (!(this instanceof HomeActivity))finish();
 	}
 	
 	public void onDeploymentButtonClick(View v) {
@@ -128,7 +135,9 @@ public abstract class BeanstalkActivity extends Activity {
 	public void onHomeButtonClick(View v) {
 		Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		setResult(Constants.CLEAR_STACK_UP_TO_HOME);
 		startActivityForResult(intent, 0);
+		if (!(this instanceof HomeActivity))finish();
 	}
 	
 }

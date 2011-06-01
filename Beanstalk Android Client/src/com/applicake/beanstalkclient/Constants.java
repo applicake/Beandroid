@@ -51,5 +51,7 @@ public class Constants {
 	public static final int CLOSE_ALL_BUT_LOGOUT = 1997;
 
 	public static final String DASHBOARD_LIST_SPREAD_PREFERENCE = "dashboard list spread preference";
+
+	public static final int CLEAR_STACK_UP_TO_HOME = 314; 
 	
 }

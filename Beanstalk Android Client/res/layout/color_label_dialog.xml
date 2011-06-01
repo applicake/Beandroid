@@ -56,7 +56,7 @@
 			android:layout_weight="1"
 			android:layout_height="fill_parent"></Button>
 		<Button
-			android:text="Button"
+			android:text="Blue"
 			android:id="@+id/buttonBlue"
 			android:background="@drawable/label_blue"
 			android:layout_margin="2dp"

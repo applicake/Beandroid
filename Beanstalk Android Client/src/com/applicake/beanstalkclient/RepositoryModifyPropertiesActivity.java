@@ -11,7 +11,9 @@ import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -147,11 +149,24 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 
 		ProgressDialog progressDialog;
 		String errorMessage;
+		
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"modifying repository properties");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Download task was cancelled");
+				}
+			});
 			super.onPreExecute();
 		}
 
@@ -185,7 +200,7 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result == 200) {
 				GUI.displayMonit(mContext, "reposiotry properties were modified!");
 				setResult(Constants.REFRESH_ACTIVITY);

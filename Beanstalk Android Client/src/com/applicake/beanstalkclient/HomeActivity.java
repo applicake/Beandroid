@@ -48,5 +48,10 @@ public class HomeActivity extends BeanstalkActivity{
 	public void onHomeSettingsClick(View v){
 		Toast.makeText(getApplicationContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (resultCode != Constants.CLEAR_STACK_UP_TO_HOME) super.onActivityResult(requestCode, resultCode, data);
+	}
 
 }

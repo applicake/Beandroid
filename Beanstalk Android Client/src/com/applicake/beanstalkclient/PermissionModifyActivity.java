@@ -10,7 +10,9 @@ import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -114,11 +116,24 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 	public class ModifyPermissionsTask extends AsyncTask<Integer, Void, Integer> {
 
 		ProgressDialog progressDialog;
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"changing user properties");
+			
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "User data changing task was cancelled");
+				}
+			});
+			super.onPreExecute();
 			super.onPreExecute();
 		}
 
@@ -157,7 +172,7 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result == 201) {
 				GUI.displayMonit(mContext, "user permissions were modified!");
 				setResult(Constants.REFRESH_ACTIVITY);
@@ -174,11 +189,22 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 	public class DeletePermissionsTask extends AsyncTask<Integer, Void, Integer> {
 		
 		ProgressDialog progressDialog;
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 		
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 			"removing permission");
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "User permission deleting task was cancelled");
+				}
+			});
 			super.onPreExecute();
 		}
 		
@@ -209,7 +235,7 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 		
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result == 200) {
 				GUI.displayMonit(mContext, "user permission was removed!");
 				setResult(Constants.REFRESH_ACTIVITY);

@@ -9,7 +9,9 @@ import org.xml.sax.SAXException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -70,7 +72,8 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 				}
 				startActivityForResult(intent, 0);
 			} else {
-				GUI.displayMonit(mContext, "Owner and Admins have full access to all repositories");
+				GUI.displayMonit(mContext,
+						"Owner and Admins have full access to all repositories");
 			}
 		}
 
@@ -86,12 +89,25 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 	}
 
 	public class DownloadUsersListTask extends AsyncTask<Void, Void, ArrayList<User>> {
+		
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog = ProgressDialog.show(mContext, "Loading user list",
 					"Please wait...");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Download task was cancelled");
+				}
+			});
 		}
 
 		@Override
@@ -126,111 +142,10 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 			usersArray.addAll(parsedArray);
 
 			usersAdapter.notifyDataSetChanged();
-			progressDialog.cancel();
+			progressDialog.dismiss();
 
 		}
 
 	}
-
-	// public class DownloadPermissionsTask extends
-	// AsyncTask<Integer, Void, HashMap<Integer, Permission>> {
-	//
-	// private ProgressBar loadingBar;
-	// private TextView repoPermissionLabel;
-	// private TextView deploymentPermissionLabel;
-	// private TextView repoPermissionTitle;
-	// private TextView deploymentPermissionTitle;
-	//
-	// @Override
-	// protected void onPreExecute() {
-	// super.onPreExecute();
-	// }
-	//
-	// @Override
-	// protected HashMap<Integer, Permission> doInBackground(Integer... params)
-	// {
-	// int i = params[0];
-	// View view = usersList.getChildAt(i);
-	//
-	// loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
-	//
-	// repoPermissionLabel = (TextView) view.findViewById(R.id.repositoryLabel);
-	// deploymentPermissionLabel = (TextView) view
-	// .findViewById(R.id.deploymentLabel);
-	//
-	// repoPermissionTitle = (TextView) view.findViewById(R.id.repoPermission);
-	// deploymentPermissionTitle = (TextView) view
-	// .findViewById(R.id.deploymentPermission);
-	//
-	// String userId = String.valueOf(usersArray.get(i).getId());
-	//
-	// XmlParser xmlParser = new XmlParser();
-	//
-	// try {
-	// String permissionsXml = new HttpRetriever().getPermissionListForUserXML(
-	// prefs, userId);
-	//
-	// return xmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
-	// } catch (HttpRetreiverException e) {
-	// // TODO generate http parsing exception handling
-	// e.printStackTrace();
-	// cancel(true);
-	// } catch (SAXException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// cancel(true);
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// cancel(true);
-	// } catch (ParserConfigurationException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// cancel(true);
-	// }
-	//
-	// return null;
-	//
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(HashMap<Integer, Permission> result) {
-	// loadingBar.setVisibility(View.GONE);
-	// repoPermissionLabel.setVisibility(View.VISIBLE);
-	// deploymentPermissionLabel.setVisibility(View.VISIBLE);
-	// repoPermissionTitle.setVisibility(View.VISIBLE);
-	// deploymentPermissionTitle.setVisibility(View.VISIBLE);
-	//
-	// if (result.containsKey(repository.getId())) {
-	// Permission permission = result.get(repository.getId());
-	//
-	// if (permission.isReadAccess()) {
-	// if (permission.isWriteAccess()) {
-	// repoPermissionLabel.setText("write");
-	// repoPermissionLabel.getBackground().setLevel(0);
-	// } else {
-	// repoPermissionLabel.setText("read");
-	// repoPermissionLabel.getBackground().setLevel(1);
-	// }
-	// }
-	//
-	// if (permission.isFullDeploymentAccess()) {
-	// deploymentPermissionLabel.setText("write");
-	// deploymentPermissionLabel.getBackground().setLevel(0);
-	// } else {
-	// deploymentPermissionLabel.setText("read");
-	// deploymentPermissionLabel.getBackground().setLevel(2);
-	// }
-	// } else {
-	// repoPermissionLabel.setText("no access");
-	// repoPermissionLabel.getBackground().setLevel(2);
-	//
-	// deploymentPermissionLabel.setText("read");
-	// deploymentPermissionLabel.getBackground().setLevel(2);
-	// }
-	//
-	// }
-	//
-	// }
 
 }

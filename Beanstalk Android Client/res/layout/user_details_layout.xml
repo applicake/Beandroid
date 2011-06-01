@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/ApplicationBackground">
+<RelativeLayout
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@color/ApplicationBackground">
@@ -102,3 +106,4 @@
 		android:layout_height="wrap_content"></Button>
 
 </RelativeLayout>
+</ScrollView>

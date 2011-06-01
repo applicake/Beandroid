@@ -1,15 +1,21 @@
 package com.applicake.beanstalkclient;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import com.applicake.beanstalkclient.adapters.SpinnerTimezoneAdapter;
 import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.RailsTimezones;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 		OnClickListener {
@@ -31,23 +38,24 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 	private EditText nameEditText;
 	private EditText lastNameEditText;
 	private EditText emailEditText;
-	private EditText timezoneEditText;
+	private Spinner timezoneSpinner;
 	private CheckBox adminCheckBox;
 	private EditText newPasswordEditText;
 	private EditText retypedPasswordEditText;
+	private ArrayList<String> popupValuesList;
+	private ArrayList<String> spinnerValuesList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_modify_properties_layout);
 		mContext = this;
-
 		user = getIntent().getParcelableExtra(Constants.USER);
 
 		nameEditText = (EditText) findViewById(R.id.nameEditText);
 		lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
 		emailEditText = (EditText) findViewById(R.id.emailEditText);
-		timezoneEditText = (EditText) findViewById(R.id.timezoneEditText);
+		timezoneSpinner = (Spinner) findViewById(R.id.timezoneSpinner);
 		adminCheckBox = (CheckBox) findViewById(R.id.adminCheckBox);
 
 		passwordChangeButton = (Button) findViewById(R.id.passwordChangeButton);
@@ -55,6 +63,13 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 
 		applyChangesButton = (Button) findViewById(R.id.saveChangesButton);
 		applyChangesButton.setOnClickListener(this);
+		popupValuesList = RailsTimezones.getDetailedRailsTimezonesArrayList();
+		spinnerValuesList = RailsTimezones.listOfRailsTimezones();
+
+		timezoneSpinner
+				.setAdapter(new SpinnerTimezoneAdapter(this,
+						android.R.layout.simple_spinner_item, popupValuesList,
+						spinnerValuesList));
 		loadUserInfo();
 
 	}
@@ -64,7 +79,8 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 			nameEditText.setText(user.getFirstName());
 			lastNameEditText.setText(user.getLastName());
 			emailEditText.setText(user.getEmail());
-			timezoneEditText.setText(user.getTimezone());
+			timezoneSpinner.setSelection(spinnerValuesList.indexOf(user.getTimezone()));
+			// timezoneSpinner.setSelection();
 			UserType userType = user.getAdmin();
 			if (userType == UserType.ADMIN) {
 				adminCheckBox.setChecked(true);
@@ -145,13 +161,26 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 	public class SendUserPropertiesTask extends AsyncTask<Void, Void, Integer> {
 
 		ProgressDialog progressDialog;
-		//temporary
+		// temporary
 		String errorMessage = "";
+
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"changing user properties");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Data sending task was cancelled");
+				}
+			});
 			super.onPreExecute();
 		}
 
@@ -160,11 +189,12 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 			XmlCreator xmlCreator = new XmlCreator();
 			HttpSender httpSender = new HttpSender();
 			try {
-				String userModificationXml = xmlCreator
-						.createUserPropertiesChangeXML(nameEditText.getText().toString()
-								.trim(), lastNameEditText.getText().toString().trim(),
-								emailEditText.getText().toString().trim(),
-								adminCheckBox.isChecked());
+				String userModificationXml = xmlCreator.createUserPropertiesChangeXML(
+						nameEditText.getText().toString().trim(), lastNameEditText
+								.getText().toString().trim(), emailEditText.getText()
+								.toString().trim(),
+						spinnerValuesList.get(timezoneSpinner.getSelectedItemPosition()),
+						adminCheckBox.isChecked());
 				return httpSender.sendUpdateUserXML(prefs, userModificationXml,
 						String.valueOf(user.getId()));
 
@@ -180,24 +210,24 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 			} catch (HttpSenderException e) {
 				errorMessage = e.getMessage();
 				e.printStackTrace();
+				return 0;
 			}
-			return 0;
+			return null;
 
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result == 200) {
-				
+
 				GUI.displayMonit(mContext, "user properties were modified!");
 				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 
-			} else if (result == 0){
+			} else if (result == 0) {
 				GUI.displayMonit(mContext, errorMessage);
 			}
-			
 
 			super.onPostExecute(result);
 		}
@@ -207,11 +237,24 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 	public class SendUserPasswordTask extends AsyncTask<String, Void, Integer> {
 
 		ProgressDialog progressDialog;
+		@SuppressWarnings("rawtypes")
+		private AsyncTask thisTask = this;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"changing user password");
+
+			progressDialog.setCancelable(true);
+			progressDialog.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					thisTask.cancel(true);
+					GUI.displayMonit(mContext, "Data sending task was cancelled");
+				}
+			});
+
 			super.onPreExecute();
 		}
 
@@ -244,7 +287,7 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			progressDialog.cancel();
+			progressDialog.dismiss();
 			if (result == 200) {
 				GUI.displayMonit(mContext, "user password was modified!");
 

@@ -91,7 +91,7 @@ public class UserHandler extends DefaultHandler {
 			if (localName == "login") {
 				user.setLogin(buffer.toString());
 			}
-			//TODO map beanstalk timezones to java timezones
+			
 			if (localName == "timezone") {
 				user.setTimezone(buffer.toString());
 			}

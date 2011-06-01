@@ -9,5 +9,6 @@ public class GUI {
 	public static void displayMonit(Context context, String message){
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
+	
 
 }

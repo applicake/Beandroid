@@ -1,112 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@color/ApplicationBackground">
-	<include
-		layout="@layout/actionbar"
-		android:id="@+id/actionbar"
-		android:layout_alignParentTop="true" />
-
-	<ImageView
-		android:layout_width="40dp"
-		android:layout_height="40dp"
-		android:id="@+id/userGravatar"
-		android:layout_alignParentLeft="true"
-		android:layout_below="@id/actionbar"
-		android:layout_margin="10dp"></ImageView>
-
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/userName"
-		android:layout_toRightOf="@id/userGravatar"
-		android:layout_below="@id/actionbar"
-		android:layout_margin="10dp"
-		android:textSize="@dimen/LargeTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
-
-	<View
-		android:id="@+id/colorLabel"
-		android:layout_below="@id/userGravatar"
-		android:layout_alignParentLeft="true"
+	<RelativeLayout
+		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_width="15dp"
-		android:layout_marginRight="5dp"
-		android:background="@drawable/repository_labels">
-	</View>
-
-	<TextView
-		android:id="@+id/repositoryTitle"
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:layout_below="@id/userGravatar"
-		android:layout_toRightOf="@id/colorLabel"
-		android:textSize="@dimen/MediumTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
-
-	<TextView
-		android:id="@+id/repositoryName"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repositoryTitle"
-		android:textSize="@dimen/SmallTextSize"></TextView>
-	<Button
-		android:id="@+id/deleteButton"
-		android:layout_alignParentRight="true"
-		android:layout_below="@id/userGravatar"
-		android:drawableTop="@drawable/icon"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="Remove"
 		android:background="@color/ApplicationBackground">
-	</Button>
+		<include
+			layout="@layout/actionbar"
+			android:id="@+id/actionbar"
+			android:layout_alignParentTop="true" />
 
-	<TextView
-		android:id="@+id/repoAccessLabel"
-		android:text="Repository access"
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:layout_below="@id/deleteButton"
-		android:layout_toRightOf="@id/colorLabel"
-		android:textSize="@dimen/MediumTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
+		<ImageView
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:id="@+id/userGravatar"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@id/actionbar"
+			android:layout_margin="10dp"></ImageView>
 
-	<Spinner
-		android:id="@+id/repoAccessSpinner"
-		android:layout_below="@id/repoAccessLabel"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:entries="@array/repoAccessLevels"></Spinner>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/userName"
+			android:layout_toRightOf="@id/userGravatar"
+			android:layout_below="@id/actionbar"
+			android:layout_margin="10dp"
+			android:textSize="@dimen/LargeTextSize"
+			android:textColor="@color/ApplicationText"></TextView>
 
-	<TextView
-		android:id="@+id/deploymentAccessLabel"
-		android:text="Deployment access"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/repoAccessSpinner"
-		android:textSize="@dimen/SmallTextSize"></TextView>
+		<View
+			android:id="@+id/colorLabel"
+			android:layout_below="@id/userGravatar"
+			android:layout_alignParentLeft="true"
+			android:layout_height="fill_parent"
+			android:layout_width="15dp"
+			android:layout_marginRight="5dp"
+			android:background="@drawable/repository_labels">
+		</View>
 
-	<Spinner
-		android:id="@+id/deploymentAccessSpinner"
-		android:layout_below="@id/deploymentAccessLabel"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:entries="@array/deploymentAccessLevels"></Spinner>
+		<TextView
+			android:id="@+id/repositoryTitle"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_below="@id/userGravatar"
+			android:layout_toRightOf="@id/colorLabel"
+			android:textSize="@dimen/MediumTextSize"
+			android:textColor="@color/ApplicationText"></TextView>
 
-	<Button
-		android:id="@+id/applyButton"
-		android:layout_width="100dp"
-		android:layout_height="wrap_content"
-		android:layout_below="@id/deploymentAccessSpinner"
-		android:layout_alignParentRight="true"
-		android:text="Apply"></Button>
+		<TextView
+			android:id="@+id/repositoryName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repositoryTitle"
+			android:textSize="@dimen/SmallTextSize"></TextView>
+		<Button
+			android:id="@+id/deleteButton"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/userGravatar"
+			android:drawableTop="@drawable/icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Remove"
+			android:background="@color/ApplicationBackground">
+		</Button>
 
+		<TextView
+			android:id="@+id/repoAccessLabel"
+			android:text="Repository access"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_below="@id/deleteButton"
+			android:layout_toRightOf="@id/colorLabel"
+			android:textSize="@dimen/MediumTextSize"
+			android:textColor="@color/ApplicationText"></TextView>
 
+		<Spinner
+			android:id="@+id/repoAccessSpinner"
+			android:layout_below="@id/repoAccessLabel"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:entries="@array/repoAccessLevels"></Spinner>
 
-</RelativeLayout>
+		<TextView
+			android:id="@+id/deploymentAccessLabel"
+			android:text="Deployment access"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_below="@id/repoAccessSpinner"
+			android:textSize="@dimen/SmallTextSize"></TextView>
+
+		<Spinner
+			android:id="@+id/deploymentAccessSpinner"
+			android:layout_below="@id/deploymentAccessLabel"
+			android:layout_toRightOf="@id/colorLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:entries="@array/deploymentAccessLevels"></Spinner>
+
+		<Button
+			android:id="@+id/applyButton"
+			android:layout_width="100dp"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/deploymentAccessSpinner"
+			android:layout_alignParentRight="true"
+			android:text="Apply"></Button>
+
+	</RelativeLayout>
+</ScrollView>
