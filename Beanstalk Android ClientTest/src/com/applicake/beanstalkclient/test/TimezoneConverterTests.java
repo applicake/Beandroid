@@ -15,8 +15,9 @@ public class TimezoneConverterTests extends AndroidTestCase {
 		// first timezone is empty
 		for (int i = 1; i < testTimezonesList.size(); i++){
 			Log.w("timezone tests", "Input: " + testTimezonesList.get(i));
-			TimeZone timezone = TimeZone.getTimeZone(RailsTimezones.getJavaTz(testTimezonesList.get(i)));
+			TimeZone timezone = RailsTimezones.getJavaTz(testTimezonesList.get(i));
 			Log.w("timezone tests", "Result: " + timezone.getID());
+			Log.w("timezone offset", String.valueOf(timezone.getRawOffset()));
 			assertNotNull(timezone);
 		}
 		

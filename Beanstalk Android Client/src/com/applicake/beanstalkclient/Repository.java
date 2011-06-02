@@ -3,6 +3,8 @@ package com.applicake.beanstalkclient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import com.applicake.beanstalkclient.enums.ColorLabels;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -197,24 +199,8 @@ public class Repository implements Parcelable{
 	}
 
 	public int getColorLabelNo() {
-		if (this.colorLabel.equals("label-white")) {
-			return 0;
-		} else if (this.colorLabel.equals("label-red")) {
-			return 1;
-		} else if (this.colorLabel.equals("label-orange")) {
-			return 2;
-		} else if (this.colorLabel.equals("label-yellow")) {
-			return 3;
-		} else if (this.colorLabel.equals("label-green")) {
-			return 4;
-		} else if (this.colorLabel.equals("label-blue")) {
-			return 5;
-		} else if (this.colorLabel.equals("label-pink")) {
-			return 6;
-		} else if (this.colorLabel.equals("label-grey")) {
-			return 7;
-		}
-		return 0;
+		return ColorLabels.getNumberFromLabel(colorLabel);
+
 	}
 
 

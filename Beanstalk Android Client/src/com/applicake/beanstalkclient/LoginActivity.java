@@ -31,7 +31,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class LoginActivity extends Activity implements OnClickListener {
-	/** Called when the activity is first created. */
 
 	private EditText domainaccountEditText;
 	private EditText loginEditText;
@@ -61,8 +60,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		}
 
-		
-
 		Button loginButton = (Button) findViewById(R.id.login_button);
 		loginButton.setOnClickListener(this);
 
@@ -78,7 +75,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 				for (int i = start; i < end; i++) {
 					if (!Character.isLetterOrDigit(source.charAt(i))
-							&& (source.charAt(i) == '-')) {
+							&& !(source.charAt(i) == '-')) {
+						return "";
+					}
+					if (((dstart == 0) || (dend == dest.length())) && (source.charAt(i) == '-')){
 						return "";
 					}
 				}
@@ -198,6 +198,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				editor.putString(Constants.USER_LOGIN, login);
 				editor.putString(Constants.USER_PASSWORD, password);
 				editor.putInt(Constants.ACCOUNT_PLAN, account.getPlanId());
+				editor.putString(Constants.USER_TIMEZONE, account.getTimeZone());
 				editor.putBoolean(Constants.CREDENTIALS_STORED, true);
 				editor.commit();
 

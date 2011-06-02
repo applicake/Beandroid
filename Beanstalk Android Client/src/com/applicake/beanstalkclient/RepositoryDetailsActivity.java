@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -63,8 +64,6 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		repoStorageUsed = (TextView) findViewById(R.id.repoStorageUsed);
 		repoUpdatedAt = (TextView) findViewById(R.id.repoUpdatedAt);
 
-		loadRepositoryData();
-
 		// add button listeners
 		Button viewCommitsButton = (Button) findViewById(R.id.buttonViewCommits);
 		Button usersPermissionsButton = (Button) findViewById(R.id.buttonUsersPermissions);
@@ -75,12 +74,15 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		usersPermissionsButton.setOnClickListener(this);
 		deploymentButton.setOnClickListener(this);
 		modifyPropertiesButton.setOnClickListener(this);
+		
+		loadRepositoryData();
 
 	}
 
 	public void loadRepositoryData() {
 
-		colorLabel.getBackground().setLevel(repository.getColorLabelNo());
+		Log.w("color change", String.valueOf(colorLabel.getBackground().setLevel(repository.getColorLabelNo())));
+		
 		repoName.setText(repository.getName());
 		repoType.setText(repository.getType().equals("SubversionRepository") ? "SVN"
 				: "Git");

@@ -39,7 +39,7 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
 
 	@Override
 	protected void setUp() throws Exception {
-		baseActivity = new LoginActivity();
+		baseActivity = getActivity();
 		super.setUp();
 	}
 

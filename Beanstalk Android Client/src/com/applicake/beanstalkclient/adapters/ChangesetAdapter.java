@@ -3,13 +3,17 @@ package com.applicake.beanstalkclient.adapters;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.applicake.beanstalkclient.Changeset;
+import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.utils.GravatarDowloader;
+import com.applicake.beanstalkclient.utils.RailsTimezones;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +38,18 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 		super(context, textViewResourceId, changesetArray);
 		mInflater = LayoutInflater.from(context);
 		this.changesetArray = changesetArray;
+		SharedPreferences prefs = context.getSharedPreferences(Constants.SHARED_PREFERENCES,
+				Context.MODE_PRIVATE);
+		String timezoneString = prefs.getString(Constants.USER_TIMEZONE, "");
+		TimeZone currentUserTimeZone;
+		if (timezoneString == "") {
+			currentUserTimeZone = TimeZone.getDefault(); 
+		} else {
+			currentUserTimeZone = RailsTimezones.getJavaTz(timezoneString);
+		}
+
+		dateFormatter.setTimeZone(currentUserTimeZone);
+		timeFormatter.setTimeZone(currentUserTimeZone);
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -49,7 +65,7 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 		if (changeset != null) {
 			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
 			GravatarDowloader.getInstance().download(changeset.getEmail(), userGravatar);
-			
+
 			TextView repositoryNameTextView = (TextView) view
 					.findViewById(R.id.reposiotryName);
 			repositoryNameTextView.setText(repository.getTitle());
@@ -68,7 +84,7 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 
 			View colorLabel = (View) view.findViewById(R.id.colorLabel);
 			colorLabel.getBackground().setLevel(repository.getColorLabelNo());
-			
+
 		}
 
 		return view;

@@ -3,6 +3,7 @@ package com.applicake.beanstalkclient.utils;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class RailsTimezones {
 
@@ -313,8 +314,8 @@ public class RailsTimezones {
 		return valuesArray;
 	}
 	
-	public static String getJavaTz(String railsTZ){
-		return railsTZtoJavaTZ.get(railsTZ);
+	public static TimeZone getJavaTz(String railsTZ){
+		return TimeZone.getTimeZone(railsTZtoJavaTZ.get(railsTZ));
 	}
 	
 	public static ArrayList<String> listOfRailsTimezones(){

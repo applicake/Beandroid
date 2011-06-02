@@ -49,13 +49,11 @@ public class XmlParserTests extends InstrumentationTestCase {
 	private static final String INVALID_REPOSITORIES_XML_ADDRESS_DATEFORMAT = "mockxmls/corrupted_dateformat_repositories.xml";
 	private static final String INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE = "mockxmls/corrupted_xmlstructure_repositories.xml";
 
-	private XmlParser xmlParser;
 	private Calendar calendar;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		xmlParser = new XmlParser();
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
 		calendar = Calendar.getInstance();
 
@@ -65,7 +63,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 			SAXException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(CHANGESET_XML_ADDRESS));
-		ArrayList<Changeset> changesetList = xmlParser.parseChangesetList(testXml);
+		ArrayList<Changeset> changesetList = XmlParser.parseChangesetList(testXml);
 
 		Changeset changeset1 = changesetList.get(0);
 		assertNotNull("changeset is null", changeset1);
@@ -109,7 +107,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 			SAXException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(USERS_XML_ADDRESS));
-		ArrayList<User> userList = xmlParser.parseUserList(testXml);
+		ArrayList<User> userList = XmlParser.parseUserList(testXml);
 
 		User user1 = userList.get(0);
 		assertNotNull("user1 is null", user1);
@@ -177,7 +175,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 			SAXException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(REPOSITORIES_XML_ADDRESS));
-		ArrayList<Repository> repositoryList = xmlParser.parseRepositoryList(testXml);
+		ArrayList<Repository> repositoryList = XmlParser.parseRepositoryList(testXml);
 
 		Repository repo1 = repositoryList.get(0);
 		assertNotNull("repo1 is null", repo1);
@@ -224,7 +222,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 			ParserConfigurationException, SAXException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(REPOSITORIES_XML_ADDRESS));
-		HashMap<Integer, Repository> repositoryHashMap = xmlParser
+		HashMap<Integer, Repository> repositoryHashMap = XmlParser
 				.parseRepositoryHashMap(testXml);
 
 		Repository repo1 = repositoryHashMap.get(205628);
@@ -273,7 +271,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 			SAXException {
 		String testXml1 = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(PERMISSIONS_XML_ADDRESS_1));
-		ArrayList<Permission> permissionList1 = xmlParser.parsePermissionList(testXml1);
+		ArrayList<Permission> permissionList1 = XmlParser.parsePermissionList(testXml1);
 		
 
 		Permission permission1 = permissionList1.get(0);
@@ -301,12 +299,12 @@ public class XmlParserTests extends InstrumentationTestCase {
 		// testing user with no permissions or admin/owner user
 		String testXml2 = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(PERMISSIONS_XML_ADDRESS_2));
-		ArrayList<Permission> permissionList2 = xmlParser.parsePermissionList(testXml2);
+		ArrayList<Permission> permissionList2 = XmlParser.parsePermissionList(testXml2);
 
 		assertTrue("This permission arraylist should be empty", permissionList2.isEmpty());
 		
 		// hashmap parsing tests
-		HashMap<Integer, Permission> permissionHashMap1 = xmlParser.parseRepoIdToPermissionHashMap(testXml1);
+		HashMap<Integer, Permission> permissionHashMap1 = XmlParser.parseRepoIdToPermissionHashMap(testXml1);
 		assertEquals(207784, permissionHashMap1.get(207784).getRepositoryId());
 		
 		
@@ -318,7 +316,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 			SAXException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(ACCOUNT_XML_ADDRESS));
-		Account account = xmlParser.parseAccountInfo(testXml);
+		Account account = XmlParser.parseAccountInfo(testXml);
 
 		assertNotNull("account is null", account);
 		assertEquals(new Date(111, 3, 26, 7, 29, 27), account.getCreatedAt());
@@ -339,7 +337,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 			SAXException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(COMMENTS_XML_ADDRESS));
-		ArrayList<Comment> commentList = xmlParser.parseCommentList(testXml);
+		ArrayList<Comment> commentList = XmlParser.parseCommentList(testXml);
 
 		Comment comment = commentList.get(0);
 
@@ -363,7 +361,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 		String testXmlPartial = convertIStoString(getInstrumentation().getContext()
 				.getAssets().open(COMMENTS_XML_ADDRESS_PARTIAL_CHECK));
-		ArrayList<Comment> commentListPartial = xmlParser
+		ArrayList<Comment> commentListPartial = XmlParser
 				.parseCommentList(testXmlPartial);
 
 		Comment comment1Partial = commentListPartial.get(0);
@@ -404,7 +402,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		try {
 			String testXml = convertIStoString(getInstrumentation().getContext()
 					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_NFE));
-			xmlParser.parseRepositoryList(testXml);
+			XmlParser.parseRepositoryList(testXml);
 			fail("parseRepositoryList() was supposed to throw an exception");
 		} catch (SAXException se) {
 			assertTrue(se.getException() instanceof NumberFormatException);
@@ -421,7 +419,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		try {
 			String testXml = convertIStoString(getInstrumentation().getContext()
 					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_DATEFORMAT));
-			xmlParser.parseRepositoryList(testXml);
+			XmlParser.parseRepositoryList(testXml);
 			fail("parseRepositoryList() was supposed to throw an exception");
 		} catch (SAXException se) {
 			assertTrue(se.getException() instanceof ParseException);
@@ -435,7 +433,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 		try {
 			String testXml = convertIStoString(getInstrumentation().getContext()
 					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE));
-			xmlParser.parseRepositoryList(testXml);
+			XmlParser.parseRepositoryList(testXml);
 			fail("parseRepositoryList() was supposed to throw an exception");
 		} catch (SAXParseException se) {
 			// valid exception -> test passes if no other exception was thrown
