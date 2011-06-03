@@ -16,6 +16,8 @@ import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GravatarDowloader;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
@@ -61,6 +63,9 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 		if (user != null) {
 
+			// setting view clickable
+			view.setTag(true);
+
 			String email = user.getEmail();
 			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
 			GravatarDowloader.getInstance().download(email, userGravatar);
@@ -72,6 +77,8 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			userEmailTextView.setText(email);
 
 			if (user.getAdmin() == UserType.USER) {
+				// making view unclickable while the data is being downloaded
+				view.setTag(false);
 
 				new DownloadPermissionsTask().execute(String.valueOf(user.getId()), view);
 			} else if (user.getAdmin() == UserType.ADMIN) {
@@ -107,11 +114,12 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 		private TextView repoPermissionTitle;
 		private TextView deploymentPermissionTitle;
 		private String userId;
+		private View view;
 
 		@Override
 		protected HashMap<Integer, Permission> doInBackground(Object... params) {
 			userId = (String) params[0];
-			View view = (View) params[1];
+			view = (View) params[1];
 
 			loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
 
@@ -126,15 +134,12 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			Log.w("user ID", userId);
 
 			try {
-				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(
-						prefs, userId);
+				String permissionsXml = HttpRetriever.getPermissionListForUserXML(prefs,
+						userId);
 				Log.w("user permission xml", permissionsXml);
 
 				return XmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
-			} catch (HttpRetreiverException e) {
-				// TODO generate http parsing exception handling
-				e.printStackTrace();
-				cancel(true);
+
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -147,6 +152,13 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				cancel(true);
+			} catch (HttpConnectionErrorException e) {
+				e.printStackTrace();
+				cancel(true);
+			} catch (UnsuccessfulServerResponseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				cancel(true);
 			}
 
 			return null;
@@ -155,40 +167,48 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 		@Override
 		protected void onPostExecute(HashMap<Integer, Permission> result) {
+			// setting view clickable again
+			
 			loadingBar.setVisibility(View.GONE);
-			repoPermissionLabel.setVisibility(View.VISIBLE);
-			deploymentPermissionLabel.setVisibility(View.VISIBLE);
-			repoPermissionTitle.setVisibility(View.VISIBLE);
-			deploymentPermissionTitle.setVisibility(View.VISIBLE);
 
-			if (result.containsKey(repository.getId())) {
-				Permission permission = result.get(repository.getId());
-				// add permission to userid -> permission hashmap
-				userIdToPermissionMap.put(Integer.valueOf(userId), permission);
+			if (result != null) {
+				view.setTag(true);
+				repoPermissionLabel.setVisibility(View.VISIBLE);
+				deploymentPermissionLabel.setVisibility(View.VISIBLE);
+				repoPermissionTitle.setVisibility(View.VISIBLE);
+				deploymentPermissionTitle.setVisibility(View.VISIBLE);
+				
+				if (result.containsKey(repository.getId())) {
+					Permission permission = result.get(repository.getId());
+					// add permission to userid -> permission hashmap
+					userIdToPermissionMap.put(Integer.valueOf(userId), permission);
 
-				if (permission.isReadAccess()) {
-					if (permission.isWriteAccess()) {
-						repoPermissionLabel.setText("write");
-						repoPermissionLabel.getBackground().setLevel(0);
-					} else {
-						repoPermissionLabel.setText("read");
-						repoPermissionLabel.getBackground().setLevel(1);
+					if (permission.isReadAccess()) {
+						if (permission.isWriteAccess()) {
+							repoPermissionLabel.setText("write");
+							repoPermissionLabel.getBackground().setLevel(0);
+						} else {
+							repoPermissionLabel.setText("read");
+							repoPermissionLabel.getBackground().setLevel(1);
+						}
 					}
-				}
 
-				if (permission.isFullDeploymentAccess()) {
-					deploymentPermissionLabel.setText("write");
-					deploymentPermissionLabel.getBackground().setLevel(0);
+					if (permission.isFullDeploymentAccess()) {
+						deploymentPermissionLabel.setText("write");
+						deploymentPermissionLabel.getBackground().setLevel(0);
+					} else {
+						deploymentPermissionLabel.setText("read");
+						deploymentPermissionLabel.getBackground().setLevel(2);
+					}
 				} else {
+					repoPermissionLabel.setText("no access");
+					repoPermissionLabel.getBackground().setLevel(2);
+
 					deploymentPermissionLabel.setText("read");
 					deploymentPermissionLabel.getBackground().setLevel(2);
 				}
 			} else {
-				repoPermissionLabel.setText("no access");
-				repoPermissionLabel.getBackground().setLevel(2);
-
-				deploymentPermissionLabel.setText("read");
-				deploymentPermissionLabel.getBackground().setLevel(2);
+				view.findViewById(R.id.parsingFailed).setVisibility(View.VISIBLE);
 			}
 
 		}

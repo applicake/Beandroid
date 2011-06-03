@@ -111,8 +111,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 		protected ArrayList<User> doInBackground(Void... params) {
 
 			try {
-				HttpRetriever httpRetriever = new HttpRetriever();
-				String xmlUserList = httpRetriever.getUserListXML(prefs);
+				String xmlUserList = HttpRetriever.getUserListXML(prefs);
 				// parsing users list
 				return XmlParser.parseUserList(xmlUserList);
 				// TODO better implementation of exception handling

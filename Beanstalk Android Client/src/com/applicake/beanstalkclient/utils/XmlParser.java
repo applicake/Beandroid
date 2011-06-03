@@ -166,8 +166,6 @@ public class XmlParser {
 		xmlReader.parse(is);
 
 		return accountHandler.retrieveAccount();
-
-		
 	}
 
 	public static ArrayList<Comment> parseCommentList(String xml) throws SAXException, IOException, ParserConfigurationException {

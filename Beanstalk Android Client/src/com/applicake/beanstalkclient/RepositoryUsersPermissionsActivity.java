@@ -57,10 +57,10 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int itemNumber, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View view, int itemNumber, long arg3) {
 		if (itemNumber < usersArray.size()) {
 			User user = usersArray.get(itemNumber);
-			if (user.getAdmin() == UserType.USER) {
+			if (user.getAdmin() == UserType.USER && (Boolean) view.getTag()) {
 				Permission permission = usersAdapter.getUserIdToPermissionMap().get(
 						user.getId());
 				Intent intent = new Intent(mContext, PermissionModifyActivity.class);
@@ -89,7 +89,7 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 	}
 
 	public class DownloadUsersListTask extends AsyncTask<Void, Void, ArrayList<User>> {
-		
+
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
 
@@ -114,8 +114,7 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 		protected ArrayList<User> doInBackground(Void... params) {
 
 			try {
-				HttpRetriever httpRetriever = new HttpRetriever();
-				String xmlUserList = httpRetriever.getUserListXML(prefs);
+				String xmlUserList = HttpRetriever.getUserListXML(prefs);
 				// parsing users list
 				return XmlParser.parseUserList(xmlUserList);
 				// TODO better implementation of exception handling

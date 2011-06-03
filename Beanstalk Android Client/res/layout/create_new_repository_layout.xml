@@ -1,89 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="@color/ApplicationBackground">
-	<include
-		layout="@layout/actionbar"
-		android:layout_alignParentTop="true"
-		android:id="@+id/actionbar" />
-	<TextView
-		android:text="Create new repository"
-		android:id="@+id/title"
-		android:layout_below="@id/actionbar"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-	<TextView
-		android:text="name:"
-		android:id="@+id/nameLabel"
-		android:layout_below="@id/title"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-	<EditText
-		android:id="@+id/nameEditText"
-		android:layout_below="@id/nameLabel"
-		android:layout_width="fill_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_height="wrap_content"></EditText>
+	android:fillViewport="true">
+	<RelativeLayout
 
-	<TextView
-		android:text="type:"
-		android:id="@+id/typeLabel"
-		android:layout_below="@id/nameEditText"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-	<Spinner
-		android:id="@+id/typeSpinner"
-		android:entries="@array/repository_types"
-		android:layout_below="@id/typeLabel"
 		android:layout_width="fill_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_height="wrap_content"></Spinner>
+		android:layout_height="fill_parent"
+		android:background="@color/ApplicationBackground">
+		<include
+			layout="@layout/actionbar"
+			android:layout_alignParentTop="true"
+			android:id="@+id/actionbar" />
+		<TextView
+			android:text="Create new repository"
+			android:id="@+id/title"
+			android:layout_below="@id/actionbar"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<TextView
+			android:text="name:"
+			android:id="@+id/nameLabel"
+			android:layout_below="@id/title"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<EditText
+			android:id="@+id/nameEditText"
+			android:layout_below="@id/nameLabel"
+			android:layout_width="fill_parent"
+			android:layout_centerHorizontal="true"
+			android:layout_height="wrap_content"></EditText>
 
-	<TextView
-		android:text="title:"
-		android:id="@+id/titleLabel"
-		android:layout_below="@id/typeSpinner"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-	<EditText
-		android:id="@+id/titleEditText"
-		android:layout_below="@id/titleLabel"
-		android:layout_width="fill_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_height="wrap_content"></EditText>
-	<CheckBox
-		android:text="create structure"
-		android:id="@+id/structureCheckBox"
-		android:layout_below="@id/titleEditText"
-		android:layout_width="fill_parent"
-		android:layout_centerHorizontal="true"
-		android:layout_height="wrap_content"></CheckBox>
-	<TextView
-		android:text="color label:"
-		android:id="@+id/colorLabelLabel"
-		android:layout_below="@id/structureCheckBox"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-	<Button
-		android:background="@drawable/repository_labels"
-		android:id="@+id/colorLabelButton"
-		android:layout_below="@id/colorLabelLabel"
-		android:layout_centerHorizontal="true"
-		android:layout_width="100dp"
-		android:layout_height="50dp"></Button>
-	<Button
-		android:text="Create!"
-		android:id="@+id/createButton"
-		android:layout_below="@id/colorLabelButton"
-		android:layout_alignParentRight="true"
-		android:layout_width="150dp"
-		android:layout_height="wrap_content"></Button>
+		<TextView
+			android:text="type:"
+			android:id="@+id/typeLabel"
+			android:layout_below="@id/nameEditText"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<Spinner
+			android:id="@+id/typeSpinner"
+			android:entries="@array/repository_types"
+			android:layout_below="@id/typeLabel"
+			android:layout_width="fill_parent"
+			android:layout_centerHorizontal="true"
+			android:layout_height="wrap_content"></Spinner>
 
-</RelativeLayout>
+		<TextView
+			android:text="title:"
+			android:id="@+id/titleLabel"
+			android:layout_below="@id/typeSpinner"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<EditText
+			android:id="@+id/titleEditText"
+			android:layout_below="@id/titleLabel"
+			android:layout_width="fill_parent"
+			android:layout_centerHorizontal="true"
+			android:layout_height="wrap_content"></EditText>
+		<CheckBox
+			android:text="create structure"
+			android:id="@+id/structureCheckBox"
+			android:layout_below="@id/titleEditText"
+			android:layout_width="fill_parent"
+			android:layout_centerHorizontal="true"
+			android:layout_height="wrap_content"></CheckBox>
+		<TextView
+			android:text="color label:"
+			android:id="@+id/colorLabelLabel"
+			android:layout_below="@id/structureCheckBox"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+		<Button
+			android:background="@drawable/repository_labels"
+			android:id="@+id/colorLabelButton"
+			android:layout_below="@id/colorLabelLabel"
+			android:layout_centerHorizontal="true"
+			android:layout_width="100dp"
+			android:layout_height="50dp"></Button>
+		<Button
+			android:text="Create!"
+			android:id="@+id/createButton"
+			android:layout_below="@id/colorLabelButton"
+			android:layout_alignParentRight="true"
+			android:layout_width="150dp"
+			android:layout_height="wrap_content"></Button>
+
+	</RelativeLayout>
+</ScrollView>

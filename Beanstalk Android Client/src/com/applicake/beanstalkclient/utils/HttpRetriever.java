@@ -52,22 +52,22 @@ public class HttpRetriever {
 		return httpClient;
 	}
 
-	final DefaultHttpClient httpClient = getClient();
+	final static DefaultHttpClient httpClient = getClient();
 
-	private final String HTTP_PREFIX = "https://";
-	private final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
-	private final String USERS_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
-	private final String PERMISSIONS_FOR_USER_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions/";
-	private final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
-	private final String SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/repository.xml?repository_id=";
-	private final String REPOSITORY_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
-	private final String REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
-	private final String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
-	private final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
-	private final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
+	private static final String HTTP_PREFIX = "https://";
+	private static final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
+	private static final String USERS_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
+	private static final String PERMISSIONS_FOR_USER_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions/";
+	private static final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
+	private static final String SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/repository.xml?repository_id=";
+	private static final String REPOSITORY_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
+	private static final String REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
+	private static final String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+	private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
+	private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
 
-	public String checkCredentials(String domain, String username, String password)
+	public static String checkCredentials(String domain, String username, String password)
 			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
@@ -91,17 +91,17 @@ public class HttpRetriever {
 		} catch (ClientProtocolException cpe) { // TODO exception handling
 			cpe.printStackTrace();
 			getRequest.abort();
-			throw new HttpRetreiverException("666");
+			throw new HttpRetreiverException("0");
 			
 		} catch (IOException ioe) { // TODO exception handling
 			ioe.printStackTrace();
 			getRequest.abort();
-			throw new HttpRetreiverException("666");
+			throw new HttpRetreiverException("0");
 		}
 
 	}
 
-	public String getUserListXML(SharedPreferences prefs) throws HttpRetreiverException {
+	public static String getUserListXML(SharedPreferences prefs) throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -136,7 +136,7 @@ public class HttpRetriever {
 		}
 	}
 
-	public String getActivityListXML(SharedPreferences prefs, int pageNumber)
+	public static String getActivityListXML(SharedPreferences prefs, int pageNumber)
 			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
@@ -159,7 +159,6 @@ public class HttpRetriever {
 				throw new Exception("Http connection error");
 
 		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
 			getRequest.abort();
 			throw new HttpRetreiverException("Http parsing IOException");
 		} catch (Exception e) {
@@ -171,7 +170,7 @@ public class HttpRetriever {
 
 	}
 
-	public String getChangesetForReposiotoryXML(SharedPreferences prefs, String repoId)
+	public static String getChangesetForReposiotoryXML(SharedPreferences prefs, String repoId)
 			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
@@ -194,19 +193,16 @@ public class HttpRetriever {
 				throw new Exception("Http connection error");
 
 		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
 			getRequest.abort();
 			throw new HttpRetreiverException("Http parsing IOException");
 		} catch (Exception e) {
 			getRequest.abort();
 			e.printStackTrace();
 			throw new HttpRetreiverException("Http parsing exception");
-
 		}
-
 	}
 
-	public String getRepositoryListXML(SharedPreferences prefs)
+	public static String getRepositoryListXML(SharedPreferences prefs)
 			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
@@ -215,9 +211,6 @@ public class HttpRetriever {
 		String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -232,7 +225,6 @@ public class HttpRetriever {
 				throw new Exception("Http connection error");
 
 		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
 			getRequest.abort();
 			throw new HttpRetreiverException("Http parsing IOException");
 		} catch (Exception e) {
@@ -241,10 +233,9 @@ public class HttpRetriever {
 			throw new HttpRetreiverException("Http parsing exception");
 
 		}
-
 	}
 
-	public String getRepositoryXML(SharedPreferences prefs, int repoId)
+	public static String getRepositoryXML(SharedPreferences prefs, int repoId)
 			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
@@ -254,9 +245,6 @@ public class HttpRetriever {
 				+ String.valueOf(repoId) + ".xml";
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -271,7 +259,6 @@ public class HttpRetriever {
 				throw new Exception("Http connection error");
 
 		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
 			getRequest.abort();
 			throw new HttpRetreiverException("Http parsing IOException");
 		} catch (Exception e) {
@@ -283,7 +270,7 @@ public class HttpRetriever {
 
 	}
 
-	public String getCommentsListXML(SharedPreferences prefs, String repoId)
+	public static String getCommentsListXML(SharedPreferences prefs, String repoId)
 			throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
@@ -293,9 +280,6 @@ public class HttpRetriever {
 				+ String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -310,7 +294,6 @@ public class HttpRetriever {
 				throw new Exception("Http connection error");
 
 		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
 			getRequest.abort();
 			throw new HttpRetreiverException("Http parsing IOException");
 		} catch (Exception e) {
@@ -322,7 +305,7 @@ public class HttpRetriever {
 
 	}
 
-	public String getCommentsListForRevisionXML(SharedPreferences prefs, String repoId,
+	public static String getCommentsListForRevisionXML(SharedPreferences prefs, String repoId,
 			String revision, int pageNumber) throws HttpRetreiverException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
@@ -332,13 +315,8 @@ public class HttpRetriever {
 				+ String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX
 				+ COMMENTS_REVISION_HTTP_SUFFIX + revision + "&page=" + String.valueOf(pageNumber);
 		
-		Log.w("request address", comments_http);
-
 		HttpGet getRequest = new HttpGet(comments_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
-
+		
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -349,23 +327,17 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new HttpRetreiverException(getResponse.getStatusLine().getReasonPhrase());
 
 		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
 			getRequest.abort();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
-
-		}
+			throw new HttpRetreiverException("Http connection error");
+		} 
 
 	}
 
-	public String getPermissionListForUserXML(SharedPreferences prefs, String userId)
-			throws HttpRetreiverException {
+	public static String getPermissionListForUserXML(SharedPreferences prefs, String userId)
+			throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -374,8 +346,6 @@ public class HttpRetriever {
 				+ String.valueOf(userId) + ".xml";
 
 		HttpGet getRequest = new HttpGet(activity_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -388,34 +358,48 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
 		} catch (IOException io) {
 			// TODO handle various HTTP exceptions
 			getRequest.abort();
 			io.printStackTrace();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
-
-		}
+			throw new HttpConnectionErrorException(io);
+		} 
 
 	}
 
 	public static class HttpRetreiverException extends Exception {
-		/**
-		 * 
-		 */
+		
 		private static final long serialVersionUID = 1L;
 
 		public HttpRetreiverException(String message) {
 			super(message);
 		}
 	}
+	
+	public static class UnsuccessfulServerResponseException extends Exception {
+		
+		public UnsuccessfulServerResponseException(String reasonPhrase){
+			super(reasonPhrase);
+			
+		}
+		
+	}
+	
+	public static class HttpConnectionErrorException extends Exception {
+		
+		public HttpConnectionErrorException(Exception e){
+			super(e);
+		}
+		
+	}
+	
+	
+	
+	
 
-	// helper
+	// helpers
 
 	private static UsernamePasswordCredentials getCredentialsFromPreferences(
 			SharedPreferences prefs) {

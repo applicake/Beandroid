@@ -116,9 +116,8 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		protected ArrayList<Changeset> doInBackground(Void... params) {
 			
 			try {
-				HttpRetriever httpRetriever = new HttpRetriever();
-				String xmlRepoList = httpRetriever.getRepositoryListXML(prefs);
-				String xmlChangesetList = httpRetriever.getActivityListXML(prefs, 1);
+				String xmlRepoList = HttpRetriever.getRepositoryListXML(prefs);
+				String xmlChangesetList = HttpRetriever.getActivityListXML(prefs, 1);
 				// parsing repository list
 				repositoryMap = XmlParser.parseRepositoryHashMap(xmlRepoList);
 				//parsing changeset list
@@ -169,8 +168,7 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 		protected ArrayList<Changeset> doInBackground(Void... params) {
 			
 			try {
-				HttpRetriever httpRetriever = new HttpRetriever();
-				String xmlChangesetList = httpRetriever.getActivityListXML(prefs, lastLoadedPage + 1);
+				String xmlChangesetList = HttpRetriever.getActivityListXML(prefs, lastLoadedPage + 1);
 				//parsing changeset list
 				return XmlParser.parseChangesetList(xmlChangesetList);
 				//TODO better implementation of exception handling

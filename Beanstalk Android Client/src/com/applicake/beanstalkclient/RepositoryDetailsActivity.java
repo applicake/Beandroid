@@ -173,7 +173,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			try {
-				String repositoryXml = new HttpRetriever().getRepositoryXML(prefs,
+				String repositoryXml = HttpRetriever.getRepositoryXML(prefs,
 						repository.getId());
 				repository = XmlParser.parseRepository(repositoryXml);
 			} catch (HttpRetreiverException e) {

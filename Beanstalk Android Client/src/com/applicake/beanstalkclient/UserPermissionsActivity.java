@@ -24,6 +24,8 @@ import android.widget.ListView;
 import com.applicake.beanstalkclient.adapters.UserPermissionsAdapter;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
 
@@ -120,14 +122,13 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 		@Override
 		protected Integer doInBackground(String... params) {
 
-			HttpRetriever httpRetriever = new HttpRetriever();
 
 			try {
-				String repositoriesXml = httpRetriever.getRepositoryListXML(prefs);
+				String repositoriesXml = HttpRetriever.getRepositoryListXML(prefs);
 				repositoriesArray.clear();
 				repositoriesArray.addAll(XmlParser.parseRepositoryList(repositoriesXml));
 
-				String permissionsXml = new HttpRetriever().getPermissionListForUserXML(
+				String permissionsXml = HttpRetriever.getPermissionListForUserXML(
 						prefs, String.valueOf(user.getId()));
 				Log.w("permission xml", permissionsXml);
 				repoIdToPermission = XmlParser
@@ -142,6 +143,12 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (HttpConnectionErrorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsuccessfulServerResponseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

@@ -169,6 +169,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 	public class SendRepositoryCreateTask extends AsyncTask<Void, Void, Integer> {
 
 		ProgressDialog progressDialog;
+		String errorMessage;
 		
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
@@ -187,7 +188,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 					GUI.displayMonit(mContext, "Logging in task was cancelled");
 				}
 			});
-			super.onPreExecute();
+			
 			super.onPreExecute();
 		}
 
@@ -195,6 +196,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 
 			XmlCreator xmlCreator = new XmlCreator();
 			HttpSender httpSender = new HttpSender();
+			
 
 			try {
 				if (repoTypeSpinner.getSelectedItemPosition() == 1) {
@@ -215,16 +217,16 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 				}
 
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
+				errorMessage = "XML creator internal error";
 				e.printStackTrace();
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+				errorMessage = "XML creator internal error";
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				errorMessage = "XML creator internal error";
 				e.printStackTrace();
 			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			}
 			return 0;
@@ -239,6 +241,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 			}
+			if ((result == 0) && (errorMessage != null)) GUI.displayMonit(mContext, errorMessage);
 
 			super.onPostExecute(result);
 		}

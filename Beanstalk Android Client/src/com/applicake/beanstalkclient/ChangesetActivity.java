@@ -169,11 +169,9 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			String repoId = params[0];
 			String revision = params[1];
 
-			HttpRetriever httpRetriever = new HttpRetriever();
-
 			try {
 				// getting first page of comments
-				String commentsXml = httpRetriever.getCommentsListForRevisionXML(prefs,
+				String commentsXml = HttpRetriever.getCommentsListForRevisionXML(prefs,
 						repoId, revision, 1);
 				return XmlParser.parseCommentList(commentsXml);
 			} catch (HttpRetreiverException e) {
@@ -229,12 +227,10 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			String repoId = params[0];
 			String revision = params[1];
 
-			HttpRetriever httpRetriever = new HttpRetriever();
-
 			try {
 
 				// getting first page of comments
-				String commentsXml = httpRetriever.getCommentsListForRevisionXML(prefs,
+				String commentsXml = HttpRetriever.getCommentsListForRevisionXML(prefs,
 						repoId, revision, lastLoadedPage + 1);
 				return XmlParser.parseCommentList(commentsXml);
 			} catch (HttpRetreiverException e) {

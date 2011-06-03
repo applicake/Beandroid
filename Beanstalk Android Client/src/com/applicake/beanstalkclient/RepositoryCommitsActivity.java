@@ -122,8 +122,7 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 		protected ArrayList<Changeset> doInBackground(Void... params) {
 
 			try {
-				HttpRetriever httpRetriever = new HttpRetriever();
-				String xmlChangesetList = httpRetriever.getChangesetForReposiotoryXML(
+				String xmlChangesetList = HttpRetriever.getChangesetForReposiotoryXML(
 						prefs, repoId);
 				// parsing changeset list
 				return XmlParser.parseChangesetList(xmlChangesetList);

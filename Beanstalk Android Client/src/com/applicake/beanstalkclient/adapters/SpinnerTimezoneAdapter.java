@@ -1,9 +1,6 @@
 package com.applicake.beanstalkclient.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.applicake.beanstalkclient.utils.RailsTimezones;
 
 import android.content.Context;
 import android.view.LayoutInflater;

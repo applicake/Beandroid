@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.adapters.RepositoriesAdapter;
 import com.applicake.beanstalkclient.enums.Plans;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
@@ -31,7 +32,6 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 		OnItemClickListener, OnClickListener {
 
 	private Context mContext;
-	private ProgressDialog progressDialog;
 	public ArrayList<Repository> repositoriesArray;
 	public RepositoriesAdapter repositoriesAdapter;
 	public ListView repositoriesList;
@@ -61,7 +61,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 				.findViewById(R.id.repositoryCounter);
 
 		// changesetList.setOnItemClickListener(this);
-		new DownloadChangesetListTask().execute();
+		new DownloadChangesetListTask(this).execute();
 
 	}
 
@@ -69,7 +69,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Constants.REFRESH_ACTIVITY)
-			new DownloadChangesetListTask().execute();
+			new DownloadChangesetListTask(this).execute();
 	}
 
 	@Override
@@ -92,13 +92,23 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 	public class DownloadChangesetListTask extends
 			AsyncTask<String, Void, ArrayList<Repository>> {
 
+		private Context context;
+		private ProgressDialog progressDialog;
+		
 		@SuppressWarnings("rawtypes")
-		private AsyncTask thisTask = this;
+		private AsyncTask thisTask;
+		private String errorMessage;
 
+		public DownloadChangesetListTask(Context context) {
+			this.context = context;
+			thisTask = this;
+		}
+		
+		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(mContext, "Loading Repository list",
+			progressDialog = ProgressDialog.show(context, "Loading Repository list",
 					"Please wait...");
 			progressDialog.setCancelable(true);
 			progressDialog.setOnCancelListener(new OnCancelListener() {
@@ -114,13 +124,12 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 		@Override
 		protected ArrayList<Repository> doInBackground(String... params) {
 
-			HttpRetriever httpRetriever = new HttpRetriever();
 
 			try {
-				String repositoriesXml = httpRetriever.getRepositoryListXML(prefs);
+				String repositoriesXml = HttpRetriever.getRepositoryListXML(prefs);
 				return XmlParser.parseRepositoryList(repositoriesXml);
 			} catch (HttpRetreiverException e) {
-				// TODO generate http parsing exception handling
+				errorMessage = e.getMessage();
 				e.printStackTrace();
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
@@ -139,8 +148,10 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 		@Override
 		protected void onPostExecute(ArrayList<Repository> result) {
 			repositoriesArray.clear();
-			repositoriesArray.addAll(result);
+			if (result != null) repositoriesArray.addAll(result);
 			progressDialog.dismiss();
+
+			if (errorMessage != null) GUI.displayMonit(context, errorMessage);
 
 			repositoriesAdapter.notifyDataSetChanged();
 

@@ -162,10 +162,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 			domain = params[0];
 			login = params[1];
 			password = params[2];
-			HttpRetriever httpRetriever = new HttpRetriever();
 			String loginAttemptResultxml;
 			try {
-				loginAttemptResultxml = httpRetriever.checkCredentials(domain, login,
+				loginAttemptResultxml = HttpRetriever.checkCredentials(domain, login,
 						password);
 
 				account = XmlParser.parseAccountInfo(loginAttemptResultxml);
@@ -173,8 +172,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 			} catch (HttpRetreiverException e) {
 				return Integer.parseInt(e.getMessage());
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				GUI.displayMonit(mContext, "An error occured while parsing data");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -207,6 +206,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 			} else if (result == 302) {
 				GUI.displayMonit(mContext, "Invalid account domain");
+			} else if (result == 0) {
+				GUI.displayMonit(mContext, "Internet connection error");
 			} else if (result == 401) {
 				GUI.displayMonit(mContext, "Invalid username or password");
 			} else if (result == 500) {

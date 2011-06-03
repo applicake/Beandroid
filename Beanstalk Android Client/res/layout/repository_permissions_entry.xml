@@ -90,8 +90,20 @@
 		style="@android:style/Widget.ProgressBar.Small.Inverse"
 		android:id="@+id/loadingBar"
 		android:visibility="visible"></ProgressBar>
-		
-			<TextView
+
+	<TextView
+		android:text="Parsing failed"
+		android:textSize="@dimen/SmallTextSize"
+		android:textColor="@color/ApplicationText"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_alignParentRight="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/parsingFailed"
+		android:visibility="gone"></TextView>
+
+	<TextView
 		android:text="ADMIN"
 		android:background="@drawable/label_red"
 		android:visibility="gone"
