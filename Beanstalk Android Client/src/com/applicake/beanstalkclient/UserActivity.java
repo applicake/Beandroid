@@ -1,18 +1,16 @@
 package com.applicake.beanstalkclient;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.adapters.UserAdapter;
 import com.applicake.beanstalkclient.enums.Plans;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -89,6 +87,9 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 	public class DownloadUsersListTask extends AsyncTask<Void, Void, ArrayList<User>> {
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String errorMessage;
+		private String failMessage;
+		private boolean failed;
 
 		@Override
 		protected void onPreExecute() {
@@ -115,39 +116,59 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 				// parsing users list
 				return XmlParser.parseUserList(xmlUserList);
 				// TODO better implementation of exception handling
-			} catch (ParserConfigurationException e) {
-				GUI.displayMonit(mContext, "An error occured while paring Changeset list");
-				e.printStackTrace();
-			} catch (SAXException e) {
-				GUI.displayMonit(mContext, "An error occured while paring Changeset list");
-				e.printStackTrace();
-			} catch (IOException e) {
-				GUI.displayMonit(mContext, "An error occured while paring Changeset list");
-				e.printStackTrace();
-			} catch (HttpRetreiverException e) {
-				GUI.displayMonit(mContext,
-						"An error occured while parsing Changeset list");
-				e.printStackTrace();
+
+			} catch (UnsuccessfulServerResponseException e) {
+				errorMessage = e.getMessage();
+				return null;
+			} catch (HttpConnectionErrorException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			}
+			failed = true;
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<User> parsedArray) {
 			progressDialog.dismiss();
-			userArray.clear();
-			userArray.addAll(parsedArray);
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
 
-			userAdapter.notifyDataSetChanged();
+					@Override
+					public void retryAction() {
+						new DownloadUsersListTask().execute();
+					}
 
-			int usersInPlan = Plans.getPlanById(prefs.getInt(Constants.ACCOUNT_PLAN, 0))
-					.getNumberOfUsers();
-			int numberLeft = usersInPlan - userArray.size();
-			userLeftCounter.setText("available users: " + String.valueOf(numberLeft)
-					+ "/" + String.valueOf(usersInPlan));
+					@Override
+					public void noRetryAction(DialogInterface dialog) {
+						super.noRetryAction(dialog);
+						finish();
+					}
 
-			// userAdapter.notifyDataSetChanged();
+				};
 
+				builder.displayDialog();
+			} else {
+				if (parsedArray != null){
+
+					userArray.clear();
+					userArray.addAll(parsedArray);
+
+					userAdapter.notifyDataSetChanged();
+
+					int usersInPlan = Plans.getPlanById(
+							prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfUsers();
+					int numberLeft = usersInPlan - userArray.size();
+					userLeftCounter.setText("available users: " + String.valueOf(numberLeft)
+							+ "/" + String.valueOf(usersInPlan));
+				} else if (errorMessage != null){
+					GUI.displayMonit(mContext, "Server error: "+ errorMessage);
+				} else GUI.displayMonit(mContext, "Unexpected error, please try again later");
+
+
+			}
 		}
 
 	}

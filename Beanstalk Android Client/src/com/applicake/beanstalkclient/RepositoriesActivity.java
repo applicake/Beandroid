@@ -1,17 +1,16 @@
 package com.applicake.beanstalkclient;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.adapters.RepositoriesAdapter;
 import com.applicake.beanstalkclient.enums.Plans;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -94,17 +93,18 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 
 		private Context context;
 		private ProgressDialog progressDialog;
-		
+
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask;
 		private String errorMessage;
+		private String failMessage;
+		private boolean failed = false;
 
 		public DownloadChangesetListTask(Context context) {
 			this.context = context;
 			thisTask = this;
 		}
-		
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -124,44 +124,62 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 		@Override
 		protected ArrayList<Repository> doInBackground(String... params) {
 
-
 			try {
 				String repositoriesXml = HttpRetriever.getRepositoryListXML(prefs);
 				return XmlParser.parseRepositoryList(repositoriesXml);
-			} catch (HttpRetreiverException e) {
-				errorMessage = e.getMessage();
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
+			} catch (UnsuccessfulServerResponseException e) {
+				errorMessage = e.getMessage();
+				return null;
+			} catch (HttpConnectionErrorException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
+			}
+			failed = true;
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<Repository> result) {
-			repositoriesArray.clear();
-			if (result != null) repositoriesArray.addAll(result);
 			progressDialog.dismiss();
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
 
-			if (errorMessage != null) GUI.displayMonit(context, errorMessage);
+					@Override
+					public void retryAction() {
+						new DownloadChangesetListTask(context).execute();
+					}
 
-			repositoriesAdapter.notifyDataSetChanged();
+					@Override
+					public void noRetryAction(DialogInterface dialog) {
+						super.noRetryAction(dialog);
+						finish();
+					}
 
-			int repositoriesInPlan = Plans.getPlanById(
-					prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfRepos();
-			int numberLeft = repositoriesInPlan - repositoriesArray.size();
-			repositoriesLeftCounter.setText("available repositories: "
-					+ String.valueOf(numberLeft) + "/"
-					+ String.valueOf(repositoriesInPlan));
+				};
 
+				builder.displayDialog();
+			} else {
+				repositoriesArray.clear();
+				if (result != null) {
+					repositoriesArray.addAll(result);
+
+					repositoriesAdapter.notifyDataSetChanged();
+
+					int repositoriesInPlan = Plans.getPlanById(
+							prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfRepos();
+					int numberLeft = repositoriesInPlan - repositoriesArray.size();
+					repositoriesLeftCounter.setText("available repositories: "
+							+ String.valueOf(numberLeft) + "/"
+							+ String.valueOf(repositoriesInPlan));
+				}
+
+				if (errorMessage != null)
+					GUI.displayMonit(context, errorMessage);
+
+			}
 		}
 
 	}

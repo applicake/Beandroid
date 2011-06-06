@@ -1,6 +1,6 @@
 package com.applicake.beanstalkclient;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,7 +22,9 @@ import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.GravatarDowloader;
 import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
 
 public class UserDetailsActivity extends BeanstalkActivity implements OnClickListener {
 
@@ -81,7 +83,7 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 				.setCancelable(false)
 				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						new sendDeleteUserRequest().execute();
+						new SendDeleteUserRequest().execute();
 					}
 				}).setNegativeButton("No", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
@@ -123,10 +125,13 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 
 	}
 
-	public class sendDeleteUserRequest extends AsyncTask<Void, Void, Integer> {
+	public class SendDeleteUserRequest extends AsyncTask<Void, Void, Integer> {
 
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String failMessage;
+		private String errorMessage;
+		private boolean failed = false;
 
 		@Override
 		protected void onPreExecute() {
@@ -148,25 +153,23 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 		@Override
 		protected Integer doInBackground(Void... params) {
 			try {
-				return new HttpSender().sendDeleteUserRequest(prefs,
+				return HttpSender.sendDeleteUserRequest(prefs,
 						String.valueOf(user.getId()));
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return 0;
-			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return 0;
+
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return 0;
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
+			} catch (IOException e) {
+				failMessage = Strings.internalErrorMessage;
+			} catch (HttpSenderException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
+				errorMessage = e.getMessage();
 				return 0;
 			}
+			failed = true;
+			return 0;
 
 		}
 
@@ -174,13 +177,27 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
 		protected void onPostExecute(Integer result) {
 
 			progressDialog.dismiss();
-			if (result == 200) {
-				GUI.displayMonit(mContext, "The user was deleted!");
-				setResult(Constants.REFRESH_ACTIVITY);
-				finish();
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+					@Override
+					public void retryAction() {
+						new SendDeleteUserRequest().execute();
+					}
+				};
+
+				builder.displayDialog();
+			} else {
+				if (result == 200) {
+					GUI.displayMonit(mContext, "The user was deleted!");
+					setResult(Constants.REFRESH_ACTIVITY);
+					finish();
+				} else if (errorMessage != null)
+					GUI.displayServerErrorMonit(mContext, errorMessage);
+				else
+					GUI.displayUnexpectedErrorMonit(mContext);
 			}
 
-			super.onPostExecute(result);
 		}
 
 	}

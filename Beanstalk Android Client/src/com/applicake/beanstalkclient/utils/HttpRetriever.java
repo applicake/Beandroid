@@ -6,7 +6,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -66,9 +65,8 @@ public class HttpRetriever {
 	private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
 	private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
-
 	public static String checkCredentials(String domain, String username, String password)
-			throws HttpRetreiverException {
+			throws HttpImproperStatusCodeException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
@@ -86,22 +84,18 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			}
-			throw new HttpRetreiverException(String.valueOf(statusCode));
+			throw new HttpImproperStatusCodeException(statusCode);
 
-		} catch (ClientProtocolException cpe) { // TODO exception handling
-			cpe.printStackTrace();
+
+		} catch (IOException ioe) { 
 			getRequest.abort();
-			throw new HttpRetreiverException("0");
-			
-		} catch (IOException ioe) { // TODO exception handling
-			ioe.printStackTrace();
-			getRequest.abort();
-			throw new HttpRetreiverException("0");
+			throw new HttpConnectionErrorException(ioe);
 		}
 
 	}
 
-	public static String getUserListXML(SharedPreferences prefs) throws HttpRetreiverException {
+	public static String getUserListXML(SharedPreferences prefs)
+			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -109,9 +103,6 @@ public class HttpRetriever {
 		String auth_http = HTTP_PREFIX + domain + USERS_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
-		// final HttpParams params = new BasicHttpParams();
-		// httpClient.setParams(params);
-		// HttpClientParams.setRedirecting(params, false);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -122,29 +113,25 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 			getRequest.abort();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
-
+			throw new HttpConnectionErrorException(ioe);
 		}
 	}
 
 	public static String getActivityListXML(SharedPreferences prefs, int pageNumber)
-			throws HttpRetreiverException {
+			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 
-		String activity_http = HTTP_PREFIX + domain + ACTIVITY_HTTP_SUFFIX + "?page=" + String.valueOf(pageNumber);
+		String activity_http = HTTP_PREFIX + domain + ACTIVITY_HTTP_SUFFIX + "?page="
+				+ String.valueOf(pageNumber);
 		Log.w("Beansdroid", activity_http);
-		
+
 		HttpGet getRequest = new HttpGet(activity_http);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
@@ -156,22 +143,19 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
-			getRequest.abort();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
 
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			getRequest.abort();
+			throw new HttpConnectionErrorException(ioe);
 		}
 
 	}
 
-	public static String getChangesetForReposiotoryXML(SharedPreferences prefs, String repoId)
-			throws HttpRetreiverException {
+	public static String getChangesetForReposiotoryXML(SharedPreferences prefs,
+			String repoId) throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -190,20 +174,18 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 			getRequest.abort();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
+			throw new HttpConnectionErrorException(ioe);
 		}
 	}
 
 	public static String getRepositoryListXML(SharedPreferences prefs)
-			throws HttpRetreiverException {
+			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -222,21 +204,17 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 			getRequest.abort();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
-
+			throw new HttpConnectionErrorException(ioe);
 		}
 	}
 
 	public static String getRepositoryXML(SharedPreferences prefs, int repoId)
-			throws HttpRetreiverException {
+			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -256,22 +234,17 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
-			getRequest.abort();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
 
+		} catch (IOException ioe) {
+			getRequest.abort();
+			throw new HttpConnectionErrorException(ioe);
 		}
-
 	}
 
 	public static String getCommentsListXML(SharedPreferences prefs, String repoId)
-			throws HttpRetreiverException {
+			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -291,32 +264,30 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new Exception("Http connection error");
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
-			getRequest.abort();
-			throw new HttpRetreiverException("Http parsing IOException");
-		} catch (Exception e) {
-			getRequest.abort();
-			e.printStackTrace();
-			throw new HttpRetreiverException("Http parsing exception");
 
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			getRequest.abort();
+			throw new HttpConnectionErrorException(ioe);
 		}
 
 	}
 
-	public static String getCommentsListForRevisionXML(SharedPreferences prefs, String repoId,
-			String revision, int pageNumber) throws HttpRetreiverException {
+	public static String getCommentsListForRevisionXML(SharedPreferences prefs,
+			String repoId, String revision, int pageNumber) throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 
 		String comments_http = HTTP_PREFIX + domain + COMMENTS_HTTP_MIDDLE
 				+ String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX
-				+ COMMENTS_REVISION_HTTP_SUFFIX + revision + "&page=" + String.valueOf(pageNumber);
-		
+				+ COMMENTS_REVISION_HTTP_SUFFIX + revision + "&page="
+				+ String.valueOf(pageNumber);
+
 		HttpGet getRequest = new HttpGet(comments_http);
-		
+
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
@@ -327,17 +298,19 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new HttpRetreiverException(getResponse.getStatusLine().getReasonPhrase());
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 			getRequest.abort();
-			throw new HttpRetreiverException("Http connection error");
-		} 
+			throw new HttpConnectionErrorException(ioe);
+		}
 
 	}
 
-	public static String getPermissionListForUserXML(SharedPreferences prefs, String userId)
-			throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
+	public static String getPermissionListForUserXML(SharedPreferences prefs,
+			String userId) throws HttpConnectionErrorException,
+			UnsuccessfulServerResponseException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -360,44 +333,67 @@ public class HttpRetriever {
 			} else
 				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
 
-		} catch (IOException io) {
-			// TODO handle various HTTP exceptions
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 			getRequest.abort();
-			io.printStackTrace();
-			throw new HttpConnectionErrorException(io);
-		} 
+			throw new HttpConnectionErrorException(ioe);
+		}
 
 	}
 
-	public static class HttpRetreiverException extends Exception {
+	// this exception is passing the status code of failed Http Request up the
+	// activity stack
+	public static class HttpImproperStatusCodeException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private int statusCode;
+
+		public HttpImproperStatusCodeException(int statusCode) {
+			super();
+			this.statusCode = statusCode;
+		}
 		
+		public int getStatusCode(){
+			return statusCode;
+		}
+
+	}
+
+
+	// exception thrown by this class after receiving improper response from
+	// server
+	public static class UnsuccessfulServerResponseException extends Exception {
+
+
+		/**
+		 * 
+		 */
 		private static final long serialVersionUID = 1L;
 
-		public HttpRetreiverException(String message) {
-			super(message);
-		}
-	}
-	
-	public static class UnsuccessfulServerResponseException extends Exception {
-		
-		public UnsuccessfulServerResponseException(String reasonPhrase){
+		public UnsuccessfulServerResponseException(String reasonPhrase) {
 			super(reasonPhrase);
-			
+
 		}
-		
+
 	}
-	
+
+	// exception thrown after unsuccessful connection with http server (i.e. no
+	// internet connection)
 	public static class HttpConnectionErrorException extends Exception {
-		
-		public HttpConnectionErrorException(Exception e){
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public HttpConnectionErrorException(Exception e) {
 			super(e);
 		}
-		
+
 	}
-	
-	
-	
-	
 
 	// helpers
 

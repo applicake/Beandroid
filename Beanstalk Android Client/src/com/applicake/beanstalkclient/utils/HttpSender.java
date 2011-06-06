@@ -2,40 +2,13 @@ package com.applicake.beanstalkclient.utils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.PasswordAuthentication;
-import java.net.Socket;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
-import org.apache.http.NoHttpResponseException;
 import org.apache.http.ParseException;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.HttpRequestRetryHandler;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.params.HttpClientParams;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -48,12 +21,10 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -83,7 +54,7 @@ public class HttpSender {
 		return httpClient;
 	}
 
-	final DefaultHttpClient httpClient = getClient();
+	private static final DefaultHttpClient httpClient = getClient();
 	private final static String HTTPS_PREFIX = "https://";
 	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
 	private final static String COMMENTS_HTTP_SUFFIX = "/comments.xml";
@@ -95,8 +66,9 @@ public class HttpSender {
 	private final static String PERMISSION_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions.xml";
 	private final static String PERMISSION_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/permissions/";
 
-	public String sendCommentXML(SharedPreferences prefs, String xml, String repoId)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static String sendCommentXML(SharedPreferences prefs, String xml, String repoId)
+			throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
+			HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -120,7 +92,7 @@ public class HttpSender {
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
 			int statusCode = postResponse.getStatusLine().getStatusCode();
-			
+
 			if (statusCode == 422) {
 				StringBuilder sb = new StringBuilder();
 				for (String s : XmlParser.parseErrors(entity)) {
@@ -128,35 +100,24 @@ public class HttpSender {
 					sb.append("\n");
 				}
 
-				throw new HttpSenderException(sb.toString());
-			} else if (statusCode == 201){
+				throw new HttpSenderServerErrorException(sb.toString());
+			} else if (statusCode == 201) {
 				return entity;
 			} else {
 				throw new HttpSenderException("Incorrect response from server");
 			}
 
-		} catch (ClientProtocolException e) {
-			postRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
 			postRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
-		} catch (ParserConfigurationException e) {
-			postRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException("Parser configuration exception");
-		} catch (SAXException e) {
-			postRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException(e.getMessage());
 		}
 
 	}
 
-	public int sendCreateNewRepostiroyXML(SharedPreferences prefs, String xml)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static int sendCreateNewRepostiroyXML(SharedPreferences prefs, String xml)
+			throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
+			HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -180,7 +141,7 @@ public class HttpSender {
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
 			int statusCode = postResponse.getStatusLine().getStatusCode();
-			
+
 			if (statusCode == 422) {
 				StringBuilder sb = new StringBuilder();
 				for (String s : XmlParser.parseErrors(entity)) {
@@ -188,31 +149,22 @@ public class HttpSender {
 					sb.append("\n");
 				}
 
-				throw new HttpSenderException(sb.toString());
+				throw new HttpSenderServerErrorException(sb.toString());
 			} else {
 				return statusCode;
 			}
 
-		} catch (ClientProtocolException e) {
-			postRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
 			postRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			throw new HttpSenderException("Parser configuration error");
-		} catch (SAXException e) {
-			e.printStackTrace();
-			throw new HttpSenderException(e.getMessage());
 		}
 
 	}
 
-	public int sendUpdateRepositoryXML(SharedPreferences prefs, String xml, String repoId)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static int sendUpdateRepositoryXML(SharedPreferences prefs, String xml, String repoId)
+			throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
+			HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -236,7 +188,7 @@ public class HttpSender {
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
 			int statusCode = postResponse.getStatusLine().getStatusCode();
-			
+
 			if (statusCode == 422) {
 				StringBuilder sb = new StringBuilder();
 				for (String s : XmlParser.parseErrors(entity)) {
@@ -244,33 +196,23 @@ public class HttpSender {
 					sb.append("\n");
 				}
 
-				throw new HttpSenderException(sb.toString());
+				throw new HttpSenderServerErrorException(sb.toString());
 			} else {
 				return statusCode;
 			}
 
-		} catch (ClientProtocolException e) {
-			putRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
 			putRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new HttpSenderException("Parse configuration error");
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new HttpSenderException(e.getMessage());
+
 		}
 
 	}
 
-	public int sendUpdateUserXML(SharedPreferences prefs, String xml, String userId)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static int sendUpdateUserXML(SharedPreferences prefs, String xml, String userId)
+			throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
+			HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -294,45 +236,31 @@ public class HttpSender {
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
 			int statusCode = postResponse.getStatusLine().getStatusCode();
-
-			if (statusCode == 422) {
+			if (statusCode == 200) {
+				return 200;
+			} else if (statusCode == 422) {
 				StringBuilder sb = new StringBuilder();
 				for (String s : XmlParser.parseErrors(entity)) {
 					sb.append(s);
 					sb.append("\n");
 				}
-
-				throw new HttpSenderException(sb.toString());
+				throw new HttpSenderServerErrorException(sb.toString());
 			} else {
-				return statusCode;
+				throw new HttpSenderServerErrorException(postResponse.getStatusLine()
+						.getReasonPhrase());
 			}
 
-		} catch (ClientProtocolException e) {
-			putRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
 			putRequest.abort();
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new HttpSenderException("ParseException");
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new HttpSenderException("ParserConfigurationException");
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new HttpSenderException("SAXException");
 		}
 
 	}
 
-	public int sendCreateUserXML(SharedPreferences prefs, String xml)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static int sendCreateUserXML(SharedPreferences prefs, String xml)
+			throws UnsupportedEncodingException, HttpSenderException,
+			HttpSenderServerErrorException, XMLParserException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -349,32 +277,36 @@ public class HttpSender {
 		StringEntity se = new StringEntity(xml, "UTF-8");
 		postRequest.setEntity(se);
 
-		// TODO throw exceptions if an error occurs
 		try {
 			HttpResponse postResponse = httpClient.execute(postRequest);
 			Log.w("postRequestXml", xml);
 			String entity = EntityUtils.toString(postResponse.getEntity());
 			Log.w("postResponse", entity);
-			if (postResponse.getStatusLine().getStatusCode() == 201) {
-				return 201;
-			} else {
-				throw new HttpSenderException("Incorrect response from server");
-			}
+			int statusCode = postResponse.getStatusLine().getStatusCode();
 
-		} catch (ClientProtocolException e) {
-			postRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
+			if (statusCode == 201) {
+				return 201;
+			} else if (statusCode == 422) {
+				StringBuilder sb = new StringBuilder();
+				for (String s : XmlParser.parseErrors(entity)) {
+					sb.append(s);
+					sb.append("\n");
+				}
+				throw new HttpSenderServerErrorException(sb.toString());
+			} else
+				throw new HttpSenderServerErrorException(postResponse.getStatusLine()
+						.getReasonPhrase());
+
 		} catch (IOException e) {
 			postRequest.abort();
-			e.printStackTrace();
 			throw new HttpSenderException("IOException");
 		}
 
 	}
 
-	public int sendPermissionXML(SharedPreferences prefs, String xml)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static int sendPermissionXML(SharedPreferences prefs, String xml)
+			throws UnsupportedEncodingException, HttpSenderException,
+			HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -400,29 +332,22 @@ public class HttpSender {
 			if (postResponse.getStatusLine().getStatusCode() == 201) {
 				return 201;
 			} else {
-				throw new HttpSenderException("Incorrect response from server");
+				throw new HttpSenderServerErrorException("Failed");
 			}
 
-		} catch (ClientProtocolException e) {
-			postRequest.abort();
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
 			postRequest.abort();
-			e.printStackTrace();
 			throw new HttpSenderException("IOException");
 		}
 
 	}
 
-	public int sendDeletePermissionRequest(SharedPreferences prefs, String permissionId)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static int sendDeletePermissionRequest(SharedPreferences prefs, String permissionId)
+			throws UnsupportedEncodingException, HttpSenderException,
+			HttpSenderServerErrorException, ParseException, XMLParserException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
-
-		// HttpConnectionParams.setConnectionTimeout(httpClient.getParams(),
-		// 20000);
 
 		// create DELETE request with address
 		HttpPost deleteRequest = new HttpPost(HTTPS_PREFIX + domain
@@ -436,24 +361,32 @@ public class HttpSender {
 
 		Log.w("deleteRequest", deleteRequest.getURI().toString());
 
-		// TODO throw exceptions if an error occurs
 		try {
 			HttpResponse response = httpClient.execute(deleteRequest);
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode == 200) {
+				return 200;
+			} else if (statusCode == 422) {
+				StringBuilder sb = new StringBuilder();
+				for (String s : XmlParser.parseErrors(EntityUtils.toString(response
+						.getEntity()))) {
+					sb.append(s);
+					sb.append("\n");
+				}
+				throw new HttpSenderServerErrorException(sb.toString());
+			} else {
+				throw new HttpSenderServerErrorException(response.getStatusLine()
+						.getReasonPhrase());
+			}
 
-			return response.getStatusLine().getStatusCode();
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
-			e.printStackTrace();
 			throw new HttpSenderException("IOException");
 		}
 
 	}
 
-	public int sendDeleteUserRequest(SharedPreferences prefs, String userId)
-			throws UnsupportedEncodingException, HttpSenderException {
+	public static int sendDeleteUserRequest(SharedPreferences prefs, String userId)
+			throws UnsupportedEncodingException, HttpSenderException, HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -475,63 +408,19 @@ public class HttpSender {
 		// TODO throw exceptions if an error occurs
 		try {
 			HttpResponse response = httpClient.execute(deleteRequest);
-			return response.getStatusLine().getStatusCode();
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode == 200) {
+				return 200;
+			} else
+				throw new HttpSenderServerErrorException(response.getStatusLine()
+						.getReasonPhrase());
 
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			throw new HttpSenderException("Client protocol exception");
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new HttpSenderException("IOException");
 		}
 
 	}
-
-	// public int sendHackDeleteUserRequest(SharedPreferences prefs, String
-	// userId)
-	// throws HttpSenderException, IllegalArgumentException,
-	// IllegalStateException, IOException {
-	//
-	// UsernamePasswordCredentials credentials =
-	// getCredentialsFromPreferences(prefs);
-	// String domain = getAccountDomain(prefs);
-	//
-	// HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
-	//
-	// // create DELETE request with address
-	// HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain
-	// + USER_DELETE_HTTP_MIDDLE + userId + ".xml");
-	//
-	// postRequest.addHeader("Content-Type", "application/xml");
-	// postRequest.addHeader("Accept", "application/xml");
-	//
-	// postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8",
-	// false));
-	//
-	// String xml = new XmlCreator().createDeleteHack();
-	// StringEntity se = new StringEntity(xml, "UTF-8");
-	// postRequest.setEntity(se);
-	//
-	//
-	//
-	// Log.w("deleteRequestxml", xml);
-	// Log.w("deleteRequest", postRequest.getURI().toString());
-	//
-	// // TODO throw exceptions if an error occurs
-	// try {
-	// httpClient.execute(postRequest);
-	// return 200;
-	//
-	//
-	// } catch (ClientProtocolException e) {
-	// e.printStackTrace();
-	// throw new HttpSenderException("Client protocol exception");
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// throw new HttpSenderException("IOException");
-	// }
-	//
-	// }
 
 	private static UsernamePasswordCredentials getCredentialsFromPreferences(
 			SharedPreferences prefs) {
@@ -544,13 +433,28 @@ public class HttpSender {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
 	}
 
-	public class HttpSenderException extends Exception {
+	// a general exception for this class associated with connection errors and
+	// improper responses from server
+	public static class HttpSenderException extends Exception {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
 
 		public HttpSenderException(String message) {
+			super(message);
+		}
+	}
+
+	// an exception carrying an error message from the server - connected with
+	// malformed query
+	public static class HttpSenderServerErrorException extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public HttpSenderServerErrorException(String message) {
 			super(message);
 		}
 	}

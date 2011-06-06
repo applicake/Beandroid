@@ -1,12 +1,7 @@
 package com.applicake.beanstalkclient;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,10 +19,11 @@ import android.widget.ListView;
 import com.applicake.beanstalkclient.adapters.UserPermissionsAdapter;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
 import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class UserPermissionsActivity extends BeanstalkActivity implements
 		OnItemClickListener {
@@ -98,9 +94,15 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 	public class DownloadRepositoryListTask extends AsyncTask<String, Void, Integer> {
 
 		private static final int SUCCESSFUL_PARSING = 1;
-		
+
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+
+		private String errorMessage;
+
+		private String failMessage;
+
+		private boolean failed;
 
 		@Override
 		protected void onPreExecute() {
@@ -122,49 +124,57 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 		@Override
 		protected Integer doInBackground(String... params) {
 
-
 			try {
 				String repositoriesXml = HttpRetriever.getRepositoryListXML(prefs);
 				repositoriesArray.clear();
 				repositoriesArray.addAll(XmlParser.parseRepositoryList(repositoriesXml));
 
-				String permissionsXml = HttpRetriever.getPermissionListForUserXML(
-						prefs, String.valueOf(user.getId()));
+				String permissionsXml = HttpRetriever.getPermissionListForUserXML(prefs,
+						String.valueOf(user.getId()));
 				Log.w("permission xml", permissionsXml);
 				repoIdToPermission = XmlParser
 						.parseRepoIdToPermissionHashMap(permissionsXml);
-			} catch (HttpRetreiverException e) {
-				// TODO generate http parsing exception handling
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (HttpConnectionErrorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnsuccessfulServerResponseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				return SUCCESSFUL_PARSING;
 
-			return SUCCESSFUL_PARSING;
+			} catch (UnsuccessfulServerResponseException e) {
+				errorMessage = e.getMessage();
+				return 0;
+			} catch (HttpConnectionErrorException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
+			}
+			failed = true;
+			return 0;
+
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
 
-			if (result == 1) {
-				repositoriesAdapter.setRepoIdToPermissionMap(repoIdToPermission);
-			}
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+					@Override
+					public void retryAction() {
+						new DownloadRepositoryListTask().execute();
+					}
+				};
 
-			repositoriesAdapter.notifyDataSetChanged();
+				builder.displayDialog();
+			} else {
+
+				if (result == SUCCESSFUL_PARSING) {
+					repositoriesAdapter.setRepoIdToPermissionMap(repoIdToPermission);
+					repositoriesAdapter.notifyDataSetChanged();
+					
+				} else if (errorMessage != null)
+					GUI.displayServerErrorMonit(mContext, errorMessage);
+				else
+					GUI.displayUnexpectedErrorMonit(mContext);
+
+			}
 
 		}
 

@@ -1,11 +1,5 @@
 package com.applicake.beanstalkclient;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,8 +18,11 @@ import android.widget.TextView;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		OnClickListener {
@@ -74,15 +71,17 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		usersPermissionsButton.setOnClickListener(this);
 		deploymentButton.setOnClickListener(this);
 		modifyPropertiesButton.setOnClickListener(this);
-		
+
 		loadRepositoryData();
 
 	}
 
 	public void loadRepositoryData() {
 
-		Log.w("color change", String.valueOf(colorLabel.getBackground().setLevel(repository.getColorLabelNo())));
-		
+		Log.w("color change",
+				String.valueOf(colorLabel.getBackground().setLevel(
+						repository.getColorLabelNo())));
+
 		repoName.setText(repository.getName());
 		repoType.setText(repository.getType().equals("SubversionRepository") ? "SVN"
 				: "Git");
@@ -149,12 +148,16 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 
 	public class DownloadRepositoryInfo extends AsyncTask<Void, Void, Boolean> {
 
-		Repository refreshedRepository;
-
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
 		ProgressDialog progressDialog;
-		
+
+		private boolean failed;
+
+		private String failMessage;
+
+		private String errorMessage;
+
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait",
 					"Repository data is being refreshed");
@@ -176,33 +179,49 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 				String repositoryXml = HttpRetriever.getRepositoryXML(prefs,
 						repository.getId());
 				repository = XmlParser.parseRepository(repositoryXml);
-			} catch (HttpRetreiverException e) {
-				// TODO Auto-generated catch block
+				return true;
 
-				e.printStackTrace();
-				cancel(true);
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				cancel(true);
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				cancel(true);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				cancel(true);
+			} catch (UnsuccessfulServerResponseException e) {
+				errorMessage = e.getMessage();
+				return false;
+			} catch (HttpConnectionErrorException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			}
-			return true;
+			failed = true;
+			return false;
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result) {
 			progressDialog.dismiss();
-			if (result) {
-				loadRepositoryData();
 
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+
+					@Override
+					public void retryAction() {
+						new DownloadRepositoryInfo().execute();
+					}
+
+					@Override
+					public void noRetryAction(DialogInterface dialog) {
+						super.noRetryAction(dialog);
+						finish();
+					}
+
+				};
+
+				builder.displayDialog();
+			} else {
+				if (result) {
+					loadRepositoryData();
+
+				} else {
+					GUI.displayMonit(mContext, "Server error: "+ errorMessage);
+				}
 			}
 		}
 

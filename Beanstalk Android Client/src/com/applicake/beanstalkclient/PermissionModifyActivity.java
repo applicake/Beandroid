@@ -2,11 +2,16 @@ package com.applicake.beanstalkclient;
 
 import java.io.IOException;
 
+import org.apache.http.ParseException;
+
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.GravatarDowloader;
 import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -69,8 +74,8 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 				repoAccessSpinner.setSelection(2);
 			else if (permission.isReadAccess())
 				repoAccessSpinner.setSelection(1);
-		 if (permission.isFullDeploymentAccess()) 
-			 deploymentAccessSpinner.setSelection(1);
+			if (permission.isFullDeploymentAccess())
+				deploymentAccessSpinner.setSelection(1);
 		}
 
 	}
@@ -78,7 +83,7 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.deleteButton) {
-			if (permission != null){
+			if (permission != null) {
 				new DeletePermissionsTask().execute(permission.getId());
 			} else {
 				GUI.displayMonit(mContext, "no changes were made");
@@ -89,7 +94,7 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 		if (v.getId() == R.id.applyButton) {
 			if ((repoAccessSpinner.getSelectedItemPosition() == 0)
 					&& (deploymentAccessSpinner.getSelectedItemPosition() == 0)) {
-				if (permission != null){
+				if (permission != null) {
 					new DeletePermissionsTask().execute(permission.getId());
 				} else {
 					GUI.displayMonit(mContext, "no changes were made");
@@ -118,12 +123,17 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 		ProgressDialog progressDialog;
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String failMessage;
+		private boolean failed;
+		private String errorMessage;
+		private int repoAccess;
+		private int deploymentAccess;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"changing user properties");
-			
+
 			progressDialog.setCancelable(true);
 			progressDialog.setOnCancelListener(new OnCancelListener() {
 
@@ -138,11 +148,10 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 		}
 
 		protected Integer doInBackground(Integer... params) {
-			int repoAccess = params[0];
-			int deploymentAccess = params[1];
+			repoAccess = params[0];
+			deploymentAccess = params[1];
 
 			XmlCreator xmlCreator = new XmlCreator();
-			HttpSender httpSender = new HttpSender();
 			try {
 				boolean readAccess = (repoAccess != 0);
 				boolean writeAccess = (repoAccess == 2);
@@ -151,21 +160,20 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 						String.valueOf(user.getId()), String.valueOf(repository.getId()),
 						readAccess, writeAccess, deploymentBooleanAccess);
 
-				return httpSender.sendPermissionXML(prefs, modifyPermissionXml);
+				return HttpSender.sendPermissionXML(prefs, modifyPermissionXml);
 
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
+				errorMessage = e.getMessage();
 			}
+			failed = true;
 			return null;
 
 		}
@@ -173,81 +181,121 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
-			if (result == 201) {
-				GUI.displayMonit(mContext, "user permissions were modified!");
-				setResult(Constants.REFRESH_ACTIVITY);
-				finish();
+
+			if (failed) {
+
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+
+					@Override
+					public void retryAction() {
+						new ModifyPermissionsTask().execute(repoAccess, deploymentAccess);
+					}
+
+				};
+
+				builder.displayDialog();
 
 			} else {
-				GUI.displayMonit(mContext, "error");
-			}
+				if (result == 201) {
+					GUI.displayMonit(mContext, "user permissions were modified!");
+					setResult(Constants.REFRESH_ACTIVITY);
+					finish();
 
-			super.onPostExecute(result);
+				} else {
+					GUI.displayMonit(mContext, errorMessage);
+				}
+
+			}
 		}
 
 	}
+
 	public class DeletePermissionsTask extends AsyncTask<Integer, Void, Integer> {
-		
+
 		ProgressDialog progressDialog;
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
-		
+		private String failMessage;
+		private String errorMessage;
+		private boolean failed;
+		private Integer permissionId;
+
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
-			"removing permission");
+					"removing permission");
 			progressDialog.setCancelable(true);
 			progressDialog.setOnCancelListener(new OnCancelListener() {
 
 				@Override
 				public void onCancel(DialogInterface dialog) {
 					thisTask.cancel(true);
-					GUI.displayMonit(mContext, "User permission deleting task was cancelled");
+					GUI.displayMonit(mContext,
+							"User permission deleting task was cancelled");
 				}
 			});
 			super.onPreExecute();
 		}
-		
+
 		protected Integer doInBackground(Integer... params) {
-			Integer permissionId = params[0];
-			
-			HttpSender httpSender = new HttpSender();
+			permissionId = params[0];
+
 			try {
-				
-				return httpSender.sendDeletePermissionRequest(prefs, String.valueOf(permissionId));
-				
+
+				return HttpSender.sendDeletePermissionRequest(prefs,
+						String.valueOf(permissionId));
+
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
+				errorMessage = e.getMessage();
+			} catch (ParseException e) {
+				failMessage = Strings.internalErrorMessage;
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			}
-			return null;
-			
+			failed = true;
+			return 0;
+
 		}
-		
+
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
-			if (result == 200) {
-				GUI.displayMonit(mContext, "user permission was removed!");
-				setResult(Constants.REFRESH_ACTIVITY);
-				finish();
-				
+			if (failed) {
+
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+
+					@Override
+					public void retryAction() {
+						new DeletePermissionsTask().execute(permissionId);
+					}
+
+				};
+
+				builder.displayDialog();
+
 			} else {
-				GUI.displayMonit(mContext, "error " + String.valueOf(result));
+				if (result == 200) {
+					GUI.displayMonit(mContext, "User permission was removed!");
+					setResult(Constants.REFRESH_ACTIVITY);
+					finish();
+
+				} else {
+					GUI.displayMonit(mContext, errorMessage);
+				}
+
 			}
-			
-			super.onPostExecute(result);
 		}
-		
+
 	}
 
 }

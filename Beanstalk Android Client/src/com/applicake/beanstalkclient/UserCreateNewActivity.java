@@ -7,8 +7,11 @@ import com.applicake.beanstalkclient.adapters.SpinnerTimezoneAdapter;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.RailsTimezones;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -47,11 +50,12 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 		nameEditText = (EditText) findViewById(R.id.nameEditText);
 		lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
 		emailEditText = (EditText) findViewById(R.id.emailEditText);
+		timezoneSpinner = (Spinner) findViewById(R.id.timezonesSpinner);
 		popupValuesList = RailsTimezones.getDetailedRailsTimezonesArrayList();
 		spinnerValuesList = RailsTimezones.listOfRailsTimezones();
 
 		timezoneSpinner
-				.setAdapter(new SpinnerTimezoneAdapter(this,
+				.setAdapter(new SpinnerTimezoneAdapter(mContext,
 						android.R.layout.simple_spinner_item, popupValuesList,
 						spinnerValuesList));
 		passwordEditText = (EditText) findViewById(R.id.passwordEditText);
@@ -75,6 +79,8 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 		String errorMessage;
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String failMessage;
+		private boolean failed;
 
 		@Override
 		protected void onPreExecute() {
@@ -91,13 +97,11 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 				}
 			});
 
-			super.onPreExecute();
 		}
 
 		protected Integer doInBackground(Void... params) {
 
 			XmlCreator xmlCreator = new XmlCreator();
-			HttpSender httpSender = new HttpSender();
 			try {
 				String userCreateXml = xmlCreator.createNewUserXML(loginEditText
 						.getText().toString().trim(), nameEditText.getText().toString()
@@ -106,21 +110,23 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 						spinnerValuesList.get(timezoneSpinner.getSelectedItemPosition()),
 						adminCheckBox.isChecked(), passwordEditText.getText().toString()
 								.trim());
-				return httpSender.sendCreateUserXML(prefs, userCreateXml);
+				return HttpSender.sendCreateUserXML(prefs, userCreateXml);
 
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalArgumentException e) {
-				errorMessage = "error";
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				errorMessage = "error";
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				errorMessage = "Unexpected IO error";
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
 				errorMessage = e.getMessage();
-				e.printStackTrace();
+				return 0;
 			}
+			failed = true;
 			return 0;
 
 		}
@@ -128,16 +134,28 @@ public class UserCreateNewActivity extends BeanstalkActivity implements OnClickL
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
-			if (result == 201) {
-				GUI.displayMonit(mContext, "user was created!");
-				setResult(Constants.REFRESH_ACTIVITY);
-				finish();
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+					@Override
+					public void retryAction() {
+						new SendUserCreateTask().execute();
+					}
+				};
 
-			} else if (result == 0) {
-				GUI.displayMonit(mContext, errorMessage);
+				builder.displayDialog();
+			} else {
+
+				if (result == 201) {
+					GUI.displayMonit(mContext, "User was created!");
+					setResult(Constants.REFRESH_ACTIVITY);
+					finish();
+
+				} else if ((result == 0) && (errorMessage != null)) {
+					GUI.displayMonit(mContext, errorMessage);
+				} else
+					GUI.displayUnexpectedErrorMonit(mContext);
 			}
-
-			super.onPostExecute(result);
 		}
 
 	}

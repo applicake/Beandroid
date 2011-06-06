@@ -1,13 +1,9 @@
 package com.applicake.beanstalkclient.adapters;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.R;
@@ -19,7 +15,8 @@ import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
 import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
+
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -140,25 +137,13 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 				return XmlParser.parseRepoIdToPermissionHashMap(permissionsXml);
 
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				cancel(true);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				cancel(true);
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				cancel(true);
+				// all those exceptions are handled the same way
 			} catch (HttpConnectionErrorException e) {
-				e.printStackTrace();
-				cancel(true);
+				
 			} catch (UnsuccessfulServerResponseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				cancel(true);
+				
+			} catch (XMLParserException e) {
+				
 			}
 
 			return null;

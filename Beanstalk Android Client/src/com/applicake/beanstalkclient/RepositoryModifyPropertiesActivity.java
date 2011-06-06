@@ -5,8 +5,11 @@ import java.io.IOException;
 import com.applicake.beanstalkclient.enums.ColorLabels;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -149,9 +152,11 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 
 		ProgressDialog progressDialog;
 		String errorMessage;
-		
+
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String failMessage;
+		private boolean failed;
 
 		@Override
 		protected void onPreExecute() {
@@ -173,27 +178,28 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 		protected Integer doInBackground(Void... params) {
 
 			XmlCreator xmlCreator = new XmlCreator();
-			HttpSender httpSender = new HttpSender();
 			try {
 				String repostitoryModificationXml = xmlCreator.createRepositoryModifyXML(
 						repoTitleEditText.getText().toString().trim(),
 						ColorLabels.getLabelFromNumber(colorLabelNo));
-				return httpSender.sendUpdateRepositoryXML(prefs,
+				return HttpSender.sendUpdateRepositoryXML(prefs,
 						repostitoryModificationXml, String.valueOf(repoId));
 
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalArgumentException e) {
-				errorMessage = e.getMessage();
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				errorMessage = e.getMessage();
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				errorMessage = e.getMessage();
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
 				errorMessage = e.getMessage();
-				e.printStackTrace();
+				return 0;
 			}
+			failed = true;
 			return 0;
 
 		}
@@ -201,12 +207,24 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+					@Override
+					public void retryAction() {
+						new SendRepositoryPropertiesTask().execute();
+					}
+				};
+
+				builder.displayDialog();
+			}
+
 			if (result == 200) {
 				GUI.displayMonit(mContext, "reposiotry properties were modified!");
 				setResult(Constants.REFRESH_ACTIVITY);
 				finish();
 			} else if ((result == 0) && (errorMessage != null)) {
-				GUI.displayMonit(mContext, errorMessage);
+				GUI.displayMonit(mContext, "Server error: " + errorMessage);
 			} else {
 				GUI.displayMonit(mContext, "Unexpected error, please try again later");
 			}

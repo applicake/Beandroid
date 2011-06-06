@@ -1,14 +1,12 @@
 package com.applicake.beanstalkclient;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpImproperStatusCodeException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
+
 import com.applicake.beanstalkclient.utils.XmlParser;
 
 import android.app.Activity;
@@ -68,6 +66,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 		passwordEditText = (EditText) findViewById(R.id.password_edittext);
 		remeberMeCheckBox = (CheckBox) findViewById(R.id.rememberMeCheckBox);
 
+		// custom input filter that allows only alphanumeric characters and "-"
+		// character, but not in the beginning or the end of the string 
+		//TODO
+		// create better implementation
+
 		InputFilter httpAddressFilter = new InputFilter() {
 
 			public CharSequence filter(CharSequence source, int start, int end,
@@ -78,7 +81,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 							&& !(source.charAt(i) == '-')) {
 						return "";
 					}
-					if (((dstart == 0) || (dend == dest.length())) && (source.charAt(i) == '-')){
+					if (((dstart == 0) || (dend == dest.length()))
+							&& (source.charAt(i) == '-')) {
 						return "";
 					}
 				}
@@ -139,6 +143,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private boolean failed = false;;
+		private String failMessage;
 
 		@Override
 		protected void onPreExecute() {
@@ -168,58 +174,65 @@ public class LoginActivity extends Activity implements OnClickListener {
 						password);
 
 				account = XmlParser.parseAccountInfo(loginAttemptResultxml);
+				return 200;
 
-			} catch (HttpRetreiverException e) {
-				return Integer.parseInt(e.getMessage());
-			} catch (SAXException e) {
-				e.printStackTrace();
-				GUI.displayMonit(mContext, "An error occured while parsing data");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
+			} catch (HttpImproperStatusCodeException e) {
+				return e.getStatusCode();
+			} catch (HttpConnectionErrorException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
 			}
+			failed = true;
+			return null;
 
-			return 200;
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
 
-			if ((result == 200) && (account != null)) {
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
 
-				GUI.displayMonit(mContext, "Access granted");
-				Editor editor = prefs.edit();
-				editor.putString(Constants.USER_ACCOUNT_DOMAIN, domain);
-				editor.putString(Constants.USER_LOGIN, login);
-				editor.putString(Constants.USER_PASSWORD, password);
-				editor.putInt(Constants.ACCOUNT_PLAN, account.getPlanId());
-				editor.putString(Constants.USER_TIMEZONE, account.getTimeZone());
-				editor.putBoolean(Constants.CREDENTIALS_STORED, true);
-				editor.commit();
+					@Override
+					public void retryAction() {
+						new VerifyLoginTask().execute(domain, login, password);
+					}
+				};
+				builder.displayDialog();
 
-				Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-				startActivityForResult(intent, 0);
-
-			} else if (result == 302) {
-				GUI.displayMonit(mContext, "Invalid account domain");
-			} else if (result == 0) {
-				GUI.displayMonit(mContext, "Internet connection error");
-			} else if (result == 401) {
-				GUI.displayMonit(mContext, "Invalid username or password");
-			} else if (result == 500) {
-				GUI.displayMonit(mContext,
-						"You must enable Developer API in your Beanstalk account settings");
-			} else if (result == 666) {
-				GUI.displayMonit(mContext, "Login process error");
 			} else {
-				GUI.displayMonit(mContext, "Access denied: " + result);
-			}
 
-			// TODO add various messages
+				if ((result == 200) && (account != null)) {
+
+					GUI.displayMonit(mContext, "Access granted");
+					Editor editor = prefs.edit();
+					editor.putString(Constants.USER_ACCOUNT_DOMAIN, domain);
+					editor.putString(Constants.USER_LOGIN, login);
+					editor.putString(Constants.USER_PASSWORD, password);
+					editor.putInt(Constants.ACCOUNT_PLAN, account.getPlanId());
+					editor.putString(Constants.USER_TIMEZONE, account.getTimeZone());
+					editor.putBoolean(Constants.CREDENTIALS_STORED, true);
+					editor.commit();
+
+					Intent intent = new Intent(getApplicationContext(),
+							HomeActivity.class);
+					startActivityForResult(intent, 0);
+
+				} else if (result == 302) {
+					GUI.displayMonit(mContext, "Invalid account domain");
+				} else if (result == 401) {
+					GUI.displayMonit(mContext, "Invalid username or password");
+				} else if (result == 500) {
+					GUI.displayMonit(mContext,
+							"You must have Developer API enabled in your Beanstalk account settings");
+				} else {
+					GUI.displayMonit(mContext, "Server error: " + result);
+				}
+
+			}
 
 		}
 

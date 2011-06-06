@@ -5,8 +5,11 @@ import java.io.IOException;
 import com.applicake.beanstalkclient.enums.ColorLabels;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -108,8 +111,9 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 		repoTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int selectedItem, long arg3) {
-				if (selectedItem == 0){
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int selectedItem,
+					long arg3) {
+				if (selectedItem == 0) {
 					repoCreateStructCheckbox.setEnabled(true);
 				} else if (selectedItem == 1) {
 					repoCreateStructCheckbox.setEnabled(false);
@@ -119,7 +123,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		repoCreateStructCheckbox = (CheckBox) findViewById(R.id.structureCheckBox);
@@ -156,7 +160,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 	public void onClick(View v) {
 		if (v.getId() == R.id.createButton) {
 			new SendRepositoryCreateTask().execute();
-			
+
 		}
 
 		if (v.getId() == R.id.colorLabelButton) {
@@ -170,15 +174,17 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 
 		ProgressDialog progressDialog;
 		String errorMessage;
-		
+
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String failMessage;
+		private boolean failed;
 
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(mContext, "Please wait...",
 					"creating repository");
-			
+
 			progressDialog.setCancelable(true);
 			progressDialog.setOnCancelListener(new OnCancelListener() {
 
@@ -188,15 +194,11 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 					GUI.displayMonit(mContext, "Logging in task was cancelled");
 				}
 			});
-			
-			super.onPreExecute();
 		}
 
 		protected Integer doInBackground(Void... params) {
 
 			XmlCreator xmlCreator = new XmlCreator();
-			HttpSender httpSender = new HttpSender();
-			
 
 			try {
 				if (repoTypeSpinner.getSelectedItemPosition() == 1) {
@@ -204,7 +206,7 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 							.createGitRepositoryCreationXML(repoNameEditText.getText()
 									.toString(), repoTitleEditText.getText().toString(),
 									ColorLabels.getLabelFromNumber(colorLabelNo));
-					return httpSender.sendCreateNewRepostiroyXML(prefs,
+					return HttpSender.sendCreateNewRepostiroyXML(prefs,
 							repostitoryCreateXml);
 				} else {
 					String repostitoryCreateXml = xmlCreator
@@ -212,23 +214,25 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 									.toString(), repoTitleEditText.getText().toString(),
 									ColorLabels.getLabelFromNumber(colorLabelNo),
 									repoCreateStructCheckbox.isChecked());
-					return httpSender.sendCreateNewRepostiroyXML(prefs,
+					return HttpSender.sendCreateNewRepostiroyXML(prefs,
 							repostitoryCreateXml);
 				}
 
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalArgumentException e) {
-				errorMessage = "XML creator internal error";
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				errorMessage = "XML creator internal error";
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				errorMessage = "XML creator internal error";
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
 				errorMessage = e.getMessage();
-				e.printStackTrace();
+				return 0;
 			}
+			failed = true;
 			return 0;
 
 		}
@@ -236,14 +240,27 @@ public class CreateNewRepositoryActivity extends BeanstalkActivity implements
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
-			if (result == 201) {
-				GUI.displayMonit(mContext, "reposiotry was created successfully!");
-				setResult(Constants.REFRESH_ACTIVITY);
-				finish();
-			}
-			if ((result == 0) && (errorMessage != null)) GUI.displayMonit(mContext, errorMessage);
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+					@Override
+					public void retryAction() {
+						new SendRepositoryCreateTask().execute();
+					}
+				};
 
-			super.onPostExecute(result);
+				builder.displayDialog();
+			} else {
+
+				if (result == 201) {
+					GUI.displayMonit(mContext, "Reposiotry was created successfully!");
+					setResult(Constants.REFRESH_ACTIVITY);
+					finish();
+				}
+				if ((result == 0) && (errorMessage != null))
+					GUI.displayMonit(mContext, errorMessage);
+
+			}
 		}
 
 	}

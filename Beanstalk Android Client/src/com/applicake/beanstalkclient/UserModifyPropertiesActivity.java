@@ -8,8 +8,11 @@ import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.RailsTimezones;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -166,6 +169,8 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String failMessage;
+		private boolean failed = false;
 
 		@Override
 		protected void onPreExecute() {
@@ -187,7 +192,6 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 		protected Integer doInBackground(Void... params) {
 
 			XmlCreator xmlCreator = new XmlCreator();
-			HttpSender httpSender = new HttpSender();
 			try {
 				String userModificationXml = xmlCreator.createUserPropertiesChangeXML(
 						nameEditText.getText().toString().trim(), lastNameEditText
@@ -195,41 +199,56 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 								.toString().trim(),
 						spinnerValuesList.get(timezoneSpinner.getSelectedItemPosition()),
 						adminCheckBox.isChecked());
-				return httpSender.sendUpdateUserXML(prefs, userModificationXml,
+				return HttpSender.sendUpdateUserXML(prefs, userModificationXml,
 						String.valueOf(user.getId()));
 
+
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
 				errorMessage = e.getMessage();
-				e.printStackTrace();
 				return 0;
 			}
-			return null;
+			failed  = true;
+			return 0;
 
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
-			if (result == 200) {
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+					@Override
+					public void retryAction() {
+						new SendUserPasswordTask().execute();
+					}
+				};
 
-				GUI.displayMonit(mContext, "user properties were modified!");
-				setResult(Constants.REFRESH_ACTIVITY);
-				finish();
+				builder.displayDialog();
+			} else {
 
-			} else if (result == 0) {
-				GUI.displayMonit(mContext, errorMessage);
+				if (result == 200) {
+					GUI.displayMonit(mContext, "User properties were modified!");
+					setResult(Constants.REFRESH_ACTIVITY);
+					finish();
+
+				} else if (result == 0 && errorMessage != null) {
+					GUI.displayServerErrorMonit(mContext, errorMessage);
+				} else
+					GUI.displayUnexpectedErrorMonit(mContext);
+
 			}
 
-			super.onPostExecute(result);
 		}
 
 	}
@@ -239,6 +258,9 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 		ProgressDialog progressDialog;
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String failMessage;
+		private String errorMessage;
+		private boolean failed;
 
 		@Override
 		protected void onPreExecute() {
@@ -255,45 +277,62 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 				}
 			});
 
-			super.onPreExecute();
 		}
 
 		protected Integer doInBackground(String... params) {
 
 			XmlCreator xmlCreator = new XmlCreator();
-			HttpSender httpSender = new HttpSender();
 			try {
 				String userPasswordModificationXml = xmlCreator
 						.createPasswordChangeXML(params[0]);
-				return httpSender.sendUpdateUserXML(prefs, userPasswordModificationXml,
+				return HttpSender.sendUpdateUserXML(prefs, userPasswordModificationXml,
 						String.valueOf(user.getId()));
 
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
+				errorMessage = e.getMessage();
+				return 0;
 			}
-			return null;
+			failed = true;
+			return 0;
 
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			progressDialog.dismiss();
-			if (result == 200) {
-				GUI.displayMonit(mContext, "user password was modified!");
+
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+					@Override
+					public void retryAction() {
+						new SendUserPasswordTask().execute();
+					}
+				};
+
+				builder.displayDialog();
+			} else {
+
+				if (result == 200) {
+					GUI.displayMonit(mContext, "User password was modified!");
+
+				} else if (result == 0 && errorMessage != null) {
+					GUI.displayServerErrorMonit(mContext, errorMessage);
+				} else
+					GUI.displayUnexpectedErrorMonit(mContext);
 
 			}
 
-			super.onPostExecute(result);
 		}
 
 	}

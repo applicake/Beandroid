@@ -1,11 +1,6 @@
 package com.applicake.beanstalkclient;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,8 +19,12 @@ import android.widget.TextView;
 import com.applicake.beanstalkclient.adapters.RepositoryChangesetAdapter;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
+
 
 public class RepositoryCommitsActivity extends BeanstalkActivity implements
 		OnItemClickListener {
@@ -100,6 +99,9 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String errorMessage;
+		private String failMessage;
+		private boolean failed = false;
 
 		@Override
 		protected void onPreExecute() {
@@ -127,30 +129,53 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 				// parsing changeset list
 				return XmlParser.parseChangesetList(xmlChangesetList);
 				// TODO better implementation of exception handling
-			} catch (ParserConfigurationException e) {
-				GUI.displayMonit(mContext, "An error occured while paring Changeset list");
-				e.printStackTrace();
-			} catch (SAXException e) {
-				GUI.displayMonit(mContext, "An error occured while paring Changeset list");
-				e.printStackTrace();
-			} catch (IOException e) {
-				GUI.displayMonit(mContext, "An error occured while paring Changeset list");
-				e.printStackTrace();
-			} catch (HttpRetreiverException e) {
-				GUI.displayMonit(mContext,
-						"An error occured while parsing Changeset list");
-				e.printStackTrace();
+
+			} catch (UnsuccessfulServerResponseException e) {
+				errorMessage = e.getMessage();
+				return null;
+			} catch (HttpConnectionErrorException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			}
+			failed  = true;
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<Changeset> changesetParserArray) {
-			changesetArray.addAll(changesetParserArray);
-
-			changesetAdapter.notifyDataSetChanged();
 			progressDialog.dismiss();
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
 
+					@Override
+					public void retryAction() {
+						new DownloadChangesetListTask().execute();
+					}
+
+					@Override
+					public void noRetryAction(DialogInterface dialog) {
+						super.noRetryAction(dialog);
+						finish();
+					}
+
+				};
+
+				builder.displayDialog();
+			} else {
+				
+			if (changesetParserArray != null){
+				
+				changesetArray.addAll(changesetParserArray);
+				changesetAdapter.notifyDataSetChanged();
+				
+			} else if (errorMessage != null) {
+				GUI.displayMonit(mContext, "Server error: " + errorMessage);
+			}
+
+			
+			}
 		}
 
 	}

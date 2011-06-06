@@ -90,7 +90,7 @@
 			android:textColor="@color/ApplicationText"></TextView>
 			
 		<Spinner
-			android:id="@+id/spinnerValuesList"
+			android:id="@+id/timezonesSpinner"
 			android:layout_below="@id/timezoneLabel"
 			android:layout_width="fill_parent"
 			android:layout_centerHorizontal="true"
@@ -98,7 +98,7 @@
 
 		<CheckBox
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/spinnerValuesList"
+			android:layout_below="@+id/timezonesSpinner"
 			android:text="admin"
 			android:textColor="@color/ApplicationText"
 			android:layout_centerHorizontal="true"

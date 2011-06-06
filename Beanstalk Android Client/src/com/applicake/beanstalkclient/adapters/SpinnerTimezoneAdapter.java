@@ -19,7 +19,7 @@ public class SpinnerTimezoneAdapter extends ArrayAdapter<String> {
 		super(context, textViewResourceId, popupValuesList);
 		mInflater = LayoutInflater.from(context);
 		displayedValues = spinnerValues;
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	@Override

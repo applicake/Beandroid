@@ -3,19 +3,19 @@ package com.applicake.beanstalkclient;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.applicake.beanstalkclient.adapters.ChangesAdapter;
 import com.applicake.beanstalkclient.adapters.CommentAdapter;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlCreator;
 import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpRetreiverException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -163,48 +163,72 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 	public class ParseCommentListTask extends AsyncTask<String, Void, ArrayList<Comment>> {
 
+		private boolean failed = false;
+		private String failMessage;
+
+		private String repoId;
+		private String revision;
+
 		@Override
 		protected ArrayList<Comment> doInBackground(String... params) {
 
-			String repoId = params[0];
-			String revision = params[1];
+			repoId = params[0];
+			revision = params[1];
 
 			try {
 				// getting first page of comments
 				String commentsXml = HttpRetriever.getCommentsListForRevisionXML(prefs,
 						repoId, revision, 1);
 				return XmlParser.parseCommentList(commentsXml);
-			} catch (HttpRetreiverException e) {
-				// TODO generate http parsing exception handling
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
+
+			} catch (UnsuccessfulServerResponseException e) {
+				failMessage = "The target server failed to respond.";
+			} catch (HttpConnectionErrorException e) {
+				failMessage = "An error occured while trying to connect to Beanstalk server.";
+			} catch (XMLParserException e) {
+				failMessage = "An error occured while analysing server response";
 				e.printStackTrace();
 			}
-
+			failed = true;
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<Comment> result) {
-			commentsArray.addAll(result);
-			footerRefreshProgressBar.setVisibility(View.GONE);
-			footerRefreshButtonView.setEnabled(true);
-			footerRefreshButtonView.setClickable(true);
-			footerRefreshBodyText.setText("Click here do download more comments");
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
 
-			// determine whether there are more comments to be downloaded; if so
-			// - display header button
-			if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE)
-				commentList.removeFooterView(footerRefreshButtonView);
-			lastLoadedPage = 1;
-			commentAdapter.notifyDataSetChanged();
+					@Override
+					public void retryAction() {
+						new ParseCommentListTask().execute(repoId, revision);
+					}
+
+					@Override
+					public void noRetryAction(DialogInterface dialog) {
+						super.noRetryAction(dialog);
+						ChangesetActivity.this.finish();
+					}
+				};
+
+				builder.displayDialog();
+
+			} else {
+
+				commentsArray.addAll(result);
+				footerRefreshProgressBar.setVisibility(View.GONE);
+				footerRefreshButtonView.setEnabled(true);
+				footerRefreshButtonView.setClickable(true);
+				footerRefreshBodyText.setText("Click here do download more comments");
+
+				// determine whether there are more comments to be downloaded;
+				// if so
+				// - display header button
+				if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE)
+					commentList.removeFooterView(footerRefreshButtonView);
+				lastLoadedPage = 1;
+				commentAdapter.notifyDataSetChanged();
+			}
 
 		}
 
@@ -212,6 +236,14 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 	public class ParseMoreCommentListTask extends
 			AsyncTask<String, Void, ArrayList<Comment>> {
+
+		// error handling
+		private boolean failed = false;
+		private String failMessage;
+
+		// task parameters
+		private String repoId;
+		private String revision;
 
 		@Override
 		protected void onPreExecute() {
@@ -224,8 +256,8 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		@Override
 		protected ArrayList<Comment> doInBackground(String... params) {
 
-			String repoId = params[0];
-			String revision = params[1];
+			repoId = params[0];
+			revision = params[1];
 
 			try {
 
@@ -233,37 +265,49 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				String commentsXml = HttpRetriever.getCommentsListForRevisionXML(prefs,
 						repoId, revision, lastLoadedPage + 1);
 				return XmlParser.parseCommentList(commentsXml);
-			} catch (HttpRetreiverException e) {
-				// TODO generate http parsing exception handling
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
+
+			} catch (UnsuccessfulServerResponseException e) {
+				failMessage = "The target server failed to respond.";
+			} catch (HttpConnectionErrorException e) {
+				failMessage = "An error occured while trying to connect to Beanstalk server.";
+			} catch (XMLParserException e) {
+				failMessage = "An error occured while analysing server response";
 				e.printStackTrace();
 			}
-
+			failed = true;
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(ArrayList<Comment> result) {
-			lastLoadedPage++;
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
 
-			if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE) {
-				commentList.removeFooterView(footerRefreshButtonView);
+					@Override
+					public void retryAction() {
+						new ParseMoreCommentListTask().execute(repoId, revision);
+					}
+
+				};
+
+				builder.displayDialog();
+
 			} else {
-				footerRefreshProgressBar.setVisibility(View.GONE);
-				footerRefreshBodyText.setText("Press here to download more comments");
-				footerRefreshButtonView.setEnabled(true);
-				footerRefreshButtonView.setClickable(true);
+
+				lastLoadedPage++;
+
+				if (result.size() < NUMBER_OF_ENTRIES_PER_PAGE) {
+					commentList.removeFooterView(footerRefreshButtonView);
+				} else {
+					footerRefreshProgressBar.setVisibility(View.GONE);
+					footerRefreshBodyText.setText("Press here to download more comments");
+					footerRefreshButtonView.setEnabled(true);
+					footerRefreshButtonView.setClickable(true);
+				}
+				commentsArray.addAll(result);
+				commentAdapter.notifyDataSetChanged();
 			}
-			commentsArray.addAll(result);
-			commentAdapter.notifyDataSetChanged();
 
 		}
 
@@ -271,11 +315,15 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 	public class SendCommentTask extends AsyncTask<String, Void, String> {
 
+		private boolean failed = false;
+		private String failMessage;
+
 		ProgressDialog progressDialog;
 		String errorMessage = null;
 
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
+		private String commentBody;
 
 		@Override
 		protected void onPreExecute() {
@@ -295,27 +343,28 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		protected String doInBackground(String... params) {
 
-			String commentBody = params[0];
+			commentBody = params[0];
 			XmlCreator xmlCreator = new XmlCreator();
-			HttpSender httpSender = new HttpSender();
 			try {
 				String commentXml = xmlCreator.createCommentXML(revisionId, commentBody);
-				return httpSender.sendCommentXML(prefs, commentXml,
+				return HttpSender.sendCommentXML(prefs, commentXml,
 						String.valueOf(repoId));
 
+			} catch (XMLParserException e) {
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalArgumentException e) {
-				errorMessage = e.getMessage();
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalStateException e) {
-				errorMessage = e.getMessage();
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (IOException e) {
-				errorMessage = e.getMessage();
-				e.printStackTrace();
+				failMessage = Strings.internalErrorMessage;
 			} catch (HttpSenderException e) {
+				failMessage = Strings.networkConnectionErrorMessage;
+			} catch (HttpSenderServerErrorException e) {
 				errorMessage = e.getMessage();
-				e.printStackTrace();
+				return null;
 			}
+			failed = true;
 			return null;
 
 		}
@@ -323,22 +372,29 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		@Override
 		protected void onPostExecute(String result) {
 			progressDialog.dismiss();
+			if (failed) {
+				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+						failMessage) {
+
+					@Override
+					public void retryAction() {
+						new SendCommentTask().execute(commentBody);
+					}
+
+				};
+
+				builder.displayDialog();
+			}
+			else{
+				
 			if (result != null) {
 
 				try {
 					Comment comment = XmlParser.parseComment(result);
 					commentsArray.add(comment);
-					// commentAdapter.add(comment);
 					commentAdapter.notifyDataSetChanged();
 
-				} catch (SAXException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParserConfigurationException e) {
-					// TODO Auto-generated catch block
+				} catch (XMLParserException e) {
 					e.printStackTrace();
 				}
 			} else if (errorMessage != null) {
@@ -347,9 +403,9 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 			} else {
 				GUI.displayMonit(mContext, "unexpected error");
 			}
+			}
 
 		}
-
 	}
 
 }
