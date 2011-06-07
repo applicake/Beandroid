@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory
+		android:title="Application preferences">
+		<CheckBoxPreference
+			android:key="remember_me_preference"
+			android:title="Store credentials"
+			android:summary="Enable auto login" />
+	</PreferenceCategory>
+</PreferenceScreen>
+
+

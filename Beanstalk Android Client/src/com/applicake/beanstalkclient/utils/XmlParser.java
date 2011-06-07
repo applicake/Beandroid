@@ -294,9 +294,16 @@ public class XmlParser {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-
+		private Exception cause;
 		public XMLParserException(Exception e) {
-			super(e);
+			super();
+			cause = e;
+		}
+		
+		
+		public Exception getException() {
+			// TODO Auto-generated method stub
+			return cause;
 		}
 	}
 }

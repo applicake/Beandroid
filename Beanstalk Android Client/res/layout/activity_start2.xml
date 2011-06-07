@@ -50,7 +50,7 @@
 		<Button
 			style="@style/HomeButton"
 			android:drawableTop="@drawable/icon"
-			android:text="Settings"
+			android:text="Account settings"
 			android:onClick="onHomeSettingsClick"></Button>
 	</LinearLayout>
 

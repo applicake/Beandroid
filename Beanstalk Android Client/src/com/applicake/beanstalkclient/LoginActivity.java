@@ -19,6 +19,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
@@ -35,7 +36,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private EditText passwordEditText;
 	private CheckBox remeberMeCheckBox;
 
-	private ProgressDialog progressDialog;
+//	private ProgressDialog progressDialog;
 	private Context mContext;
 	private SharedPreferences prefs;
 
@@ -43,7 +44,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		setContentView(R.layout.main);
 		// auto login with previously stored user data
 		if (prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)
@@ -64,7 +65,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		domainaccountEditText = (EditText) findViewById(R.id.accountdomain_edittext);
 		loginEditText = (EditText) findViewById(R.id.login_edittext);
 		passwordEditText = (EditText) findViewById(R.id.password_edittext);
-		remeberMeCheckBox = (CheckBox) findViewById(R.id.rememberMeCheckBox);
+		remeberMeCheckBox = (CheckBox) findViewById(R.id.remember_me_check_box);
 
 		// custom input filter that allows only alphanumeric characters and "-"
 		// character, but not in the beginning or the end of the string 
@@ -81,10 +82,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 							&& !(source.charAt(i) == '-')) {
 						return "";
 					}
-					if (((dstart == 0) || (dend == dest.length()))
-							&& (source.charAt(i) == '-')) {
-						return "";
-					}
+//					if (((dstart == 0) || (dend == dest.length()))
+//							&& (source.charAt(i) == '-')) {
+//						return "";
+//					}
 				}
 				return null;
 			}
@@ -145,6 +146,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		private AsyncTask thisTask = this;
 		private boolean failed = false;;
 		private String failMessage;
+		private ProgressDialog progressDialog;
 
 		@Override
 		protected void onPreExecute() {
@@ -159,7 +161,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 					GUI.displayMonit(mContext, "Logging in task was cancelled");
 				}
 			});
-			super.onPreExecute();
 		}
 
 		@Override
@@ -183,6 +184,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			} catch (HttpConnectionErrorException e) {
 				failMessage = Strings.networkConnectionErrorMessage;
 			}
+			
 			failed = true;
 			return null;
 

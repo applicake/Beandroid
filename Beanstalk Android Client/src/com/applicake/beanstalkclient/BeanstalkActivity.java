@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,8 +20,7 @@ public abstract class BeanstalkActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
-//		setContentView(R.layout.main_blank);
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
 	}
 
@@ -37,14 +37,12 @@ public abstract class BeanstalkActivity extends Activity {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	    case R.id.settings:
-	        Toast.makeText(getApplicationContext(), "settings", Toast.LENGTH_SHORT).show();
+	        startActivity(new Intent(this, ApplicationSettingsActivity.class));
 	        return true;
 	    case R.id.logout:
-	    	Toast.makeText(getApplicationContext(), "logout", Toast.LENGTH_SHORT).show();
 	    	logout();
 	        return true;
 	    case R.id.exit:
-	    	Toast.makeText(getApplicationContext(), "exit", Toast.LENGTH_SHORT).show();
 	    	exitApplication();
 	    	return true;
 	    default:
@@ -65,10 +63,12 @@ public abstract class BeanstalkActivity extends Activity {
 	public void logout(){
 		clearCredentials();
 		Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
 		finish();
 	}
+	
 	//closing all activities mechanism 
 	public void exitApplication(){
 		setResult(Constants.CLOSE_ALL_ACTIVITIES);
@@ -92,9 +92,7 @@ public abstract class BeanstalkActivity extends Activity {
 	    case Constants.CLEAR_STACK_UP_TO_HOME:
 	    	finish();
 	    }
-	   
-	    	
-
+	
 //		super.onActivityResult(requestCode, resultCode, data);
 	}
 	

@@ -11,10 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+
 
 import com.applicake.beanstalkclient.Account;
 import com.applicake.beanstalkclient.Changeset;
@@ -24,6 +22,7 @@ import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.test.InstrumentationTestCase;
 
@@ -59,8 +58,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 	}
 
-	public void testParseChangesets() throws IOException, ParserConfigurationException,
-			SAXException {
+	public void testParseChangesets() throws IOException, XMLParserException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(CHANGESET_XML_ADDRESS));
 		ArrayList<Changeset> changesetList = XmlParser.parseChangesetList(testXml);
@@ -69,10 +67,10 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertNotNull("changeset is null", changeset1);
 		assertEquals(88998, changeset1.getAccountId());
 		assertEquals("Han Solo", changeset1.getAuthor());
-		//testing moved to YamlTesting
-//		assertEquals("--- []", changeset1.getChangedDirs());
-//		assertEquals("--- - - README  - :add", changeset1.getChangedFiles());
-//		assertEquals("", changeset1.getChangedProperties());
+		// testing moved to YamlTesting
+		// assertEquals("--- []", changeset1.getChangedDirs());
+		// assertEquals("--- - - README  - :add", changeset1.getChangedFiles());
+		// assertEquals("", changeset1.getChangedProperties());
 		assertEquals("bartek.f+HanSolo@applicake.com", changeset1.getEmail());
 		assertEquals("aea1c74c112667bb458957778d016a4a66233110", changeset1.getHashId());
 		assertEquals(207784, changeset1.getRepositoryId());
@@ -87,11 +85,11 @@ public class XmlParserTests extends InstrumentationTestCase {
 		assertNotNull("changeset is null", changeset2);
 		assertEquals(88998, changeset2.getAccountId());
 		assertEquals("admin", changeset2.getAuthor());
-		//testing moved to YamlTesting
-//		assertEquals("--- - - branches/  - :add- - tags/  - :add- - trunk/  - :add",
-//				changeset2.getChangedDirs());
-//		assertEquals("--- []", changeset2.getChangedFiles());
-//		assertEquals("", changeset2.getChangedProperties());
+		// testing moved to YamlTesting
+		// assertEquals("--- - - branches/  - :add- - tags/  - :add- - trunk/  - :add",
+		// changeset2.getChangedDirs());
+		// assertEquals("--- []", changeset2.getChangedFiles());
+		// assertEquals("", changeset2.getChangedProperties());
 		assertEquals("", changeset2.getEmail());
 		assertEquals("", changeset2.getHashId());
 		assertEquals(205628, changeset2.getRepositoryId());
@@ -103,8 +101,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 	}
 
-	public void testParseUsers() throws IOException, ParserConfigurationException,
-			SAXException {
+	public void testParseUsers() throws IOException, XMLParserException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(USERS_XML_ADDRESS));
 		ArrayList<User> userList = XmlParser.parseUserList(testXml);
@@ -171,8 +168,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 	}
 
-	public void testParseRepositories() throws IOException, ParserConfigurationException,
-			SAXException {
+	public void testParseRepositories() throws IOException, XMLParserException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(REPOSITORIES_XML_ADDRESS));
 		ArrayList<Repository> repositoryList = XmlParser.parseRepositoryList(testXml);
@@ -218,8 +214,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 	}
 
-	public void testParseRepositoriesHashMap() throws IOException,
-			ParserConfigurationException, SAXException {
+	public void testParseRepositoriesHashMap() throws IOException, XMLParserException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(REPOSITORIES_XML_ADDRESS));
 		HashMap<Integer, Repository> repositoryHashMap = XmlParser
@@ -267,12 +262,10 @@ public class XmlParserTests extends InstrumentationTestCase {
 	}
 
 	// testing Xml parser capability of parsing permissions
-	public void testParsePermissions() throws IOException, ParserConfigurationException,
-			SAXException {
+	public void testParsePermissions() throws IOException, XMLParserException {
 		String testXml1 = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(PERMISSIONS_XML_ADDRESS_1));
 		ArrayList<Permission> permissionList1 = XmlParser.parsePermissionList(testXml1);
-		
 
 		Permission permission1 = permissionList1.get(0);
 
@@ -302,18 +295,17 @@ public class XmlParserTests extends InstrumentationTestCase {
 		ArrayList<Permission> permissionList2 = XmlParser.parsePermissionList(testXml2);
 
 		assertTrue("This permission arraylist should be empty", permissionList2.isEmpty());
-		
+
 		// hashmap parsing tests
-		HashMap<Integer, Permission> permissionHashMap1 = XmlParser.parseRepoIdToPermissionHashMap(testXml1);
+		HashMap<Integer, Permission> permissionHashMap1 = XmlParser
+				.parseRepoIdToPermissionHashMap(testXml1);
 		assertEquals(207784, permissionHashMap1.get(207784).getRepositoryId());
-		
-		
+
 	}
 
 	// test parsing own account info
 
-	public void testParseAccount() throws IOException, ParserConfigurationException,
-			SAXException {
+	public void testParseAccount() throws IOException, XMLParserException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(ACCOUNT_XML_ADDRESS));
 		Account account = XmlParser.parseAccountInfo(testXml);
@@ -333,8 +325,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 
 	// test comment parsing
 
-	public void testParseComments() throws IOException, ParserConfigurationException,
-			SAXException {
+	public void testParseComments() throws IOException, XMLParserException {
 		String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
 				.open(COMMENTS_XML_ADDRESS));
 		ArrayList<Comment> commentList = XmlParser.parseCommentList(testXml);
@@ -404,8 +395,9 @@ public class XmlParserTests extends InstrumentationTestCase {
 					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_NFE));
 			XmlParser.parseRepositoryList(testXml);
 			fail("parseRepositoryList() was supposed to throw an exception");
-		} catch (SAXException se) {
-			assertTrue(se.getException() instanceof NumberFormatException);
+		} catch (XMLParserException xpe) {
+			assertTrue(xpe.getException() instanceof SAXException);
+			assertTrue(((SAXException) xpe.getException()).getException() instanceof NumberFormatException);
 		} catch (Exception e) {
 			fail("SAXException should have beed caught");
 		}
@@ -421,8 +413,9 @@ public class XmlParserTests extends InstrumentationTestCase {
 					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_DATEFORMAT));
 			XmlParser.parseRepositoryList(testXml);
 			fail("parseRepositoryList() was supposed to throw an exception");
-		} catch (SAXException se) {
-			assertTrue(se.getException() instanceof ParseException);
+		} catch (XMLParserException xpe) {
+			assertTrue(xpe.getException() instanceof SAXException);
+			assertTrue(((SAXException) xpe.getException()).getException() instanceof ParseException);
 		} catch (Exception e) {
 			fail("SAXException should have beed caught");
 		}
@@ -435,7 +428,7 @@ public class XmlParserTests extends InstrumentationTestCase {
 					.getAssets().open(INVALID_REPOSITORIES_XML_ADDRESS_XMLSTRUCUTRE));
 			XmlParser.parseRepositoryList(testXml);
 			fail("parseRepositoryList() was supposed to throw an exception");
-		} catch (SAXParseException se) {
+		} catch (XMLParserException xpe) {
 			// valid exception -> test passes if no other exception was thrown
 		} catch (Exception e) {
 
@@ -462,8 +455,8 @@ public class XmlParserTests extends InstrumentationTestCase {
 		return sb.toString();
 	}
 
-//	public Date toDefaultTZ(Date date) {
-//		return DateInTimezoneConverter.getDateInTimeZone(date, defaultTimeZone);
-//	}
+	// public Date toDefaultTZ(Date date) {
+	// return DateInTimezoneConverter.getDateInTimeZone(date, defaultTimeZone);
+	// }
 
 }

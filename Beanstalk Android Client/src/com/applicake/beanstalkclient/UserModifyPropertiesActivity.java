@@ -186,7 +186,6 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 					GUI.displayMonit(mContext, "Data sending task was cancelled");
 				}
 			});
-			super.onPreExecute();
 		}
 
 		protected Integer doInBackground(Void... params) {

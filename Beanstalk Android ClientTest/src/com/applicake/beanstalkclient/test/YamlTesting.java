@@ -3,14 +3,11 @@ package com.applicake.beanstalkclient.test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.YamlEntry;
 import com.applicake.beanstalkclient.utils.CustomYamlParser;
 import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.test.InstrumentationTestCase;
 
@@ -38,8 +35,7 @@ public class YamlTesting extends InstrumentationTestCase {
 
 	}
 
-	public void testCustomYamlParserWithDataFromChangeset() throws IOException,
-			ParserConfigurationException, SAXException {
+	public void testCustomYamlParserWithDataFromChangeset() throws IOException, XMLParserException {
 		String testXml = XmlParserTests.convertIStoString(getInstrumentation()
 				.getContext().getAssets().open(CHANGESET_XML_ADDRESS));
 		ArrayList<Changeset> changesetList = XmlParser

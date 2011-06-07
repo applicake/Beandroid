@@ -46,7 +46,8 @@ public class HomeActivity extends BeanstalkActivity{
 	}
 	
 	public void onHomeSettingsClick(View v){
-		Toast.makeText(getApplicationContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getApplicationContext(), AccountSettingsActivity.class);
+		startActivityForResult(intent, 0);
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ import com.applicake.beanstalkclient.utils.RailsTimezones;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,7 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 		super(context, textViewResourceId, changesetArray);
 		mInflater = LayoutInflater.from(context);
 		this.changesetArray = changesetArray;
-		SharedPreferences prefs = context.getSharedPreferences(Constants.SHARED_PREFERENCES,
-				Context.MODE_PRIVATE);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		String timezoneString = prefs.getString(Constants.USER_TIMEZONE, "");
 		TimeZone currentUserTimeZone;
 		if (timezoneString == "") {

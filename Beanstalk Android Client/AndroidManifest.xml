@@ -84,6 +84,14 @@
 			android:name="RepositoryUsersPermissionsActivity"
 			android:configChanges="orientation|keyboardHidden">
 		</activity>
+		<activity
+			android:name="AccountSettingsActivity"
+			android:configChanges="orientation|keyboardHidden">
+		</activity>
+		<activity
+			android:name="ApplicationSettingsActivity"
+			android:configChanges="orientation|keyboardHidden">
+		</activity>
 
 	</application>
 

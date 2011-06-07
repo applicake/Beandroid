@@ -86,8 +86,7 @@ public class HttpRetriever {
 			}
 			throw new HttpImproperStatusCodeException(statusCode);
 
-
-		} catch (IOException ioe) { 
+		} catch (IOException ioe) {
 			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
 		}
@@ -113,10 +112,37 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+			getRequest.abort();
+			throw new HttpConnectionErrorException(ioe);
+		}
+	}
+
+	public static String getAccountInfo(SharedPreferences prefs)
+			throws HttpImproperStatusCodeException, HttpConnectionErrorException {
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+
+		String auth_http = HTTP_PREFIX + domain + AUTH_HTTP_SUFFIX;
+
+		HttpGet getRequest = new HttpGet(auth_http);
+		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+
+		try {
+			// parsing
+			HttpResponse getResponse = httpClient.execute(getRequest);
+			// response code
+			int statusCode = getResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				return EntityUtils.toString(getResponse.getEntity());
+			}
+			throw new HttpImproperStatusCodeException(statusCode);
+
+		} catch (IOException ioe) {
 			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
 		}
@@ -143,8 +169,8 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
-
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -155,7 +181,8 @@ public class HttpRetriever {
 	}
 
 	public static String getChangesetForReposiotoryXML(SharedPreferences prefs,
-			String repoId) throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
+			String repoId) throws UnsuccessfulServerResponseException,
+			HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -174,8 +201,8 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
-
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -204,7 +231,8 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -234,8 +262,8 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
-
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			getRequest.abort();
@@ -264,8 +292,8 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
-
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -276,7 +304,8 @@ public class HttpRetriever {
 	}
 
 	public static String getCommentsListForRevisionXML(SharedPreferences prefs,
-			String repoId, String revision, int pageNumber) throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
+			String repoId, String revision, int pageNumber)
+			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -298,7 +327,8 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -331,7 +361,8 @@ public class HttpRetriever {
 			if (statusCode == HttpStatus.SC_OK) {
 				return EntityUtils.toString(getResponse.getEntity());
 			} else
-				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine().getReasonPhrase());
+				throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
+						.getReasonPhrase());
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -355,18 +386,16 @@ public class HttpRetriever {
 			super();
 			this.statusCode = statusCode;
 		}
-		
-		public int getStatusCode(){
+
+		public int getStatusCode() {
 			return statusCode;
 		}
 
 	}
 
-
 	// exception thrown by this class after receiving improper response from
 	// server
 	public static class UnsuccessfulServerResponseException extends Exception {
-
 
 		/**
 		 * 

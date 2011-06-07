@@ -31,12 +31,12 @@ public class Constants {
 
 	public static final String REPOSITORY = "repository";
 
-	public static final String REPOSITORY_ID = "repository id";
+	public static final String REPOSITORY_ID = "repository_id";
 
-	public static final String REPOSITORY_NAME = "repository name";
-	public static final String REPOSITORY_COLOR_NO = "repository color number";
+	public static final String REPOSITORY_NAME = "repository_name";
+	public static final String REPOSITORY_COLOR_NO = "repository_color_number";
 
-	public static final String REPOSITORY_TITLE = "repository title";
+	public static final String REPOSITORY_TITLE = "repository_title";
 
 	public static final String USER = "user_parcel";
 

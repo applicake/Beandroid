@@ -30,7 +30,21 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 public class HttpSender {
+	
+	private final static String HTTPS_PREFIX = "https://";
+	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+	private final static String COMMENTS_HTTP_SUFFIX = "/comments.xml";
+	private final static String REPOSITORY_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
+	private final static String REPOSITORY_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
+	private final static String USER_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/users/";
+	private final static String USER_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/users/";
+	private final static String USER_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
+	private final static String PERMISSION_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions.xml";
+	private final static String PERMISSION_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/permissions/";
+	private static final String ACCOUNT_UPDATE_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
 
+	private static final DefaultHttpClient httpClient = getClient();
+	
 	public static DefaultHttpClient getClient() {
 		DefaultHttpClient httpClient = null;
 
@@ -54,17 +68,6 @@ public class HttpSender {
 		return httpClient;
 	}
 
-	private static final DefaultHttpClient httpClient = getClient();
-	private final static String HTTPS_PREFIX = "https://";
-	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
-	private final static String COMMENTS_HTTP_SUFFIX = "/comments.xml";
-	private final static String REPOSITORY_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
-	private final static String REPOSITORY_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
-	private final static String USER_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/users/";
-	private final static String USER_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/users/";
-	private final static String USER_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
-	private final static String PERMISSION_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions.xml";
-	private final static String PERMISSION_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/permissions/";
 
 	public static String sendCommentXML(SharedPreferences prefs, String xml, String repoId)
 			throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
@@ -231,11 +234,11 @@ public class HttpSender {
 
 		// TODO throw exceptions if an error occurs
 		try {
-			HttpResponse postResponse = httpClient.execute(putRequest);
+			HttpResponse putResponse = httpClient.execute(putRequest);
 			Log.w("postRequestXml", xml);
-			String entity = EntityUtils.toString(postResponse.getEntity());
+			String entity = EntityUtils.toString(putResponse.getEntity());
 			Log.w("postResponse", entity);
-			int statusCode = postResponse.getStatusLine().getStatusCode();
+			int statusCode = putResponse.getStatusLine().getStatusCode();
 			if (statusCode == 200) {
 				return 200;
 			} else if (statusCode == 422) {
@@ -246,7 +249,7 @@ public class HttpSender {
 				}
 				throw new HttpSenderServerErrorException(sb.toString());
 			} else {
-				throw new HttpSenderServerErrorException(postResponse.getStatusLine()
+				throw new HttpSenderServerErrorException(putResponse.getStatusLine()
 						.getReasonPhrase());
 			}
 
@@ -421,6 +424,50 @@ public class HttpSender {
 		}
 
 	}
+	
+	public static Integer sendUpdateAccountXML(SharedPreferences prefs,
+			String accountModificationXml) throws XMLParserException, HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
+		
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+
+		// create PUT request with address
+		HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain + ACCOUNT_UPDATE_HTTP_SUFFIX);
+
+		// add auth headers
+		putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		putRequest.addHeader("Content-Type", "application/xml");
+
+		// add xml entity
+		StringEntity se = new StringEntity(accountModificationXml, "UTF-8");
+		putRequest.setEntity(se);
+
+		// TODO throw exceptions if an error occurs
+		try {
+			HttpResponse putResponse = httpClient.execute(putRequest);
+			String entity = EntityUtils.toString(putResponse.getEntity());
+			int statusCode = putResponse.getStatusLine().getStatusCode();
+			if (statusCode == 200) {
+				return 200;
+			} else if (statusCode == 422) {
+				StringBuilder sb = new StringBuilder();
+				for (String s : XmlParser.parseErrors(entity)) {
+					sb.append(s);
+					sb.append("\n");
+				}
+				throw new HttpSenderServerErrorException(sb.toString());
+			} else {
+				throw new HttpSenderServerErrorException(putResponse.getStatusLine()
+						.getReasonPhrase());
+			}
+
+		} catch (IOException e) {
+			putRequest.abort();
+			e.printStackTrace();
+			throw new HttpSenderException("IOException");
+		}
+
+	}
 
 	private static UsernamePasswordCredentials getCredentialsFromPreferences(
 			SharedPreferences prefs) {
@@ -428,6 +475,8 @@ public class HttpSender {
 				prefs.getString(Constants.USER_PASSWORD, ""));
 
 	}
+	
+	
 
 	private static String getAccountDomain(SharedPreferences prefs) {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
@@ -458,5 +507,7 @@ public class HttpSender {
 			super(message);
 		}
 	}
+
+
 
 }
