@@ -116,6 +116,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 				@Override
 				public void onCancel(DialogInterface dialog) {
 					thisTask.cancel(true);
+					finish();
 				}
 			});
 

@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -42,6 +44,17 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 
 		mContext = this;
 		usersList = (ListView) findViewById(R.id.userPermissionsList);
+		View headerView = ((LayoutInflater) getApplicationContext().getSystemService(
+				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.repo_name_header,
+				null, false);
+
+		// setup list header
+		headerView.findViewById(R.id.colorLabel).getBackground()
+				.setLevel(repository.getColorLabelNo());
+		TextView repoNameTextView = (TextView) headerView.findViewById(R.id.repoName);
+		repoNameTextView.setText(repository.getTitle());
+		
+		usersList.addHeaderView(headerView, null, false);
 
 		usersArray = new ArrayList<User>();
 		usersAdapter = new RepositoryPermissionsAdapter(mContext, prefs, repository,
@@ -109,6 +122,7 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 				public void onCancel(DialogInterface dialog) {
 					thisTask.cancel(true);
 					GUI.displayMonit(mContext, "Download task was cancelled");
+					finish();
 				}
 			});
 		}

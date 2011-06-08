@@ -93,7 +93,6 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 
 		@Override
 		protected void onPreExecute() {
-			super.onPreExecute();
 			progressDialog = ProgressDialog.show(mContext, "Loading user list",
 					"Please wait...");
 
@@ -104,6 +103,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 				public void onCancel(DialogInterface dialog) {
 					thisTask.cancel(true);
 					GUI.displayMonit(mContext, "Download task was cancelled");
+					finish();
 				}
 			});
 		}
@@ -151,7 +151,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 
 				builder.displayDialog();
 			} else {
-				if (parsedArray != null){
+				if (parsedArray != null) {
 
 					userArray.clear();
 					userArray.addAll(parsedArray);
@@ -161,12 +161,13 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 					int usersInPlan = Plans.getPlanById(
 							prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfUsers();
 					int numberLeft = usersInPlan - userArray.size();
-					userLeftCounter.setText("available users: " + String.valueOf(numberLeft)
-							+ "/" + String.valueOf(usersInPlan));
-				} else if (errorMessage != null){
-					GUI.displayMonit(mContext, "Server error: "+ errorMessage);
-				} else GUI.displayMonit(mContext, "Unexpected error, please try again later");
-
+					userLeftCounter.setText("available users: "
+							+ String.valueOf(numberLeft) + "/"
+							+ String.valueOf(usersInPlan));
+				} else if (errorMessage != null) {
+					GUI.displayMonit(mContext, "Server error: " + errorMessage);
+				} else
+					GUI.displayMonit(mContext, "Unexpected error, please try again later");
 
 			}
 		}

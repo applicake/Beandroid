@@ -1,9 +1,10 @@
 package com.applicake.beanstalkclient.adapters;
 
 import java.util.HashMap;
+
+import android.widget.Button;
 import java.util.List;
 import java.util.Map;
-
 
 import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.R;
@@ -17,13 +18,13 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerRespo
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -112,6 +113,9 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 		private TextView deploymentPermissionTitle;
 		private String userId;
 		private View view;
+		private boolean failed;
+		private Button refreshButton;
+		
 
 		@Override
 		protected HashMap<Integer, Permission> doInBackground(Object... params) {
@@ -119,10 +123,13 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			view = (View) params[1];
 
 			loadingBar = (ProgressBar) view.findViewById(R.id.loadingBar);
+			loadingBar.setVisibility(View.VISIBLE);
 
 			repoPermissionLabel = (TextView) view.findViewById(R.id.repositoryLabel);
 			deploymentPermissionLabel = (TextView) view
 					.findViewById(R.id.deploymentLabel);
+			
+			refreshButton = (Button) view.findViewById(R.id.refresh_button);
 
 			repoPermissionTitle = (TextView) view.findViewById(R.id.repoPermission);
 			deploymentPermissionTitle = (TextView) view
@@ -139,13 +146,13 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 				// all those exceptions are handled the same way
 			} catch (HttpConnectionErrorException e) {
-				
-			} catch (UnsuccessfulServerResponseException e) {
-				
-			} catch (XMLParserException e) {
-				
-			}
 
+			} catch (UnsuccessfulServerResponseException e) {
+
+			} catch (XMLParserException e) {
+
+			}
+			failed = true;
 			return null;
 
 		}
@@ -153,47 +160,64 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 		@Override
 		protected void onPostExecute(HashMap<Integer, Permission> result) {
 			// setting view clickable again
-			
+
 			loadingBar.setVisibility(View.GONE);
-
-			if (result != null) {
-				view.setTag(true);
-				repoPermissionLabel.setVisibility(View.VISIBLE);
-				deploymentPermissionLabel.setVisibility(View.VISIBLE);
-				repoPermissionTitle.setVisibility(View.VISIBLE);
-				deploymentPermissionTitle.setVisibility(View.VISIBLE);
-				
-				if (result.containsKey(repository.getId())) {
-					Permission permission = result.get(repository.getId());
-					// add permission to userid -> permission hashmap
-					userIdToPermissionMap.put(Integer.valueOf(userId), permission);
-
-					if (permission.isReadAccess()) {
-						if (permission.isWriteAccess()) {
-							repoPermissionLabel.setText("write");
-							repoPermissionLabel.getBackground().setLevel(0);
-						} else {
-							repoPermissionLabel.setText("read");
-							repoPermissionLabel.getBackground().setLevel(1);
-						}
+			
+			if (failed) {
+				// if one of downloads fail a refresh button will be displayed
+					refreshButton.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						new DownloadPermissionsTask().execute(userId, view);
+						refreshButton.setVisibility(View.GONE);
+						
 					}
+				});
+				refreshButton.setVisibility(View.VISIBLE);
 
-					if (permission.isFullDeploymentAccess()) {
-						deploymentPermissionLabel.setText("write");
-						deploymentPermissionLabel.getBackground().setLevel(0);
+			} else {
+
+				if (result != null) {
+					view.setTag(true);
+					
+					repoPermissionLabel.setVisibility(View.VISIBLE);
+					deploymentPermissionLabel.setVisibility(View.VISIBLE);
+					repoPermissionTitle.setVisibility(View.VISIBLE);
+					deploymentPermissionTitle.setVisibility(View.VISIBLE);
+
+					if (result.containsKey(repository.getId())) {
+						Permission permission = result.get(repository.getId());
+						// add permission to userid -> permission hashmap
+						userIdToPermissionMap.put(Integer.valueOf(userId), permission);
+
+						if (permission.isReadAccess()) {
+							if (permission.isWriteAccess()) {
+								repoPermissionLabel.setText("write");
+								repoPermissionLabel.getBackground().setLevel(0);
+							} else {
+								repoPermissionLabel.setText("read");
+								repoPermissionLabel.getBackground().setLevel(1);
+							}
+						}
+
+						if (permission.isFullDeploymentAccess()) {
+							deploymentPermissionLabel.setText("write");
+							deploymentPermissionLabel.getBackground().setLevel(0);
+						} else {
+							deploymentPermissionLabel.setText("read");
+							deploymentPermissionLabel.getBackground().setLevel(2);
+						}
 					} else {
+						repoPermissionLabel.setText("no access");
+						repoPermissionLabel.getBackground().setLevel(2);
+
 						deploymentPermissionLabel.setText("read");
 						deploymentPermissionLabel.getBackground().setLevel(2);
 					}
 				} else {
-					repoPermissionLabel.setText("no access");
-					repoPermissionLabel.getBackground().setLevel(2);
-
-					deploymentPermissionLabel.setText("read");
-					deploymentPermissionLabel.getBackground().setLevel(2);
+					view.findViewById(R.id.parsingFailed).setVisibility(View.VISIBLE);
 				}
-			} else {
-				view.findViewById(R.id.parsingFailed).setVisibility(View.VISIBLE);
 			}
 
 		}

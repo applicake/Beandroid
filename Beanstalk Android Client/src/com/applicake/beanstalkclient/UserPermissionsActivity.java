@@ -117,6 +117,7 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 				public void onCancel(DialogInterface dialog) {
 					thisTask.cancel(true);
 					GUI.displayMonit(mContext, "Data sending task was cancelled");
+					finish();
 				}
 			});
 		}

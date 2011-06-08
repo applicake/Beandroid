@@ -57,14 +57,14 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 		View headerView = ((LayoutInflater) getApplicationContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.repo_name_header,
 				null, false);
-		headerView.setClickable(false);
+
 		// setup list header
 		headerView.findViewById(R.id.colorLabel).getBackground()
 				.setLevel(repoColorLabelNo);
 		TextView repoNameTextView = (TextView) headerView.findViewById(R.id.repoName);
 		repoNameTextView.setText(repoTitle);
 
-		changesetList.addHeaderView(headerView);
+		changesetList.addHeaderView(headerView, null, false);		
 		changesetList.setAdapter(changesetAdapter);
 		changesetList.setOnItemClickListener(this);
 

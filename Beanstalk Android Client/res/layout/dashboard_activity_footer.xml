@@ -6,7 +6,7 @@
 	android:background="@color/ApplicationBackground">
 
 	<TextView
-		android:text="Loading more content..."
+		android:text="Downloading content..."
 		android:id="@+id/textView1"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

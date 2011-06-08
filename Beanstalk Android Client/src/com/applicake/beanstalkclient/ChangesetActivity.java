@@ -207,7 +207,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 					@Override
 					public void noRetryAction(DialogInterface dialog) {
 						super.noRetryAction(dialog);
-						ChangesetActivity.this.finish();
+						
 					}
 				};
 
@@ -335,10 +335,9 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				@Override
 				public void onCancel(DialogInterface dialog) {
 					thisTask.cancel(true);
-					GUI.displayMonit(mContext, "Logging in task was cancelled");
+					GUI.displayMonit(mContext, "Sending comment task was cancelled");
 				}
 			});
-			super.onPreExecute();
 		}
 
 		protected String doInBackground(String... params) {
@@ -384,25 +383,24 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 				};
 
 				builder.displayDialog();
-			}
-			else{
-				
-			if (result != null) {
-
-				try {
-					Comment comment = XmlParser.parseComment(result);
-					commentsArray.add(comment);
-					commentAdapter.notifyDataSetChanged();
-
-				} catch (XMLParserException e) {
-					e.printStackTrace();
-				}
-			} else if (errorMessage != null) {
-				GUI.displayMonit(mContext, errorMessage);
-
 			} else {
-				GUI.displayMonit(mContext, "unexpected error");
-			}
+
+				if (result != null) {
+
+					try {
+						Comment comment = XmlParser.parseComment(result);
+						commentsArray.add(comment);
+						commentAdapter.notifyDataSetChanged();
+
+					} catch (XMLParserException e) {
+						e.printStackTrace();
+					}
+				} else if (errorMessage != null) {
+					GUI.displayMonit(mContext, errorMessage);
+
+				} else {
+					GUI.displayMonit(mContext, "unexpected error");
+				}
 			}
 
 		}

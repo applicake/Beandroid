@@ -90,6 +90,16 @@
 		style="@android:style/Widget.ProgressBar.Small.Inverse"
 		android:id="@+id/loadingBar"
 		android:visibility="visible"></ProgressBar>
+	
+	<Button
+		android:visibility="gone"
+		android:text="Reload"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_alignParentRight="true"
+		android:layout_width="100dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/refresh_button"></Button>
 
 	<TextView
 		android:text="Parsing failed"
