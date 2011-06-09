@@ -71,6 +71,9 @@ public abstract class BeanstalkActivity extends Activity {
 	
 	//closing all activities mechanism 
 	public void exitApplication(){
+		if (!prefs.getBoolean(Constants.CREDENTIALS_STORED, false)){
+			clearCredentials();
+		}
 		setResult(Constants.CLOSE_ALL_ACTIVITIES);
 		finish();
 	}

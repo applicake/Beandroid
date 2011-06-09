@@ -90,6 +90,48 @@ public class XmlParser {
 		return userHandler.retrieveUserList();
 
 	}
+	
+	public static User parseCurrentUser(String currentUserXML) throws XMLParserException {
+		XMLReader xmlReader = initializeReader();
+
+		UserHandler userHandler = new UserHandler();
+		// set handler
+		xmlReader.setContentHandler(userHandler);
+		// parse
+		StringReader sr = new StringReader(currentUserXML);
+		InputSource is = new InputSource(sr);
+		try {
+			xmlReader.parse(is);
+
+		} catch (IOException e) {
+			throw new XMLParserException(e);
+		} catch (SAXException e) {
+			throw new XMLParserException(e);
+		}
+
+		return userHandler.retrieveUser();
+	}
+	
+	public static User parsePlan(String planXML) throws XMLParserException {
+		XMLReader xmlReader = initializeReader();
+		
+		UserHandler userHandler = new UserHandler();
+		// set handler
+		xmlReader.setContentHandler(userHandler);
+		// parse
+		StringReader sr = new StringReader(planXML);
+		InputSource is = new InputSource(sr);
+		try {
+			xmlReader.parse(is);
+			
+		} catch (IOException e) {
+			throw new XMLParserException(e);
+		} catch (SAXException e) {
+			throw new XMLParserException(e);
+		}
+		
+		return userHandler.retrieveUser();
+	}
 
 	public static ArrayList<Repository> parseRepositoryList(String xml)
 			throws XMLParserException {
@@ -306,4 +348,6 @@ public class XmlParser {
 			return cause;
 		}
 	}
+
+
 }

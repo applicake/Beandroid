@@ -54,8 +54,10 @@ public class HttpRetriever {
 	final static DefaultHttpClient httpClient = getClient();
 
 	private static final String HTTP_PREFIX = "https://";
-	private static final String AUTH_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
+	private static final String ACCOUNT_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
 	private static final String USERS_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
+	private static final String PLANS_HTTP_SUFFIX = ".beanstalkapp.com/api/plans.xml";
+	private static final String CURRENT_USER_HTTP_SUFFIX = ".beanstalkapp.com/api/users/current.xml";
 	private static final String PERMISSIONS_FOR_USER_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions/";
 	private static final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
 	private static final String SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/repository.xml?repository_id=";
@@ -65,13 +67,14 @@ public class HttpRetriever {
 	private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
 	private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
-	public static String checkCredentials(String domain, String username, String password)
+	// checking credentials for Owner user
+	public static String checkCredentialsAccount(String domain, String username, String password)
 			throws HttpImproperStatusCodeException, HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
 
-		String auth_http = HTTP_PREFIX + domain + AUTH_HTTP_SUFFIX;
+		String auth_http = HTTP_PREFIX + domain + ACCOUNT_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
@@ -91,6 +94,90 @@ public class HttpRetriever {
 			throw new HttpConnectionErrorException(ioe);
 		}
 
+	}
+	
+	// checking credentials for Admins
+	public static String checkCredentialsUser(String domain, String username, String password)
+	throws HttpImproperStatusCodeException, HttpConnectionErrorException {
+		
+		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
+				username, password);
+		
+		String auth_http = HTTP_PREFIX + domain + CURRENT_USER_HTTP_SUFFIX;
+		
+		HttpGet getRequest = new HttpGet(auth_http);
+		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		
+		try {
+			// parsing
+			HttpResponse getResponse = httpClient.execute(getRequest);
+			// response code
+			int statusCode = getResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				return EntityUtils.toString(getResponse.getEntity());
+			}
+			throw new HttpImproperStatusCodeException(statusCode);
+			
+		} catch (IOException ioe) {
+			getRequest.abort();
+			throw new HttpConnectionErrorException(ioe);
+		}
+		
+	}
+	
+	// checking credentials for regular user
+	public static String checkCredentialsPlan(String domain, String username, String password)
+	throws HttpImproperStatusCodeException, HttpConnectionErrorException {
+		
+		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
+				username, password);
+		
+		String auth_http = HTTP_PREFIX + domain + PLANS_HTTP_SUFFIX;
+		
+		HttpGet getRequest = new HttpGet(auth_http);
+		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		
+		try {
+			// parsing
+			HttpResponse getResponse = httpClient.execute(getRequest);
+			// response code
+			int statusCode = getResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				return EntityUtils.toString(getResponse.getEntity());
+			}
+			throw new HttpImproperStatusCodeException(statusCode);
+			
+		} catch (IOException ioe) {
+			getRequest.abort();
+			throw new HttpConnectionErrorException(ioe);
+		}
+		
+	}
+
+	public static String getAccountInfo(SharedPreferences prefs)
+			throws HttpImproperStatusCodeException, HttpConnectionErrorException {
+		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+		String domain = getAccountDomain(prefs);
+
+		String auth_http = HTTP_PREFIX + domain + ACCOUNT_HTTP_SUFFIX;
+
+		HttpGet getRequest = new HttpGet(auth_http);
+		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+
+		try {
+			// parsing
+			HttpResponse getResponse = httpClient.execute(getRequest);
+			// response code
+			int statusCode = getResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				return EntityUtils.toString(getResponse.getEntity());
+			}
+			throw new HttpImproperStatusCodeException(statusCode);
+
+		} catch (IOException ioe) {
+			getRequest.abort();
+			throw new HttpConnectionErrorException(ioe);
+		}
 	}
 
 	public static String getUserListXML(SharedPreferences prefs)
@@ -122,31 +209,6 @@ public class HttpRetriever {
 		}
 	}
 
-	public static String getAccountInfo(SharedPreferences prefs)
-			throws HttpImproperStatusCodeException, HttpConnectionErrorException {
-		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
-		String domain = getAccountDomain(prefs);
-
-		String auth_http = HTTP_PREFIX + domain + AUTH_HTTP_SUFFIX;
-
-		HttpGet getRequest = new HttpGet(auth_http);
-		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
-		try {
-			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
-			// response code
-			int statusCode = getResponse.getStatusLine().getStatusCode();
-			if (statusCode == HttpStatus.SC_OK) {
-				return EntityUtils.toString(getResponse.getEntity());
-			}
-			throw new HttpImproperStatusCodeException(statusCode);
-
-		} catch (IOException ioe) {
-			getRequest.abort();
-			throw new HttpConnectionErrorException(ioe);
-		}
-	}
 
 	public static String getActivityListXML(SharedPreferences prefs, int pageNumber)
 			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {

@@ -1,5 +1,6 @@
 package com.applicake.beanstalkclient;
 
+import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
@@ -36,9 +37,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private EditText passwordEditText;
 	private CheckBox remeberMeCheckBox;
 
-//	private ProgressDialog progressDialog;
 	private Context mContext;
 	private SharedPreferences prefs;
+	private User user;
+	private Account account;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,32 @@ public class LoginActivity extends Activity implements OnClickListener {
 		editor.putBoolean(Constants.REMEBER_ME_CHECKBOX, false);
 		editor.commit();
 	}
+	
+	// this 
+	private UserType authenticateAndCheckUserType(String domain, String username, String password) throws HttpConnectionErrorException, XMLParserException, HttpImproperStatusCodeException{
+		
+		try {
+			String accountInfoXML = HttpRetriever.checkCredentialsAccount(domain, username, password);
+			account = XmlParser.parseAccountInfo(accountInfoXML);
+			return UserType.OWNER;
+			
+		} catch (HttpImproperStatusCodeException e) {
+			Log.w("Status code", String.valueOf(e.getStatusCode()));
+			try {
+				String currentUserXML = HttpRetriever.checkCredentialsUser(domain, username, password);
+				user = XmlParser.parseCurrentUser(currentUserXML);
+				return UserType.OWNER;
+			} catch (HttpImproperStatusCodeException e1) {
+				Object plansXML = HttpRetriever.checkCredentialsPlan(domain, username, password);
+				return UserType.OWNER;
+			}
+			
+		} 
+		
+	}
+	
+	
+	
 
 	public class VerifyLoginTask extends AsyncTask<String, Void, Integer> {
 
@@ -140,13 +168,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 		private String login;
 		private String password;
 
-		private Account account;
-
 		@SuppressWarnings("rawtypes")
 		private AsyncTask thisTask = this;
 		private boolean failed = false;;
 		private String failMessage;
 		private ProgressDialog progressDialog;
+		private UserType usertype;
 
 		@Override
 		protected void onPreExecute() {
@@ -169,12 +196,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 			domain = params[0];
 			login = params[1];
 			password = params[2];
-			String loginAttemptResultxml;
 			try {
-				loginAttemptResultxml = HttpRetriever.checkCredentials(domain, login,
-						password);
+				usertype = authenticateAndCheckUserType(domain, login, password);
+				
+//				loginAttemptResultxml = HttpRetriever.checkCredentials(domain, login,
+//						password);
 
-				account = XmlParser.parseAccountInfo(loginAttemptResultxml);
+//				account = XmlParser.parseAccountInfo(loginAttemptResultxml);
 				return 200;
 
 			} catch (XMLParserException e) {
@@ -207,16 +235,22 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 			} else {
 
-				if ((result == 200) && (account != null)) {
+				if ((result == 200) && (usertype != null)) {
 
 					GUI.displayMonit(mContext, "Access granted");
 					Editor editor = prefs.edit();
 					editor.putString(Constants.USER_ACCOUNT_DOMAIN, domain);
 					editor.putString(Constants.USER_LOGIN, login);
 					editor.putString(Constants.USER_PASSWORD, password);
-					editor.putInt(Constants.ACCOUNT_PLAN, account.getPlanId());
-					editor.putString(Constants.USER_TIMEZONE, account.getTimeZone());
 					editor.putBoolean(Constants.CREDENTIALS_STORED, true);
+					if (usertype == UserType.OWNER){
+						editor.putString(Constants.USER_TYPE, usertype.name());
+						editor.putInt(Constants.ACCOUNT_PLAN, account.getPlanId());
+						editor.putString(Constants.USER_TIMEZONE, account.getTimeZone());
+					} else {
+						editor.putString(Constants.USER_TYPE, usertype.name());
+					}
+					
 					editor.commit();
 
 					Intent intent = new Intent(getApplicationContext(),

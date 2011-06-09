@@ -54,4 +54,6 @@ public class Constants {
 
 	public static final String USER_TIMEZONE = "account timezone";
 
+	public static final String USER_TYPE = "user_type";
+
 }

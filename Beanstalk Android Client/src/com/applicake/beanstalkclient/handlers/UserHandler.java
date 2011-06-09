@@ -117,4 +117,8 @@ public class UserHandler extends DefaultHandler {
 		return userList;
 	}
 
+	public User retrieveUser() {
+		return user;
+	}
+
 }
