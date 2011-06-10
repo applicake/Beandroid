@@ -3,7 +3,7 @@ package com.applicake.beanstalkclient;
 import java.util.ArrayList;
 
 import com.applicake.beanstalkclient.adapters.UserAdapter;
-import com.applicake.beanstalkclient.enums.Plans;
+import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
@@ -155,15 +155,15 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 
 					userArray.clear();
 					userArray.addAll(parsedArray);
-
 					userAdapter.notifyDataSetChanged();
 
-					int usersInPlan = Plans.getPlanById(
-							prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfUsers();
-					int numberLeft = usersInPlan - userArray.size();
-					userLeftCounter.setText("available users: "
-							+ String.valueOf(numberLeft) + "/"
-							+ String.valueOf(usersInPlan));
+					if (prefs.getString(Constants.USER_TYPE, "") == UserType.OWNER.name()) {
+						int usersInPlan = prefs.getInt(Constants.NUMBER_OF_USERS_AVAILABLE, 0);
+						int numberLeft = usersInPlan - userArray.size();
+						userLeftCounter.setText("available users: "
+								+ String.valueOf(numberLeft) + "/"
+								+ String.valueOf(usersInPlan));
+					}
 				} else if (errorMessage != null) {
 					GUI.displayMonit(mContext, "Server error: " + errorMessage);
 				} else

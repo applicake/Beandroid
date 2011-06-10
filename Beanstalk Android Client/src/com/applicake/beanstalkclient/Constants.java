@@ -56,4 +56,8 @@ public class Constants {
 
 	public static final String USER_TYPE = "user_type";
 
+	public static final String NUMBER_OF_REPOS_AVAILABLE = "number_of_repos_available";
+
+	public static final String NUMBER_OF_USERS_AVAILABLE = "number_of_users_available";
+
 }

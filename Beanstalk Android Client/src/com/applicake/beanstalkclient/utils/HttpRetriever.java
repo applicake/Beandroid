@@ -1,12 +1,16 @@
 package com.applicake.beanstalkclient.utils;
 
 import java.io.IOException;
+import java.net.ResponseCache;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -27,15 +31,18 @@ import android.util.Log;
 
 public class HttpRetriever {
 
-	public static DefaultHttpClient getClient() {
-		DefaultHttpClient httpClient = null;
+	public static HttpClient getClient() {
+		HttpClient httpClient = null;
+		
 
 		// sets up parameters
 		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params, "utf-8");
 		HttpClientParams.setRedirecting(params, false);
-		params.setBooleanParameter("http.protocol.expect-continue", false);
+		params.setBooleanParameter("http.protocol.expect-continue", false);		
+
+		
 
 		// registers schemes for both http and https
 		SchemeRegistry registry = new SchemeRegistry();
@@ -51,7 +58,7 @@ public class HttpRetriever {
 		return httpClient;
 	}
 
-	final static DefaultHttpClient httpClient = getClient();
+	final static HttpClient httpClient = AndroidHttpClient.newInstance("");
 
 	private static final String HTTP_PREFIX = "https://";
 	private static final String ACCOUNT_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
@@ -67,9 +74,12 @@ public class HttpRetriever {
 	private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
 	private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
+	private static HttpResponse getResponse;
+
 	// checking credentials for Owner user
-	public static String checkCredentialsAccount(String domain, String username, String password)
-			throws HttpImproperStatusCodeException, HttpConnectionErrorException {
+	public static String checkCredentialsAccount(String domain, String username,
+			String password) throws HttpImproperStatusCodeException,
+			HttpConnectionErrorException {
 
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
@@ -77,81 +87,106 @@ public class HttpRetriever {
 		String auth_http = HTTP_PREFIX + domain + ACCOUNT_HTTP_SUFFIX;
 
 		HttpGet getRequest = new HttpGet(auth_http);
-		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		getRequest.setHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
 		try {
 			// parsing
 			HttpResponse getResponse = httpClient.execute(getRequest);
+			for (Header h : getRequest.getAllHeaders()) {
+				Log.w("request", h.getName() + " " + h.getValue());
+			}
+
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
+
+//			Log.w("responsecache", ResponseCache.getDefault().toString());
+			Log.w("credentials", username + " " + password);
+			Log.w("login attempt result - account", String.valueOf(statusCode));
 			if (statusCode == HttpStatus.SC_OK) {
-				return EntityUtils.toString(getResponse.getEntity());
+				String response = EntityUtils.toString(getResponse.getEntity());
+				getResponse.getEntity().consumeContent();
+				Log.w("login attempt response - account", response);
+				return response;
 			}
 			throw new HttpImproperStatusCodeException(statusCode);
 
 		} catch (IOException ioe) {
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
-		}
-
+		} 
 	}
-	
+
 	// checking credentials for Admins
-	public static String checkCredentialsUser(String domain, String username, String password)
-	throws HttpImproperStatusCodeException, HttpConnectionErrorException {
-		
+	public static String checkCredentialsUser(String domain, String username,
+			String password) throws HttpImproperStatusCodeException,
+			HttpConnectionErrorException {
+
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
-		
+
 		String auth_http = HTTP_PREFIX + domain + CURRENT_USER_HTTP_SUFFIX;
-		
+
 		HttpGet getRequest = new HttpGet(auth_http);
-		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-		
+		getRequest.setHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+
 		try {
 			// parsing
 			HttpResponse getResponse = httpClient.execute(getRequest);
+			Log.w("request", getRequest.toString());
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
+			Log.w("login attempt result - user", String.valueOf(statusCode));
 			if (statusCode == HttpStatus.SC_OK) {
-				return EntityUtils.toString(getResponse.getEntity());
+				String response = EntityUtils.toString(getResponse.getEntity());
+				getResponse.getEntity().consumeContent();
+				Log.w("login attempt response - user", response);
+				return response;
 			}
 			throw new HttpImproperStatusCodeException(statusCode);
-			
+
 		} catch (IOException ioe) {
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			getRequest.abort();
+			httpClient.getConnectionManager().closeExpiredConnections();
 		}
-		
+
 	}
-	
+
 	// checking credentials for regular user
-	public static String checkCredentialsPlan(String domain, String username, String password)
-	throws HttpImproperStatusCodeException, HttpConnectionErrorException {
-		
+	public static String checkCredentialsPlan(String domain, String username,
+			String password) throws HttpImproperStatusCodeException,
+			HttpConnectionErrorException {
+
 		UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 				username, password);
-		
+
 		String auth_http = HTTP_PREFIX + domain + PLANS_HTTP_SUFFIX;
-		
+
 		HttpGet getRequest = new HttpGet(auth_http);
-		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-		
+		getRequest.setHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+
+			getResponse = httpClient.execute(getRequest);
+			Log.w("request", getRequest.toString());
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
+			Log.w("login attempt result - plan", String.valueOf(statusCode));
+
 			if (statusCode == HttpStatus.SC_OK) {
-				return EntityUtils.toString(getResponse.getEntity());
+				String response = EntityUtils.toString(getResponse.getEntity());
+				getResponse.getEntity().consumeContent();
+				Log.w("login attempt response - plan", response);
+
+				return response;
 			}
 			throw new HttpImproperStatusCodeException(statusCode);
-			
+
 		} catch (IOException ioe) {
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
 		}
-		
+
 	}
 
 	public static String getAccountInfo(SharedPreferences prefs)
@@ -208,7 +243,6 @@ public class HttpRetriever {
 			throw new HttpConnectionErrorException(ioe);
 		}
 	}
-
 
 	public static String getActivityListXML(SharedPreferences prefs, int pageNumber)
 			throws UnsuccessfulServerResponseException, HttpConnectionErrorException {

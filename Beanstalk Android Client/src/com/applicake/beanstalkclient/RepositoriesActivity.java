@@ -3,7 +3,7 @@ package com.applicake.beanstalkclient;
 import java.util.ArrayList;
 
 import com.applicake.beanstalkclient.adapters.RepositoriesAdapter;
-import com.applicake.beanstalkclient.enums.Plans;
+import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
@@ -169,12 +169,14 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 
 					repositoriesAdapter.notifyDataSetChanged();
 
-					int repositoriesInPlan = Plans.getPlanById(
-							prefs.getInt(Constants.ACCOUNT_PLAN, 0)).getNumberOfRepos();
-					int numberLeft = repositoriesInPlan - repositoriesArray.size();
-					repositoriesLeftCounter.setText("available repositories: "
-							+ String.valueOf(numberLeft) + "/"
-							+ String.valueOf(repositoriesInPlan));
+					if (prefs.getString(Constants.USER_TYPE, "") == UserType.OWNER.name()) {
+
+						int repositoriesInPlan = prefs.getInt(Constants.NUMBER_OF_REPOS_AVAILABLE, 0);
+						int numberLeft = repositoriesInPlan - repositoriesArray.size();
+						repositoriesLeftCounter.setText("available repositories: "
+								+ String.valueOf(numberLeft) + "/"
+								+ String.valueOf(repositoriesInPlan));
+					}
 				}
 
 				if (errorMessage != null)

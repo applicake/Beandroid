@@ -17,6 +17,7 @@ import com.applicake.beanstalkclient.Account;
 import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.Comment;
 import com.applicake.beanstalkclient.Permission;
+import com.applicake.beanstalkclient.Plan;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.handlers.AccountHandler;
@@ -24,6 +25,7 @@ import com.applicake.beanstalkclient.handlers.ChangesetHandler;
 import com.applicake.beanstalkclient.handlers.CommentsHandler;
 import com.applicake.beanstalkclient.handlers.ErrorHandler;
 import com.applicake.beanstalkclient.handlers.PermissionsHandler;
+import com.applicake.beanstalkclient.handlers.PlanHandler;
 import com.applicake.beanstalkclient.handlers.RepositoriesHandler;
 import com.applicake.beanstalkclient.handlers.UserHandler;
 
@@ -112,12 +114,12 @@ public class XmlParser {
 		return userHandler.retrieveUser();
 	}
 	
-	public static User parsePlan(String planXML) throws XMLParserException {
+	public static HashMap<Integer, Plan> parsePlan(String planXML) throws XMLParserException {
 		XMLReader xmlReader = initializeReader();
 		
-		UserHandler userHandler = new UserHandler();
+		PlanHandler planHandler = new PlanHandler();
 		// set handler
-		xmlReader.setContentHandler(userHandler);
+		xmlReader.setContentHandler(planHandler);
 		// parse
 		StringReader sr = new StringReader(planXML);
 		InputSource is = new InputSource(sr);
@@ -130,7 +132,7 @@ public class XmlParser {
 			throw new XMLParserException(e);
 		}
 		
-		return userHandler.retrieveUser();
+		return planHandler.retrievePlanMap();
 	}
 
 	public static ArrayList<Repository> parseRepositoryList(String xml)
@@ -265,7 +267,6 @@ public class XmlParser {
 			throw new XMLParserException(e);
 		}
 
-		
 	}
 
 	public static ArrayList<Comment> parseCommentList(String xml) throws XMLParserException {

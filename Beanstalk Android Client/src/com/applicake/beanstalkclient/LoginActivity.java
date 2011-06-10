@@ -1,5 +1,7 @@
 package com.applicake.beanstalkclient;
 
+import java.util.HashMap;
+
 import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
@@ -39,8 +41,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 	private Context mContext;
 	private SharedPreferences prefs;
-	private User user;
 	private Account account;
+	private Plan currentPlan;
+	private HashMap<Integer, Plan> plansMap;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 		remeberMeCheckBox = (CheckBox) findViewById(R.id.remember_me_check_box);
 
 		// custom input filter that allows only alphanumeric characters and "-"
-		// character, but not in the beginning or the end of the string 
-		//TODO
+		// character, but not in the beginning or the end of the string
+		// TODO
 		// create better implementation
 
 		InputFilter httpAddressFilter = new InputFilter() {
@@ -84,10 +87,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 							&& !(source.charAt(i) == '-')) {
 						return "";
 					}
-//					if (((dstart == 0) || (dend == dest.length()))
-//							&& (source.charAt(i) == '-')) {
-//						return "";
-//					}
+					// if (((dstart == 0) || (dend == dest.length()))
+					// && (source.charAt(i) == '-')) {
+					// return "";
+					// }
 				}
 				return null;
 			}
@@ -135,32 +138,41 @@ public class LoginActivity extends Activity implements OnClickListener {
 		editor.putBoolean(Constants.REMEBER_ME_CHECKBOX, false);
 		editor.commit();
 	}
-	
-	// this 
-	private UserType authenticateAndCheckUserType(String domain, String username, String password) throws HttpConnectionErrorException, XMLParserException, HttpImproperStatusCodeException{
-		
+
+	// this
+	private UserType authenticateAndCheckUserType(String domain, String username,
+			String password) throws HttpConnectionErrorException, XMLParserException,
+			HttpImproperStatusCodeException {
+
 		try {
-			String accountInfoXML = HttpRetriever.checkCredentialsAccount(domain, username, password);
+			String accountInfoXML = HttpRetriever.checkCredentialsAccount(domain,
+					username, password);
 			account = XmlParser.parseAccountInfo(accountInfoXML);
+			String plansXML = HttpRetriever.checkCredentialsPlan(domain, username,
+					password);
+			plansMap = XmlParser.parsePlan(plansXML);
+			currentPlan = plansMap.get(account.getPlanId());
 			return UserType.OWNER;
-			
 		} catch (HttpImproperStatusCodeException e) {
-			Log.w("Status code", String.valueOf(e.getStatusCode()));
-			try {
-				String currentUserXML = HttpRetriever.checkCredentialsUser(domain, username, password);
-				user = XmlParser.parseCurrentUser(currentUserXML);
-				return UserType.OWNER;
-			} catch (HttpImproperStatusCodeException e1) {
-				Object plansXML = HttpRetriever.checkCredentialsPlan(domain, username, password);
-				return UserType.OWNER;
+			if (e.getStatusCode() != 401) {
+				throw e;
+			} else {
+				Log.w("Status code", String.valueOf(e.getStatusCode()));
+				try {
+					HttpRetriever.checkCredentialsUser(domain, username, password);
+					return UserType.ADMIN;
+				} catch (HttpImproperStatusCodeException e1) {
+					if (e1.getStatusCode() != 401) {
+						throw e1;
+					} else {
+						Log.w("Status code", String.valueOf(e1.getStatusCode()));
+						HttpRetriever.checkCredentialsPlan(domain, username, password);
+						return UserType.USER;
+					}
+				}
 			}
-			
-		} 
-		
+		}
 	}
-	
-	
-	
 
 	public class VerifyLoginTask extends AsyncTask<String, Void, Integer> {
 
@@ -198,11 +210,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 			password = params[2];
 			try {
 				usertype = authenticateAndCheckUserType(domain, login, password);
-				
-//				loginAttemptResultxml = HttpRetriever.checkCredentials(domain, login,
-//						password);
+				Log.w("usertype", usertype.name());
 
-//				account = XmlParser.parseAccountInfo(loginAttemptResultxml);
+				// loginAttemptResultxml =
+				// HttpRetriever.checkCredentials(domain, login,
+				// password);
+
+				// account = XmlParser.parseAccountInfo(loginAttemptResultxml);
 				return 200;
 
 			} catch (XMLParserException e) {
@@ -212,7 +226,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			} catch (HttpConnectionErrorException e) {
 				failMessage = Strings.networkConnectionErrorMessage;
 			}
-			
+
 			failed = true;
 			return null;
 
@@ -243,14 +257,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 					editor.putString(Constants.USER_LOGIN, login);
 					editor.putString(Constants.USER_PASSWORD, password);
 					editor.putBoolean(Constants.CREDENTIALS_STORED, true);
-					if (usertype == UserType.OWNER){
-						editor.putString(Constants.USER_TYPE, usertype.name());
-						editor.putInt(Constants.ACCOUNT_PLAN, account.getPlanId());
+					editor.putString(Constants.USER_TYPE, usertype.name());
+					if (usertype == UserType.OWNER) {
+						editor.putInt(Constants.NUMBER_OF_REPOS_AVAILABLE,
+								currentPlan.getNumberOfRepos());
+						editor.putInt(Constants.NUMBER_OF_USERS_AVAILABLE,
+								currentPlan.getNumberOfUsers());
 						editor.putString(Constants.USER_TIMEZONE, account.getTimeZone());
-					} else {
-						editor.putString(Constants.USER_TYPE, usertype.name());
 					}
-					
 					editor.commit();
 
 					Intent intent = new Intent(getApplicationContext(),
