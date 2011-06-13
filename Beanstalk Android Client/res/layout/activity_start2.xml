@@ -33,11 +33,13 @@
 		android:padding="10dp">
 		<Button
 			style="@style/HomeButton"
+			android:id="@+id/users_button"
 			android:drawableTop="@drawable/icon"
 			android:text="Users"
 			android:onClick="onHomeUsersClick"></Button>
 		<Button
 			style="@style/HomeButton"
+			android:id="@+id/deployment_button"
 			android:drawableTop="@drawable/icon"
 			android:text="Deployment"
 			android:onClick="onHomeDeploymentClick"></Button>
@@ -49,6 +51,7 @@
 		android:padding="10dp">
 		<Button
 			style="@style/HomeButton"
+			android:id="@+id/account_settings_button"
 			android:drawableTop="@drawable/icon"
 			android:text="Account settings"
 			android:onClick="onHomeSettingsClick"></Button>

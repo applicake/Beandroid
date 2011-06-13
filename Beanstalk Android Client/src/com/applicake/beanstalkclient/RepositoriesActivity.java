@@ -47,8 +47,11 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 		View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_repository,
 				null, false);
-		repositoriesList.addFooterView(footerView);
-		footerView.setOnClickListener(this);
+		if (currentUser != UserType.USER.name()) {
+			repositoriesList.addFooterView(footerView);
+			footerView.setOnClickListener(this);
+		}
+		
 
 		repositoriesArray = new ArrayList<Repository>();
 		repositoriesAdapter = new RepositoriesAdapter(getApplicationContext(),
@@ -59,7 +62,6 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 		repositoriesLeftCounter = (TextView) footerView
 				.findViewById(R.id.repositoryCounter);
 
-		// changesetList.setOnItemClickListener(this);
 		new DownloadChangesetListTask(this).execute();
 
 	}
@@ -169,7 +171,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 
 					repositoriesAdapter.notifyDataSetChanged();
 
-					if (prefs.getString(Constants.USER_TYPE, "") == UserType.OWNER.name()) {
+					if (currentUser == UserType.OWNER.name()) {
 
 						int repositoriesInPlan = prefs.getInt(Constants.NUMBER_OF_REPOS_AVAILABLE, 0);
 						int numberLeft = repositoriesInPlan - repositoriesArray.size();

@@ -157,7 +157,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 					userArray.addAll(parsedArray);
 					userAdapter.notifyDataSetChanged();
 
-					if (prefs.getString(Constants.USER_TYPE, "") == UserType.OWNER.name()) {
+					if (currentUser == UserType.OWNER.name()) {
 						int usersInPlan = prefs.getInt(Constants.NUMBER_OF_USERS_AVAILABLE, 0);
 						int numberLeft = usersInPlan - userArray.size();
 						userLeftCounter.setText("available users: "

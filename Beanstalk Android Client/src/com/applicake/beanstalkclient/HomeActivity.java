@@ -1,7 +1,10 @@
 package com.applicake.beanstalkclient;
 
+import com.applicake.beanstalkclient.enums.UserType;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +19,17 @@ public class HomeActivity extends BeanstalkActivity{
 		
 		// hide home button
 		findViewById(R.id.ActionBarHomeIcon).setVisibility(View.GONE);
+		
+		// manage flows for various user types
+		
+		Log.w("usertype", currentUser);
+		
+		if (currentUser != UserType.OWNER.name()){
+			findViewById(R.id.account_settings_button).setVisibility(View.GONE);
+		}
+		if (currentUser == UserType.USER.name()){
+			findViewById(R.id.users_button).setVisibility(View.GONE);
+		}
 		
 		// set title 
 		TextView title = (TextView) findViewById(R.id.ActionBarTitle);

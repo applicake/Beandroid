@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
@@ -66,6 +67,11 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		Button usersPermissionsButton = (Button) findViewById(R.id.buttonUsersPermissions);
 		Button deploymentButton = (Button) findViewById(R.id.buttonDeployment);
 		Button modifyPropertiesButton = (Button) findViewById(R.id.buttonModifyProperties);
+		
+		if (currentUser == UserType.USER.name()){
+			usersPermissionsButton.setVisibility(View.GONE);
+			modifyPropertiesButton.setVisibility(View.GONE);
+		}
 
 		viewCommitsButton.setOnClickListener(this);
 		usersPermissionsButton.setOnClickListener(this);

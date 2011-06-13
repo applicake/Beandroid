@@ -1,7 +1,6 @@
 package com.applicake.beanstalkclient.utils;
 
 import java.io.IOException;
-import java.net.ResponseCache;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -10,8 +9,8 @@ import org.apache.http.HttpVersion;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.client.params.HttpClientParams;
+import org.apache.http.client.protocol.RequestAddCookies;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -20,6 +19,7 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.util.EntityUtils;
@@ -32,16 +32,21 @@ import android.util.Log;
 public class HttpRetriever {
 
 	public static HttpClient getClient() {
-		HttpClient httpClient = null;
-		
+		DefaultHttpClient httpClient = null;
 
 		// sets up parameters
 		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params, "utf-8");
+		
 		HttpClientParams.setRedirecting(params, false);
-		params.setBooleanParameter("http.protocol.expect-continue", false);		
-
+		params.setBooleanParameter("http.protocol.expect-continue", false);
+		
+		HttpConnectionParams.setStaleCheckingEnabled(params, false);
+		HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
+		HttpConnectionParams.setSoTimeout(params, 20 * 1000);
+		HttpConnectionParams.setSocketBufferSize(params, 8192);
+		
 		
 
 		// registers schemes for both http and https
@@ -54,11 +59,15 @@ public class HttpRetriever {
 
 		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
 				registry);
+		
 		httpClient = new DefaultHttpClient(manager, params);
+		httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
+		
 		return httpClient;
 	}
 
-	final static HttpClient httpClient = AndroidHttpClient.newInstance("");
+//	 final static HttpClient httpClient = AndroidHttpClient.newInstance("");
+	final static HttpClient httpClient = getClient();
 
 	private static final String HTTP_PREFIX = "https://";
 	private static final String ACCOUNT_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
@@ -74,8 +83,6 @@ public class HttpRetriever {
 	private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
 	private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
-	private static HttpResponse getResponse;
-
 	// checking credentials for Owner user
 	public static String checkCredentialsAccount(String domain, String username,
 			String password) throws HttpImproperStatusCodeException,
@@ -88,10 +95,10 @@ public class HttpRetriever {
 
 		HttpGet getRequest = new HttpGet(auth_http);
 		getRequest.setHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
+		HttpResponse getResponse = null;
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			for (Header h : getRequest.getAllHeaders()) {
 				Log.w("request", h.getName() + " " + h.getValue());
 			}
@@ -99,7 +106,7 @@ public class HttpRetriever {
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 
-//			Log.w("responsecache", ResponseCache.getDefault().toString());
+			// Log.w("responsecache", ResponseCache.getDefault().toString());
 			Log.w("credentials", username + " " + password);
 			Log.w("login attempt result - account", String.valueOf(statusCode));
 			if (statusCode == HttpStatus.SC_OK) {
@@ -112,7 +119,14 @@ public class HttpRetriever {
 
 		} catch (IOException ioe) {
 			throw new HttpConnectionErrorException(ioe);
-		} 
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
+		}
 	}
 
 	// checking credentials for Admins
@@ -127,10 +141,10 @@ public class HttpRetriever {
 
 		HttpGet getRequest = new HttpGet(auth_http);
 		getRequest.setHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
+		HttpResponse getResponse = null;
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			Log.w("request", getRequest.toString());
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
@@ -146,10 +160,13 @@ public class HttpRetriever {
 		} catch (IOException ioe) {
 			throw new HttpConnectionErrorException(ioe);
 		} finally {
-			getRequest.abort();
-			httpClient.getConnectionManager().closeExpiredConnections();
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
-
 	}
 
 	// checking credentials for regular user
@@ -164,6 +181,7 @@ public class HttpRetriever {
 
 		HttpGet getRequest = new HttpGet(auth_http);
 		getRequest.setHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		HttpResponse getResponse = null;
 
 		try {
 			// parsing
@@ -185,6 +203,14 @@ public class HttpRetriever {
 
 		} catch (IOException ioe) {
 			throw new HttpConnectionErrorException(ioe);
+
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 
 	}
@@ -198,10 +224,10 @@ public class HttpRetriever {
 
 		HttpGet getRequest = new HttpGet(auth_http);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
+		HttpResponse getResponse = null;
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -212,7 +238,15 @@ public class HttpRetriever {
 		} catch (IOException ioe) {
 			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
+
 	}
 
 	public static String getUserListXML(SharedPreferences prefs)
@@ -225,10 +259,11 @@ public class HttpRetriever {
 
 		HttpGet getRequest = new HttpGet(auth_http);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		HttpResponse getResponse = null;
 
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -241,6 +276,13 @@ public class HttpRetriever {
 			ioe.printStackTrace();
 			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 	}
 
@@ -256,10 +298,10 @@ public class HttpRetriever {
 
 		HttpGet getRequest = new HttpGet(activity_http);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
+		HttpResponse getResponse = null;
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -269,9 +311,14 @@ public class HttpRetriever {
 						.getReasonPhrase());
 
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 
 	}
@@ -288,10 +335,10 @@ public class HttpRetriever {
 
 		HttpGet getRequest = new HttpGet(activity_http);
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
+		HttpResponse getResponse = null;
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -301,9 +348,14 @@ public class HttpRetriever {
 						.getReasonPhrase());
 
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 	}
 
@@ -318,10 +370,10 @@ public class HttpRetriever {
 		HttpGet getRequest = new HttpGet(activity_http);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
+		HttpResponse getResponse = null;
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -331,9 +383,14 @@ public class HttpRetriever {
 						.getReasonPhrase());
 
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 	}
 
@@ -349,10 +406,11 @@ public class HttpRetriever {
 		HttpGet getRequest = new HttpGet(activity_http);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		HttpResponse getResponse = null;
 
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -362,8 +420,14 @@ public class HttpRetriever {
 						.getReasonPhrase());
 
 		} catch (IOException ioe) {
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 	}
 
@@ -379,10 +443,11 @@ public class HttpRetriever {
 		HttpGet getRequest = new HttpGet(activity_http);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		HttpResponse getResponse = null;
 
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -392,9 +457,15 @@ public class HttpRetriever {
 						.getReasonPhrase());
 
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 
 	}
@@ -414,10 +485,11 @@ public class HttpRetriever {
 		HttpGet getRequest = new HttpGet(comments_http);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+		HttpResponse getResponse = null;
 
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
@@ -427,9 +499,15 @@ public class HttpRetriever {
 						.getReasonPhrase());
 
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 
 	}
@@ -447,10 +525,10 @@ public class HttpRetriever {
 		HttpGet getRequest = new HttpGet(activity_http);
 
 		getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
+		HttpResponse getResponse = null;
 		try {
 			// parsing
-			HttpResponse getResponse = httpClient.execute(getRequest);
+			getResponse = httpClient.execute(getRequest);
 			// response code
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			// Log.w("status code", String.valueOf(statusCode));
@@ -461,9 +539,14 @@ public class HttpRetriever {
 						.getReasonPhrase());
 
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			getRequest.abort();
 			throw new HttpConnectionErrorException(ioe);
+		} finally {
+			if (getResponse != null)
+				try {
+					getResponse.getEntity().consumeContent();
+				} catch (IOException e) {
+					throw new HttpConnectionErrorException(e);
+				}
 		}
 
 	}

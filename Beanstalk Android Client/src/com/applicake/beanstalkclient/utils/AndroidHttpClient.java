@@ -1,32 +1,28 @@
 package com.applicake.beanstalkclient.utils;
 
 /*
- * Copyright (C) 2007 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright (C) 2007 The Android Open Source Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpEntityEnclosingRequest;
-import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
-import org.apache.http.entity.AbstractHttpEntity;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.ClientProtocolException;
@@ -39,7 +35,6 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.RequestWrapper;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -51,25 +46,22 @@ import org.apache.http.protocol.BasicHttpContext;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.zip.GZIPInputStream;
-import java.net.URI;
-
 import android.util.Log;
 
 /**
- * Subclass of the Apache {@link DefaultHttpClient} that is configured with
- * reasonable default settings and registered schemes for Android, and
- * also lets the user add {@link HttpRequestInterceptor} classes.
- * Don't create this directly, use the {@link #newInstance} factory method.
- *
- * <p>This client processes cookies but does not retain them by default.
- * To retain cookies, simply add a cookie store to the HttpContext:</p>
- *
- * <pre>context.setAttribute(ClientContext.COOKIE_STORE, cookieStore);</pre>
- * 
- * {@hide}
- */
+* Subclass of the Apache {@link DefaultHttpClient} that is configured with
+* reasonable default settings and registered schemes for Android, and
+* also lets the user add {@link HttpRequestInterceptor} classes.
+* Don't create this directly, use the {@link #newInstance} factory method.
+*
+* <p>This client processes cookies but does not retain them by default.
+* To retain cookies, simply add a cookie store to the HttpContext:</p>
+*
+* <pre>context.setAttribute(ClientContext.COOKIE_STORE, cookieStore);</pre>
+*
+* {@hide}
+*/
 public final class AndroidHttpClient implements HttpClient {
         
     // Gzip of data shorter than this probably won't be worthwhile
@@ -93,25 +85,25 @@ public final class AndroidHttpClient implements HttpClient {
     };
 
     /**
-     * Create a new HttpClient with reasonable defaults (which you can update).
-     *
-     * @param userAgent to report in your HTTP requests.
-     * @param sessionCache persistent session cache
-     * @return AndroidHttpClient for you to use for all your requests.
-     */
+* Create a new HttpClient with reasonable defaults (which you can update).
+*
+* @param userAgent to report in your HTTP requests.
+* @param sessionCache persistent session cache
+* @return AndroidHttpClient for you to use for all your requests.
+*/
     public static AndroidHttpClient newInstance(String userAgent) {
         HttpParams params = new BasicHttpParams();
 
-        // Turn off stale checking.  Our connections break all the time anyway,
+        // Turn off stale checking. Our connections break all the time anyway,
         // and it's not worth it to pay the penalty of checking every time.
         HttpConnectionParams.setStaleCheckingEnabled(params, false);
 
-        // Default connection and socket timeout of 20 seconds.  Tweak to taste.
+        // Default connection and socket timeout of 20 seconds. Tweak to taste.
         HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
         HttpConnectionParams.setSoTimeout(params, 20 * 1000);
         HttpConnectionParams.setSocketBufferSize(params, 8192);
 
-        // Don't handle redirects -- return them to the caller.  Our code
+        // Don't handle redirects -- return them to the caller. Our code
         // often wants to re-POST after a redirect, which we must do ourselves.
         HttpClientParams.setRedirecting(params, false);
 
@@ -133,10 +125,10 @@ public final class AndroidHttpClient implements HttpClient {
 
 
     /**
-     * Create a new HttpClient with reasonable defaults (which you can update).
-     * @param userAgent to report in your HTTP requests.
-     * @return AndroidHttpClient for you to use for all your requests.
-     */
+* Create a new HttpClient with reasonable defaults (which you can update).
+* @param userAgent to report in your HTTP requests.
+* @return AndroidHttpClient for you to use for all your requests.
+*/
 
     private final HttpClient delegate;
 
@@ -183,32 +175,32 @@ public final class AndroidHttpClient implements HttpClient {
     }
 
     /**
-     * Block this thread from executing HTTP requests.
-     * Used to guard against HTTP requests blocking the main application thread.
-     * @param blocked if HTTP requests run on this thread should be denied
-     */
+* Block this thread from executing HTTP requests.
+* Used to guard against HTTP requests blocking the main application thread.
+* @param blocked if HTTP requests run on this thread should be denied
+*/
     public static void setThreadBlocked(boolean blocked) {
         sThreadBlocked.set(blocked);
     }
 
     /**
-     * Modifies a request to indicate to the server that we would like a
-     * gzipped response.  (Uses the "Accept-Encoding" HTTP header.)
-     * @param request the request to modify
-     * @see #getUngzippedContent
-     */
+* Modifies a request to indicate to the server that we would like a
+* gzipped response. (Uses the "Accept-Encoding" HTTP header.)
+* @param request the request to modify
+* @see #getUngzippedContent
+*/
     public static void modifyRequestToAcceptGzipResponse(HttpRequest request) {
         request.addHeader("Accept-Encoding", "gzip");
     }
 
     /**
-     * Gets the input stream from a response entity.  If the entity is gzipped
-     * then this will get a stream over the uncompressed data.
-     *
-     * @param entity the entity whose content should be read
-     * @return the input stream to read from
-     * @throws IOException
-     */
+* Gets the input stream from a response entity. If the entity is gzipped
+* then this will get a stream over the uncompressed data.
+*
+* @param entity the entity whose content should be read
+* @return the input stream to read from
+* @throws IOException
+*/
     public static InputStream getUngzippedContent(HttpEntity entity)
             throws IOException {
         InputStream responseStream = entity.getContent();
@@ -223,9 +215,9 @@ public final class AndroidHttpClient implements HttpClient {
     }
 
     /**
-     * Release resources associated with this client.  You must call this,
-     * or significant resources (sockets and memory) may be leaked.
-     */
+* Release resources associated with this client. You must call this,
+* or significant resources (sockets and memory) may be leaked.
+*/
     public void close() {
         if (mLeakedException != null) {
             getConnectionManager().shutdown();
@@ -260,7 +252,7 @@ public final class AndroidHttpClient implements HttpClient {
         return delegate.execute(target, request, context);
     }
 
-    public <T> T execute(HttpUriRequest request, 
+    public <T> T execute(HttpUriRequest request,
             ResponseHandler<? extends T> responseHandler)
             throws IOException, ClientProtocolException {
         return delegate.execute(request, responseHandler);

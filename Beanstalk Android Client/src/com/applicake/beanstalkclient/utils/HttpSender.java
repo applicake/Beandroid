@@ -9,6 +9,8 @@ import org.apache.http.ParseException;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.params.HttpClientParams;
+import org.apache.http.client.protocol.RequestAddCookies;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -49,10 +51,19 @@ public class HttpSender {
 		DefaultHttpClient httpClient = null;
 
 		// sets up parameters
-		HttpParams params = new BasicHttpParams();
+		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params, "utf-8");
+		
+		HttpClientParams.setRedirecting(params, false);
 		params.setBooleanParameter("http.protocol.expect-continue", false);
+		
+		HttpConnectionParams.setStaleCheckingEnabled(params, false);
+		HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
+		HttpConnectionParams.setSoTimeout(params, 20 * 1000);
+		HttpConnectionParams.setSocketBufferSize(params, 8192);
+		
+		
 
 		// registers schemes for both http and https
 		SchemeRegistry registry = new SchemeRegistry();
@@ -64,7 +75,9 @@ public class HttpSender {
 
 		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
 				registry);
+		
 		httpClient = new DefaultHttpClient(manager, params);
+		httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
 		return httpClient;
 	}
 

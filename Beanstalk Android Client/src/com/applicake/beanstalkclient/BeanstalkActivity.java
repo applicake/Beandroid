@@ -1,5 +1,6 @@
 package com.applicake.beanstalkclient;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,11 +17,13 @@ public abstract class BeanstalkActivity extends Activity {
 	//on create
 	
 	protected SharedPreferences prefs;
+	protected String currentUser;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		currentUser = prefs.getString(Constants.USER_TYPE, "");
 		
 	}
 
