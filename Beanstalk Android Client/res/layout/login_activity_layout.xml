@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:fillViewport="true"
+	android:background="@drawable/app_bg_hdpi">
+	<RelativeLayout
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<ImageView
+			android:id="@+id/title"
+			android:layout_centerHorizontal="true"
+			android:layout_alignParentTop="true"
+			android:layout_marginTop="30dp"
+			android:layout_marginBottom="30dp"
+			android:src="@drawable/ic_ab_beandroid"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></ImageView>
+
+		<TextView
+			android:text="Account domain: "
+			android:textColor="@color/ApplicationText"
+			android:id="@+id/account_domain_textview"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+
+		<EditText
+			android:text="bartosz-filipowicz"
+			android:id="@+id/accountdomain_edittext"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/account_domain_textview"
+			style="@style/edit_text"
+			android:layout_marginBottom="0px"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"></EditText>
+
+		<TextView
+			android:text=".beanstalkapp.com"
+			android:layout_alignRight="@id/accountdomain_edittext"
+			android:layout_below="@id/accountdomain_edittext"
+			android:textSize="@dimen/SmallTextSize"
+			android:layout_marginBottom="5dp"
+			android:id="@+id/footer_info"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+
+
+		<TextView
+			android:text="Login:"
+			android:textColor="@color/ApplicationText"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/footer_info"
+			android:textSize="@dimen/MediumTextSize"
+			android:id="@+id/login_text_view"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+
+		<EditText
+			style="@style/edit_text"
+			android:text="bartoszfilipowicz"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/login_text_view"
+			android:id="@+id/login_edittext"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"></EditText>
+
+		<TextView
+			android:text="Password:"
+			android:textColor="@color/ApplicationText"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/login_edittext"
+			android:textSize="@dimen/MediumTextSize"
+			android:id="@+id/password_textview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+
+		<EditText
+			style="@style/edit_text"
+			android:text="applicake10"
+			android:id="@+id/password_edittext"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/password_textview"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:password="true"></EditText>
+
+		<CheckBox
+			android:text="Remeber me"
+			android:button="@drawable/custom_checkbox"
+			android:textColor="@color/ApplicationText"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/password_edittext"
+			android:textSize="@dimen/MediumTextSize"
+			android:id="@+id/remember_me_check_box"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginBottom="10dp"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"></CheckBox>
+
+		<Button
+			style="@style/button"
+			android:text="Login"
+			android:layout_alignRight="@id/remember_me_check_box"
+			android:layout_alignLeft="@id/remember_me_check_box"
+			android:layout_below="@id/remember_me_check_box"
+			android:id="@+id/login_button"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"></Button>
+	</RelativeLayout>
+</ScrollView>

@@ -60,4 +60,8 @@ public class Constants {
 
 	public static final String NUMBER_OF_USERS_AVAILABLE = "number_of_users_available";
 
+	public static final String COMMIT_REPOSIOTRY_NAME = "commit_reposiotry_name";
+
+	public static final String COMMIT_REPOSIOTRY_LABEL = "commit_repostory_label";
+
 }

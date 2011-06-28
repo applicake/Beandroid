@@ -12,5 +12,6 @@
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent"
 		android:cacheColorHint="#00000000"
-		android:background="@color/white"></ListView>
+		android:background="@color/dark_entry_bg"
+		android:dividerHeight="1sp"></ListView>
 </LinearLayout>

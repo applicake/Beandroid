@@ -50,7 +50,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		mContext = this;
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		setContentView(R.layout.main);
+		setContentView(R.layout.login_activity_layout);
 		// auto login with previously stored user data
 		if (prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)
 				&& prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
@@ -61,7 +61,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 			String storedLogin = prefs.getString(Constants.USER_LOGIN, "");
 			String storedPassword = prefs.getString(Constants.USER_PASSWORD, "");
 			new VerifyLoginTask().execute(storedDomain, storedLogin, storedPassword);
-
 		}
 
 		Button loginButton = (Button) findViewById(R.id.login_button);

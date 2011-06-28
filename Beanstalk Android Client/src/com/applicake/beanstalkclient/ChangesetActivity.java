@@ -61,12 +61,16 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		// loadinig initial data and layout
 		setContentView(R.layout.changeset_layout);
-		mContext = this;
+		mContext = getApplicationContext();
 		Intent acitivyIntent = getIntent();
 		commentListParsed = false;
 		repoId = acitivyIntent.getIntExtra(Constants.COMMIT_REPOSITORY_ID, 0);
 		revisionId = acitivyIntent.getStringExtra(Constants.COMMIT_REVISION_ID);
 
+		findViewById(R.id.colorLabel).getBackground().setLevel(
+				acitivyIntent.getIntExtra(Constants.COMMIT_REPOSIOTRY_LABEL, 0));
+		((TextView) findViewById(R.id.repoName)).setText(acitivyIntent
+				.getStringExtra(Constants.COMMIT_REPOSIOTRY_NAME));
 		((TextView) findViewById(R.id.userName)).setText(acitivyIntent
 				.getStringExtra(Constants.COMMIT_USERNAME));
 		((TextView) findViewById(R.id.commitMessage)).setText(acitivyIntent
@@ -76,6 +80,9 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		commentsButton = (Button) findViewById(R.id.commentsButton);
 		changesetButton.setOnClickListener(this);
 		commentsButton.setOnClickListener(this);
+
+		changesetButton.setSelected(true);
+		commentsButton.setSelected(false);
 
 		// getting changed files list and changed dirs list and merging them
 		// into one arraylist
@@ -137,6 +144,8 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		if (v.getId() == changesetButton.getId()) {
 			changesList.setVisibility(View.VISIBLE);
 			commentList.setVisibility(View.GONE);
+			changesetButton.setSelected(true);
+			commentsButton.setSelected(false);
 
 		} else if (v.getId() == footerRefreshButtonView.getId()) {
 			new ParseMoreCommentListTask().execute(String.valueOf(repoId), revisionId);
@@ -144,6 +153,8 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 		} else if (v.getId() == commentsButton.getId()) {
 			changesList.setVisibility(View.GONE);
 			commentList.setVisibility(View.VISIBLE);
+			changesetButton.setSelected(false);
+			commentsButton.setSelected(true);
 			if (!commentListParsed) {
 				new ParseCommentListTask().execute(String.valueOf(repoId), revisionId);
 				commentListParsed = true;
@@ -207,7 +218,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 					@Override
 					public void noRetryAction(DialogInterface dialog) {
 						super.noRetryAction(dialog);
-						
+
 					}
 				};
 

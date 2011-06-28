@@ -38,6 +38,7 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 	private boolean listMightHaveMoreItems = false;
 	private int lastLoadedPage = 1;
 	private View footerView;
+	private HashMap<Integer, Repository> repositoryMap;
 
 	private ListView changesetList;
 
@@ -47,7 +48,7 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 
 		setContentView(R.layout.dashboard_activity_layout);
 
-		mContext = this;
+		mContext = getApplicationContext();
 
 		changesetList = (ListView) findViewById(R.id.changesetList);
 		changesetArray = new ArrayList<Changeset>();
@@ -77,6 +78,9 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 					changeset.getChangedFiles());
 			intent.putParcelableArrayListExtra(Constants.CHANGEDDIRS_ARRAYLIST,
 					changeset.getChangedDirs());
+			Repository repository = repositoryMap.get(changeset.getRepositoryId());
+			intent.putExtra(Constants.COMMIT_REPOSIOTRY_NAME, repository.getTitle());
+			intent.putExtra(Constants.COMMIT_REPOSIOTRY_LABEL, repository.getColorLabelNo());
 			intent.putExtra(Constants.COMMIT_USERNAME, changeset.getAuthor());
 			intent.putExtra(Constants.COMMIT_MESSAGE, changeset.getMessage());
 			intent.putExtra(Constants.COMMIT_REPOSITORY_ID, changeset.getRepositoryId());
@@ -110,7 +114,7 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 	public class DownloadChangesetListTask extends
 			AsyncTask<Void, Void, ArrayList<Changeset>> {
 
-		private HashMap<Integer, Repository> repositoryMap;
+		
 		private boolean failed = false;
 		private String failMessage;
 

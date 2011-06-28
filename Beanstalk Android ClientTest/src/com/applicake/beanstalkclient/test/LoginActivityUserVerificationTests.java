@@ -1,18 +1,13 @@
 package com.applicake.beanstalkclient.test;
 
-import java.util.prefs.Preferences;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.LoginActivity;
-import com.applicake.beanstalkclient.LoginActivity.VerifyLoginTask;
 import com.applicake.beanstalkclient.enums.UserType;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.AndroidTestCase;
 
 public class LoginActivityUserVerificationTests extends
 		ActivityInstrumentationTestCase2<LoginActivity> {
@@ -23,15 +18,15 @@ public class LoginActivityUserVerificationTests extends
 	}
 
 	String[] ownerCorrect = { "bartosz-filipowicz", "bartoszfilipowicz",
-			SecretData.PASSWORD }; 											// OWNER
-	String[] adminCorrect = { "bartosz-filipowicz", "login", "password" }; // ADMIN
-	String[] userCorrect = { "bartosz-filipowicz", "user", "test" }; 		// USER
+			SecretData.PASSWORD }; 												// OWNER
+	String[] adminCorrect = { "bartosz-filipowicz", "login", "password" }; 		// ADMIN
+	String[] userCorrect = { "bartosz-filipowicz", "user", "test" }; 			// USER
 	String[] ownerIncorrect = { "bartosz-filipowicz", "bartoszfilipowicz",
-			SecretData.PASSWORD + "xx" }; 									// OWNER INCORRECT
-	String[] adminIncorrect = { "bartosz-filipowicz", "login", "password" }; // ADMIN
+			SecretData.PASSWORD + "xx" }; 										// OWNER INCORRECT
+	String[] adminIncorrect = { "bartosz-filipowicz", "login", "password" };	// ADMIN
 																				// INCORRECT
-	String[] userIncorrect = { "bartosz-filipowicz", "user", "test" }; 		// USER
-																			// INCORRECT
+	String[] userIncorrect = { "bartosz-filipowicz", "user", "test" }; 			// USER
+																				// INCORRECT
 	private LoginActivity baseActivity;
 	private SharedPreferences prefs;
 
@@ -72,9 +67,6 @@ public class LoginActivityUserVerificationTests extends
 		
 	}
 	
-	
-	
-
 	// helper class coupling a Runnable object with an AsyncTask for test
 	// purposes
 	// the constructor creates a Runnable task which executes the Task

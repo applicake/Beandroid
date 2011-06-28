@@ -5,9 +5,9 @@
 		<item
 			name="android:layout_height">fill_parent</item>
 		<item
-			name="android:layout_width">1dp</item>
+			name="android:layout_width">2sp</item>
 		<item
-			name="android:background">@color/ActionBarSeparator</item>
+			name="android:background">@drawable/menu_stripe</item>
 	</style>
 	<style
 		name="ActionBarIcon">
@@ -34,9 +34,45 @@
 		<item
 			name="android:textStyle">bold</item>
 		<item
-			name="android:textColor">@color/ActionBarMainColor</item>
+			name="android:textColor">@color/homescreen_text</item>
 		<item
 			name="android:background">@null</item>
 	</style>
 
+	<style
+		name="button"
+		parent="android:Widget.Button">
+		<item
+			name="android:background">@drawable/bn_generic</item>
+		<item
+			name="android:textColor">@color/ApplicationButtonText</item>
+		<item
+			name="android:textSize">@dimen/MediumTextSize</item>
+	</style>
+	<style
+		name="edit_text"
+		parent="android:Widget.EditText">
+		<item
+			name="android:layout_marginBottom">10dp</item>
+		<item
+			name="android:layout_marginLeft">10dp</item>
+		<item
+			name="android:layout_marginRight">10dp</item>
+		<item
+			name="android:padding">10dp</item>
+			
+		<item
+			name="android:textSize">@dimen/MediumTextSize</item>
+		<item
+			name="android:background">@drawable/et_background</item>
+	</style>
+	<style name="white_title" parent="android:Widget.TextView">
+		<item name="android:textColor">@color/application_text_light</item>
+		<item name="android:textSize">@dimen/MediumTextSize</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="body_small_dark" parent="android:Widget.TextView">
+		<item name="android:textColor">@color/application_text_dark</item>
+		<item name="android:textSize">@dimen/SmallTextSize</item>
+	</style>
 </resources>

@@ -2,15 +2,19 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="60dp"
+	android:layout_height="@dimen/list_entry_height"
 	android:orientation="horizontal"
 	android:paddingRight="5dp"
+	android:background="@color/dark_entry_bg"
 	>
 	<View
 		android:id="@+id/colorLabel"
 		android:background="@drawable/repository_labels"
-		android:layout_width="15dp"
-		android:layout_height="60dp"
+		android:layout_width="@dimen/color_label_size"
+		android:layout_height="@dimen/color_label_size"
+		android:layout_marginRight="5dp"
+		android:layout_marginTop="5dp"
+		android:layout_marginLeft="3dp"
 		android:padding="2dp"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true"></View>
@@ -19,23 +23,28 @@
 		android:layout_height="40dp"
 		android:id="@+id/userGravatar"
 		android:layout_toRightOf="@id/colorLabel"
-		android:layout_centerInParent="true"
-		android:paddingLeft="2dp"
+		android:layout_below="@id/colorLabel"
+		android:layout_marginTop="5dp"
+		android:layout_marginLeft="2dp"
 		android:layout_marginRight="10dp"></ImageView>
 
 	<TableRow
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:id="@+id/topRow"
-		android:layout_toRightOf="@id/userGravatar"
-		android:layout_alignParentTop="true">
+		android:layout_alignBaseline="@id/colorLabel"
+		android:layout_toRightOf="@id/colorLabel"
+		android:layout_above="@id/userGravatar"
+		>
 		<TextView
+			
 			android:layout_weight="7"
 			android:layout_height="wrap_content"
 			android:layout_width="0dp"
 			android:id="@+id/reposiotryName"
-			android:textSize="@dimen/SmallTextSize"
-			android:textColor="@color/ApplicationText"
+			android:textSize="@dimen/MediumTextSize"
+			android:textStyle="bold"
+			android:textColor="@color/application_text_light"
 			></TextView>
 		<TextView
 			android:gravity="right"
@@ -44,6 +53,7 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/date"
 			android:textSize="@dimen/SmallTextSize"
+			android:textColor="@color/application_text_dark"
 			></TextView>
 	</TableRow>
 	<TableRow
@@ -57,15 +67,17 @@
 			android:layout_weight="7"
 			android:layout_height="wrap_content"
 			android:id="@+id/hash"
-			android:textSize="@dimen/SmallTextSize"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textSize="@dimen/MediumTextSize"
+			android:textColor="@color/application_text_light"></TextView>
 		<TextView
 			android:gravity="right"
 			android:layout_width="0dp"
 			android:layout_weight="2"
 			android:layout_height="wrap_content"
 			android:id="@+id/time"
-			android:textSize="@dimen/SmallTextSize"></TextView>
+			android:textSize="@dimen/SmallTextSize"
+			android:textColor="@color/application_text_dark"
+			></TextView>
 	</TableRow>
 
 	<TableRow
@@ -80,7 +92,7 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/commitMessage"
 			android:textSize="@dimen/MediumTextSize"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/application_text_dark"></TextView>
 	</TableRow>
 
 

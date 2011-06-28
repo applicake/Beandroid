@@ -2,15 +2,16 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="80dp"
+	android:minHeight="80dp"
 	android:orientation="horizontal"
-	android:paddingRight="5dp">
+	android:paddingRight="5dp"
+	android:background="@color/dark_entry_bg">
 	<View
 		android:id="@+id/colorLabel"
 		android:background="@drawable/repository_labels"
-		android:layout_width="15dp"
-		android:layout_height="80dp"
-		android:padding="2dp"
+		android:layout_width="@dimen/color_label_size"
+		android:layout_height="@dimen/color_label_size"
+		android:layout_margin="5dp"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true"></View>
 
@@ -26,35 +27,40 @@
 			android:layout_width="0dp"
 			android:id="@+id/reposiotryName"
 			android:textSize="@dimen/MediumTextSize"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textStyle="bold"
+			android:textColor="@color/application_text_light"></TextView>
 		<TextView
 			android:gravity="right"
 			android:layout_width="0dp"
 			android:layout_weight="3"
 			android:layout_height="wrap_content"
 			android:id="@+id/date"
-			android:textSize="@dimen/SmallTextSize"></TextView>
+			android:textSize="@dimen/SmallTextSize"
+			android:textColor="@color/application_text_light"></TextView>
 	</TableRow>
 	<TableRow
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:id="@+id/middleRow"
+		android:layout_marginTop="5dp"
 		android:layout_toRightOf="@id/colorLabel"
 		android:layout_below="@id/topRow">
+		
 		<TextView
 			android:layout_width="0dp"
 			android:layout_weight="7"
 			android:layout_height="wrap_content"
 			android:id="@+id/lastCommit"
 			android:textSize="@dimen/SmallTextSize"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/application_text_dark"></TextView>
 		<TextView
 			android:gravity="right"
 			android:layout_width="0dp"
 			android:layout_weight="3"
 			android:layout_height="wrap_content"
 			android:id="@+id/type"
-			android:textSize="@dimen/SmallTextSize"></TextView>
+			android:textSize="@dimen/MediumTextSize"
+			android:textColor="@color/application_text_light"></TextView>
 	</TableRow>
 
 

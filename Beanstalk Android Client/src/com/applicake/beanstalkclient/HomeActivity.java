@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -15,25 +14,26 @@ public class HomeActivity extends BeanstalkActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_start2);
+		setContentView(R.layout.home_screen_activity);
 		
 		// hide home button
-		findViewById(R.id.ActionBarHomeIcon).setVisibility(View.GONE);
+//		findViewById(R.id.ActionBarHomeIcon).setVisibility(View.GONE);
+		findViewById(R.id.ActionBarHomeIcon).setClickable(false);
 		
 		// manage flows for various user types
 		
 		Log.w("usertype", currentUser);
 		
-		if (currentUser != UserType.OWNER.name()){
+		if (!currentUser.equals(UserType.OWNER.name())){
 			findViewById(R.id.account_settings_button).setVisibility(View.GONE);
 		}
-		if (currentUser == UserType.USER.name()){
+		if (currentUser.equals(UserType.USER.name())){
 			findViewById(R.id.users_button).setVisibility(View.GONE);
 		}
 		
 		// set title 
-		TextView title = (TextView) findViewById(R.id.ActionBarTitle);
-		title.setText("Beansdroid");
+//		TextView title = (TextView) findViewById(R.id.ActionBarTitle);
+//		title.setText("Beansdroid");
 
 	}
 

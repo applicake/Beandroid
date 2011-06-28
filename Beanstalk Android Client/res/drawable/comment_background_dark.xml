@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:shape="rectangle">
 	<solid
-		android:color="@color/dark" />
+		android:color="@color/selector_active_dimmer" />
 	<corners
 		android:radius="@dimen/ColorLabelCornerRadius" />
 </shape>

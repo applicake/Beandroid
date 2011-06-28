@@ -3,6 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
+  android:padding="10dp"
   android:orientation="vertical">
   		<EditText
 			android:id="@+id/newCommentBody"
@@ -10,10 +11,12 @@
 			android:layout_width="fill_parent"
 			android:hint="enter your comment here"
 			android:minLines="4"
+			android:background="@drawable/comment_input_bg"
 			android:textSize="@dimen/MediumTextSize"></EditText>
 		<Button
 			android:text="Submit"
+			android:background="@drawable/bn_generic"
 			android:id="@+id/submitButton"
-			android:layout_width="100dp"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"></Button>
 </LinearLayout>
