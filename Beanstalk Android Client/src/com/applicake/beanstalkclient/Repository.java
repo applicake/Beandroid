@@ -8,7 +8,7 @@ import com.applicake.beanstalkclient.enums.ColorLabels;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Repository implements Parcelable{
+public class Repository implements Parcelable {
 	static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	static SimpleDateFormat FORMATTER_NOTIMEZONE = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -27,7 +27,6 @@ public class Repository implements Parcelable{
 	private long updatedAt;
 	private String vcs;
 	private String defaultBranch;
-	
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
@@ -46,11 +45,11 @@ public class Repository implements Parcelable{
 		dest.writeString(vcs);
 		dest.writeString(defaultBranch);
 	}
-	
+
 	public Repository() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Repository(Parcel in) {
 		this.accountId = in.readInt();
 		this.anonymous = Boolean.getBoolean(in.readString());
@@ -67,15 +66,13 @@ public class Repository implements Parcelable{
 		this.vcs = in.readString();
 		this.defaultBranch = in.readString();
 	}
-	
+
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	
-	
 	public static final Parcelable.Creator<Repository> CREATOR = new Parcelable.Creator<Repository>() {
 		public Repository createFromParcel(Parcel in) {
 			return new Repository(in);
@@ -202,7 +199,5 @@ public class Repository implements Parcelable{
 		return ColorLabels.getNumberFromLabel(colorLabel);
 
 	}
-
-
 
 }

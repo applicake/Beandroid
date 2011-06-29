@@ -19,7 +19,7 @@ public class YamlEntry implements Parcelable {
 		dest.writeString(property);
 
 	}
-	
+
 	public static final Parcelable.Creator<YamlEntry> CREATOR = new Parcelable.Creator<YamlEntry>() {
 		public YamlEntry createFromParcel(Parcel in) {
 			return new YamlEntry(in.readString(), in.readString());
@@ -29,8 +29,7 @@ public class YamlEntry implements Parcelable {
 			return new YamlEntry[size];
 		}
 	};
-	
-	
+
 	public YamlEntry(String value, String key) {
 		this.value = value;
 		this.property = key;

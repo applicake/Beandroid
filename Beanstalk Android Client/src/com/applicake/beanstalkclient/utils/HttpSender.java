@@ -32,7 +32,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 public class HttpSender {
-	
+
 	private final static String HTTPS_PREFIX = "https://";
 	private final static String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
 	private final static String COMMENTS_HTTP_SUFFIX = "/comments.xml";
@@ -46,7 +46,7 @@ public class HttpSender {
 	private static final String ACCOUNT_UPDATE_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
 
 	private static final DefaultHttpClient httpClient = getClient();
-	
+
 	public static DefaultHttpClient getClient() {
 		DefaultHttpClient httpClient = null;
 
@@ -54,16 +54,14 @@ public class HttpSender {
 		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params, "utf-8");
-		
+
 		HttpClientParams.setRedirecting(params, false);
 		params.setBooleanParameter("http.protocol.expect-continue", false);
-		
+
 		HttpConnectionParams.setStaleCheckingEnabled(params, false);
 		HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
 		HttpConnectionParams.setSoTimeout(params, 20 * 1000);
 		HttpConnectionParams.setSocketBufferSize(params, 8192);
-		
-		
 
 		// registers schemes for both http and https
 		SchemeRegistry registry = new SchemeRegistry();
@@ -75,12 +73,11 @@ public class HttpSender {
 
 		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
 				registry);
-		
+
 		httpClient = new DefaultHttpClient(manager, params);
 		httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
 		return httpClient;
 	}
-
 
 	public static String sendCommentXML(SharedPreferences prefs, String xml, String repoId)
 			throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
@@ -178,9 +175,9 @@ public class HttpSender {
 
 	}
 
-	public static int sendUpdateRepositoryXML(SharedPreferences prefs, String xml, String repoId)
-			throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
-			HttpSenderServerErrorException {
+	public static int sendUpdateRepositoryXML(SharedPreferences prefs, String xml,
+			String repoId) throws UnsupportedEncodingException, HttpSenderException,
+			XMLParserException, HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -358,9 +355,10 @@ public class HttpSender {
 
 	}
 
-	public static int sendDeletePermissionRequest(SharedPreferences prefs, String permissionId)
-			throws UnsupportedEncodingException, HttpSenderException,
-			HttpSenderServerErrorException, ParseException, XMLParserException {
+	public static int sendDeletePermissionRequest(SharedPreferences prefs,
+			String permissionId) throws UnsupportedEncodingException,
+			HttpSenderException, HttpSenderServerErrorException, ParseException,
+			XMLParserException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -402,7 +400,8 @@ public class HttpSender {
 	}
 
 	public static int sendDeleteUserRequest(SharedPreferences prefs, String userId)
-			throws UnsupportedEncodingException, HttpSenderException, HttpSenderServerErrorException {
+			throws UnsupportedEncodingException, HttpSenderException,
+			HttpSenderServerErrorException {
 
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
@@ -437,15 +436,18 @@ public class HttpSender {
 		}
 
 	}
-	
+
 	public static Integer sendUpdateAccountXML(SharedPreferences prefs,
-			String accountModificationXml) throws XMLParserException, HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
-		
+			String accountModificationXml) throws XMLParserException,
+			HttpSenderServerErrorException, HttpSenderException,
+			UnsupportedEncodingException {
+
 		UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
 		String domain = getAccountDomain(prefs);
 
 		// create PUT request with address
-		HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain + ACCOUNT_UPDATE_HTTP_SUFFIX);
+		HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
+				+ ACCOUNT_UPDATE_HTTP_SUFFIX);
 
 		// add auth headers
 		putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
@@ -488,8 +490,6 @@ public class HttpSender {
 				prefs.getString(Constants.USER_PASSWORD, ""));
 
 	}
-	
-	
 
 	private static String getAccountDomain(SharedPreferences prefs) {
 		return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
@@ -520,7 +520,5 @@ public class HttpSender {
 			super(message);
 		}
 	}
-
-
 
 }

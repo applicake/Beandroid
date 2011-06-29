@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="ActionBarHeight">56dp</dimen>
+    <dimen name="ActionBarHeight">50dp</dimen>
     <dimen name="TextSizeMedium">16sp</dimen>
     <dimen name="LargeTextSize">16sp</dimen>
     <dimen name="ColorLabelCornerRadius">2dp</dimen>
     <dimen name="MediumTextSize">14sp</dimen>
     <dimen name="SmallTextSize">12sp</dimen>
-    <dimen name="ActionBarWidth">56dp</dimen>
-    <dimen name="ac_bar_height">38sp</dimen>
-    <dimen name="ac_margin">5dp</dimen>
+    <dimen name="VerySmallTextSize">10sp</dimen>
+    <dimen name="ActionBarWidth">38dp</dimen>
+    <dimen name="ac_bar_height">25dp</dimen>
     <dimen name="list_entry_height">80dp</dimen>
+    <dimen name="ac_margin">12dp</dimen>
     <dimen name="color_label_size">12dp</dimen>
+    <dimen name="button_height">60dp</dimen>
 </resources>

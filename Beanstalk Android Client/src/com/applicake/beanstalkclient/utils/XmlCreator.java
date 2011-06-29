@@ -183,19 +183,19 @@ public class XmlCreator {
 		serializer.endDocument();
 		return writer.toString();
 	}
-	
 
-	public String createAccountPropertiesChangeXML(String name, String timezone) throws IllegalArgumentException, IllegalStateException, IOException {
+	public String createAccountPropertiesChangeXML(String name, String timezone)
+			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer = Xml.newSerializer();
 		writer = new StringWriter();
 		serializer.setOutput(writer);
 
 		serializer.startDocument("UTF-8", null);
 		serializer.startTag("", "account");
-		
+
 		addName(name);
 		addTimezoneAccount(timezone);
-		
+
 		serializer.endTag("", "account");
 		serializer.endDocument();
 		return writer.toString();
@@ -210,11 +210,11 @@ public class XmlCreator {
 	}
 
 	private void addTimezoneAccount(String timezone) throws IllegalArgumentException,
-	IllegalStateException, IOException {
+			IllegalStateException, IOException {
 		serializer.startTag("", "time-zone");
 		serializer.text(timezone);
 		serializer.endTag("", "time-zone");
-		
+
 	}
 
 	private void addDeploymentAccess(boolean deploymentAccess)
@@ -379,7 +379,5 @@ public class XmlCreator {
 		serializer.text(name);
 		serializer.endTag("", "name");
 	}
-
-
 
 }

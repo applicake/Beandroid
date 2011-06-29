@@ -17,41 +17,48 @@ import android.widget.TextView;
 
 public class UserAdapter extends ArrayAdapter<User> {
 
-	
 	private List<User> userArray;
 	private LayoutInflater mInflater;
+	private GravatarDowloader gravatarDownloader;
 
 	public UserAdapter(Context context, int textViewResourceId, List<User> userArray) {
 		super(context, textViewResourceId, userArray);
 		mInflater = LayoutInflater.from(context);
 		this.userArray = userArray;
+		gravatarDownloader = GravatarDowloader.getInstance();
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
-		View view = mInflater.inflate(R.layout.user_list_entry, null);
 
-		User user = userArray.get(position);
+		View view;
+		if (convertView != null) {
+			view = convertView;
+		} else {
+			view = mInflater.inflate(R.layout.user_list_entry, null);
+		}
 
-		if (user != null) {
-			String email = user.getEmail();
-			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
-			GravatarDowloader.getInstance().download(email, userGravatar);
+		if (userArray.get(position) != null) {
+			String email = userArray.get(position).getEmail();
+			gravatarDownloader.download(email,
+					(ImageView) view.findViewById(R.id.userGravatar));
 
-			TextView userNameTextView = (TextView) view.findViewById(R.id.userName);
-			userNameTextView.setText(user.getFirstName() + " " + user.getLastName());
-			UserType userType = user.getAdmin();
+			((TextView) view.findViewById(R.id.userName)).setText(userArray.get(position).getFirstName()
+					+ " " + userArray.get(position).getLastName());
+			UserType userType = userArray.get(position).getAdmin();
 
 			if (userType == UserType.ADMIN) {
 				view.findViewById(R.id.adminLabel).setVisibility(View.VISIBLE);
+				view.findViewById(R.id.ownerLabel).setVisibility(View.GONE);
 
 			} else if (userType == UserType.OWNER) {
 				view.findViewById(R.id.ownerLabel).setVisibility(View.VISIBLE);
 				view.findViewById(R.id.adminLabel).setVisibility(View.GONE);
+			} else {
+				view.findViewById(R.id.ownerLabel).setVisibility(View.GONE);
+				view.findViewById(R.id.adminLabel).setVisibility(View.GONE);
 			}
 
-			TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
-			userEmailTextView.setText(email);
+			((TextView) view.findViewById(R.id.userEmail)).setText(email);
 
 		}
 

@@ -38,16 +38,14 @@ public class HttpRetriever {
 		final HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params, "utf-8");
-		
+
 		HttpClientParams.setRedirecting(params, false);
 		params.setBooleanParameter("http.protocol.expect-continue", false);
-		
+
 		HttpConnectionParams.setStaleCheckingEnabled(params, false);
 		HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
 		HttpConnectionParams.setSoTimeout(params, 20 * 1000);
 		HttpConnectionParams.setSocketBufferSize(params, 8192);
-		
-		
 
 		// registers schemes for both http and https
 		SchemeRegistry registry = new SchemeRegistry();
@@ -59,14 +57,14 @@ public class HttpRetriever {
 
 		ThreadSafeClientConnManager manager = new ThreadSafeClientConnManager(params,
 				registry);
-		
+
 		httpClient = new DefaultHttpClient(manager, params);
 		httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
-		
+
 		return httpClient;
 	}
 
-//	 final static HttpClient httpClient = AndroidHttpClient.newInstance("");
+	// final static HttpClient httpClient = AndroidHttpClient.newInstance("");
 	final static HttpClient httpClient = getClient();
 
 	private static final String HTTP_PREFIX = "https://";

@@ -67,8 +67,8 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		Button usersPermissionsButton = (Button) findViewById(R.id.buttonUsersPermissions);
 		Button deploymentButton = (Button) findViewById(R.id.buttonDeployment);
 		Button modifyPropertiesButton = (Button) findViewById(R.id.buttonModifyProperties);
-		
-		if (currentUser == UserType.USER.name()){
+
+		if (currentUser == UserType.USER.name()) {
 			usersPermissionsButton.setVisibility(View.GONE);
 			modifyPropertiesButton.setVisibility(View.GONE);
 		}
@@ -226,7 +226,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 					loadRepositoryData();
 
 				} else {
-					GUI.displayMonit(mContext, "Server error: "+ errorMessage);
+					GUI.displayMonit(mContext, "Server error: " + errorMessage);
 				}
 			}
 		}

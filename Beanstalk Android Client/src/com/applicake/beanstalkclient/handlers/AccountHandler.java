@@ -96,7 +96,8 @@ public class AccountHandler extends DefaultHandler {
 	}
 
 	public Account retrieveAccount() throws SAXException {
-		if (account == null) throw new SAXException("Error while parsing account info");
+		if (account == null)
+			throw new SAXException("Error while parsing account info");
 		return account;
 	}
 }

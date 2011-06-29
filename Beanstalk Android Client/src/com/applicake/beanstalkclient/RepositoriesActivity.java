@@ -45,13 +45,12 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 		mContext = this;
 		repositoriesList = (ListView) findViewById(R.id.repositoriesList);
 		View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_repository,
-				null, false);
+				Context.LAYOUT_INFLATER_SERVICE)).inflate(
+				R.layout.add_new_repository_footer, null, false);
 		if (currentUser != UserType.USER.name()) {
 			repositoriesList.addFooterView(footerView);
 			footerView.setOnClickListener(this);
 		}
-		
 
 		repositoriesArray = new ArrayList<Repository>();
 		repositoriesAdapter = new RepositoriesAdapter(getApplicationContext(),
@@ -171,9 +170,10 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 
 					repositoriesAdapter.notifyDataSetChanged();
 
-					if (currentUser == UserType.OWNER.name()) {
+					if (currentUser.equals(UserType.OWNER.name())) {
 
-						int repositoriesInPlan = prefs.getInt(Constants.NUMBER_OF_REPOS_AVAILABLE, 0);
+						int repositoriesInPlan = prefs.getInt(
+								Constants.NUMBER_OF_REPOS_AVAILABLE, 0);
 						int numberLeft = repositoriesInPlan - repositoriesArray.size();
 						repositoriesLeftCounter.setText("available repositories: "
 								+ String.valueOf(numberLeft) + "/"

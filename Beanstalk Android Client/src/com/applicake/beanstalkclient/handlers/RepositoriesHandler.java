@@ -159,13 +159,13 @@ public class RepositoriesHandler extends DefaultHandler {
 
 	public HashMap<Integer, Repository> retrieveRepositoryHashMap() {
 		HashMap<Integer, Repository> repoHashMap = new HashMap<Integer, Repository>();
-		for (Repository r : repositoryList){
+		for (Repository r : repositoryList) {
 			repoHashMap.put(r.getId(), r);
 		}
 		return repoHashMap;
 	}
-	
-	public Repository retrieveRepository(){
+
+	public Repository retrieveRepository() {
 		return repository;
 	}
 

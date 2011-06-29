@@ -2,31 +2,32 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="60dp"
-	android:paddingLeft="30dp">
+	android:minHeight="@dimen/list_entry_height"
+	android:paddingLeft="30dp"
+	android:background="@drawable/bn_generic">
 	<TextView
-		android:text="+"
-		android:id="@+id/plusSign"
-		android:textSize="30sp"
-		android:textColor="@color/ActionBarMainColor"
-		android:textStyle="bold"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerVertical="true"></TextView>
-	<TextView
+		style="@style/white_title"
+		android:id="@+id/add_user_label"
 		android:paddingLeft="10dp"
+		android:textSize="@dimen/LargeTextSize"
 		android:text="Add new user"
-		android:layout_toRightOf="@id/plusSign"
+		android:layout_centerHorizontal="true"
 		android:layout_centerVertical="true"
 		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+	<ImageView
+		android:src="@drawable/ic_extras_adduser"
+		android:id="@+id/plusSign"
+		android:layout_toLeftOf="@id/add_user_label"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="@dimen/LargeTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
+		android:layout_centerVertical="true"></ImageView>
 	<TextView
+		android:textColor="@color/application_text_light"
 		android:id="@+id/userCounter"
-		android:layout_marginRight="10dp"
+		android:layout_marginRight="5dp"
 		android:layout_alignParentRight="true"
-		android:layout_below="@id/plusSign"
+		android:layout_alignParentBottom="true"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textSize="@dimen/SmallTextSize"></TextView>

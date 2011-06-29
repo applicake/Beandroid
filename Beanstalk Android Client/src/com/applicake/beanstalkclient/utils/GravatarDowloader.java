@@ -35,7 +35,6 @@ public class GravatarDowloader {
 		return instance;
 	}
 
-
 	// convert user email to gravatarId
 	public static final String md5(final String s) {
 		try {

@@ -4,8 +4,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="60dp"
 	android:orientation="horizontal"
-	android:paddingRight="5dp"
-	android:background="@color/ApplicationBackground">
+	android:paddingRight="5dp">
 	<View
 		android:id="@+id/colorLabel"
 		android:background="@drawable/repository_labels"
@@ -36,11 +35,11 @@
 		android:gravity="center"
 		android:text="deployment"
 		android:layout_height="wrap_content"
-		android:layout_width="60dp"
+		android:layout_width="wrap_content"
 		android:layout_alignParentRight="true"
 		android:layout_alignParentTop="true"
 		android:id="@+id/deploymentPermission"
-		android:textSize="@dimen/SmallTextSize"
+		android:textSize="@dimen/VerySmallTextSize"
 		android:textColor="@color/ApplicationText"></TextView>
 
 	<TextView
@@ -50,7 +49,7 @@
 		android:layout_width="50dp"
 		android:id="@+id/repoPermission"
 		android:layout_toLeftOf="@id/deploymentPermission"
-		android:textSize="@dimen/SmallTextSize"
+		android:textSize="@dimen/VerySmallTextSize"
 		android:textColor="@color/ApplicationText"></TextView>
 
 	<TextView
@@ -61,7 +60,7 @@
 		android:layout_alignRight="@id/deploymentPermission"
 		android:padding="2dp"
 		android:layout_below="@id/deploymentPermission"
-		android:textSize="@dimen/SmallTextSize"
+		android:textSize="@dimen/VerySmallTextSize"
 		android:textColor="@color/ApplicationText"
 		android:gravity="center"></TextView>
 
@@ -73,7 +72,7 @@
 		android:layout_alignLeft="@id/repoPermission"
 		android:padding="2dp"
 		android:layout_below="@id/repoPermission"
-		android:textSize="@dimen/SmallTextSize"
+		android:textSize="@dimen/VerySmallTextSize"
 		android:textColor="@color/ApplicationText"
 		android:gravity="center"></TextView>
 

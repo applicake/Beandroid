@@ -25,7 +25,6 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerRespo
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
-
 public class RepositoryCommitsActivity extends BeanstalkActivity implements
 		OnItemClickListener {
 
@@ -64,7 +63,7 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 		TextView repoNameTextView = (TextView) headerView.findViewById(R.id.repoName);
 		repoNameTextView.setText(repoTitle);
 
-		changesetList.addHeaderView(headerView, null, false);		
+		changesetList.addHeaderView(headerView, null, false);
 		changesetList.setAdapter(changesetAdapter);
 		changesetList.setOnItemClickListener(this);
 
@@ -138,7 +137,7 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 			} catch (XMLParserException e) {
 				failMessage = Strings.internalErrorMessage;
 			}
-			failed  = true;
+			failed = true;
 			return null;
 		}
 
@@ -164,17 +163,16 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 
 				builder.displayDialog();
 			} else {
-				
-			if (changesetParserArray != null){
-				
-				changesetArray.addAll(changesetParserArray);
-				changesetAdapter.notifyDataSetChanged();
-				
-			} else if (errorMessage != null) {
-				GUI.displayMonit(mContext, "Server error: " + errorMessage);
-			}
 
-			
+				if (changesetParserArray != null) {
+
+					changesetArray.addAll(changesetParserArray);
+					changesetAdapter.notifyDataSetChanged();
+
+				} else if (errorMessage != null) {
+					GUI.displayMonit(mContext, "Server error: " + errorMessage);
+				}
+
 			}
 		}
 

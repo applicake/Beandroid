@@ -6,7 +6,7 @@
 	android:id="@+id/TitleBar"
 	android:background="@drawable/bg_actionbar">
 	<ImageView
-		android:src="@drawable/ic_ab_beandroid"
+		android:src="@drawable/ic_ab_home"
 		android:id="@+id/ActionBarHomeIcon"
 		android:layout_margin="@dimen/ac_margin"
 		android:layout_height="@dimen/ac_bar_height"
@@ -19,33 +19,33 @@
 		android:layout_weight="1"
 		android:id="@+id/ActionBarTitle"
 		></TextView>
-	<ImageButton
+	<ImageView
 		android:id="@+id/ActionBarRepoButton"
 		android:layout_margin="@dimen/ac_margin"
-		android:background="@drawable/ic_ab_repositories"
+		android:src="@drawable/ic_ab_repositories"
 		android:layout_height="@dimen/ac_bar_height"
 		android:layout_width="@dimen/ac_bar_height"
 		android:clickable="true"
-		android:onClick="onRepositoriesButtonClick"></ImageButton>
+		android:onClick="onRepositoriesButtonClick"></ImageView>
 	<ImageView
 		style="@style/ActionBarSeparator"></ImageView>
-	<ImageButton
+	<ImageView
 		android:id="@+id/ActionBarUsersButton"
 		android:onClick="onUsersButtonClick"
 		android:layout_margin="@dimen/ac_margin"
-		android:background="@drawable/ic_ab_users"
+		android:src="@drawable/ic_ab_users"
 		android:layout_height="@dimen/ac_bar_height"
 		android:layout_width="@dimen/ac_bar_height"
-		></ImageButton>
+		></ImageView>
 	<ImageView
 		style="@style/ActionBarSeparator"
 		></ImageView>
-	<ImageButton
+	<ImageView
 		android:id="@+id/ActionBarDeployButton"
 		android:layout_margin="@dimen/ac_margin"
-		android:background="@drawable/ic_ab_deployment"
+		android:src="@drawable/ic_ab_deployment"
 		android:layout_height="@dimen/ac_bar_height"
 		android:layout_width="@dimen/ac_bar_height"
 		android:clickable="true"
-		android:onClick="onDeploymentButtonClick"></ImageButton>
+		android:onClick="onDeploymentButtonClick"></ImageView>
 </LinearLayout>

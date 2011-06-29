@@ -92,7 +92,7 @@ public class XmlParser {
 		return userHandler.retrieveUserList();
 
 	}
-	
+
 	public static User parseCurrentUser(String currentUserXML) throws XMLParserException {
 		XMLReader xmlReader = initializeReader();
 
@@ -113,10 +113,11 @@ public class XmlParser {
 
 		return userHandler.retrieveUser();
 	}
-	
-	public static HashMap<Integer, Plan> parsePlan(String planXML) throws XMLParserException {
+
+	public static HashMap<Integer, Plan> parsePlan(String planXML)
+			throws XMLParserException {
 		XMLReader xmlReader = initializeReader();
-		
+
 		PlanHandler planHandler = new PlanHandler();
 		// set handler
 		xmlReader.setContentHandler(planHandler);
@@ -125,13 +126,13 @@ public class XmlParser {
 		InputSource is = new InputSource(sr);
 		try {
 			xmlReader.parse(is);
-			
+
 		} catch (IOException e) {
 			throw new XMLParserException(e);
 		} catch (SAXException e) {
 			throw new XMLParserException(e);
 		}
-		
+
 		return planHandler.retrievePlanMap();
 	}
 
@@ -205,7 +206,7 @@ public class XmlParser {
 	}
 
 	public static ArrayList<Permission> parsePermissionList(String xml)
-			throws XMLParserException{
+			throws XMLParserException {
 		XMLReader xmlReader = initializeReader();
 
 		PermissionsHandler permissionsHandler = new PermissionsHandler();
@@ -223,12 +224,10 @@ public class XmlParser {
 			throw new XMLParserException(e);
 		}
 
-		
-
 	}
 
 	public static HashMap<Integer, Permission> parseRepoIdToPermissionHashMap(String xml)
-			throws XMLParserException{
+			throws XMLParserException {
 		XMLReader xmlReader = initializeReader();
 
 		PermissionsHandler permissionsHandler = new PermissionsHandler();
@@ -249,7 +248,7 @@ public class XmlParser {
 
 	}
 
-	public static Account parseAccountInfo(String xml) throws XMLParserException{
+	public static Account parseAccountInfo(String xml) throws XMLParserException {
 		XMLReader xmlReader = initializeReader();
 
 		AccountHandler accountHandler = new AccountHandler();
@@ -269,7 +268,8 @@ public class XmlParser {
 
 	}
 
-	public static ArrayList<Comment> parseCommentList(String xml) throws XMLParserException {
+	public static ArrayList<Comment> parseCommentList(String xml)
+			throws XMLParserException {
 		XMLReader xmlReader = initializeReader();
 
 		CommentsHandler commentsHandler = new CommentsHandler();
@@ -320,7 +320,7 @@ public class XmlParser {
 		// parse
 		StringReader sr = new StringReader(xml);
 		InputSource is = new InputSource(sr);
-		
+
 		try {
 			xmlReader.parse(is);
 			return errorHandler.retrieveErrorList();
@@ -338,17 +338,16 @@ public class XmlParser {
 		 */
 		private static final long serialVersionUID = 1L;
 		private Exception cause;
+
 		public XMLParserException(Exception e) {
 			super();
 			cause = e;
 		}
-		
-		
+
 		public Exception getException() {
 			// TODO Auto-generated method stub
 			return cause;
 		}
 	}
-
 
 }

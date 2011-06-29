@@ -4,13 +4,79 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
-	android:background="@color/ApplicationBackground">
+	android:background="@drawable/app_bg">
 	<include
 		layout="@layout/actionbar" />
+
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="@dimen/list_entry_height"
+		android:orientation="horizontal"
+		android:padding="5dp">
+
+		<ImageView
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:id="@+id/userGravatar"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dp"
+			android:layout_alignParentLeft="true"></ImageView>
+
+		<TextView
+			android:text="ADMIN"
+			android:background="@drawable/label_red"
+			android:visibility="gone"
+			android:layout_marginRight="10dp"
+			android:gravity="center"
+			android:layout_width="60dp"
+			android:layout_height="18dp"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentTop="true"
+			android:id="@+id/adminLabel"
+			android:textSize="@dimen/SmallTextSize"
+			android:textColor="@color/ApplicationBackground"></TextView>
+
+		<TextView
+			android:text="OWNER"
+			android:background="@drawable/label_green"
+			android:visibility="gone"
+			android:layout_marginRight="10dp"
+			android:gravity="center"
+			android:layout_width="60dp"
+			android:layout_height="18dp"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentTop="true"
+			android:id="@+id/ownerLabel"
+			android:textSize="@dimen/SmallTextSize"
+			android:textColor="@color/application_text_light"></TextView>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/userName"
+			android:textColor="@color/black"
+			android:layout_toRightOf="@id/userGravatar"
+			android:layout_alignParentTop="true"
+			android:layout_marginTop="5dp"
+			android:textSize="@dimen/LargeTextSize"
+			android:textStyle="bold"></TextView>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/userGravatar"
+			android:layout_below="@id/userName"
+			android:id="@+id/userEmail"
+			android:textColor="@color/black"
+			android:textSize="@dimen/MediumTextSize"></TextView>
+
+	</RelativeLayout>
+
+
 	<ListView
 		android:id="@+id/userPermissionsList"
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent"
 		android:cacheColorHint="#00000000"
-		android:background="@color/white"></ListView>
+		android:background="@color/dark_entry_bg"></ListView>
 </LinearLayout>

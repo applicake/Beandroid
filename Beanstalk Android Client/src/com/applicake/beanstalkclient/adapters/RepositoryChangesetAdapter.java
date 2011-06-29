@@ -41,10 +41,9 @@ public class RepositoryChangesetAdapter extends ArrayAdapter<Changeset> {
 		if (changeset != null) {
 			ImageView userGravatar = (ImageView) view.findViewById(R.id.userGravatar);
 			GravatarDowloader.getInstance().download(changeset.getEmail(), userGravatar);
-			
+
 			TextView hashTextView = (TextView) view.findViewById(R.id.revisionTextView);
 			hashTextView.setText(changeset.getRevision());
-			
 
 			TextView dateTextView = (TextView) view.findViewById(R.id.date);
 			dateTextView.setText(dateFormatter.format(changeset.getTime()));
@@ -59,7 +58,6 @@ public class RepositoryChangesetAdapter extends ArrayAdapter<Changeset> {
 			TextView messageTextView = (TextView) view.findViewById(R.id.commitMessage);
 			messageTextView.setText(changeset.getMessage());
 
-			
 		}
 
 		return view;

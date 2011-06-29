@@ -7,7 +7,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.enums.UserType;
 
@@ -34,30 +33,38 @@ public class UserHandler extends DefaultHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName)
-			throws SAXException{
+			throws SAXException {
 		if (user != null) {
-			if (localName == "user"){
-				if (userList != null){
+			if (localName == "user") {
+				if (userList != null) {
 					userList.add(user);
 				}
 			}
 			if (localName == "account-id") {
 				try {
 					user.setAccountId(Integer.parseInt(buffer.toString()));
-				} catch (NumberFormatException nfe){
+				} catch (NumberFormatException nfe) {
 					throw new SAXException(nfe);
 				}
 			}
 			if (localName == "admin") {
-				if (buffer.toString().equals(""))
-					user.setAdmin(UserType.OWNER);
+				if (buffer.toString().equals("") || buffer.toString().equals("false"))
+					user.setAdmin(UserType.USER);
 				else if (buffer.toString().equals("true"))
 					user.setAdmin(UserType.ADMIN);
-				else if (buffer.toString().equals("false"))
-					user.setAdmin(UserType.USER);
-				else throw new SAXException("Error while parsing user type");
+				else 
+					throw new SAXException("Error while parsing user type");
 
 			}
+			
+			if (localName == "owner") {
+				if (buffer.toString().equals("true"))
+					user.setAdmin(UserType.OWNER);
+
+				
+			}
+			
+			
 
 			if (localName == "created-at") {
 				try {
@@ -78,10 +85,10 @@ public class UserHandler extends DefaultHandler {
 			if (localName == "id") {
 				try {
 					user.setId(Integer.parseInt(buffer.toString()));
-				} catch (NumberFormatException nfe){
+				} catch (NumberFormatException nfe) {
 					throw new SAXException(nfe);
 				}
-				
+
 			}
 
 			if (localName == "last-name") {
@@ -91,7 +98,7 @@ public class UserHandler extends DefaultHandler {
 			if (localName == "login") {
 				user.setLogin(buffer.toString());
 			}
-			
+
 			if (localName == "timezone") {
 				user.setTimezone(buffer.toString());
 			}

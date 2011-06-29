@@ -115,7 +115,6 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 		private View view;
 		private boolean failed;
 		private Button refreshButton;
-		
 
 		@Override
 		protected HashMap<Integer, Permission> doInBackground(Object... params) {
@@ -128,7 +127,7 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			repoPermissionLabel = (TextView) view.findViewById(R.id.repositoryLabel);
 			deploymentPermissionLabel = (TextView) view
 					.findViewById(R.id.deploymentLabel);
-			
+
 			refreshButton = (Button) view.findViewById(R.id.refresh_button);
 
 			repoPermissionTitle = (TextView) view.findViewById(R.id.repoPermission);
@@ -162,16 +161,16 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 			// setting view clickable again
 
 			loadingBar.setVisibility(View.GONE);
-			
+
 			if (failed) {
 				// if one of downloads fail a refresh button will be displayed
-					refreshButton.setOnClickListener(new OnClickListener() {
-					
+				refreshButton.setOnClickListener(new OnClickListener() {
+
 					@Override
 					public void onClick(View v) {
 						new DownloadPermissionsTask().execute(userId, view);
 						refreshButton.setVisibility(View.GONE);
-						
+
 					}
 				});
 				refreshButton.setVisibility(View.VISIBLE);
@@ -180,7 +179,7 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 
 				if (result != null) {
 					view.setTag(true);
-					
+
 					repoPermissionLabel.setVisibility(View.VISIBLE);
 					deploymentPermissionLabel.setVisibility(View.VISIBLE);
 					repoPermissionTitle.setVisibility(View.VISIBLE);

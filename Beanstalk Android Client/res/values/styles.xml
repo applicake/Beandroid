@@ -45,9 +45,16 @@
 		<item
 			name="android:background">@drawable/bn_generic</item>
 		<item
-			name="android:textColor">@color/ApplicationButtonText</item>
+			name="android:textColor">@color/application_text_light</item>
 		<item
-			name="android:textSize">@dimen/MediumTextSize</item>
+			name="android:textSize">@dimen/LargeTextSize</item>
+		<item
+			name="android:textStyle">bold</item>
+		<item
+			name="android:layout_height">@dimen/button_height</item>
+		<item
+			name="android:layout_width">fill_parent</item>
+			
 	</style>
 	<style
 		name="edit_text"

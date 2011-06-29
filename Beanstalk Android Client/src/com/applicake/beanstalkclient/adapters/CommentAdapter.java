@@ -52,7 +52,8 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 			userNameTextView.setText(comment.getAuthorName());
 
 			TextView dateTextView = (TextView) view.findViewById(R.id.commentDate);
-			dateTextView.setText(DateUtils.getRelativeTimeSpanString(comment.getUpdatedAt().getTime()));
+			dateTextView.setText(DateUtils.getRelativeTimeSpanString(comment
+					.getUpdatedAt().getTime()));
 
 			TextView commentBodyTextView = (TextView) view.findViewById(R.id.commentBody);
 			spannedText = Html.fromHtml(comment.getRenderedBody());

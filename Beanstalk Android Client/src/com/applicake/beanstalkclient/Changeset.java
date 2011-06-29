@@ -8,7 +8,6 @@ import java.util.Date;
 
 import com.applicake.beanstalkclient.utils.CustomYamlParser;
 
-
 public class Changeset implements Serializable {
 	/**
 	 * 
@@ -53,7 +52,7 @@ public class Changeset implements Serializable {
 	}
 
 	public void setChangedDirs(String yaml) {
-		
+
 		this.changedDirs = yamlParser.parseEntriesList(yaml);
 	}
 

@@ -13,11 +13,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.applicake.beanstalkclient.adapters.UserPermissionsAdapter;
+import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
+import com.applicake.beanstalkclient.utils.GravatarDowloader;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
@@ -32,7 +36,6 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 	private Context mContext;
 	private ProgressDialog progressDialog;
 	private ArrayList<Repository> repositoriesArray;
-	// private ArrayList<Permission> permissionsArray;
 	private Map<Integer, Permission> repoIdToPermission;
 	private UserPermissionsAdapter repositoriesAdapter;
 	private ListView repositoriesList;
@@ -56,6 +59,31 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 		task = new DownloadRepositoryListTask();
 		task.execute();
+		
+		// filling user info header
+		
+		String email = user.getEmail();
+		GravatarDowloader.getInstance().download(email,
+				(ImageView)findViewById(R.id.userGravatar));
+
+		((TextView)findViewById(R.id.userName)).setText(user.getFirstName()
+				+ " " + user.getLastName());
+		UserType userType = user.getAdmin();
+
+		if (userType == UserType.ADMIN) {
+			findViewById(R.id.adminLabel).setVisibility(View.VISIBLE);
+			findViewById(R.id.ownerLabel).setVisibility(View.GONE);
+
+		} else if (userType == UserType.OWNER) {
+			findViewById(R.id.ownerLabel).setVisibility(View.VISIBLE);
+			findViewById(R.id.adminLabel).setVisibility(View.GONE);
+		} else {
+			findViewById(R.id.ownerLabel).setVisibility(View.GONE);
+			findViewById(R.id.adminLabel).setVisibility(View.GONE);
+		}
+
+		((TextView)findViewById(R.id.userEmail)).setText(email);
+		
 
 	}
 
@@ -169,7 +197,7 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 				if (result == SUCCESSFUL_PARSING) {
 					repositoriesAdapter.setRepoIdToPermissionMap(repoIdToPermission);
 					repositoriesAdapter.notifyDataSetChanged();
-					
+
 				} else if (errorMessage != null)
 					GUI.displayServerErrorMonit(mContext, errorMessage);
 				else

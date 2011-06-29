@@ -53,7 +53,7 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 				.setLevel(repository.getColorLabelNo());
 		TextView repoNameTextView = (TextView) headerView.findViewById(R.id.repoName);
 		repoNameTextView.setText(repository.getTitle());
-		
+
 		usersList.addHeaderView(headerView, null, false);
 
 		usersArray = new ArrayList<User>();
@@ -81,12 +81,11 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 					intent.putExtra(Constants.PERMISSION, permission);
 				}
 				startActivityForResult(intent, 0);
-			} else if (user.getAdmin() != UserType.USER){
+			} else if (user.getAdmin() != UserType.USER) {
 				GUI.displayMonit(mContext,
 						"Owner and Admins have full access to all repositories");
 			} else {
-				GUI.displayMonit(mContext,
-				"Loading...");
+				GUI.displayMonit(mContext, "Loading...");
 			}
 		}
 
@@ -169,15 +168,15 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 
 				builder.displayDialog();
 			} else {
-				if (parsedArray != null){
+				if (parsedArray != null) {
 					usersArray.clear();
 					usersArray.addAll(parsedArray);
 
 					usersAdapter.notifyDataSetChanged();
-				} else if (errorMessage != null){
+				} else if (errorMessage != null) {
 					GUI.displayMonit(mContext, errorMessage);
-				} else GUI.displayMonit(mContext, "Unexpected error, please try again later");
-
+				} else
+					GUI.displayMonit(mContext, "Unexpected error, please try again later");
 
 			}
 		}

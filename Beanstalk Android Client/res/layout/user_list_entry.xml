@@ -2,7 +2,7 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="60dp"
+	android:minHeight="@dimen/list_entry_height"
 	android:orientation="horizontal"
 	android:padding="5dp">
 	<ImageView
@@ -39,17 +39,18 @@
 		android:layout_alignParentTop="true"
 		android:id="@+id/ownerLabel"
 		android:textSize="@dimen/SmallTextSize"
-		android:textColor="@color/ApplicationBackground"></TextView>
+		android:textColor="@color/application_text_light"></TextView>
 
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/userName"
+		android:textColor="@color/black"
 		android:layout_toRightOf="@id/userGravatar"
 		android:layout_alignParentTop="true"
 		android:layout_marginTop="5dp"
-		android:textSize="@dimen/MediumTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
+		android:textSize="@dimen/LargeTextSize"
+		android:textStyle="bold"></TextView>
 
 	<TextView
 		android:layout_width="wrap_content"
@@ -57,6 +58,7 @@
 		android:layout_toRightOf="@id/userGravatar"
 		android:layout_below="@id/userName"
 		android:id="@+id/userEmail"
-		android:textSize="@dimen/SmallTextSize"></TextView>
+		android:textColor="@color/black"
+		android:textSize="@dimen/MediumTextSize"></TextView>
 
 </RelativeLayout>

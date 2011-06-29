@@ -9,6 +9,8 @@
 	<color
 		name="ApplicationText">#333325</color>
 	<color
+		name="application_text_dark_grey">#333325</color>
+	<color
 		name="ApplicationButtonText">#FBFCF5</color>
 
 	<color

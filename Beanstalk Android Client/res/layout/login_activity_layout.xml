@@ -4,7 +4,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:fillViewport="true"
-	android:background="@drawable/app_bg_hdpi">
+	android:background="@drawable/app_bg">
 	<RelativeLayout
 		android:orientation="vertical"
 		android:layout_width="fill_parent"
@@ -16,7 +16,7 @@
 			android:layout_alignParentTop="true"
 			android:layout_marginTop="30dp"
 			android:layout_marginBottom="30dp"
-			android:src="@drawable/ic_ab_beandroid"
+			android:src="@drawable/ic_ab_beandroid_home_normal"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></ImageView>
 
@@ -110,7 +110,6 @@
 			android:layout_alignLeft="@id/remember_me_check_box"
 			android:layout_below="@id/remember_me_check_box"
 			android:id="@+id/login_button"
-			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"></Button>
 	</RelativeLayout>
 </ScrollView>

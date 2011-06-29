@@ -19,21 +19,22 @@ public class SpinnerTimezoneAdapter extends ArrayAdapter<String> {
 		super(context, textViewResourceId, popupValuesList);
 		mInflater = LayoutInflater.from(context);
 		displayedValues = spinnerValues;
-		
+
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TextView view = (TextView) convertView;
-		
-		if (convertView == null){
-			view = (TextView) mInflater.inflate(android.R.layout.simple_spinner_item, parent, false);
-			
+
+		if (convertView == null) {
+			view = (TextView) mInflater.inflate(android.R.layout.simple_spinner_item,
+					parent, false);
+
 		}
-		
+
 		view.setText(displayedValues.get(position));
 		return view;
-		
+
 	}
 
 }

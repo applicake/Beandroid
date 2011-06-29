@@ -3,8 +3,8 @@ package com.applicake.beanstalkclient;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Permission implements Parcelable{
-	
+public class Permission implements Parcelable {
+
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -21,11 +21,11 @@ public class Permission implements Parcelable{
 		dest.writeString(String.valueOf(writeAccess));
 
 	}
-	
+
 	public Permission() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Permission(Parcel in) {
 		this.fullDeploymentAccess = Boolean.parseBoolean(in.readString());
 		this.id = in.readInt();
@@ -35,7 +35,7 @@ public class Permission implements Parcelable{
 		this.readAccess = Boolean.parseBoolean(in.readString());
 		this.writeAccess = Boolean.parseBoolean(in.readString());
 	}
-	
+
 	public static final Parcelable.Creator<Permission> CREATOR = new Parcelable.Creator<Permission>() {
 		public Permission createFromParcel(Parcel in) {
 			return new Permission(in);
@@ -45,8 +45,7 @@ public class Permission implements Parcelable{
 			return new Permission[size];
 		}
 	};
-	
-	
+
 	private boolean fullDeploymentAccess;
 	private int id;
 	private int repositoryId;

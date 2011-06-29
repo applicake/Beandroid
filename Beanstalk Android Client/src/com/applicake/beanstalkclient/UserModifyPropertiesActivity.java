@@ -201,7 +201,6 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 				return HttpSender.sendUpdateUserXML(prefs, userModificationXml,
 						String.valueOf(user.getId()));
 
-
 			} catch (XMLParserException e) {
 				failMessage = Strings.internalErrorMessage;
 			} catch (IllegalArgumentException e) {
@@ -216,7 +215,7 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 				errorMessage = e.getMessage();
 				return 0;
 			}
-			failed  = true;
+			failed = true;
 			return 0;
 
 		}

@@ -16,9 +16,10 @@ public class CustomYamlParser {
 			return new ArrayList<YamlEntry>();
 		}
 		ArrayList<YamlEntry> entryList = new ArrayList<YamlEntry>();
-		
-		String prepared = yamlString.trim().length()>3 ? yamlString.trim().substring(3) : yamlString.trim();
-		
+
+		String prepared = yamlString.trim().length() > 3 ? yamlString.trim().substring(3)
+				: yamlString.trim();
+
 		String[] level1 = prepared.split("- - ");
 		for (int i = 0; i < level1.length; i++) {
 			String s = level1[i];

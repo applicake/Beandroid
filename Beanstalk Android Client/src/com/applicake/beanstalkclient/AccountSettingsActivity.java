@@ -56,7 +56,7 @@ public class AccountSettingsActivity extends BeanstalkActivity implements OnClic
 						spinnerValuesList));
 
 		((Button) findViewById(R.id.save_changes_button)).setOnClickListener(this);
-		
+
 		new DownloadAccountInfoTask().execute();
 
 	}
@@ -80,8 +80,8 @@ public class AccountSettingsActivity extends BeanstalkActivity implements OnClic
 
 		@Override
 		protected void onPreExecute() {
-			progressDialog = ProgressDialog.show(mContext, "Downloading account information",
-					"Please wait...");
+			progressDialog = ProgressDialog.show(mContext,
+					"Downloading account information", "Please wait...");
 			progressDialog.setCancelable(true);
 			progressDialog.setOnCancelListener(new OnCancelListener() {
 

@@ -80,7 +80,8 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 					changeset.getChangedDirs());
 			Repository repository = repositoryMap.get(changeset.getRepositoryId());
 			intent.putExtra(Constants.COMMIT_REPOSIOTRY_NAME, repository.getTitle());
-			intent.putExtra(Constants.COMMIT_REPOSIOTRY_LABEL, repository.getColorLabelNo());
+			intent.putExtra(Constants.COMMIT_REPOSIOTRY_LABEL,
+					repository.getColorLabelNo());
 			intent.putExtra(Constants.COMMIT_USERNAME, changeset.getAuthor());
 			intent.putExtra(Constants.COMMIT_MESSAGE, changeset.getMessage());
 			intent.putExtra(Constants.COMMIT_REPOSITORY_ID, changeset.getRepositoryId());
@@ -114,7 +115,6 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 	public class DownloadChangesetListTask extends
 			AsyncTask<Void, Void, ArrayList<Changeset>> {
 
-		
 		private boolean failed = false;
 		private String failMessage;
 

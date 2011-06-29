@@ -8,10 +8,10 @@ import android.os.Parcelable;
 
 import com.applicake.beanstalkclient.enums.UserType;
 
-public class User implements Parcelable{
+public class User implements Parcelable {
 	static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-	
-	//parcelable implementation
+
+	// parcelable implementation
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
@@ -31,10 +31,11 @@ public class User implements Parcelable{
 		dest.writeString(timezone);
 		dest.writeLong(updatedAt);
 	}
+
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public User(Parcel in) {
 		this.accountId = in.readInt();
 		this.admin = UserType.values()[in.readInt()];
@@ -46,10 +47,9 @@ public class User implements Parcelable{
 		this.login = in.readString();
 		this.timezone = in.readString();
 		this.updatedAt = in.readLong();
-		
+
 	}
-	
-	
+
 	public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
 		public User createFromParcel(Parcel in) {
 			return new User(in);
@@ -150,8 +150,8 @@ public class User implements Parcelable{
 	}
 
 	public void setUpdatedAt(String date) throws ParseException {
-		this.updatedAt = FORMATTER.parse(date.trim()).getTime();;
+		this.updatedAt = FORMATTER.parse(date.trim()).getTime();
+		;
 	}
-
 
 }

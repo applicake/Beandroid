@@ -5,7 +5,7 @@
 	<solid
 		android:color="@color/et_background" />
 	<stroke
-		android:color="@color/white"
+		android:color="@color/grey"
 		android:width="1dp"
 	/>
 </shape>

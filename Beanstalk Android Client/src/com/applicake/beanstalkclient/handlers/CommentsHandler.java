@@ -129,8 +129,9 @@ public class CommentsHandler extends DefaultHandler {
 	}
 
 	public ArrayList<Comment> retrieveCommentList() {
-		if (commentList == null) return new ArrayList<Comment>();
-//			throw new SAXException("Error while parsing comment list");
+		if (commentList == null)
+			return new ArrayList<Comment>();
+		// throw new SAXException("Error while parsing comment list");
 		return commentList;
 
 	}

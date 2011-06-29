@@ -4,106 +4,105 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@color/ApplicationBackground">
-<RelativeLayout
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:background="@color/ApplicationBackground">
-	
-	<include
-		layout="@layout/actionbar"
-		android:id="@+id/actionbar"
-		android:layout_alignParentTop="true" />
-
-	<ImageView
-		android:layout_width="60dp"
-		android:layout_height="60dp"
-		android:id="@+id/userGravatar"
-		android:layout_alignParentLeft="true"
-		android:layout_below="@id/actionbar"
-		android:layout_margin="10dp"></ImageView>
-
-	<TextView
-		android:id="@+id/userName"
-		android:layout_toRightOf="@id/userGravatar"
-		android:layout_below="@id/actionbar"
-		android:layout_width="wrap_content"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/MediumTextSize"
-		android:textStyle="bold"
-		android:layout_height="wrap_content"></TextView>
-
-	<TextView
-		android:text="ADMIN"
-		android:background="@drawable/label_red"
-		android:visibility="gone"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="2dp"
-		android:gravity="center"
-		android:layout_width="60dp"
-		android:layout_height="18dp"
-		android:layout_alignParentRight="true"
-		android:layout_below="@id/actionbar"
-		android:id="@+id/adminLabel"
-		android:textSize="@dimen/SmallTextSize"
-		android:textColor="@color/ApplicationBackground"></TextView>
-
-	<TextView
-		android:text="OWNER"
-		android:background="@drawable/label_green"
-		android:visibility="gone"
-		android:layout_marginRight="10dp"
-		android:layout_marginTop="2dp"
-		android:gravity="center"
-		android:layout_width="60dp"
-		android:layout_height="18dp"
-		android:layout_alignParentRight="true"
-		android:layout_below="@id/actionbar"
-		android:id="@+id/ownerLabel"
-		android:textSize="@dimen/SmallTextSize"
-		android:textColor="@color/ApplicationBackground"></TextView>
-
-	<TextView
-		android:id="@+id/userLogin"
-		android:textColor="@color/ApplicationText"
-		android:layout_toRightOf="@id/userGravatar"
-		android:layout_below="@id/userName"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textSize="@dimen/MediumTextSize"></TextView>
-
-	<TextView
-		android:id="@+id/userEmail"
-		android:textColor="@color/ApplicationText"
-		android:textSize="@dimen/MediumTextSize"
-		android:layout_toRightOf="@id/userGravatar"
-		android:layout_below="@id/userLogin"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
-
-	<Button
-		android:layout_marginTop="30dp"
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonUserPermissions"
-		android:layout_below="@id/userEmail"
-		android:text="User permissions"
+	<RelativeLayout
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
+		android:layout_height="fill_parent"
+		android:background="@drawable/app_bg">
 
-	<Button
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonModifyProperties"
-		android:layout_below="@id/buttonUserPermissions"
-		android:text="Modify properties"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
+		<include
+			layout="@layout/actionbar"
+			android:id="@+id/actionbar"
+			android:layout_alignParentTop="true" />
 
-	<Button
-		android:drawableLeft="@drawable/icon"
-		android:id="@+id/buttonDeleteUser"
-		android:layout_below="@id/buttonModifyProperties"
-		android:text="Delete user"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"></Button>
+		<ImageView
+			android:layout_width="60dp"
+			android:layout_height="60dp"
+			android:id="@+id/userGravatar"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@id/actionbar"
+			android:layout_margin="10dp"></ImageView>
 
-</RelativeLayout>
+		<TextView
+			android:id="@+id/userName"
+			android:layout_toRightOf="@id/userGravatar"
+			android:layout_alignTop="@id/userGravatar"
+			android:layout_below="@id/actionbar"
+			android:layout_width="wrap_content"
+			android:textColor="@color/application_text_dark_grey"
+			android:textSize="@dimen/LargeTextSize"
+			android:textStyle="bold"
+			android:layout_height="wrap_content"></TextView>
+
+		<TextView
+			android:text="ADMIN"
+			android:background="@drawable/label_red"
+			android:visibility="gone"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="2dp"
+			android:gravity="center"
+			android:layout_width="60dp"
+			android:layout_height="18dp"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/actionbar"
+			android:id="@+id/adminLabel"
+			android:textSize="@dimen/SmallTextSize"
+			android:textColor="@color/application_text_light"></TextView>
+
+		<TextView
+			android:text="OWNER"
+			android:background="@drawable/label_green"
+			android:visibility="gone"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="2dp"
+			android:gravity="center"
+			android:layout_width="60dp"
+			android:layout_height="18dp"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/actionbar"
+			android:id="@+id/ownerLabel"
+			android:textSize="@dimen/SmallTextSize"
+			android:textColor="@color/application_text_light"></TextView>
+
+		<TextView
+			android:id="@+id/userLogin"
+			android:textColor="@color/application_text_dark_grey"
+			android:textStyle="bold"
+			android:layout_toRightOf="@id/userGravatar"
+			android:layout_below="@id/userName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/MediumTextSize"></TextView>
+
+		<TextView
+			android:id="@+id/userEmail"
+			android:textColor="@color/application_text_dark_grey"
+			android:textSize="@dimen/MediumTextSize"
+			android:layout_toRightOf="@id/userGravatar"
+			android:layout_below="@id/userLogin"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+
+		<Button
+			style="@style/button"
+			android:layout_marginTop="130dp"
+			android:drawableLeft="@drawable/ic_button_users"
+			android:id="@+id/buttonUserPermissions"
+			android:layout_below="@id/userEmail"
+			android:text="User permissions"></Button>
+
+		<Button
+			style="@style/button"
+			android:drawableLeft="@drawable/ic_menu_settings"
+			android:id="@+id/buttonModifyProperties"
+			android:layout_below="@id/buttonUserPermissions"
+			android:text="Modify properties"></Button>
+
+		<Button
+			style="@style/button"
+			android:drawableLeft="@drawable/ic_button_delete"
+			android:id="@+id/buttonDeleteUser"
+			android:layout_below="@id/buttonModifyProperties"
+			android:text="Delete user"></Button>
+
+	</RelativeLayout>
 </ScrollView>

@@ -43,7 +43,7 @@ public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 		String timezoneString = prefs.getString(Constants.USER_TIMEZONE, "");
 		TimeZone currentUserTimeZone;
 		if (timezoneString == "") {
-			currentUserTimeZone = TimeZone.getDefault(); 
+			currentUserTimeZone = TimeZone.getDefault();
 		} else {
 			currentUserTimeZone = RailsTimezones.getJavaTz(timezoneString);
 		}
