@@ -61,7 +61,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 
 		// loadinig initial data and layout
 		setContentView(R.layout.changeset_layout);
-		mContext = getApplicationContext();
+		mContext = this;
 		Intent acitivyIntent = getIntent();
 		commentListParsed = false;
 		repoId = acitivyIntent.getIntExtra(Constants.COMMIT_REPOSITORY_ID, 0);

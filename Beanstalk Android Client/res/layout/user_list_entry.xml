@@ -25,7 +25,7 @@
 		android:layout_alignParentTop="true"
 		android:id="@+id/adminLabel"
 		android:textSize="@dimen/SmallTextSize"
-		android:textColor="@color/ApplicationBackground"></TextView>
+		android:textColor="@color/application_text_light"></TextView>
 
 	<TextView
 		android:text="OWNER"

@@ -5,5 +5,5 @@
 	<solid
 		android:color="@color/red" />
 	<corners
-		android:radius="2dp" />
+		android:radius="@dimen/ColorLabelCornerRadius" />
 </shape>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="ActionBarHeight">50dp</dimen>
-    <dimen name="TextSizeMedium">16sp</dimen>
     <dimen name="LargeTextSize">16sp</dimen>
-    <dimen name="ColorLabelCornerRadius">2dp</dimen>
+    <dimen name="ColorLabelCornerRadius">0dp</dimen>
     <dimen name="MediumTextSize">14sp</dimen>
     <dimen name="SmallTextSize">12sp</dimen>
     <dimen name="VerySmallTextSize">10sp</dimen>
@@ -13,4 +12,5 @@
     <dimen name="ac_margin">12dp</dimen>
     <dimen name="color_label_size">12dp</dimen>
     <dimen name="button_height">60dp</dimen>
+    <dimen name="header_height">60dp</dimen>
 </resources>

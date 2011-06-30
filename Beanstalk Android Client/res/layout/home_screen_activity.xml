@@ -5,7 +5,7 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
 	android:paddingBottom="50dp"
-	android:background="@color/light">
+	android:background="@drawable/app_bg">
 	<include
 		layout="@layout/actionbar"
 		android:layout_width="fill_parent"

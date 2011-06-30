@@ -57,9 +57,9 @@
 			android:layout_below="@+id/commitMessage"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/tableRow1">
+			android:id="@+id/tableRow1"
+			android:layout_marginTop="15dp">
 			<Button
-
 				android:text="Changeset"
 				android:layout_marginRight="1dp"
 				android:layout_marginLeft="10dp"
@@ -88,6 +88,7 @@
 		</TableRow>
 	</RelativeLayout>
 	<ListView
+		android:paddingTop="10dp"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:id="@+id/changesList"
@@ -95,6 +96,7 @@
 		android:background="@color/selector_active"></ListView>
 
 	<ListView
+		android:paddingTop="10dp"
 		android:layout_height="fill_parent"
 		android:id="@+id/commentsList"
 		android:layout_width="fill_parent"

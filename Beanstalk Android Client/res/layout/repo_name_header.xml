@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-    	<View
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:orientation="horizontal"
+	android:layout_height="@dimen/header_height"
+	android:minHeight="@dimen/header_height"
+	android:background="@color/dark_entry_bg"
+	android:gravity="center_vertical">
+	<View
 		android:id="@+id/colorLabel"
 		android:background="@drawable/repository_labels"
-		android:layout_width="15dp"
-		android:layout_height="20dp"
-		android:padding="2dp"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"></View>
-		<TextView
+		android:layout_width="@dimen/color_label_size"
+		android:layout_height="@dimen/color_label_size"
+		android:layout_gravity="center_vertical"
+		android:layout_margin="5dp"></View>
+	<TextView
+		style="@style/white_title"
 		android:id="@+id/repoName"
-		android:textSize="@dimen/MediumTextSize"
+		android:layout_marginLeft="5dp"
+		android:layout_gravity="center_vertical"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"/>
+		android:layout_height="wrap_content" />
 </LinearLayout>

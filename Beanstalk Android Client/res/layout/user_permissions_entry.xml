@@ -3,33 +3,36 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="60dp"
+	android:minHeight="60dp"
 	android:orientation="horizontal"
 	android:paddingRight="5dp">
 	<View
 		android:id="@+id/colorLabel"
 		android:background="@drawable/repository_labels"
-		android:layout_width="15dp"
-		android:layout_height="60dp"
-		android:padding="2dp"
+		android:layout_width="@dimen/color_label_size"
+		android:layout_height="@dimen/color_label_size"
+		android:layout_margin="5dp"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true"></View>
 	<TextView
+		style="@style/white_title"
 		android:id="@+id/reposiotryTitle"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
+		android:layout_toLeftOf="@id/repositoryLabel"
 		android:layout_alignParentTop="true"
-		android:layout_toRightOf="@id/colorLabel"
-		android:textSize="@dimen/MediumTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
-
+		android:layout_toRightOf="@id/colorLabel"></TextView>
 	<TextView
-		android:id="@+id/repositoryName"
-		android:gravity="left"
+		style="@style/white_title"
+		android:textColor="@color/application_text_light"
+		android:textSize="@dimen/MediumTextSize"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/colorLabel"
-		android:layout_below="@id/reposiotryTitle"
-		android:textSize="@dimen/SmallTextSize"></TextView>
+		android:textStyle="normal"
+		android:id="@+id/repositoryName"
+		android:layout_below="@+id/reposiotryTitle"
+		android:layout_alignLeft="@+id/reposiotryTitle"
+		android:layout_alignRight="@+id/reposiotryTitle"></TextView>
 
 	<TextView
 		android:gravity="center"
@@ -40,7 +43,7 @@
 		android:layout_alignParentTop="true"
 		android:id="@+id/deploymentPermission"
 		android:textSize="@dimen/VerySmallTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
+		android:textColor="@color/application_text_dark"></TextView>
 
 	<TextView
 		android:gravity="center"
@@ -50,7 +53,7 @@
 		android:id="@+id/repoPermission"
 		android:layout_toLeftOf="@id/deploymentPermission"
 		android:textSize="@dimen/VerySmallTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
+		android:textColor="@color/application_text_dark"></TextView>
 
 	<TextView
 		android:id="@+id/deploymentLabel"
@@ -61,7 +64,7 @@
 		android:padding="2dp"
 		android:layout_below="@id/deploymentPermission"
 		android:textSize="@dimen/VerySmallTextSize"
-		android:textColor="@color/ApplicationText"
+		android:textColor="@color/black"
 		android:gravity="center"></TextView>
 
 	<TextView
@@ -73,7 +76,7 @@
 		android:padding="2dp"
 		android:layout_below="@id/repoPermission"
 		android:textSize="@dimen/VerySmallTextSize"
-		android:textColor="@color/ApplicationText"
+		android:textColor="@color/black"
 		android:gravity="center"></TextView>
 
 

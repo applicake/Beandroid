@@ -16,7 +16,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"></TextView>
 	<ImageView
-		android:src="@drawable/ic_extras_adduser"
+		android:src="@drawable/ic_extras_adduser_normal"
 		android:id="@+id/plusSign"
 		android:layout_toLeftOf="@id/add_user_label"
 		android:layout_width="wrap_content"

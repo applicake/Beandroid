@@ -92,18 +92,13 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 		repoType.setText(repository.getType().equals("SubversionRepository") ? "SVN"
 				: "Git");
 		repoTitle.setText(repository.getTitle());
-		repoCreatedAt.setText("created at: "
-				+ DateFormat.format(dateFormat, repository.getCreatedAt()));
+		repoCreatedAt.setText(DateFormat.format(dateFormat, repository.getCreatedAt()));
 		long lastCommit = repository.getLastCommitAt();
-		repoLastCommit
-				.setText(lastCommit == 0 ? "last commit: no commits in this repository"
-						: "last commit: "
-								+ DateUtils.getRelativeTimeSpanString(lastCommit));
-		repoRevision.setText(String.valueOf("revision: " + repository.getRevision()));
-		repoStorageUsed.setText("storage used: "
-				+ String.valueOf(repository.getStorageUsedBytes()));
-		repoUpdatedAt.setText("updated at: "
-				+ DateFormat.format(dateFormat, repository.getUpdatedAt()));
+		repoLastCommit.setText(lastCommit == 0 ? "no commits in this repository"
+				: DateUtils.getRelativeTimeSpanString(lastCommit));
+		repoRevision.setText(String.valueOf(repository.getRevision()));
+		repoStorageUsed.setText(String.valueOf(repository.getStorageUsedBytes()));
+		repoUpdatedAt.setText(DateFormat.format(dateFormat, repository.getUpdatedAt()));
 
 	}
 

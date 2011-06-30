@@ -48,7 +48,7 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 
 		setContentView(R.layout.dashboard_activity_layout);
 
-		mContext = getApplicationContext();
+		mContext = this;
 
 		changesetList = (ListView) findViewById(R.id.changesetList);
 		changesetArray = new ArrayList<Changeset>();

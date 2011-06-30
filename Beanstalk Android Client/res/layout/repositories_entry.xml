@@ -42,7 +42,6 @@
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:id="@+id/middleRow"
-		android:layout_marginTop="5dp"
 		android:layout_toRightOf="@id/colorLabel"
 		android:layout_below="@id/topRow">
 		
@@ -62,7 +61,5 @@
 			android:textSize="@dimen/MediumTextSize"
 			android:textColor="@color/application_text_light"></TextView>
 	</TableRow>
-
-
 
 </RelativeLayout>

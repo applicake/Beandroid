@@ -41,49 +41,49 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 			if (v.getId() == R.id.buttonWhite) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.WHITE.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			if (v.getId() == R.id.buttonGreen) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.GREEN.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			if (v.getId() == R.id.buttonRed) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.RED.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			if (v.getId() == R.id.buttonOrange) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.ORANGE.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			if (v.getId() == R.id.buttonYellow) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.YELLOW.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			if (v.getId() == R.id.buttonBlue) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.BLUE.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			if (v.getId() == R.id.buttonPink) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.PINK.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			if (v.getId() == R.id.buttonGrey) {
 				colorLabelButton.getBackground().setLevel(
 						colorLabelNo = ColorLabels.GREY.getNumber());
-				colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+				colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 			}
 
 			dialog.dismiss();
@@ -109,7 +109,7 @@ public class RepositoryModifyPropertiesActivity extends BeanstalkActivity implem
 
 		colorLabelButton = (Button) findViewById(R.id.colorLabelButton);
 		colorLabelButton.getBackground().setLevel(colorLabelNo);
-		colorLabelButton.setText(ColorLabels.getLabelFromNumber(colorLabelNo));
+		colorLabelButton.setText(ColorLabels.getLabelFromNumberForButton(colorLabelNo));
 		colorLabelButton.setOnClickListener(this);
 
 		saveChangesButton = (Button) findViewById(R.id.saveChangesButton);

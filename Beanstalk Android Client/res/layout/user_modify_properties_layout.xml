@@ -2,11 +2,12 @@
 <ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content">
+	android:layout_height="wrap_content"
+	android:fillViewport="true"
+	android:background="@drawable/app_bg">
 	<RelativeLayout
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:background="@color/ApplicationBackground">
+		android:layout_height="fill_parent">
 		<include
 			layout="@layout/actionbar"
 			android:layout_alignParentTop="true"
@@ -17,18 +18,17 @@
 			android:layout_below="@id/actionbar"
 			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:layout_height="wrap_content"></TextView>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="Name:"
 			android:id="@+id/nameLabel"
 			android:layout_below="@id/title"
 			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:layout_height="wrap_content"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/nameEditText"
 			android:layout_below="@id/nameLabel"
 			android:layout_width="fill_parent"
@@ -36,14 +36,14 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="Last name:"
 			android:id="@+id/lastNameLabel"
 			android:layout_below="@id/nameEditText"
 			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:layout_height="wrap_content"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/lastNameEditText"
 			android:layout_below="@id/lastNameLabel"
 			android:layout_width="fill_parent"
@@ -51,14 +51,14 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="E-mail:"
 			android:id="@+id/emailLabel"
 			android:layout_below="@id/lastNameEditText"
 			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:layout_height="wrap_content"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/emailEditText"
 			android:layout_below="@id/emailLabel"
 			android:layout_width="fill_parent"
@@ -66,43 +66,51 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="timezone:"
 			android:id="@+id/timezoneLabel"
 			android:layout_below="@id/emailEditText"
 			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:layout_height="wrap_content"></TextView>
 		<Spinner
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:padding="10dp"
 			android:id="@+id/timezoneSpinner"
 			android:layout_below="@id/timezoneLabel"
 			android:layout_width="fill_parent"
+			android:background="@drawable/et_background"
 			android:layout_centerHorizontal="true"
-			android:layout_height="50dp"></Spinner>
+			android:layout_height="wrap_content"></Spinner>
 
 		<CheckBox
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/timezoneSpinner"
-			android:text="admin"
-			android:textColor="@color/ApplicationText"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:text="Administrator"
+			android:button="@drawable/custom_checkbox"
+			android:textColor="@color/black"
 			android:layout_centerHorizontal="true"
 			android:id="@+id/adminCheckBox"
-			android:layout_width="wrap_content"></CheckBox>
+			android:layout_width="fill_parent"></CheckBox>
 
 		<Button
+			style="@style/button_shadow"
+			android:layout_margin="10dp"
 			android:text="Change password"
 			android:id="@+id/passwordChangeButton"
 			android:layout_below="@id/adminCheckBox"
-			android:layout_alignParentRight="true"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"></Button>
 
 		<Button
-			android:text="Save changes"
+			style="@style/button"
+			android:text="Apply"
+			android:drawableLeft="@drawable/ic_extras_apply_normal"
 			android:id="@+id/saveChangesButton"
 			android:layout_below="@id/passwordChangeButton"
 			android:layout_alignParentRight="true"
-			android:layout_width="150dp"
-			android:layout_height="wrap_content"></Button>
+			android:layout_width="fill_parent"></Button>
 	</RelativeLayout>
 </ScrollView>

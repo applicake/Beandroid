@@ -85,14 +85,14 @@
 		<Button
 			style="@style/button"
 			android:layout_marginTop="130dp"
-			android:drawableLeft="@drawable/ic_button_users"
+			android:drawableLeft="@drawable/ic_user_userpermissions_normal"
 			android:id="@+id/buttonUserPermissions"
 			android:layout_below="@id/userEmail"
 			android:text="User permissions"></Button>
 
 		<Button
 			style="@style/button"
-			android:drawableLeft="@drawable/ic_menu_settings"
+			android:drawableLeft="@drawable/ic_user_modifyproperties_normal"
 			android:id="@+id/buttonModifyProperties"
 			android:layout_below="@id/buttonUserPermissions"
 			android:text="Modify properties"></Button>

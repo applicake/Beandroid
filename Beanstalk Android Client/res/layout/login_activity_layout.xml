@@ -16,17 +16,17 @@
 			android:layout_alignParentTop="true"
 			android:layout_marginTop="30dp"
 			android:layout_marginBottom="30dp"
-			android:src="@drawable/ic_ab_beandroid_home_normal"
+			android:src="@drawable/beandoid_logo"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></ImageView>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="Account domain: "
 			android:textColor="@color/ApplicationText"
 			android:id="@+id/account_domain_textview"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@id/title"
-			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
 
 		<EditText
@@ -57,7 +57,7 @@
 			android:layout_below="@id/footer_info"
 			android:textSize="@dimen/MediumTextSize"
 			android:id="@+id/login_text_view"
-			android:layout_width="wrap_content"
+			style="@style/edit_text_label"
 			android:layout_height="wrap_content"></TextView>
 
 		<EditText
@@ -76,7 +76,7 @@
 			android:layout_below="@id/login_edittext"
 			android:textSize="@dimen/MediumTextSize"
 			android:id="@+id/password_textview"
-			android:layout_width="wrap_content"
+			style="@style/edit_text_label"
 			android:layout_height="wrap_content"></TextView>
 
 		<EditText
@@ -111,5 +111,6 @@
 			android:layout_below="@id/remember_me_check_box"
 			android:id="@+id/login_button"
 			android:layout_width="fill_parent"></Button>
+			
 	</RelativeLayout>
 </ScrollView>

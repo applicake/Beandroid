@@ -39,6 +39,10 @@ public enum ColorLabels {
 		return intToString.get(i);
 	}
 
+	public static String getLabelFromNumberForButton(int i) {
+		return intToString.get(i).substring(6);
+	}
+
 	public static int getNumberFromLabel(String label) {
 		return stringToInt.get(label);
 	}

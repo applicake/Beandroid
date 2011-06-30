@@ -34,6 +34,7 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 	private Context mContext;
 	private String repoId;
 	private String repoTitle;
+	private int repoColorLabelNo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 		Intent currentIntent = getIntent();
 		repoId = currentIntent.getStringExtra(Constants.REPOSITORY_ID);
 		repoTitle = currentIntent.getStringExtra(Constants.REPOSITORY_TITLE);
-		int repoColorLabelNo = currentIntent
+		repoColorLabelNo = currentIntent
 				.getIntExtra(Constants.REPOSITORY_COLOR_NO, 0);
 
 		mContext = this;
@@ -52,7 +53,6 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 				R.layout.repository_changeset_entry, changesetArray);
 
 		ListView changesetList = (ListView) findViewById(R.id.changesetList);
-
 		View headerView = ((LayoutInflater) getApplicationContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.repo_name_header,
 				null, false);
@@ -80,6 +80,8 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 					changeset.getChangedFiles());
 			intent.putParcelableArrayListExtra(Constants.CHANGEDDIRS_ARRAYLIST,
 					changeset.getChangedDirs());
+			intent.putExtra(Constants.COMMIT_REPOSIOTRY_NAME, repoTitle);
+			intent.putExtra(Constants.COMMIT_REPOSIOTRY_LABEL, repoColorLabelNo);
 			intent.putExtra(Constants.COMMIT_USERNAME, changeset.getAuthor());
 			intent.putExtra(Constants.COMMIT_MESSAGE, changeset.getMessage());
 			intent.putExtra(Constants.COMMIT_REPOSITORY_ID, changeset.getRepositoryId());
