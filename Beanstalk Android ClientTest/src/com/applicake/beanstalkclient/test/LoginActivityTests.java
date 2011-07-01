@@ -1,6 +1,7 @@
 package com.applicake.beanstalkclient.test;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import com.applicake.beanstalkclient.*;
 
@@ -35,13 +36,19 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
 	String[] invalidDomainValidLoginInvalidPassword = { "1bartosz-filipowicz",
 			"bartoszfilipowicz", SecretData.PASSWORD + "xx" }; 		// 010
 
-	private LoginActivity baseActivity;
 
 	@Override
 	protected void setUp() throws Exception {
-		baseActivity = getActivity();
+		Log.d("tests", "setup");
 		super.setUp();
 	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		Log.d("tests", "teardown");
+		super.tearDown();
+	}
+	
 
 	// verify login task tests [on-line]
 
@@ -63,6 +70,7 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
 				validDomainValidLoginValidPassword);
 		runTestOnUiThread(testCouple.mRunnable);
 		assertEquals("111", new Integer(200), testCouple.mTestVerifyLoginTask.get());
+		
 	}
 
 	public void testVerifyLoginTaskResult110() throws Throwable {
@@ -102,13 +110,13 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
 	}
 
 	public void testVerifyLoginTaskResult001() throws Throwable {
-
+		setUp();
 		// 001
 		RunnableTaskCouple testCouple = new RunnableTaskCouple(
 				invalidDomainInvalidLoginValidPassword);
 		runTestOnUiThread(testCouple.mRunnable);
 		assertEquals("001", new Integer(401), testCouple.mTestVerifyLoginTask.get());
-
+		
 	}
 
 	public void testVerifyLoginTaskResult010() throws Throwable {
@@ -140,7 +148,7 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
 		public LoginActivity.VerifyLoginTask mTestVerifyLoginTask;
 
 		public RunnableTaskCouple(final String[] params) {
-			mTestVerifyLoginTask = baseActivity.new VerifyLoginTask();
+			mTestVerifyLoginTask = getActivity().new VerifyLoginTask();
 			mRunnable = new Runnable() {
 				@Override
 				public void run() {

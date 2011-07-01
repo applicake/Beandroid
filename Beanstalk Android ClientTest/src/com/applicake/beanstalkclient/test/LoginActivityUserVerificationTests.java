@@ -6,8 +6,10 @@ import com.applicake.beanstalkclient.LoginActivity;
 import com.applicake.beanstalkclient.enums.UserType;
 
 import android.content.SharedPreferences;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 public class LoginActivityUserVerificationTests extends
 		ActivityInstrumentationTestCase2<LoginActivity> {
@@ -32,16 +34,25 @@ public class LoginActivityUserVerificationTests extends
 
 	@Override
 	protected void setUp() throws Exception {
+		Log.d("tests", "setup");
 		baseActivity = getActivity();
 		prefs = PreferenceManager.getDefaultSharedPreferences(baseActivity);
 		prefs.edit().clear().commit();
 		super.setUp();
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		Log.d("tests", "teardown");
+		super.tearDown();
 	}
 
 	public void testOwnerUserTypeRecogintion() throws Throwable{
 		RunnableTaskCouple testCouple = new RunnableTaskCouple(
 				ownerCorrect);
 		runTestOnUiThread(testCouple.mRunnable);
+		testCouple.mTestVerifyLoginTask.get();
+		Thread.sleep(100);
 		String userType = prefs.getString(Constants.USER_TYPE, "");
 		assertEquals(UserType.OWNER.name(), userType);
 

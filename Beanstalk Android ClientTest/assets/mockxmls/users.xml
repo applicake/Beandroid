@@ -3,6 +3,7 @@
   <user>
     <account-id type="integer">88998</account-id>
     <admin type="boolean" nil="true"></admin>
+    <owner type="boolean">true</owner>
     <created-at type="datetime">2011-04-26T09:29:27+02:00</created-at>
     <email>bartek.f@applicake.com</email>
     <first-name>Bartosz</first-name>
@@ -15,6 +16,7 @@
   <user>
     <account-id type="integer">88998</account-id>
     <admin type="boolean">true</admin>
+    <owner type="boolean">false</owner>
     <created-at type="datetime">2011-05-09T09:11:21+02:00</created-at>
     <email>bartek.f+DarthVader@applicake.com</email>
     <first-name>Darth</first-name>
@@ -27,6 +29,7 @@
   <user>
     <account-id type="integer">88998</account-id>
     <admin type="boolean">false</admin>
+    <owner type="boolean">false</owner>
     <created-at type="datetime">2011-05-04T12:34:31+02:00</created-at>
     <email>bartek.f+HanSolo@applicake.com</email>
     <first-name>Han</first-name>
@@ -39,6 +42,7 @@
   <user>
     <account-id type="integer">88998</account-id>
     <admin type="boolean">false</admin>
+    <owner type="boolean">false</owner>
     <created-at type="datetime">2011-05-09T09:10:46+02:00</created-at>
     <email>bartek.f+LukeSkywalker@applicake.com</email>
     <first-name>Luke</first-name>

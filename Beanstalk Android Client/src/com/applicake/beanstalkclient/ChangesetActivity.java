@@ -402,6 +402,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 						Comment comment = XmlParser.parseComment(result);
 						commentsArray.add(comment);
 						commentAdapter.notifyDataSetChanged();
+						newCommentBody.setText("");
 
 					} catch (XMLParserException e) {
 						e.printStackTrace();
@@ -410,7 +411,7 @@ public class ChangesetActivity extends BeanstalkActivity implements OnClickListe
 					GUI.displayMonit(mContext, errorMessage);
 
 				} else {
-					GUI.displayMonit(mContext, "unexpected error");
+					GUI.displayMonit(mContext, "Unexpected error");
 				}
 			}
 

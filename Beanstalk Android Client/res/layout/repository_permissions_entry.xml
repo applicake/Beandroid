@@ -21,9 +21,11 @@
 		android:id="@+id/userName"
 		android:layout_toRightOf="@id/userGravatar"
 		android:layout_alignParentTop="true"
-		android:layout_marginTop="5dp"
+		android:layout_marginTop="10dp"
+		android:layout_alignRight="@+id/repositoryLabel"
+		android:textStyle="bold"
 		android:textSize="@dimen/MediumTextSize"
-		android:textColor="@color/ApplicationText"></TextView>
+		android:textColor="@color/black"></TextView>
 
 	<TextView
 		android:layout_width="wrap_content"
@@ -31,12 +33,14 @@
 		android:layout_toRightOf="@id/userGravatar"
 		android:layout_below="@id/userName"
 		android:id="@+id/userEmail"
+		android:textColor="@color/black"
 		android:textSize="@dimen/SmallTextSize"></TextView>
 
 	<TextView
 		android:visibility="gone"
 		android:gravity="center"
 		android:text="deployment"
+		android:layout_marginLeft="5dp"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:layout_alignParentRight="true"
@@ -50,7 +54,6 @@
 		android:gravity="center"
 		android:text="access"
 		android:minWidth="50dp"
-		android:paddingRight="5dp"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
 		android:id="@+id/repoPermission"
@@ -61,6 +64,7 @@
 	<TextView
 		android:visibility="gone"
 		android:id="@+id/deploymentLabel"
+
 		android:background="@drawable/permission_labels"
 		android:layout_width="50dp"
 		android:layout_height="15dp"
@@ -73,11 +77,11 @@
 
 	<TextView
 		android:visibility="gone"
-		android:id="@+id/repositoryLabel"
+		android:id="@id/repositoryLabel"
 		android:background="@drawable/permission_labels"
 		android:layout_width="50dp"
 		android:layout_height="15dp"
-		android:layout_alignLeft="@id/repoPermission"
+		android:layout_alignRight="@id/repoPermission"
 		android:padding="2dp"
 		android:layout_below="@id/repoPermission"
 		android:textSize="@dimen/VerySmallTextSize"

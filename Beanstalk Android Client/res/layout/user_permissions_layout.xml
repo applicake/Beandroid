@@ -18,37 +18,10 @@
 			android:layout_width="40dp"
 			android:layout_height="40dp"
 			android:id="@+id/userGravatar"
-			android:layout_centerVertical="true"
+			android:layout_marginTop="10dp"
 			android:layout_marginRight="10dp"
 			android:layout_alignParentLeft="true"></ImageView>
 
-		<TextView
-			android:text="ADMIN"
-			android:background="@drawable/label_red"
-			android:visibility="gone"
-			android:layout_marginRight="10dp"
-			android:gravity="center"
-			android:layout_width="60dp"
-			android:layout_height="18dp"
-			android:layout_alignParentRight="true"
-			android:layout_alignParentTop="true"
-			android:id="@+id/adminLabel"
-			android:textSize="@dimen/SmallTextSize"
-			android:textColor="@color/ApplicationBackground"></TextView>
-
-		<TextView
-			android:text="OWNER"
-			android:background="@drawable/label_green"
-			android:visibility="gone"
-			android:layout_marginRight="10dp"
-			android:gravity="center"
-			android:layout_width="60dp"
-			android:layout_height="18dp"
-			android:layout_alignParentRight="true"
-			android:layout_alignParentTop="true"
-			android:id="@+id/ownerLabel"
-			android:textSize="@dimen/SmallTextSize"
-			android:textColor="@color/application_text_light"></TextView>
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -57,7 +30,7 @@
 			android:textColor="@color/black"
 			android:layout_toRightOf="@id/userGravatar"
 			android:layout_alignParentTop="true"
-			android:layout_marginTop="5dp"
+			android:layout_marginTop="10dp"
 			android:textSize="@dimen/LargeTextSize"
 			android:textStyle="bold"></TextView>
 

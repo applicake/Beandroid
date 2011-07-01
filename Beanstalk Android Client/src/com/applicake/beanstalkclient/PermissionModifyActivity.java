@@ -22,6 +22,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -54,6 +56,7 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 
 		TextView userName = (TextView) findViewById(R.id.userName);
 		userName.setText(user.getFirstName() + " " + user.getLastName());
+		((TextView) findViewById(R.id.userEmail)).setText(user.getEmail());
 
 		findViewById(R.id.colorLabel).getBackground().setLevel(
 				repository.getColorLabelNo());
@@ -68,17 +71,46 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
 
 		repoAccessSpinner = (Spinner) findViewById(R.id.repoAccessSpinner);
 		deploymentAccessSpinner = (Spinner) findViewById(R.id.deploymentAccessSpinner);
+		repoAccessSpinner.getBackground().setLevel(2);
+		deploymentAccessSpinner.getBackground().setLevel(1);
+
+		repoAccessSpinner.setOnItemSelectedListener(listener);
+		deploymentAccessSpinner.setOnItemSelectedListener(listener);
 
 		if (permission != null) {
-			if (permission.isWriteAccess())
+			if (permission.isWriteAccess()) {
 				repoAccessSpinner.setSelection(2);
-			else if (permission.isReadAccess())
+				repoAccessSpinner.getBackground().setLevel(0);
+			} else if (permission.isReadAccess()) {
 				repoAccessSpinner.setSelection(1);
+				repoAccessSpinner.getBackground().setLevel(1);
+			}
 			if (permission.isFullDeploymentAccess())
 				deploymentAccessSpinner.setSelection(1);
+			deploymentAccessSpinner.getBackground().setLevel(0);
+
 		}
 
 	}
+
+	//a listener that changes color label of the spinner after selecting and items.
+	
+	private OnItemSelectedListener listener = new OnItemSelectedListener() {
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			if (parent.getId() == R.id.repoAccessSpinner)
+				parent.getBackground().setLevel(2 - position);
+			if (parent.getId() == R.id.deploymentAccessSpinner)
+				parent.getBackground().setLevel(1 - position);
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	@Override
 	public void onClick(View v) {

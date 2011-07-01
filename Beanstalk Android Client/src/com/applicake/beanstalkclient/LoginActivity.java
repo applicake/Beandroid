@@ -56,7 +56,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 				&& prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
 			// check credentials validity
 
-			Log.i("checkbox checked", "inside if");
 			String storedDomain = prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
 			String storedLogin = prefs.getString(Constants.USER_LOGIN, "");
 			String storedPassword = prefs.getString(Constants.USER_PASSWORD, "");
@@ -204,6 +203,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		@Override
 		protected Integer doInBackground(String... params) {
 
+			Log.d("tests", "background task");
 			domain = params[0];
 			login = params[1];
 			password = params[2];
@@ -257,6 +257,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					editor.putString(Constants.USER_PASSWORD, password);
 					editor.putBoolean(Constants.CREDENTIALS_STORED, true);
 					editor.putString(Constants.USER_TYPE, usertype.name());
+					Log.d("tests", "saving preference " + prefs.toString());
 					if (usertype == UserType.OWNER) {
 						editor.putInt(Constants.NUMBER_OF_REPOS_AVAILABLE,
 								currentPlan.getNumberOfRepos());

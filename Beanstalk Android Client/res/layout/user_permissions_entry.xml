@@ -15,7 +15,8 @@
 		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true"></View>
 	<TextView
-		style="@style/white_title"
+		android:textStyle="bold"
+		android:textSize="@dimen/MediumTextSize"
 		android:id="@+id/reposiotryTitle"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
 	<TextView
 		style="@style/white_title"
 		android:textColor="@color/application_text_light"
-		android:textSize="@dimen/MediumTextSize"
+		android:textSize="@dimen/SmallTextSize"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textStyle="normal"
@@ -59,7 +60,7 @@
 		android:id="@+id/deploymentLabel"
 		android:background="@drawable/permission_labels"
 		android:layout_width="50dp"
-		android:layout_height="15dp"
+		android:layout_height="wrap_content"
 		android:layout_alignRight="@id/deploymentPermission"
 		android:padding="2dp"
 		android:layout_below="@id/deploymentPermission"
@@ -71,13 +72,12 @@
 		android:id="@+id/repositoryLabel"
 		android:background="@drawable/permission_labels"
 		android:layout_width="50dp"
-		android:layout_height="15dp"
+		android:layout_height="wrap_content"
 		android:layout_alignLeft="@id/repoPermission"
 		android:padding="2dp"
 		android:layout_below="@id/repoPermission"
 		android:textSize="@dimen/VerySmallTextSize"
 		android:textColor="@color/black"
 		android:gravity="center"></TextView>
-
 
 </RelativeLayout>

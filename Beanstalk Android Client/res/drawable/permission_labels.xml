@@ -3,10 +3,10 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<item
 		android:maxLevel="0"
-		android:drawable="@drawable/label_green" />
+		android:drawable="@drawable/label_blue" />
 	<item
 		android:maxLevel="1"
-		android:drawable="@drawable/label_blue" />
+		android:drawable="@drawable/label_yellow" />
 	<item
 		android:maxLevel="2"
 		android:drawable="@drawable/label_grey" />

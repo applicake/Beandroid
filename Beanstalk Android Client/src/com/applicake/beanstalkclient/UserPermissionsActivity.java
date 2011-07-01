@@ -19,7 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.applicake.beanstalkclient.adapters.UserPermissionsAdapter;
-import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.GravatarDowloader;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
@@ -68,19 +67,6 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
 
 		((TextView)findViewById(R.id.userName)).setText(user.getFirstName()
 				+ " " + user.getLastName());
-		UserType userType = user.getAdmin();
-
-		if (userType == UserType.ADMIN) {
-			findViewById(R.id.adminLabel).setVisibility(View.VISIBLE);
-			findViewById(R.id.ownerLabel).setVisibility(View.GONE);
-
-		} else if (userType == UserType.OWNER) {
-			findViewById(R.id.ownerLabel).setVisibility(View.VISIBLE);
-			findViewById(R.id.adminLabel).setVisibility(View.GONE);
-		} else {
-			findViewById(R.id.ownerLabel).setVisibility(View.GONE);
-			findViewById(R.id.adminLabel).setVisibility(View.GONE);
-		}
 
 		((TextView)findViewById(R.id.userEmail)).setText(email);
 		

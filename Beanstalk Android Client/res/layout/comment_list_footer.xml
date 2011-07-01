@@ -7,9 +7,11 @@
   android:orientation="vertical">
   		<EditText
 			android:id="@+id/newCommentBody"
+			android:padding="5dp"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 			android:hint="enter your comment here"
+			android:gravity="top|left"
 			android:minLines="4"
 			android:background="@drawable/comment_input_bg"
 			android:textSize="@dimen/MediumTextSize"></EditText>

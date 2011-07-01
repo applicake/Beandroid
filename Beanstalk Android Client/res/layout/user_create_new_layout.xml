@@ -2,33 +2,50 @@
 <ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content">
+	android:layout_height="wrap_content"
+	android:fillViewport="true"
+	android:background="@drawable/app_bg">
 	<RelativeLayout
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:background="@color/ApplicationBackground">
+		>
 		<include
 			layout="@layout/actionbar"
 			android:layout_alignParentTop="true"
 			android:id="@+id/actionbar" />
-		<TextView
-			android:text="Create new user"
+		<LinearLayout
+			android:background="@color/dark_entry_bg"
 			android:id="@+id/title"
+			android:gravity="center"
+			android:layout_width="fill_parent"
+			android:layout_height="@dimen/header_height"
+			android:orientation="horizontal"
 			android:layout_below="@id/actionbar"
-			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:layout_marginBottom="10dp">
+			<ImageView
+				android:src="@drawable/ic_extras_adduser_normal"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="5dp" />
+			<TextView
+				android:text="@string/create_new_user"
+				android:textSize="@dimen/LargeTextSize"
+				android:id="@+id/title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/application_text_light"></TextView>
+		</LinearLayout>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="User login:"
 			android:id="@+id/loginLabel"
 			android:layout_below="@id/title"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/black"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/loginEditText"
 			android:layout_below="@id/loginLabel"
 			android:layout_width="fill_parent"
@@ -36,14 +53,15 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="Name:"
 			android:id="@+id/nameLabel"
 			android:layout_below="@id/loginEditText"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/black"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/nameEditText"
 			android:layout_below="@id/nameLabel"
 			android:layout_width="fill_parent"
@@ -51,14 +69,15 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="Last name:"
 			android:id="@+id/lastNameLabel"
 			android:layout_below="@id/nameEditText"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/black"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/lastNameEditText"
 			android:layout_below="@id/lastNameLabel"
 			android:layout_width="fill_parent"
@@ -66,14 +85,15 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="E-mail:"
 			android:id="@+id/emailLabel"
 			android:layout_below="@id/lastNameEditText"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/black"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/emailEditText"
 			android:layout_below="@id/emailLabel"
 			android:layout_width="fill_parent"
@@ -81,48 +101,51 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="timezone:"
 			android:id="@+id/timezoneLabel"
 			android:layout_below="@id/emailEditText"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
-			
+			android:textColor="@color/black"></TextView>
+
 		<Spinner
+			style="@style/edit_text"
 			android:id="@+id/timezonesSpinner"
 			android:layout_below="@id/timezoneLabel"
 			android:layout_width="fill_parent"
-			android:layout_centerHorizontal="true"
 			android:layout_height="wrap_content"></Spinner>
 
 		<CheckBox
+			style="@style/custom_checkbox"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/timezonesSpinner"
 			android:text="admin"
-			android:textColor="@color/ApplicationText"
-			android:layout_centerHorizontal="true"
+			android:textColor="@color/black"
 			android:id="@+id/adminCheckBox"
 			android:layout_width="wrap_content"></CheckBox>
-
-		<EditText
-			android:id="@+id/passwordEditText"
-			android:text="change password"
-			android:gravity="center"
+		<TextView
+			style="@style/edit_text_label"
+			android:text="Password:"
+			android:id="@+id/passwordLabel"
 			android:layout_below="@id/adminCheckBox"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/black"></TextView>
+		<EditText
+			style="@style/edit_text"
+			android:id="@+id/passwordEditText"
+			android:gravity="center"
+			android:layout_below="@id/passwordLabel"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"></EditText>
 
 		<Button
+			style="@style/button"
 			android:text="Create"
+			android:drawableLeft="@drawable/ic_extras_plus_normal"
 			android:id="@+id/createButton"
-			android:layout_below="@id/passwordEditText"
-			android:layout_alignParentRight="true"
-			android:layout_width="150dp"
-			android:layout_height="wrap_content"></Button>
-
-
-
+			android:layout_below="@id/passwordEditText"></Button>
 	</RelativeLayout>
 </ScrollView>

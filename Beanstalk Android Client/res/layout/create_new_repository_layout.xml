@@ -8,88 +8,108 @@
 
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:background="@color/ApplicationBackground">
+		android:background="@drawable/app_bg">
 		<include
 			layout="@layout/actionbar"
 			android:layout_alignParentTop="true"
 			android:id="@+id/actionbar" />
-		<TextView
-			android:text="Create new repository"
+		<LinearLayout
+			android:background="@color/dark_entry_bg"
 			android:id="@+id/title"
+			android:gravity="center"
+			android:layout_width="fill_parent"
+			android:layout_height="@dimen/header_height"
+			android:orientation="horizontal"
 			android:layout_below="@id/actionbar"
-			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"></TextView>
+			android:layout_marginBottom="10dp">
+			<ImageView
+				android:src="@drawable/ic_extras_plus_normal"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="5dp" />
+			<TextView
+				android:text="@string/create_new_repo"
+				android:textSize="@dimen/LargeTextSize"
+				android:id="@+id/title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/application_text_light"></TextView>
+		</LinearLayout>
 		<TextView
+			style="@style/edit_text_label"
 			android:text="name:"
 			android:id="@+id/nameLabel"
 			android:layout_below="@id/title"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/nameEditText"
 			android:layout_below="@id/nameLabel"
 			android:layout_width="fill_parent"
 			android:layout_centerHorizontal="true"
 			android:layout_height="wrap_content"></EditText>
-
 		<TextView
+			style="@style/edit_text_label"
 			android:text="type:"
 			android:id="@+id/typeLabel"
 			android:layout_below="@id/nameEditText"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
 		<Spinner
+			style="@style/edit_text"
 			android:id="@+id/typeSpinner"
 			android:entries="@array/repository_types"
 			android:layout_below="@id/typeLabel"
 			android:layout_width="fill_parent"
 			android:layout_centerHorizontal="true"
 			android:layout_height="wrap_content"></Spinner>
-
 		<TextView
-			android:text="title:"
+			style="@style/edit_text_label"
+			android:text="Title:"
 			android:id="@+id/titleLabel"
 			android:layout_below="@id/typeSpinner"
 			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/titleEditText"
 			android:layout_below="@id/titleLabel"
 			android:layout_width="fill_parent"
 			android:layout_centerHorizontal="true"
 			android:layout_height="wrap_content"></EditText>
 		<CheckBox
+			style="@style/custom_checkbox"
 			android:text="create structure"
 			android:id="@+id/structureCheckBox"
+			android:layout_marginBottom="10dp"
 			android:layout_below="@id/titleEditText"
 			android:layout_width="fill_parent"
 			android:layout_centerHorizontal="true"
 			android:layout_height="wrap_content"></CheckBox>
 		<TextView
+			style="@style/edit_text_label"
 			android:text="color label:"
 			android:id="@+id/colorLabelLabel"
 			android:layout_below="@id/structureCheckBox"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
 		<Button
-			android:background="@drawable/repository_labels"
 			android:id="@+id/colorLabelButton"
+			android:background="@drawable/repository_labels"
 			android:layout_below="@id/colorLabelLabel"
 			android:layout_centerHorizontal="true"
-			android:layout_width="100dp"
+			android:layout_width="fill_parent"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginBottom="20dp"
 			android:layout_height="50dp"></Button>
 		<Button
-			android:text="Create!"
+			style="@style/button"
+			android:text="Create"
+			android:drawableLeft="@drawable/ic_extras_plus_normal"
 			android:id="@+id/createButton"
-			android:layout_below="@id/colorLabelButton"
-			android:layout_alignParentRight="true"
-			android:layout_width="150dp"
-			android:layout_height="wrap_content"></Button>
+			android:layout_below="@id/colorLabelButton"></Button>
 
 	</RelativeLayout>
 </ScrollView>

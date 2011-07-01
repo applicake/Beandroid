@@ -128,4 +128,18 @@
 		<item
 			name="android:layout_width">fill_parent</item>
 	</style>
+	<style name="styleName">
+		<item name="android:button">@drawable/custom_checkbox</item>
+		<item name="android:layout_marginLeft">10dp</item>
+		<item name="android:layout_marginRight">10dp</item>
+		<item name="android:textColor">@color/ApplicationText</item>
+		<item name="android:textSize">@dimen/MediumTextSize</item>
+	</style>
+	<style name="custom_checkbox">
+		<item name="android:button">@drawable/custom_checkbox</item>
+		<item name="android:layout_marginLeft">10dp</item>
+		<item name="android:layout_marginRight">10dp</item>
+		<item name="android:textColor">@color/black</item>
+		<item name="android:textSize">@dimen/MediumTextSize</item>
+	</style>
 </resources>

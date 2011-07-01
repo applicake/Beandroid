@@ -57,4 +57,5 @@
 		name="selector_inactive">#70C109</color>
 	<color
 		name="comment_input_background">#CBC5BE</color>
+	<color name="transparent">#00000000</color>
 </resources>

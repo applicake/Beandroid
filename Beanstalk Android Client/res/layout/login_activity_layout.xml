@@ -89,16 +89,11 @@
 			android:layout_height="wrap_content"
 			android:password="true"></EditText>
 
-		<CheckBox
+		<CheckBox style="@style/custom_checkbox"
 			android:text="Remeber me"
-			android:button="@drawable/custom_checkbox"
-			android:textColor="@color/ApplicationText"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@id/password_edittext"
-			android:textSize="@dimen/MediumTextSize"
 			android:id="@+id/remember_me_check_box"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
 			android:layout_marginBottom="10dp"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"></CheckBox>

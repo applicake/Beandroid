@@ -8,6 +8,7 @@
 		android:layout_width="fill_parent"
 		android:layout_alignParentLeft="true"
 		android:id="@+id/topRow"
+		android:paddingLeft="5dp"
 		android:layout_height="wrap_content">
 		<ImageView
 			android:layout_alignParentLeft="true"
@@ -23,7 +24,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="@dimen/MediumTextSize"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textStyle="bold"
+			android:textColor="@color/black"></TextView>
 		<TextView
 			android:id="@+id/commentDate"
 			android:layout_toRightOf="@id/userGravatar"
@@ -31,12 +33,12 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="@dimen/SmallTextSize"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/application_text_dark"></TextView>
 	</RelativeLayout>
 	<TextView
+		android:paddingLeft="40dp"
 		android:layout_width="wrap_content"
 		android:layout_below="@id/topRow"
-		android:layout_alignParentLeft="true"
 		android:layout_height="wrap_content"
 		android:id="@+id/commentBody"
 		android:textSize="@dimen/MediumTextSize"

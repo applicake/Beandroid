@@ -74,8 +74,14 @@ public class UserPermissionsAdapter extends ArrayAdapter<Repository> {
 					deploymentPermissionLabel.setText("write");
 					deploymentPermissionLabel.getBackground().setLevel(0);
 				} else {
-					deploymentPermissionLabel.setText("read");
-					deploymentPermissionLabel.getBackground().setLevel(2);
+					if (!permission.isReadAccess()){
+						deploymentPermissionLabel.setText("read");
+						deploymentPermissionLabel.getBackground().setLevel(2);
+					} else {
+						deploymentPermissionLabel.setText("read");
+						deploymentPermissionLabel.getBackground().setLevel(1);
+					}
+
 				}
 			} else {
 				repoPermissionLabel.setText("no access");

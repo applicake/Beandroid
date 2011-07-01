@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.applicake.beanstalkclient.adapters.SpinnerTimezoneAdapter;
 import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.GUI;
+import com.applicake.beanstalkclient.utils.GravatarDowloader;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.RailsTimezones;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
@@ -26,7 +27,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 		OnClickListener {
@@ -54,6 +57,11 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
 		setContentView(R.layout.user_modify_properties_layout);
 		mContext = this;
 		user = getIntent().getParcelableExtra(Constants.USER);
+		
+		GravatarDowloader.getInstance().download(user.getEmail(), (ImageView) findViewById(R.id.userGravatar));
+		((TextView) findViewById(R.id.userName)).setText(user.getFirstName() + " "
+				+ user.getLastName());
+		((TextView) findViewById(R.id.userEmail)).setText(user.getEmail());
 
 		nameEditText = (EditText) findViewById(R.id.nameEditText);
 		lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);

@@ -12,13 +12,42 @@
 			layout="@layout/actionbar"
 			android:layout_alignParentTop="true"
 			android:id="@+id/actionbar" />
-		<TextView
-			android:text="User properties"
-			android:id="@+id/title"
+			
+		<RelativeLayout
 			android:layout_below="@id/actionbar"
-			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"></TextView>
+			android:id="@+id/title"
+			android:layout_width="fill_parent"
+			android:layout_height="@dimen/list_entry_height"
+			android:orientation="horizontal"
+			android:padding="5dp">
+			<ImageView
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:id="@+id/userGravatar"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="10dp"
+				android:layout_alignParentLeft="true"></ImageView>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/userName"
+				android:textColor="@color/black"
+				android:layout_toRightOf="@id/userGravatar"
+				android:layout_alignParentTop="true"
+				android:layout_marginTop="5dp"
+				android:textSize="@dimen/LargeTextSize"
+				android:textStyle="bold"></TextView>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/userGravatar"
+				android:layout_below="@id/userName"
+				android:id="@+id/userEmail"
+				android:textColor="@color/black"
+				android:textSize="@dimen/MediumTextSize"></TextView>
+
+		</RelativeLayout>
 
 		<TextView
 			style="@style/edit_text_label"

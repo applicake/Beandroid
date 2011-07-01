@@ -4,13 +4,12 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
-	android:background="@color/ApplicationBackground">
+	android:background="@drawable/app_bg">
 	<include
 		layout="@layout/actionbar" />
 	<ListView
 		android:id="@+id/userPermissionsList"
 		android:layout_height="fill_parent"
 		android:layout_width="fill_parent"
-		android:cacheColorHint="#00000000"
-		android:background="@color/ApplicationBackground"></ListView>
+		android:cacheColorHint="#00000000"></ListView>
 </LinearLayout>
