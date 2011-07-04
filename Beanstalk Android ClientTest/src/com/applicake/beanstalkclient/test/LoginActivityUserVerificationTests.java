@@ -1,9 +1,13 @@
 package com.applicake.beanstalkclient.test;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.LoginActivity;
 import com.applicake.beanstalkclient.enums.UserType;
 
+import android.app.Service;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -49,8 +53,7 @@ public class LoginActivityUserVerificationTests extends
   public void testOwnerUserTypeRecogintion() throws Throwable {
     RunnableTaskCouple testCouple = new RunnableTaskCouple(ownerCorrect);
     runTestOnUiThread(testCouple.mRunnable);
-    testCouple.mTestVerifyLoginTask.get();
-    Thread.sleep(100);
+    testCouple.mSignal.await(30, TimeUnit.SECONDS);
     String userType = prefs.getString(Constants.USER_TYPE, "");
     assertEquals(UserType.OWNER.name(), userType);
 
@@ -79,9 +82,16 @@ public class LoginActivityUserVerificationTests extends
   private class RunnableTaskCouple {
     public Runnable mRunnable;
     public LoginActivity.VerifyLoginTask mTestVerifyLoginTask;
+    final CountDownLatch mSignal = new CountDownLatch(1);
 
     public RunnableTaskCouple(final String[] params) {
-      mTestVerifyLoginTask = baseActivity.new VerifyLoginTask();
+      mTestVerifyLoginTask = baseActivity.new VerifyLoginTask(){
+        @Override
+        protected void onPostExecute(Integer result) {
+          super.onPostExecute(result);
+          mSignal.countDown();
+        }
+      };
       mRunnable = new Runnable() {
         @Override
         public void run() {
