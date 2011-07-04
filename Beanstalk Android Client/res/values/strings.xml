@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Beandroid</string>
-    <string name="settings">Settings</string>
-    <string name="logout">Logout</string>
-    <string name="exit">Exit</string>
-    <string name="network_connection_error">An error occured while trying to connect to the server.</string>
-    <string name="internal_xml_error">The application encountered an internal error. </string>
-    <string name="modify_repository_properties">Modify repository <b>properties</b></string>
-    <string name="create_new_repo">Create new <b>repository</b></string>
-    <string name="create_new_user">Create new <b>user</b></string>
+	<string
+		name="app_name">Beandroid</string>
+	<string
+		name="settings">Settings</string>
+	<string
+		name="logout">Logout</string>
+	<string
+		name="exit">Exit</string>
+	<string
+		name="network_connection_error">An error occured while trying to connect to the server.</string>
+	<string
+		name="internal_xml_error">The application encountered an internal error. </string>
+	<string
+		name="modify_repository_properties">
+		Modify repository
+		<b>properties</b>
+	</string>
+	<string
+		name="create_new_repo">
+		Create new
+		<b>repository</b>
+	</string>
+	<string
+		name="create_new_user">
+		Create new
+		<b>user</b>
+	</string>
+	<string
+		name="account_settings">Account <b>settings</b></string>
 </resources>

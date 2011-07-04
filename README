@@ -1,0 +1,38 @@
+Beandroid
+
+To install the project simply clone the repository and import projects into Eclipse.
+
+Application flow: 
+The application starts in LoginActivity, where user credentails are verified. If user credentials are valid, he is dispatched to HomeActivity.
+
+
+Notable mentions:
+- All activities except LoginActivity are extending BeanstalkActivity abstract class, thus inheriting Action Bar and Options Menu handling. The class is also responsible for proper handling of Logout and Exit. 
+
+- The layout for login activity has default account domain name, user name, and password temporarily hardcoded inside in order to ease the process of testing.
+
+- The default credentials for the 3 different user types are as follows:
+-- for Owner:
+	account domain: bartosz-filipowicz
+	user name: bartoszfilipowicz
+	password: applicake10
+
+-- for Admin: 
+	account domain: bartosz-filipowicz
+	user name: login
+	password: password
+
+-- for User:
+	account domain: bartosz-filipowicz
+	user name: user
+	password: test	  
+
+Tests:
+The tests are located in Beanstalk Android Client Tests project. 
+So far, the tests are covering:
+- LoginActivityTests: testing if application is properly responding to valid and invalid credentials. (further explanation can be found in the tests file)
+- TimezoneConverterTests: testing conversion between rails timezones (used by Beanstalk) and java timezones.
+- XMLCreatorTests: testing creation of XMLs used in POST, PUT and DELETE requests to Beanstalk API
+- XMLParserTests: testing xml parser used to parse data from XMLs received form Beanstalk API
+- YamlTesting: testing custom simple yaml parser implemented in the application (Yaml is used only in API's Changeset model)
+  

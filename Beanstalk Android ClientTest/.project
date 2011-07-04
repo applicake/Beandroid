@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Beanstalk Android ClientTest</name>
+	<name>Beanstalk Android Client Tests</name>
 	<comment></comment>
 	<projects>
 		<project>Beanstalk Android Client</project>

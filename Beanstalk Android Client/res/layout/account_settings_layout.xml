@@ -3,34 +3,49 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:fillViewport="true">
+	android:fillViewport="true"
+	android:background="@drawable/app_bg">
 	<RelativeLayout
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:background="@color/ApplicationBackground">
+		android:layout_height="fill_parent">
 		<include
 			layout="@layout/actionbar"
 			android:layout_alignParentTop="true"
 			android:id="@+id/actionbar" />
-		<TextView
-			android:text="Account settings"
-			android:id="@+id/account_settings_text_view"
+		<LinearLayout
+			android:background="@color/dark_entry_bg"
+			android:id="@+id/title"
+			android:gravity="center"
+			android:layout_width="fill_parent"
+			android:layout_height="@dimen/header_height"
+			android:orientation="horizontal"
 			android:layout_below="@id/actionbar"
-			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:layout_marginBottom="10dp">
+			<ImageView
+				android:src="@drawable/ic_options_settings_normal"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="5dp" />
+			<TextView
+				android:text="@string/account_settings"
+				android:textSize="@dimen/LargeTextSize"
+				android:id="@+id/title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/application_text_light"></TextView>
+		</LinearLayout>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="Name:"
-			android:layout_marginTop="50dp"
+			android:layout_marginTop="30dp"
 			android:id="@+id/account_name_text_view"
-			android:layout_below="@id/account_settings_text_view"
-			android:layout_centerHorizontal="true"
-			android:layout_width="wrap_content"
+			android:layout_below="@id/title"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@color/ApplicationText"></TextView>
+			android:textColor="@color/black"></TextView>
 		<EditText
+			style="@style/edit_text"
 			android:id="@+id/account_name_edit_text"
 			android:layout_below="@id/account_name_text_view"
 			android:layout_width="fill_parent"
@@ -38,16 +53,17 @@
 			android:layout_height="wrap_content"></EditText>
 
 		<TextView
+			style="@style/edit_text_label"
 			android:text="Timezone:"
 			android:id="@+id/timezone_textview"
-			android:layout_marginTop="50dp"
+			android:layout_marginTop="30dp"
 			android:layout_below="@id/account_name_edit_text"
-			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@color/ApplicationText"></TextView>
 
 		<Spinner
+			style="@style/edit_text"
 			android:id="@+id/timezone_spinner"
 			android:layout_below="@id/timezone_textview"
 			android:layout_width="fill_parent"
@@ -55,12 +71,13 @@
 			android:layout_height="50dp"></Spinner>
 
 		<Button
-			android:text="Save changes"
+			style="@style/button"
+			android:drawableLeft="@drawable/ic_extras_apply_normal"
+			android:text="Apply"
 			android:id="@+id/save_changes_button"
 			android:layout_below="@id/timezone_spinner"
 			android:layout_alignParentRight="true"
-			android:layout_width="150dp"
-			android:layout_marginTop="50dp"
-			android:layout_height="wrap_content"></Button>
+			android:layout_width="fill_parent"
+			android:layout_marginTop="30dp"></Button>
 	</RelativeLayout>
 </ScrollView>
