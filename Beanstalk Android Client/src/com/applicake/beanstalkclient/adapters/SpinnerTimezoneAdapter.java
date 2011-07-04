@@ -11,30 +11,30 @@ import android.widget.TextView;
 
 public class SpinnerTimezoneAdapter extends ArrayAdapter<String> {
 
-	private LayoutInflater mInflater;
-	private List<String> displayedValues;
+  private LayoutInflater mInflater;
+  private List<String> displayedValues;
 
-	public SpinnerTimezoneAdapter(Context context, int textViewResourceId,
-			List<String> popupValuesList, List<String> spinnerValues) {
-		super(context, textViewResourceId, popupValuesList);
-		mInflater = LayoutInflater.from(context);
-		displayedValues = spinnerValues;
+  public SpinnerTimezoneAdapter(Context context, int textViewResourceId,
+      List<String> popupValuesList, List<String> spinnerValues) {
+    super(context, textViewResourceId, popupValuesList);
+    mInflater = LayoutInflater.from(context);
+    displayedValues = spinnerValues;
 
-	}
+  }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		TextView view = (TextView) convertView;
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+    TextView view = (TextView) convertView;
 
-		if (convertView == null) {
-			view = (TextView) mInflater.inflate(android.R.layout.simple_spinner_item,
-					parent, false);
+    if (convertView == null) {
+      view = (TextView) mInflater.inflate(android.R.layout.simple_spinner_item, parent,
+          false);
 
-		}
+    }
 
-		view.setText(displayedValues.get(position));
-		return view;
+    view.setText(displayedValues.get(position));
+    return view;
 
-	}
+  }
 
 }

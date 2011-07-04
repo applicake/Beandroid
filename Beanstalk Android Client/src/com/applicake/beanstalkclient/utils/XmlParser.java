@@ -31,323 +31,322 @@ import com.applicake.beanstalkclient.handlers.UserHandler;
 
 public class XmlParser {
 
-	private static XMLReader initializeReader() throws XMLParserException {
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-		SAXParser parser;
-		try {
-			parser = factory.newSAXParser();
-			XMLReader xmlReader = parser.getXMLReader();
-			return xmlReader;
-		} catch (ParserConfigurationException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+  private static XMLReader initializeReader() throws XMLParserException {
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    SAXParser parser;
+    try {
+      parser = factory.newSAXParser();
+      XMLReader xmlReader = parser.getXMLReader();
+      return xmlReader;
+    } catch (ParserConfigurationException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-	}
+  }
 
-	public static ArrayList<Changeset> parseChangesetList(String xml)
-			throws XMLParserException {
+  public static ArrayList<Changeset> parseChangesetList(String xml)
+      throws XMLParserException {
 
-		XMLReader xmlReader = initializeReader();
+    XMLReader xmlReader = initializeReader();
 
-		ChangesetHandler changesetHandler = new ChangesetHandler();
-		// set handler
-		xmlReader.setContentHandler(changesetHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
+    ChangesetHandler changesetHandler = new ChangesetHandler();
+    // set handler
+    xmlReader.setContentHandler(changesetHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
 
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return changesetHandler.retrieveChangesetList();
+    return changesetHandler.retrieveChangesetList();
 
-	}
+  }
 
-	public static ArrayList<User> parseUserList(String xml) throws XMLParserException {
+  public static ArrayList<User> parseUserList(String xml) throws XMLParserException {
 
-		XMLReader xmlReader = initializeReader();
+    XMLReader xmlReader = initializeReader();
 
-		UserHandler userHandler = new UserHandler();
-		// set handler
-		xmlReader.setContentHandler(userHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
+    UserHandler userHandler = new UserHandler();
+    // set handler
+    xmlReader.setContentHandler(userHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
 
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return userHandler.retrieveUserList();
+    return userHandler.retrieveUserList();
 
-	}
+  }
 
-	public static User parseCurrentUser(String currentUserXML) throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static User parseCurrentUser(String currentUserXML) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		UserHandler userHandler = new UserHandler();
-		// set handler
-		xmlReader.setContentHandler(userHandler);
-		// parse
-		StringReader sr = new StringReader(currentUserXML);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
+    UserHandler userHandler = new UserHandler();
+    // set handler
+    xmlReader.setContentHandler(userHandler);
+    // parse
+    StringReader sr = new StringReader(currentUserXML);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
 
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return userHandler.retrieveUser();
-	}
+    return userHandler.retrieveUser();
+  }
 
-	public static HashMap<Integer, Plan> parsePlan(String planXML)
-			throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static HashMap<Integer, Plan> parsePlan(String planXML)
+      throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		PlanHandler planHandler = new PlanHandler();
-		// set handler
-		xmlReader.setContentHandler(planHandler);
-		// parse
-		StringReader sr = new StringReader(planXML);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
+    PlanHandler planHandler = new PlanHandler();
+    // set handler
+    xmlReader.setContentHandler(planHandler);
+    // parse
+    StringReader sr = new StringReader(planXML);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
 
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return planHandler.retrievePlanMap();
-	}
+    return planHandler.retrievePlanMap();
+  }
 
-	public static ArrayList<Repository> parseRepositoryList(String xml)
-			throws XMLParserException {
+  public static ArrayList<Repository> parseRepositoryList(String xml)
+      throws XMLParserException {
 
-		XMLReader xmlReader = initializeReader();
+    XMLReader xmlReader = initializeReader();
 
-		RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
-		// set handler
-		xmlReader.setContentHandler(repositoriesHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
+    RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
+    // set handler
+    xmlReader.setContentHandler(repositoriesHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
 
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return repositoriesHandler.retrieveRepositoryList();
+    return repositoriesHandler.retrieveRepositoryList();
 
-	}
+  }
 
-	public static Repository parseRepository(String xml) throws XMLParserException {
+  public static Repository parseRepository(String xml) throws XMLParserException {
 
-		XMLReader xmlReader = initializeReader();
+    XMLReader xmlReader = initializeReader();
 
-		RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
-		// set handler
-		xmlReader.setContentHandler(repositoriesHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
+    // set handler
+    xmlReader.setContentHandler(repositoriesHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return repositoriesHandler.retrieveRepository();
+    return repositoriesHandler.retrieveRepository();
 
-	}
+  }
 
-	public static HashMap<Integer, Repository> parseRepositoryHashMap(String xml)
-			throws XMLParserException {
+  public static HashMap<Integer, Repository> parseRepositoryHashMap(String xml)
+      throws XMLParserException {
 
-		XMLReader xmlReader = initializeReader();
+    XMLReader xmlReader = initializeReader();
 
-		RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
-		// set handler
-		xmlReader.setContentHandler(repositoriesHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    RepositoriesHandler repositoriesHandler = new RepositoriesHandler();
+    // set handler
+    xmlReader.setContentHandler(repositoriesHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return repositoriesHandler.retrieveRepositoryHashMap();
+    return repositoriesHandler.retrieveRepositoryHashMap();
 
-	}
+  }
 
-	public static ArrayList<Permission> parsePermissionList(String xml)
-			throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static ArrayList<Permission> parsePermissionList(String xml)
+      throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		PermissionsHandler permissionsHandler = new PermissionsHandler();
-		// set handler
-		xmlReader.setContentHandler(permissionsHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
-			return permissionsHandler.retrievePermissionList();
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    PermissionsHandler permissionsHandler = new PermissionsHandler();
+    // set handler
+    xmlReader.setContentHandler(permissionsHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+      return permissionsHandler.retrievePermissionList();
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-	}
+  }
 
-	public static HashMap<Integer, Permission> parseRepoIdToPermissionHashMap(String xml)
-			throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static HashMap<Integer, Permission> parseRepoIdToPermissionHashMap(String xml)
+      throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		PermissionsHandler permissionsHandler = new PermissionsHandler();
-		// set handler
-		xmlReader.setContentHandler(permissionsHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    PermissionsHandler permissionsHandler = new PermissionsHandler();
+    // set handler
+    xmlReader.setContentHandler(permissionsHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return permissionsHandler.retrievePermissionHashMap();
+    return permissionsHandler.retrievePermissionHashMap();
 
-	}
+  }
 
-	public static Account parseAccountInfo(String xml) throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static Account parseAccountInfo(String xml) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		AccountHandler accountHandler = new AccountHandler();
-		// set handler
-		xmlReader.setContentHandler(accountHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
-			return accountHandler.retrieveAccount();
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    AccountHandler accountHandler = new AccountHandler();
+    // set handler
+    xmlReader.setContentHandler(accountHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+      return accountHandler.retrieveAccount();
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-	}
+  }
 
-	public static ArrayList<Comment> parseCommentList(String xml)
-			throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static ArrayList<Comment> parseCommentList(String xml) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		CommentsHandler commentsHandler = new CommentsHandler();
-		// set handler
-		xmlReader.setContentHandler(commentsHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    CommentsHandler commentsHandler = new CommentsHandler();
+    // set handler
+    xmlReader.setContentHandler(commentsHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return commentsHandler.retrieveCommentList();
+    return commentsHandler.retrieveCommentList();
 
-	}
+  }
 
-	public static Comment parseComment(String xml) throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static Comment parseComment(String xml) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		CommentsHandler commentsHandler = new CommentsHandler();
-		// set handler
-		xmlReader.setContentHandler(commentsHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
-		try {
-			xmlReader.parse(is);
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    CommentsHandler commentsHandler = new CommentsHandler();
+    // set handler
+    xmlReader.setContentHandler(commentsHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-		return commentsHandler.retrieveComment();
+    return commentsHandler.retrieveComment();
 
-	}
+  }
 
-	public static ArrayList<String> parseErrors(String xml) throws XMLParserException {
-		XMLReader xmlReader = initializeReader();
+  public static ArrayList<String> parseErrors(String xml) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
 
-		ErrorHandler errorHandler = new ErrorHandler();
-		// set handler
-		xmlReader.setContentHandler(errorHandler);
-		// parse
-		StringReader sr = new StringReader(xml);
-		InputSource is = new InputSource(sr);
+    ErrorHandler errorHandler = new ErrorHandler();
+    // set handler
+    xmlReader.setContentHandler(errorHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
 
-		try {
-			xmlReader.parse(is);
-			return errorHandler.retrieveErrorList();
-		} catch (IOException e) {
-			throw new XMLParserException(e);
-		} catch (SAXException e) {
-			throw new XMLParserException(e);
-		}
+    try {
+      xmlReader.parse(is);
+      return errorHandler.retrieveErrorList();
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
 
-	}
+  }
 
-	public static class XMLParserException extends Exception {
-		/**
+  public static class XMLParserException extends Exception {
+    /**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
-		private Exception cause;
+    private static final long serialVersionUID = 1L;
+    private Exception cause;
 
-		public XMLParserException(Exception e) {
-			super();
-			cause = e;
-		}
+    public XMLParserException(Exception e) {
+      super();
+      cause = e;
+    }
 
-		public Exception getException() {
-			// TODO Auto-generated method stub
-			return cause;
-		}
-	}
+    public Exception getException() {
+      // TODO Auto-generated method stub
+      return cause;
+    }
+  }
 
 }

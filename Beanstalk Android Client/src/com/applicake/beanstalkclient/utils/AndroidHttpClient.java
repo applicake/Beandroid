@@ -67,217 +67,216 @@ import android.util.Log;
  */
 public final class AndroidHttpClient implements HttpClient {
 
-	// Gzip of data shorter than this probably won't be worthwhile
-	public static long DEFAULT_SYNC_MIN_GZIP_BYTES = 256;
+  // Gzip of data shorter than this probably won't be worthwhile
+  public static long DEFAULT_SYNC_MIN_GZIP_BYTES = 256;
 
-	private static final String TAG = "AndroidHttpClient";
+  private static final String TAG = "AndroidHttpClient";
 
-	/** Set if HTTP requests are blocked from being executed on this thread */
-	private static final ThreadLocal<Boolean> sThreadBlocked = new ThreadLocal<Boolean>();
+  /** Set if HTTP requests are blocked from being executed on this thread */
+  private static final ThreadLocal<Boolean> sThreadBlocked = new ThreadLocal<Boolean>();
 
-	/** Interceptor throws an exception if the executing thread is blocked */
-	private static final HttpRequestInterceptor sThreadCheckInterceptor = new HttpRequestInterceptor() {
-		public void process(HttpRequest request, HttpContext context) {
-			if (sThreadBlocked.get() != null && sThreadBlocked.get()) {
-				throw new RuntimeException("This thread forbids HTTP requests");
-			}
-		}
-	};
+  /** Interceptor throws an exception if the executing thread is blocked */
+  private static final HttpRequestInterceptor sThreadCheckInterceptor = new HttpRequestInterceptor() {
+    public void process(HttpRequest request, HttpContext context) {
+      if (sThreadBlocked.get() != null && sThreadBlocked.get()) {
+        throw new RuntimeException("This thread forbids HTTP requests");
+      }
+    }
+  };
 
-	/**
-	 * Create a new HttpClient with reasonable defaults (which you can update).
-	 * 
-	 * @param userAgent
-	 *            to report in your HTTP requests.
-	 * @param sessionCache
-	 *            persistent session cache
-	 * @return AndroidHttpClient for you to use for all your requests.
-	 */
-	public static AndroidHttpClient newInstance(String userAgent) {
-		HttpParams params = new BasicHttpParams();
+  /**
+   * Create a new HttpClient with reasonable defaults (which you can update).
+   * 
+   * @param userAgent
+   *          to report in your HTTP requests.
+   * @param sessionCache
+   *          persistent session cache
+   * @return AndroidHttpClient for you to use for all your requests.
+   */
+  public static AndroidHttpClient newInstance(String userAgent) {
+    HttpParams params = new BasicHttpParams();
 
-		// Turn off stale checking. Our connections break all the time anyway,
-		// and it's not worth it to pay the penalty of checking every time.
-		HttpConnectionParams.setStaleCheckingEnabled(params, false);
+    // Turn off stale checking. Our connections break all the time anyway,
+    // and it's not worth it to pay the penalty of checking every time.
+    HttpConnectionParams.setStaleCheckingEnabled(params, false);
 
-		// Default connection and socket timeout of 20 seconds. Tweak to taste.
-		HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
-		HttpConnectionParams.setSoTimeout(params, 20 * 1000);
-		HttpConnectionParams.setSocketBufferSize(params, 8192);
+    // Default connection and socket timeout of 20 seconds. Tweak to taste.
+    HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
+    HttpConnectionParams.setSoTimeout(params, 20 * 1000);
+    HttpConnectionParams.setSocketBufferSize(params, 8192);
 
-		// Don't handle redirects -- return them to the caller. Our code
-		// often wants to re-POST after a redirect, which we must do ourselves.
-		HttpClientParams.setRedirecting(params, false);
+    // Don't handle redirects -- return them to the caller. Our code
+    // often wants to re-POST after a redirect, which we must do ourselves.
+    HttpClientParams.setRedirecting(params, false);
 
-		// Set the specified user agent and register standard protocols.
-		HttpProtocolParams.setUserAgent(params, userAgent);
-		SchemeRegistry schemeRegistry = new SchemeRegistry();
-		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(),
-				80));
-		schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(),
-				443));
+    // Set the specified user agent and register standard protocols.
+    HttpProtocolParams.setUserAgent(params, userAgent);
+    SchemeRegistry schemeRegistry = new SchemeRegistry();
+    schemeRegistry
+        .register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+    schemeRegistry
+        .register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
 
-		ClientConnectionManager manager = new ThreadSafeClientConnManager(params,
-				schemeRegistry);
+    ClientConnectionManager manager = new ThreadSafeClientConnManager(params,
+        schemeRegistry);
 
-		// We use a factory method to modify superclass initialization
-		// parameters without the funny call-a-static-method dance.
-		return new AndroidHttpClient(manager, params);
-	}
+    // We use a factory method to modify superclass initialization
+    // parameters without the funny call-a-static-method dance.
+    return new AndroidHttpClient(manager, params);
+  }
 
-	/**
-	 * Create a new HttpClient with reasonable defaults (which you can update).
-	 * 
-	 * @param userAgent
-	 *            to report in your HTTP requests.
-	 * @return AndroidHttpClient for you to use for all your requests.
-	 */
+  /**
+   * Create a new HttpClient with reasonable defaults (which you can update).
+   * 
+   * @param userAgent
+   *          to report in your HTTP requests.
+   * @return AndroidHttpClient for you to use for all your requests.
+   */
 
-	private final HttpClient delegate;
+  private final HttpClient delegate;
 
-	private RuntimeException mLeakedException = new IllegalStateException(
-			"AndroidHttpClient created and never closed");
+  private RuntimeException mLeakedException = new IllegalStateException(
+      "AndroidHttpClient created and never closed");
 
-	private AndroidHttpClient(ClientConnectionManager ccm, HttpParams params) {
-		this.delegate = new DefaultHttpClient(ccm, params) {
-			@Override
-			protected BasicHttpProcessor createHttpProcessor() {
-				// Add interceptor to prevent making requests from main thread.
-				BasicHttpProcessor processor = super.createHttpProcessor();
-				processor.addRequestInterceptor(sThreadCheckInterceptor);
+  private AndroidHttpClient(ClientConnectionManager ccm, HttpParams params) {
+    this.delegate = new DefaultHttpClient(ccm, params) {
+      @Override
+      protected BasicHttpProcessor createHttpProcessor() {
+        // Add interceptor to prevent making requests from main thread.
+        BasicHttpProcessor processor = super.createHttpProcessor();
+        processor.addRequestInterceptor(sThreadCheckInterceptor);
 
-				return processor;
-			}
+        return processor;
+      }
 
-			@Override
-			protected HttpContext createHttpContext() {
-				// Same as DefaultHttpClient.createHttpContext() minus the
-				// cookie store.
-				HttpContext context = new BasicHttpContext();
-				context.setAttribute(ClientContext.AUTHSCHEME_REGISTRY, getAuthSchemes());
-				context.setAttribute(ClientContext.COOKIESPEC_REGISTRY, getCookieSpecs());
-				context.setAttribute(ClientContext.CREDS_PROVIDER,
-						getCredentialsProvider());
-				return context;
-			}
-		};
-	}
+      @Override
+      protected HttpContext createHttpContext() {
+        // Same as DefaultHttpClient.createHttpContext() minus the
+        // cookie store.
+        HttpContext context = new BasicHttpContext();
+        context.setAttribute(ClientContext.AUTHSCHEME_REGISTRY, getAuthSchemes());
+        context.setAttribute(ClientContext.COOKIESPEC_REGISTRY, getCookieSpecs());
+        context.setAttribute(ClientContext.CREDS_PROVIDER, getCredentialsProvider());
+        return context;
+      }
+    };
+  }
 
-	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-		if (mLeakedException != null) {
-			Log.e(TAG, "Leak found", mLeakedException);
-			mLeakedException = null;
-		}
-	}
+  @Override
+  protected void finalize() throws Throwable {
+    super.finalize();
+    if (mLeakedException != null) {
+      Log.e(TAG, "Leak found", mLeakedException);
+      mLeakedException = null;
+    }
+  }
 
-	/**
-	 * Block this thread from executing HTTP requests. Used to guard against
-	 * HTTP requests blocking the main application thread.
-	 * 
-	 * @param blocked
-	 *            if HTTP requests run on this thread should be denied
-	 */
-	public static void setThreadBlocked(boolean blocked) {
-		sThreadBlocked.set(blocked);
-	}
+  /**
+   * Block this thread from executing HTTP requests. Used to guard against HTTP
+   * requests blocking the main application thread.
+   * 
+   * @param blocked
+   *          if HTTP requests run on this thread should be denied
+   */
+  public static void setThreadBlocked(boolean blocked) {
+    sThreadBlocked.set(blocked);
+  }
 
-	/**
-	 * Modifies a request to indicate to the server that we would like a gzipped
-	 * response. (Uses the "Accept-Encoding" HTTP header.)
-	 * 
-	 * @param request
-	 *            the request to modify
-	 * @see #getUngzippedContent
-	 */
-	public static void modifyRequestToAcceptGzipResponse(HttpRequest request) {
-		request.addHeader("Accept-Encoding", "gzip");
-	}
+  /**
+   * Modifies a request to indicate to the server that we would like a gzipped
+   * response. (Uses the "Accept-Encoding" HTTP header.)
+   * 
+   * @param request
+   *          the request to modify
+   * @see #getUngzippedContent
+   */
+  public static void modifyRequestToAcceptGzipResponse(HttpRequest request) {
+    request.addHeader("Accept-Encoding", "gzip");
+  }
 
-	/**
-	 * Gets the input stream from a response entity. If the entity is gzipped
-	 * then this will get a stream over the uncompressed data.
-	 * 
-	 * @param entity
-	 *            the entity whose content should be read
-	 * @return the input stream to read from
-	 * @throws IOException
-	 */
-	public static InputStream getUngzippedContent(HttpEntity entity) throws IOException {
-		InputStream responseStream = entity.getContent();
-		if (responseStream == null)
-			return responseStream;
-		Header header = entity.getContentEncoding();
-		if (header == null)
-			return responseStream;
-		String contentEncoding = header.getValue();
-		if (contentEncoding == null)
-			return responseStream;
-		if (contentEncoding.contains("gzip"))
-			responseStream = new GZIPInputStream(responseStream);
-		return responseStream;
-	}
+  /**
+   * Gets the input stream from a response entity. If the entity is gzipped then
+   * this will get a stream over the uncompressed data.
+   * 
+   * @param entity
+   *          the entity whose content should be read
+   * @return the input stream to read from
+   * @throws IOException
+   */
+  public static InputStream getUngzippedContent(HttpEntity entity) throws IOException {
+    InputStream responseStream = entity.getContent();
+    if (responseStream == null)
+      return responseStream;
+    Header header = entity.getContentEncoding();
+    if (header == null)
+      return responseStream;
+    String contentEncoding = header.getValue();
+    if (contentEncoding == null)
+      return responseStream;
+    if (contentEncoding.contains("gzip"))
+      responseStream = new GZIPInputStream(responseStream);
+    return responseStream;
+  }
 
-	/**
-	 * Release resources associated with this client. You must call this, or
-	 * significant resources (sockets and memory) may be leaked.
-	 */
-	public void close() {
-		if (mLeakedException != null) {
-			getConnectionManager().shutdown();
-			mLeakedException = null;
-		}
-	}
+  /**
+   * Release resources associated with this client. You must call this, or
+   * significant resources (sockets and memory) may be leaked.
+   */
+  public void close() {
+    if (mLeakedException != null) {
+      getConnectionManager().shutdown();
+      mLeakedException = null;
+    }
+  }
 
-	public HttpParams getParams() {
-		return delegate.getParams();
-	}
+  public HttpParams getParams() {
+    return delegate.getParams();
+  }
 
-	public ClientConnectionManager getConnectionManager() {
-		return delegate.getConnectionManager();
-	}
+  public ClientConnectionManager getConnectionManager() {
+    return delegate.getConnectionManager();
+  }
 
-	public HttpResponse execute(HttpUriRequest request) throws IOException {
-		return delegate.execute(request);
-	}
+  public HttpResponse execute(HttpUriRequest request) throws IOException {
+    return delegate.execute(request);
+  }
 
-	public HttpResponse execute(HttpUriRequest request, HttpContext context)
-			throws IOException {
-		return delegate.execute(request, context);
-	}
+  public HttpResponse execute(HttpUriRequest request, HttpContext context)
+      throws IOException {
+    return delegate.execute(request, context);
+  }
 
-	public HttpResponse execute(HttpHost target, HttpRequest request) throws IOException {
-		return delegate.execute(target, request);
-	}
+  public HttpResponse execute(HttpHost target, HttpRequest request) throws IOException {
+    return delegate.execute(target, request);
+  }
 
-	public HttpResponse execute(HttpHost target, HttpRequest request, HttpContext context)
-			throws IOException {
-		return delegate.execute(target, request, context);
-	}
+  public HttpResponse execute(HttpHost target, HttpRequest request, HttpContext context)
+      throws IOException {
+    return delegate.execute(target, request, context);
+  }
 
-	public <T> T execute(HttpUriRequest request,
-			ResponseHandler<? extends T> responseHandler) throws IOException,
-			ClientProtocolException {
-		return delegate.execute(request, responseHandler);
-	}
+  public <T> T execute(HttpUriRequest request,
+      ResponseHandler<? extends T> responseHandler) throws IOException,
+      ClientProtocolException {
+    return delegate.execute(request, responseHandler);
+  }
 
-	public <T> T execute(HttpUriRequest request,
-			ResponseHandler<? extends T> responseHandler, HttpContext context)
-			throws IOException, ClientProtocolException {
-		return delegate.execute(request, responseHandler, context);
-	}
+  public <T> T execute(HttpUriRequest request,
+      ResponseHandler<? extends T> responseHandler, HttpContext context)
+      throws IOException, ClientProtocolException {
+    return delegate.execute(request, responseHandler, context);
+  }
 
-	public <T> T execute(HttpHost target, HttpRequest request,
-			ResponseHandler<? extends T> responseHandler) throws IOException,
-			ClientProtocolException {
-		return delegate.execute(target, request, responseHandler);
-	}
+  public <T> T execute(HttpHost target, HttpRequest request,
+      ResponseHandler<? extends T> responseHandler) throws IOException,
+      ClientProtocolException {
+    return delegate.execute(target, request, responseHandler);
+  }
 
-	public <T> T execute(HttpHost target, HttpRequest request,
-			ResponseHandler<? extends T> responseHandler, HttpContext context)
-			throws IOException, ClientProtocolException {
-		return delegate.execute(target, request, responseHandler, context);
-	}
+  public <T> T execute(HttpHost target, HttpRequest request,
+      ResponseHandler<? extends T> responseHandler, HttpContext context)
+      throws IOException, ClientProtocolException {
+    return delegate.execute(target, request, responseHandler, context);
+  }
 
 }

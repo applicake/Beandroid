@@ -26,206 +26,202 @@ import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class RepositoryDetailsActivity extends BeanstalkActivity implements
-		OnClickListener {
+    OnClickListener {
 
-	private Context mContext;
+  private Context mContext;
 
-	private Repository repository;
-	private View colorLabel;
-	private TextView repoName;
-	private String dateFormat = new String("yyyy-MM-dd");
-	private TextView repoType;
-	private TextView repoTitle;
-	private TextView repoCreatedAt;
-	private TextView repoLastCommit;
-	private TextView repoRevision;
-	private TextView repoStorageUsed;
-	private TextView repoUpdatedAt;
+  private Repository repository;
+  private View colorLabel;
+  private TextView repoName;
+  private String dateFormat = new String("yyyy-MM-dd");
+  private TextView repoType;
+  private TextView repoTitle;
+  private TextView repoCreatedAt;
+  private TextView repoLastCommit;
+  private TextView repoRevision;
+  private TextView repoStorageUsed;
+  private TextView repoUpdatedAt;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.repository_details_layout);
-		repository = getIntent().getParcelableExtra(Constants.REPOSITORY);
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.repository_details_layout);
+    repository = getIntent().getParcelableExtra(Constants.REPOSITORY);
 
-		mContext = this;
+    mContext = this;
 
-		colorLabel = findViewById(R.id.colorLabel);
-		repoName = (TextView) findViewById(R.id.repoName);
+    colorLabel = findViewById(R.id.colorLabel);
+    repoName = (TextView) findViewById(R.id.repoName);
 
-		repoType = (TextView) findViewById(R.id.repoType);
-		repoTitle = (TextView) findViewById(R.id.repoTitle);
-		repoCreatedAt = (TextView) findViewById(R.id.repoCreatedAt);
-		repoLastCommit = (TextView) findViewById(R.id.repoLastCommit);
-		repoRevision = (TextView) findViewById(R.id.repoRevision);
-		repoStorageUsed = (TextView) findViewById(R.id.repoStorageUsed);
-		repoUpdatedAt = (TextView) findViewById(R.id.repoUpdatedAt);
+    repoType = (TextView) findViewById(R.id.repoType);
+    repoTitle = (TextView) findViewById(R.id.repoTitle);
+    repoCreatedAt = (TextView) findViewById(R.id.repoCreatedAt);
+    repoLastCommit = (TextView) findViewById(R.id.repoLastCommit);
+    repoRevision = (TextView) findViewById(R.id.repoRevision);
+    repoStorageUsed = (TextView) findViewById(R.id.repoStorageUsed);
+    repoUpdatedAt = (TextView) findViewById(R.id.repoUpdatedAt);
 
-		// add button listeners
-		Button viewCommitsButton = (Button) findViewById(R.id.buttonViewCommits);
-		Button usersPermissionsButton = (Button) findViewById(R.id.buttonUsersPermissions);
-		Button deploymentButton = (Button) findViewById(R.id.buttonDeployment);
-		Button modifyPropertiesButton = (Button) findViewById(R.id.buttonModifyProperties);
+    // add button listeners
+    Button viewCommitsButton = (Button) findViewById(R.id.buttonViewCommits);
+    Button usersPermissionsButton = (Button) findViewById(R.id.buttonUsersPermissions);
+    Button deploymentButton = (Button) findViewById(R.id.buttonDeployment);
+    Button modifyPropertiesButton = (Button) findViewById(R.id.buttonModifyProperties);
 
-		if (currentUser == UserType.USER.name()) {
-			usersPermissionsButton.setVisibility(View.GONE);
-			modifyPropertiesButton.setVisibility(View.GONE);
-		}
+    if (currentUser == UserType.USER.name()) {
+      usersPermissionsButton.setVisibility(View.GONE);
+      modifyPropertiesButton.setVisibility(View.GONE);
+    }
 
-		viewCommitsButton.setOnClickListener(this);
-		usersPermissionsButton.setOnClickListener(this);
-		deploymentButton.setOnClickListener(this);
-		modifyPropertiesButton.setOnClickListener(this);
+    viewCommitsButton.setOnClickListener(this);
+    usersPermissionsButton.setOnClickListener(this);
+    deploymentButton.setOnClickListener(this);
+    modifyPropertiesButton.setOnClickListener(this);
 
-		loadRepositoryData();
+    loadRepositoryData();
 
-	}
+  }
 
-	public void loadRepositoryData() {
+  public void loadRepositoryData() {
 
-		Log.w("color change",
-				String.valueOf(colorLabel.getBackground().setLevel(
-						repository.getColorLabelNo())));
+    Log.w("color change",
+        String.valueOf(colorLabel.getBackground().setLevel(repository.getColorLabelNo())));
 
-		repoName.setText(repository.getName());
-		repoType.setText(repository.getType().equals("SubversionRepository") ? "SVN"
-				: "Git");
-		repoTitle.setText(repository.getTitle());
-		repoCreatedAt.setText(DateFormat.format(dateFormat, repository.getCreatedAt()));
-		long lastCommit = repository.getLastCommitAt();
-		repoLastCommit.setText(lastCommit == 0 ? "no commits in this repository"
-				: DateUtils.getRelativeTimeSpanString(lastCommit));
-		repoRevision.setText(String.valueOf(repository.getRevision()));
-		repoStorageUsed.setText(String.valueOf(repository.getStorageUsedBytes()));
-		repoUpdatedAt.setText(DateFormat.format(dateFormat, repository.getUpdatedAt()));
+    repoName.setText(repository.getName());
+    repoType.setText(repository.getType().equals("SubversionRepository") ? "SVN" : "Git");
+    repoTitle.setText(repository.getTitle());
+    repoCreatedAt.setText(DateFormat.format(dateFormat, repository.getCreatedAt()));
+    long lastCommit = repository.getLastCommitAt();
+    repoLastCommit.setText(lastCommit == 0 ? "no commits in this repository" : DateUtils
+        .getRelativeTimeSpanString(lastCommit));
+    repoRevision.setText(String.valueOf(repository.getRevision()));
+    repoStorageUsed.setText(String.valueOf(repository.getStorageUsedBytes()));
+    repoUpdatedAt.setText(DateFormat.format(dateFormat, repository.getUpdatedAt()));
 
-	}
+  }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Constants.REFRESH_ACTIVITY) {
-			setResult(resultCode);
-			new DownloadRepositoryInfo().execute();
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Constants.REFRESH_ACTIVITY) {
+      setResult(resultCode);
+      new DownloadRepositoryInfo().execute();
 
-		}
-	}
+    }
+  }
 
-	@Override
-	public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
 
-		if (v.getId() == R.id.buttonViewCommits) {
-			Intent intent = new Intent(getApplicationContext(),
-					RepositoryCommitsActivity.class);
-			intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
-			intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
-			intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
-			startActivityForResult(intent, 0);
+    if (v.getId() == R.id.buttonViewCommits) {
+      Intent intent = new Intent(getApplicationContext(), RepositoryCommitsActivity.class);
+      intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
+      intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
+      intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
+      startActivityForResult(intent, 0);
 
-		}
+    }
 
-		if (v.getId() == R.id.buttonUsersPermissions) {
-			Intent intent = new Intent(getApplicationContext(),
-					RepositoryUsersPermissionsActivity.class);
-			intent.putExtra(Constants.REPOSITORY, repository);
-			startActivityForResult(intent, 0);
-		}
+    if (v.getId() == R.id.buttonUsersPermissions) {
+      Intent intent = new Intent(getApplicationContext(),
+          RepositoryUsersPermissionsActivity.class);
+      intent.putExtra(Constants.REPOSITORY, repository);
+      startActivityForResult(intent, 0);
+    }
 
-		if (v.getId() == R.id.buttonDeployment) {
-			GUI.displayMonit(getApplicationContext(), "to be implemented");
-		}
+    if (v.getId() == R.id.buttonDeployment) {
+      GUI.displayMonit(getApplicationContext(), "to be implemented");
+    }
 
-		if (v.getId() == R.id.buttonModifyProperties) {
-			Intent intent = new Intent(getApplicationContext(),
-					RepositoryModifyPropertiesActivity.class);
-			intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
-			intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
-			intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
-			startActivityForResult(intent, 0);
-		}
+    if (v.getId() == R.id.buttonModifyProperties) {
+      Intent intent = new Intent(getApplicationContext(),
+          RepositoryModifyPropertiesActivity.class);
+      intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
+      intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
+      intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
+      startActivityForResult(intent, 0);
+    }
 
-	}
+  }
 
-	public class DownloadRepositoryInfo extends AsyncTask<Void, Void, Boolean> {
+  public class DownloadRepositoryInfo extends AsyncTask<Void, Void, Boolean> {
 
-		@SuppressWarnings("rawtypes")
-		private AsyncTask thisTask = this;
-		ProgressDialog progressDialog;
+    @SuppressWarnings("rawtypes")
+    private AsyncTask thisTask = this;
+    ProgressDialog progressDialog;
 
-		private boolean failed;
+    private boolean failed;
 
-		private String failMessage;
+    private String failMessage;
 
-		private String errorMessage;
+    private String errorMessage;
 
-		protected void onPreExecute() {
-			progressDialog = ProgressDialog.show(mContext, "Please wait",
-					"Repository data is being refreshed");
+    protected void onPreExecute() {
+      progressDialog = ProgressDialog.show(mContext, "Please wait",
+          "Repository data is being refreshed");
 
-			progressDialog.setCancelable(true);
-			progressDialog.setOnCancelListener(new OnCancelListener() {
+      progressDialog.setCancelable(true);
+      progressDialog.setOnCancelListener(new OnCancelListener() {
 
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					thisTask.cancel(true);
-					GUI.displayMonit(mContext, "Download task was cancelled");
-				}
-			});
-		};
+        @Override
+        public void onCancel(DialogInterface dialog) {
+          thisTask.cancel(true);
+          GUI.displayMonit(mContext, "Download task was cancelled");
+        }
+      });
+    };
 
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			try {
-				String repositoryXml = HttpRetriever.getRepositoryXML(prefs,
-						repository.getId());
-				repository = XmlParser.parseRepository(repositoryXml);
-				return true;
+    @Override
+    protected Boolean doInBackground(Void... params) {
+      try {
+        String repositoryXml = HttpRetriever.getRepositoryXML(prefs, repository.getId());
+        repository = XmlParser.parseRepository(repositoryXml);
+        return true;
 
-			} catch (UnsuccessfulServerResponseException e) {
-				errorMessage = e.getMessage();
-				return false;
-			} catch (HttpConnectionErrorException e) {
-				failMessage = Strings.networkConnectionErrorMessage;
-			} catch (XMLParserException e) {
-				failMessage = Strings.internalErrorMessage;
-			}
-			failed = true;
-			return false;
-		}
+      } catch (UnsuccessfulServerResponseException e) {
+        errorMessage = e.getMessage();
+        return false;
+      } catch (HttpConnectionErrorException e) {
+        failMessage = Strings.networkConnectionErrorMessage;
+      } catch (XMLParserException e) {
+        failMessage = Strings.internalErrorMessage;
+      }
+      failed = true;
+      return false;
+    }
 
-		@Override
-		protected void onPostExecute(Boolean result) {
-			progressDialog.dismiss();
+    @Override
+    protected void onPostExecute(Boolean result) {
+      progressDialog.dismiss();
 
-			if (failed) {
-				SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
-						failMessage) {
+      if (failed) {
+        SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
+            failMessage) {
 
-					@Override
-					public void retryAction() {
-						new DownloadRepositoryInfo().execute();
-					}
+          @Override
+          public void retryAction() {
+            new DownloadRepositoryInfo().execute();
+          }
 
-					@Override
-					public void noRetryAction(DialogInterface dialog) {
-						super.noRetryAction(dialog);
-						finish();
-					}
+          @Override
+          public void noRetryAction(DialogInterface dialog) {
+            super.noRetryAction(dialog);
+            finish();
+          }
 
-				};
+        };
 
-				builder.displayDialog();
-			} else {
-				if (result) {
-					loadRepositoryData();
+        builder.displayDialog();
+      } else {
+        if (result) {
+          loadRepositoryData();
 
-				} else {
-					GUI.displayMonit(mContext, "Server error: " + errorMessage);
-				}
-			}
-		}
+        } else {
+          GUI.displayMonit(mContext, "Server error: " + errorMessage);
+        }
+      }
+    }
 
-	}
+  }
 
 }
