@@ -101,7 +101,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if (v.getId() == R.id.login_button) {
 
-			// TODO check if login and password fields are filled in correctly
 			String login = loginEditText.getText().toString();
 			String password = passwordEditText.getText().toString();
 			String domain = domainaccountEditText.getText().toString();
@@ -137,7 +136,18 @@ public class LoginActivity extends Activity implements OnClickListener {
 		editor.commit();
 	}
 
-	// this
+	// this method checks in user credentials are valid (if they are not ie. the
+	// status code equals 401, an HttpImproperStatusCodeException is thrown.
+	// Otherwise, the method goes through 3 levels of authentification:
+	// 1. If user has access to Account model he is an OWNER. In that case the
+	// method also checks account's plan to determine the number of available
+	// users and repositories.
+	// 2. If user doesn't have access to account, the method checks if he has
+	// access to user model. If so, the user is an ADMIN.
+	// 3. If user doesn't have access to neither account nor user models, his
+	// credentials are verified against plans model (available for all users).
+	// If user's credentails are valid, he is a USER.
+
 	private UserType authenticateAndCheckUserType(String domain, String username,
 			String password) throws HttpConnectionErrorException, XMLParserException,
 			HttpImproperStatusCodeException {
@@ -211,11 +221,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 				usertype = authenticateAndCheckUserType(domain, login, password);
 				Log.w("usertype", usertype.name());
 
-				// loginAttemptResultxml =
-				// HttpRetriever.checkCredentials(domain, login,
-				// password);
-
-				// account = XmlParser.parseAccountInfo(loginAttemptResultxml);
 				return 200;
 
 			} catch (XMLParserException e) {

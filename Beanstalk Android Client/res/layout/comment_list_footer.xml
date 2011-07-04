@@ -16,8 +16,8 @@
 			android:background="@drawable/comment_input_bg"
 			android:textSize="@dimen/MediumTextSize"></EditText>
 		<Button
+			style="@style/button_shadow"
 			android:text="Submit"
-			android:background="@drawable/bn_generic"
 			android:id="@+id/submitButton"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"></Button>
