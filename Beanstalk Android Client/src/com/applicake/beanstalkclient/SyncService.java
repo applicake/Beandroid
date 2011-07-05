@@ -71,10 +71,12 @@ public class SyncService extends Service {
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
     alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 10 * 1000,
         minutes * 60 * 1000, pi);
+    Log.d(TAG, "notifications enabled");
+
 
   }
 
-  public static void stopService(final Context context, final int minutes) {
+  public static void stopService(final Context context) {
 
     Intent intent = new Intent(context, SyncService.class);
     PendingIntent pi = PendingIntent.getService(context, 0, intent,
@@ -82,6 +84,7 @@ public class SyncService extends Service {
 
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
     alarmManager.cancel(pi);
+    Log.d(TAG, "notifications cancelled");
 
   }
 
@@ -116,6 +119,7 @@ public class SyncService extends Service {
           break;
         newChangesetsCount++;
       }
+      Log.d(TAG, String.valueOf(newChangesetsCount));
         if (newChangesetsCount != 0){
           NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
           
@@ -123,6 +127,14 @@ public class SyncService extends Service {
           String.valueOf(newChangesetsCount)+" new commits"; 
           
           Notification notification = new Notification(R.drawable.ic_ab_deployment_normal, notificationTitle, System.currentTimeMillis());
+          
+          Context context = getApplicationContext();
+          CharSequence contentTitle = "My notification";
+          CharSequence contentText = "Hello World!";
+          Intent notificationIntent = new Intent(getApplicationContext(), DashboardActivity.class);
+          PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, 0);
+
+          notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
           
           notificationManager.notify(Constants.NOTIFICATION_ID, notification);
         }

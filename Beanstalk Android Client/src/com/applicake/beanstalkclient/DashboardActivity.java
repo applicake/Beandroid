@@ -11,6 +11,7 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerRespo
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -168,7 +169,9 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
         // storing the latest commit viewed
         if (changesetParserArray.size() > 0)
           prefs.edit().putString(Constants.RECENT_CHANGESET_ID,
-              changesetParserArray.get(0).getUniqueId());
+              changesetParserArray.get(0).getUniqueId()).commit();
+        
+        ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).cancel(Constants.NOTIFICATION_ID);
 
         loading = false;
         if (changesetParserArray.size() < NUMBER_OF_ENTRIES_PER_PAGE) {
