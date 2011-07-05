@@ -165,6 +165,11 @@ public class DashboardActivity extends BeanstalkActivity implements OnItemClickL
 
       } else {
 
+        // storing the latest commit viewed
+        if (changesetParserArray.size() > 0)
+          prefs.edit().putString(Constants.RECENT_CHANGESET_ID,
+              changesetParserArray.get(0).getUniqueId());
+
         loading = false;
         if (changesetParserArray.size() < NUMBER_OF_ENTRIES_PER_PAGE) {
           changesetList.removeFooterView(footerView);

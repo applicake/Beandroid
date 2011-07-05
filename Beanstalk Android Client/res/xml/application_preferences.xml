@@ -7,6 +7,15 @@
 			android:key="remember_me_preference"
 			android:title="Store credentials"
 			android:summary="Enable auto login" />
+			
+			
+		<CheckBoxPreference
+		
+			android:key="auto_update_notification_service"
+			android:title="Notification service"
+			android:summary="Enable notification" />
+			
+			
 	</PreferenceCategory>
 </PreferenceScreen>
 

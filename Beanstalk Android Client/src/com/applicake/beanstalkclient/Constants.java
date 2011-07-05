@@ -64,4 +64,8 @@ public class Constants {
 
   public static final String COMMIT_REPOSIOTRY_LABEL = "commit_repostory_label";
 
+  public static final String RECENT_CHANGESET_ID = "recent_changeset_id";
+
+  public static final int NOTIFICATION_ID = 90210;
+
 }
