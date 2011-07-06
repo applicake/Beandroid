@@ -53,6 +53,9 @@
 			android:configChanges="orientation|keyboardHidden">
 		</activity>
 		<activity
+			android:name="RepositoryDeploymentsActivity">
+		</activity>
+		<activity
 			android:name="RepositoryModifyPropertiesActivity"
 			android:configChanges="orientation|keyboardHidden">
 		</activity>
