@@ -21,7 +21,7 @@ public abstract class BeanstalkActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     currentUser = prefs.getString(Constants.USER_TYPE, "");
 
   }

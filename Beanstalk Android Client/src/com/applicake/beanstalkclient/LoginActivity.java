@@ -49,7 +49,7 @@ public class LoginActivity extends Activity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mContext = this;
-    prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     setContentView(R.layout.login_activity_layout);
     // auto login with previously stored user data
     if (prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)

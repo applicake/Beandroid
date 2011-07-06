@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-	xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory
-		android:title="Application preferences">
-		<CheckBoxPreference
-			android:key="remember_me_preference"
-			android:title="Store credentials"
-			android:summary="Enable auto login" />
-			
-			
-		<CheckBoxPreference
-		
-			android:key="auto_update_notification_service"
-			android:title="Notification service"
-			android:summary="Enable notification" />
-			
-			
-	</PreferenceCategory>
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory
+    android:title="Application preferences">
+    <CheckBoxPreference
+      android:key="remember_me_preference"
+      android:title="Store credentials"
+      android:summary="Enable auto login" />
+  </PreferenceCategory>
+  
+  <PreferenceCategory
+  android:title="Notification preferences">
+    <CheckBoxPreference
+      android:key="auto_update_notification_service"
+      android:title="Notification service"
+      android:summary="Enable notification" />
+
+    <ListPreference
+      android:key="auto_update_notification_service_delay"
+      android:title="Poll chceck frequency"
+      android:entries="@array/notification_delay_human_readable_entry_names"
+      android:entryValues="@array/notification_delay_entry_values"
+      android:defaultValue="60" />
+
+  </PreferenceCategory>
+
 </PreferenceScreen>
 
 
