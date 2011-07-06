@@ -3,16 +3,14 @@ package com.applicake.beanstalkclient.test;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.LoginActivity;
-import com.applicake.beanstalkclient.enums.UserType;
-
-import android.app.Service;
 import android.content.SharedPreferences;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.LoginActivity;
+import com.applicake.beanstalkclient.enums.UserType;
 
 public class LoginActivityUserVerificationTests extends
     ActivityInstrumentationTestCase2<LoginActivity> {

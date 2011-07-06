@@ -1,7 +1,5 @@
 package com.applicake.beanstalkclient;
 
-import java.util.concurrent.TimeUnit;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
