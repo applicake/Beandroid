@@ -46,6 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content">
       </Button>
+      <!-- TODO refactor name @drawable/changeset_details_selector_button -->
       <Button
         android:text="Servers"
         android:id="@+id/servers_button"

@@ -117,6 +117,10 @@ public class RepositoryDeploymentsActivityTest extends
     TouchUtils.tapView(this, mReleasesTab);
     assertReleasesVisible();
   }
+  
+  public void testReleasesList(){
+    
+  }
 
   private void assertReleasesVisible() {
     assertTrue("releases not visible", mReleases.isShown());
