@@ -13,6 +13,9 @@ import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.RepositoryDeploymentsActivity;
 
+/**
+ * These are tests of layout and point-click UI interaction.
+ */
 public class RepositoryDeploymentsActivityTest extends
     ActivityInstrumentationTestCase2<RepositoryDeploymentsActivity> {
 
@@ -125,7 +128,7 @@ public class RepositoryDeploymentsActivityTest extends
   }
 
   public void testReleasesList() {
-    
+
   }
 
   private void assertReleasesVisible() {
