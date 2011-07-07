@@ -1,6 +1,9 @@
 package com.applicake.beanstalkclient;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -63,12 +66,41 @@ public abstract class BeanstalkActivity extends Activity {
   }
 
   public void logout() {
-    clearCredentials();
-    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    startActivity(intent);
-    setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
-    finish();
+    if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false)) {
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder
+          .setTitle("The nofitcation service is ON")
+          .setMessage(
+              "If you logout the notifications will be disabled. \n Do you want to continue?")
+          .setPositiveButton("Yes", new OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              clearCredentials();
+              Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(intent);
+              setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
+              finish();
+            }
+          }).setNegativeButton("No", new OnClickListener() {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+            }
+          });
+      builder.show();
+
+    } else {
+      clearCredentials();
+      Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      startActivity(intent);
+      setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
+      finish();
+
+    }
   }
 
   // closing all activities mechanism
@@ -145,5 +177,4 @@ public abstract class BeanstalkActivity extends Activity {
     if (!(this instanceof HomeActivity))
       finish();
   }
-
 }

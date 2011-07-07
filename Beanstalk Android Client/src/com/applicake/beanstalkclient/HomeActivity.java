@@ -16,13 +16,12 @@ public class HomeActivity extends BeanstalkActivity {
     super.onCreate(savedInstanceState);
     
     Log.d("SyncService", "From HomeActivity: is service running: " + String.valueOf(SyncService.isServiceRunning(getApplicationContext())));
-    if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false)){
+    if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false) && !SyncService.isServiceRunning(getApplicationContext())){
       
       SyncService.initializeService(getApplicationContext());
       
     }
      
-
     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
       setContentView(R.layout.home_screen_activity_landscape);
 

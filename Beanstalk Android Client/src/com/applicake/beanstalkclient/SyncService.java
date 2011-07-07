@@ -62,15 +62,10 @@ public class SyncService extends Service {
     } else if (isOnline()) {
 
       mostRecentlyViewedChangesetId = prefs.getString(Constants.RECENT_CHANGESET_ID, "");
-
-      if (!mostRecentlyViewedChangesetId.equals("")) {
-        Log.d(TAG, "the download has started");
-
-        new NotificationServiceTask(prefs.getBoolean(
-            Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED, false)).execute();
-      } else {
-        Log.d(TAG, "the preference is an empty string");
-      }
+      Log.d(TAG, "the download has started");
+      new NotificationServiceTask(prefs.getBoolean(
+          Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED, false)).execute();
+      
     } else
       Log.d(TAG, "no interet connection");
 
@@ -100,7 +95,7 @@ public class SyncService extends Service {
     prefs.edit().putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, true).commit();
 
   }
-  
+
   public static void updateServiceReloadTime(Context context, Integer minutes) {
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Intent intent = new Intent(context, SyncService.class);
@@ -114,9 +109,8 @@ public class SyncService extends Service {
 
     // making sure that the service is synchronized with the settings
     prefs.edit().putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, true).commit();
-    
-  }
 
+  }
 
   public static void stopService(final Context context) {
 
