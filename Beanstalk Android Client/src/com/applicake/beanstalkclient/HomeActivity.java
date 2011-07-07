@@ -15,11 +15,11 @@ public class HomeActivity extends BeanstalkActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     
-    Log.d("Beansdroid", "is service running: " + String.valueOf(SyncService.isServiceRunning(getApplicationContext())));
+    Log.d("SyncService", "From HomeActivity: is service running: " + String.valueOf(SyncService.isServiceRunning(getApplicationContext())));
     if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false)){
       
-      SyncService.initializeService(getApplicationContext(), Integer.parseInt(prefs
-          .getString(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY, "60")));
+      SyncService.initializeService(getApplicationContext());
+      
     }
      
 

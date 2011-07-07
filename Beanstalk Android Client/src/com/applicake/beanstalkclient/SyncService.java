@@ -81,8 +81,28 @@ public class SyncService extends Service {
     super.onDestroy();
   }
 
-  public static void initializeService(final Context context, final int minutes) {
+  public static void initializeService(final Context context) {
+    prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    Intent intent = new Intent(context, SyncService.class);
+    PendingIntent pi = PendingIntent.getService(context, 0, intent,
+        PendingIntent.FLAG_CANCEL_CURRENT);
 
+    // set minutes from settings, or if a value is not present, use default 60
+    // minutes interval
+    int minutes = Integer.parseInt(prefs.getString(
+        Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY, "60"));
+    AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+    alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 10 * 1000,
+        minutes * 60 * 1000, pi);
+    Log.d(TAG, "notifications enabled");
+
+    // making sure that the service is synchronized with the settings
+    prefs.edit().putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, true).commit();
+
+  }
+  
+  public static void updateServiceReloadTime(Context context, Integer minutes) {
+    prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Intent intent = new Intent(context, SyncService.class);
     PendingIntent pi = PendingIntent.getService(context, 0, intent,
         PendingIntent.FLAG_CANCEL_CURRENT);
@@ -93,10 +113,10 @@ public class SyncService extends Service {
     Log.d(TAG, "notifications enabled");
 
     // making sure that the service is synchronized with the settings
-    prefs = PreferenceManager.getDefaultSharedPreferences(context);
     prefs.edit().putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, true).commit();
-
+    
   }
+
 
   public static void stopService(final Context context) {
 
@@ -114,7 +134,7 @@ public class SyncService extends Service {
     prefs.edit().putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false).commit();
 
   }
-  
+
   public static boolean isServiceRunning(final Context context) {
     Intent intent = new Intent(context, SyncService.class);
     PendingIntent pi = PendingIntent.getService(context, 0, intent,
@@ -223,6 +243,7 @@ public class SyncService extends Service {
     }
   }
 
+  // a method checking in the device has network connectivity
   private boolean isOnline() {
     ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo netInfo = cm.getActiveNetworkInfo();

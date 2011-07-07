@@ -40,8 +40,7 @@ public class ApplicationSettingsActivity extends PreferenceActivity {
           public boolean onPreferenceChange(Preference preference, Object newValue) {
             Boolean newBooleanValue = (Boolean) newValue;
             if (newBooleanValue && notificationsCheckboxPreference.isChecked()) {
-              SyncService.initializeService(getApplicationContext(),
-                  Integer.parseInt(notificationsDelayPreference.getValue()));
+              SyncService.initializeService(getApplicationContext());
 
             } else if (!newBooleanValue && notificationsCheckboxPreference.isChecked()) {
               SyncService.stopService(getApplicationContext());
@@ -60,7 +59,7 @@ public class ApplicationSettingsActivity extends PreferenceActivity {
             // if the service is enabled, update it
             if (notificationsCheckboxPreference.isChecked()) {
               Integer newIntegerValue = (Integer.parseInt((String) newValue));
-              SyncService.initializeService(getApplicationContext(), newIntegerValue);
+              SyncService.updateServiceReloadTime(getApplicationContext(), newIntegerValue);
             }
             Log.d(TAG, "the new value equals " + newValue.toString());
             return true;
@@ -79,8 +78,7 @@ public class ApplicationSettingsActivity extends PreferenceActivity {
               Boolean newBooleanValue = (Boolean) newValue;
 
               if (newBooleanValue.equals(true))
-                SyncService.initializeService(getApplicationContext(),
-                    Integer.parseInt(notificationsDelayPreference.getValue()));
+                SyncService.initializeService(getApplicationContext());
               else
                 SyncService.stopService(getApplicationContext());
               return true;
