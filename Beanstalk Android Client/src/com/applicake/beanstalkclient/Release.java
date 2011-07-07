@@ -2,16 +2,18 @@ package com.applicake.beanstalkclient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 public class Release implements Parcelable {
 
   private static final SimpleDateFormat FORMATTER = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ssZ");
+      "yyyy-MM-dd'T'HH:mm:ss'Z'");
   private static final String[] STATES = new String[] { "pending", "waiting", "failed",
       "success", "skipped", };
   private static final Map<String, Integer> STATES_TO_INT = new HashMap<String, Integer>();
@@ -76,16 +78,16 @@ public class Release implements Parcelable {
     this.comment = comment;
   }
 
-  public long getCreatedAt() {
-    return createdAt;
+  public Date getCreatedAt() {
+    return new Date(createdAt);
   }
 
   public void setCreatedAt(String createdAt) throws ParseException {
     this.createdAt = FORMATTER.parse(createdAt.trim()).getTime();
   }
 
-  public long getDeployedAt() {
-    return deployedAt;
+  public Date getDeployedAt() {
+    return new Date(deployedAt);
   }
 
   public void setDeployedAt(String deployedAt) throws ParseException {
@@ -100,12 +102,20 @@ public class Release implements Parcelable {
     this.id = id;
   }
 
-  public long getLastRetryAt() {
-    return lastRetryAt;
+  public Date getLastRetryAt() {
+    if (lastRetryAt == -1) {
+      return null;
+    } else {
+      return new Date(lastRetryAt);
+    }
   }
 
   public void setLastRetryAt(String lastRetryAt) throws ParseException {
-    this.lastRetryAt = FORMATTER.parse(lastRetryAt.trim()).getTime();
+    if (TextUtils.isEmpty(lastRetryAt)) {
+      this.lastRetryAt = -1;
+    } else {
+      this.lastRetryAt = FORMATTER.parse(lastRetryAt.trim()).getTime();
+    }
   }
 
   public int getRepositoryId() {
@@ -160,8 +170,8 @@ public class Release implements Parcelable {
     this.state = STATES_TO_INT.get(state);
   }
 
-  public long getUpdatedAt() {
-    return updatedAt;
+  public Date getUpdatedAt() {
+    return new Date(updatedAt);
   }
 
   public void setUpdatedAt(String updatedAt) throws ParseException {

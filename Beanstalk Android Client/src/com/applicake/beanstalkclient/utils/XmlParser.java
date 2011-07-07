@@ -18,6 +18,7 @@ import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.Comment;
 import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.Plan;
+import com.applicake.beanstalkclient.Release;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.handlers.AccountHandler;
@@ -26,6 +27,7 @@ import com.applicake.beanstalkclient.handlers.CommentsHandler;
 import com.applicake.beanstalkclient.handlers.ErrorHandler;
 import com.applicake.beanstalkclient.handlers.PermissionsHandler;
 import com.applicake.beanstalkclient.handlers.PlanHandler;
+import com.applicake.beanstalkclient.handlers.ReleasesHandler;
 import com.applicake.beanstalkclient.handlers.RepositoriesHandler;
 import com.applicake.beanstalkclient.handlers.UserHandler;
 
@@ -134,6 +136,27 @@ public class XmlParser {
     }
 
     return planHandler.retrievePlanMap();
+  }
+
+  public static ArrayList<Release> parseReleasesList(String xml)
+      throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
+
+    ReleasesHandler releasesHandler = new ReleasesHandler();
+    // set handler
+    xmlReader.setContentHandler(releasesHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
+
+    return releasesHandler.retrieveReleasesList();
   }
 
   public static ArrayList<Repository> parseRepositoryList(String xml)

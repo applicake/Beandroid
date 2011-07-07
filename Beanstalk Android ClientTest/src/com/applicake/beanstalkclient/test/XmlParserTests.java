@@ -8,22 +8,24 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.TimeZone;
 
 import org.xml.sax.SAXException;
 
+import android.test.InstrumentationTestCase;
+
 import com.applicake.beanstalkclient.Account;
 import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.Comment;
 import com.applicake.beanstalkclient.Permission;
+import com.applicake.beanstalkclient.Release;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.enums.UserType;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
-import android.test.InstrumentationTestCase;
 
 /* Testing XmlParser class
  * parsing repositories list, users list, changesets
@@ -33,6 +35,7 @@ import android.test.InstrumentationTestCase;
 public class XmlParserTests extends InstrumentationTestCase {
 
   // valid xmls
+  private static final String RELEASES_XML_ADDRESS = "mockxmls/releases.xml";
   private static final String CHANGESET_XML_ADDRESS = "mockxmls/changesets.xml";
   private static final String REPOSITORIES_XML_ADDRESS = "mockxmls/repositories.xml";
   private static final String USERS_XML_ADDRESS = "mockxmls/users.xml";
@@ -54,7 +57,56 @@ public class XmlParserTests extends InstrumentationTestCase {
     super.setUp();
     TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
     calendar = Calendar.getInstance();
+  }
 
+  public void testParseReleases() throws IOException, XMLParserException {
+    String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+        .open(RELEASES_XML_ADDRESS));
+
+    ArrayList<Release> releases = XmlParser.parseReleasesList(testXml);
+
+    assertEquals(2, releases.size());
+
+    Release release = releases.get(0);
+    assertEquals(23452, release.getAccountId());
+    assertEquals("gilbert", release.getAuthor());
+    assertEquals(342359734, release.getUserId());
+    assertEquals("Deploying yesterday's changes.", release.getComment());
+    assertEquals(new GregorianCalendar(2009, Calendar.NOVEMBER, 4, 10, 3, 29).getTime(),
+        release.getCreatedAt());
+    assertEquals(new GregorianCalendar(2009, Calendar.NOVEMBER, 4, 10, 3, 40).getTime(),
+        release.getDeployedAt());
+    assertEquals(2547, release.getId());
+    assertEquals(null, release.getLastRetryAt());
+    assertEquals(98765, release.getRepositoryId());
+    assertEquals("Staging", release.getEnvironmentName());
+    assertEquals(6, release.getEnvironmentId());
+    assertEquals(0, release.getRetries());
+    assertEquals(81, release.getRevision());
+    assertEquals("success", release.getStateLabel());
+    assertEquals(new GregorianCalendar(2009, Calendar.NOVEMBER, 4, 10, 3, 40).getTime(),
+        release.getUpdatedAt());
+
+    release = releases.get(1);
+    assertEquals(8765, release.getAccountId());
+    assertEquals("ilya", release.getAuthor());
+    assertEquals(89743563, release.getUserId());
+    assertEquals("Going crazy", release.getComment());
+    assertEquals(new GregorianCalendar(2008, Calendar.JUNE, 26, 17, 2, 22).getTime(),
+        release.getCreatedAt());
+    assertEquals(new GregorianCalendar(2008, Calendar.JUNE, 26, 17, 3, 30).getTime(),
+        release.getDeployedAt());
+    assertEquals(6543, release.getId());
+    assertEquals(new GregorianCalendar(2008, Calendar.JUNE, 26, 18, 5, 32).getTime(),
+        release.getLastRetryAt());
+    assertEquals(8967, release.getRepositoryId());
+    assertEquals("Staging", release.getEnvironmentName());
+    assertEquals(6, release.getEnvironmentId());
+    assertEquals(2, release.getRetries());
+    assertEquals(249, release.getRevision());
+    assertEquals("failed", release.getStateLabel());
+    assertEquals(new GregorianCalendar(2008, Calendar.NOVEMBER, 4, 14, 50, 1).getTime(),
+        release.getUpdatedAt());
   }
 
   public void testParseChangesets() throws IOException, XMLParserException {

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<releases type="array">
+  <release>
+    <account-id type="integer">23452</account-id>
+    <author>gilbert</author>
+    <user-id type="integer">342359734</user-id>
+    <comment>Deploying yesterday's changes.</comment>
+    <created-at type="datetime">
+      2009-11-04T10:03:29Z
+    </created-at>
+    <deployed-at type="datetime">
+      2009-11-04T10:03:40Z
+    </deployed-at>
+    <id type="integer">2547</id>
+    <last-retry-at type="datetime" nil="true"></last-retry-at>
+    <repository-id type="integer">98765</repository-id>
+    <environment-name>Staging</environment-name>
+    <environment-id>6</environment-id>      
+    <retries type="integer">0</retries>
+    <revision type="integer">81</revision>
+    <state>success</state>
+    <updated-at type="datetime">
+      2009-11-04T10:03:40Z
+    </updated-at>
+  </release>
+  <release>
+    <account-id type="integer">8765</account-id>
+    <author>ilya</author>
+    <user-id type="integer">89743563</user-id>
+    <comment>Going crazy</comment>
+    <created-at type="datetime">
+      2008-06-26T17:02:22Z
+    </created-at>
+    <deployed-at type="datetime">
+      2008-06-26T17:03:30Z
+    </deployed-at>
+    <id type="integer">6543</id>
+    <last-retry-at type="datetime" nil="true">
+      2008-06-26T18:05:32Z
+    </last-retry-at>
+    <repository-id type="integer">8967</repository-id>
+    <environment-name>Staging</environment-name>
+    <environment-id>6</environment-id>
+    <retries type="integer">2</retries>
+    <revision type="integer">249</revision>
+    <state>failed</state>
+    <updated-at type="datetime">
+      2008-11-04T14:50:01Z
+    </updated-at>
+  </release>
+</releases>
