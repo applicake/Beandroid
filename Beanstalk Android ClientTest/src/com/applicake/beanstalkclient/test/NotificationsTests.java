@@ -1,13 +1,26 @@
 package com.applicake.beanstalkclient.test;
 
-import android.test.AndroidTestCase;
+import com.applicake.beanstalkclient.HomeActivity;
+import com.applicake.beanstalkclient.SyncService;
 
-public class NotificationsTests extends AndroidTestCase {
+import android.app.Application;
+import android.test.ActivityUnitTestCase;
+import android.test.AndroidTestCase;
+import android.test.ServiceTestCase;
+
+public class NotificationsTests extends ServiceTestCase<SyncService> {
   
   
+
+
+  public NotificationsTests() {
+    super(SyncService.class);
+    // TODO Auto-generated constructor stub
+  }
+
   @Override
   protected void setUp() throws Exception {
-    // TODO Auto-generated method stub
+    
     super.setUp();
   }
   
@@ -17,7 +30,10 @@ public class NotificationsTests extends AndroidTestCase {
     super.tearDown();
   }
  
-  
+  public void testServiceInitialization(){
+    SyncService.initializeService(getService());
+    assertTrue(SyncService.isServiceRunning(getService()));
+  }
   
   
 
