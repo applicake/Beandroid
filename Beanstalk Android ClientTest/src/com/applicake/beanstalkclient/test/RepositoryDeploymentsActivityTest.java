@@ -3,6 +3,7 @@ package com.applicake.beanstalkclient.test;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
@@ -56,6 +57,7 @@ public class RepositoryDeploymentsActivityTest extends
     mReleasesAdapter = mReleases.getAdapter();
   }
 
+  @SmallTest
   public void testPreconditions() {
     // check if there are views for title and label
     assertNotNull("can't find title view", mTitle);
