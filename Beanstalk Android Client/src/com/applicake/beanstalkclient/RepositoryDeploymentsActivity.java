@@ -12,6 +12,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
   private ListView mReleasesList;
   private ListView mServersList;
+  private ReleasesAdapter mReleasesAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,10 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     mServersList = (ListView) findViewById(R.id.servers_list);
     findViewById(R.id.releases_button).setOnClickListener(this);
     findViewById(R.id.servers_button).setOnClickListener(this);
+
+    // releases list
+    mReleasesAdapter = new ReleasesAdapter(this, 0, null);
+    mReleasesList.setAdapter(mReleasesAdapter);
   }
 
   @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class RepositoryDeploymentsActivityTest extends
   private ListView mServers;
   private Button mReleasesTab;
   private Button mServersTab;
+  private Adapter mReleasesAdapter;
 
   public RepositoryDeploymentsActivityTest() {
     super("com.applicake.beanstalkclient", RepositoryDeploymentsActivity.class);
@@ -32,7 +34,7 @@ public class RepositoryDeploymentsActivityTest extends
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    
+
     Intent intent = new Intent();
     intent.putExtra(Constants.REPOSITORY_ID, 0);
     intent.putExtra(Constants.REPOSITORY_TITLE, TITLE);
@@ -48,6 +50,7 @@ public class RepositoryDeploymentsActivityTest extends
     mServers = (ListView) mActivity.findViewById(R.id.servers_list);
     mReleasesTab = (Button) mActivity.findViewById(R.id.releases_button);
     mServersTab = (Button) mActivity.findViewById(R.id.servers_button);
+    mReleasesAdapter = mReleases.getAdapter();
   }
 
   public void testPreconditions() {
@@ -62,6 +65,9 @@ public class RepositoryDeploymentsActivityTest extends
     // check tab buttons
     assertNotNull("can't find releases tab", mReleasesTab);
     assertNotNull("can't find servers tab", mServersTab);
+
+    // check if adapter for releases is set
+    assertNotNull("releases adapter not set", mReleasesAdapter);
   }
 
   public void testTitleUi() {
@@ -71,10 +77,10 @@ public class RepositoryDeploymentsActivityTest extends
     assertEquals("wrong label size", size, mColor.getHeight());
     // ...and color
     assertEquals("wrong label color", COLOR, mColor.getBackground().getLevel());
-    
+
     // test repo title
     assertEquals("wrong title", TITLE, mTitle.getText());
-    
+
     // test relative location between title and color
     int[] colorLocation = new int[2], titleLocation = new int[2];
     mColor.getLocationInWindow(colorLocation);
@@ -88,37 +94,37 @@ public class RepositoryDeploymentsActivityTest extends
     assertFalse("color label below title",
         colorLocation[1] > titleLocation[1] + mTitle.getHeight());
   }
-  
+
   public void testTabsUi() {
     // at first releases should be visible and servers hidden
     assertReleasesVisible();
-    
+
     // do nothing (tap active)
     TouchUtils.tapView(this, mReleasesTab);
     assertReleasesVisible();
-    
+
     // do nothing (tap inactive but cancel)
     TouchUtils.touchAndCancelView(this, mServersTab);
     assertReleasesVisible();
-    
+
     // switch tabs
     TouchUtils.tapView(this, mServersTab);
     assertServersVisible();
-    
+
     // do nothing (tap active)
     TouchUtils.tapView(this, mServersTab);
     assertServersVisible();
-    
+
     // do nothing (tap inactive but cancel)
     TouchUtils.touchAndCancelView(this, mReleasesTab);
     assertServersVisible();
-    
+
     // switch tabs
     TouchUtils.tapView(this, mReleasesTab);
     assertReleasesVisible();
   }
-  
-  public void testReleasesList(){
+
+  public void testReleasesList() {
     
   }
 
@@ -131,5 +137,5 @@ public class RepositoryDeploymentsActivityTest extends
     assertFalse("releases visible", mReleases.isShown());
     assertTrue("servers not visible", mServers.isShown());
   }
-  
+
 }
