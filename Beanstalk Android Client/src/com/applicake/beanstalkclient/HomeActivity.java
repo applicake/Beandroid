@@ -14,10 +14,14 @@ public class HomeActivity extends BeanstalkActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false))
+    
+    Log.d("Beansdroid", "is service running: " + String.valueOf(SyncService.isServiceRunning(getApplicationContext())));
+    if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false)){
+      
       SyncService.initializeService(getApplicationContext(), Integer.parseInt(prefs
           .getString(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY, "60")));
+    }
+     
 
     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
       setContentView(R.layout.home_screen_activity_landscape);

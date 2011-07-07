@@ -106,12 +106,21 @@ public class SyncService extends Service {
 
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
     alarmManager.cancel(pi);
+    pi.cancel();
     Log.d(TAG, "notifications cancelled");
 
     // making sure that the service is synchronized with the settings
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     prefs.edit().putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false).commit();
 
+  }
+  
+  public static boolean isServiceRunning(final Context context) {
+    Intent intent = new Intent(context, SyncService.class);
+    PendingIntent pi = PendingIntent.getService(context, 0, intent,
+        PendingIntent.FLAG_NO_CREATE);
+
+    return (pi == null) ? false : true;
   }
 
   public class NotificationServiceTask extends
