@@ -66,10 +66,12 @@ public class Constants {
 
   // preferences and misc
   
+  // settings used for notifications
   public static final String RECENT_CHANGESET_ID = "recent_changeset_id";
   public static final int NOTIFICATION_ID = 90210;
   public static final String LAST_NOTIFIED_CHANGESET_ID = "last_notified_changeset_id";
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE = "auto_update_notification_service";
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY = "auto_update_notification_service_delay";
+  public static final String AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED = "auto_update_notification_service_custom_led";
 
 }

@@ -8,6 +8,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 
+import com.applicake.beanstalkclient.utils.GUI;
+
 public class ApplicationSettingsActivity extends PreferenceActivity {
 
   protected static final String TAG = ApplicationSettingsActivity.class.getSimpleName();
@@ -16,43 +18,35 @@ public class ApplicationSettingsActivity extends PreferenceActivity {
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
+
+    Log.d(TAG, "on create");
     addPreferencesFromResource(R.xml.application_preferences);
-    CheckBoxPreference credentialsStoredCheckboxPreference = (CheckBoxPreference) findPreference("remember_me_preference");
+    final CheckBoxPreference credentialsStoredCheckboxPreference = (CheckBoxPreference) findPreference("remember_me_preference");
 
-    final CheckBoxPreference notificationsCheckboxPreference = (CheckBoxPreference) findPreference("auto_update_notification_service");
-    final ListPreference notificationsDelayPreference = (ListPreference) findPreference("auto_update_notification_service_delay");
-
-    if (credentialsStoredCheckboxPreference.isChecked()) {
-      notificationsCheckboxPreference.setEnabled(true);
-      notificationsDelayPreference.setEnabled(true);
-    } else {
-      notificationsCheckboxPreference.setEnabled(false);
-      notificationsDelayPreference.setEnabled(false);
-    }
-
+    final CheckBoxPreference notificationsCheckboxPreference = (CheckBoxPreference) findPreference(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE);
+    final ListPreference notificationsDelayPreference = (ListPreference) findPreference(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY);
+    // final CheckBoxPreference notificationsCustomLEDCheckboxPreference =
+    // (CheckBoxPreference)
+    // findPreference(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED);
+    //
+    // final PreferenceCategory notificationPreferenceCategory =
+    // (PreferenceCategory)
+    // findPreference("auto_update_notification_preferences");
+    //
     credentialsStoredCheckboxPreference
         .setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
           @Override
           public boolean onPreferenceChange(Preference preference, Object newValue) {
             Boolean newBooleanValue = (Boolean) newValue;
-            if (newBooleanValue) {
-              notificationsCheckboxPreference.setEnabled(true);
-              notificationsDelayPreference.setEnabled(true);
-              if (notificationsCheckboxPreference.isChecked()){
-                SyncService.initializeService(getApplicationContext(),
-                    Integer.parseInt(notificationsDelayPreference.getValue()));
-                
-              }
-            } else {
-              notificationsCheckboxPreference.setEnabled(false);
-              notificationsDelayPreference.setEnabled(false);
-              if (notificationsCheckboxPreference.isChecked()){
-                SyncService.initializeService(getApplicationContext(),
-                    Integer.parseInt(notificationsDelayPreference.getValue()));
-                notificationsCheckboxPreference.setChecked(false);
-                
-              }
+            if (newBooleanValue && notificationsCheckboxPreference.isChecked()) {
+              SyncService.initializeService(getApplicationContext(),
+                  Integer.parseInt(notificationsDelayPreference.getValue()));
+
+            } else if (!newBooleanValue && notificationsCheckboxPreference.isChecked()) {
+              SyncService.stopService(getApplicationContext());
+              notificationsCheckboxPreference.setChecked(false);
+
             }
             return true;
           }
@@ -77,17 +71,22 @@ public class ApplicationSettingsActivity extends PreferenceActivity {
         .setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
           @Override
           public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Boolean newBooleanValue = (Boolean) newValue;
+            if (!credentialsStoredCheckboxPreference.isChecked()) {
+              GUI.displayMonit(getApplicationContext(),
+                  "Notifications require \"Store credentails\" preference to be enabled");
+              return false;
+            } else {
+              Boolean newBooleanValue = (Boolean) newValue;
 
-            if (newBooleanValue.equals(true))
-              SyncService.initializeService(getApplicationContext(),
-                  Integer.parseInt(notificationsDelayPreference.getValue()));
-            else
-              SyncService.stopService(getApplicationContext());
-            return true;
+              if (newBooleanValue.equals(true))
+                SyncService.initializeService(getApplicationContext(),
+                    Integer.parseInt(notificationsDelayPreference.getValue()));
+              else
+                SyncService.stopService(getApplicationContext());
+              return true;
+            }
           }
         });
 
   }
-
 }

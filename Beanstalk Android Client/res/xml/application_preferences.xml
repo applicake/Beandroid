@@ -8,10 +8,14 @@
       android:title="Store credentials"
       android:summary="Enable auto login" />
   </PreferenceCategory>
-  
+
   <PreferenceCategory
-  android:title="Notification preferences">
+    android:title="Notification preferences"
+    android:key="auto_update_notification_preferences">
+    
+
     <CheckBoxPreference
+      android:defaultValue="false"
       android:key="auto_update_notification_service"
       android:title="Notification service"
       android:summary="Enable notification" />
@@ -23,8 +27,12 @@
       android:entryValues="@array/notification_delay_entry_values"
       android:defaultValue="60" />
 
+    <CheckBoxPreference
+      android:defaultValue="false"
+      android:key="auto_update_notification_service_custom_led"
+      android:title="Custom LED colors"
+      android:summary="LED color will correspond to latest commit's repository label" />
+
   </PreferenceCategory>
 
 </PreferenceScreen>
-
-
