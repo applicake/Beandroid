@@ -3,20 +3,21 @@ package com.applicake.beanstalkclient.test;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.LoginActivity;
 import com.applicake.beanstalkclient.enums.UserType;
 
-public class LoginActivityUserVerificationTests extends
-    ActivityInstrumentationTestCase2<LoginActivity> {
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.test.AndroidTestCase;
+import android.test.UiThreadTest;
+import android.util.Log;
+
+
+public class LoginActivityUserVerificationTests extends AndroidTestCase {
 
   public LoginActivityUserVerificationTests() {
-    super("com.applicake.beanstalkclient", LoginActivity.class);
+    super();
     // TODO Auto-generated constructor stub
   }
 
@@ -32,12 +33,13 @@ public class LoginActivityUserVerificationTests extends
   // INCORRECT
   private LoginActivity baseActivity;
   private SharedPreferences prefs;
+  
 
   @Override
   protected void setUp() throws Exception {
     Log.d("tests", "setup");
-    baseActivity = getActivity();
-    prefs = PreferenceManager.getDefaultSharedPreferences(baseActivity);
+    baseActivity = new LoginActivity();
+    prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
     prefs.edit().clear().commit();
     super.setUp();
   }
@@ -48,26 +50,29 @@ public class LoginActivityUserVerificationTests extends
     super.tearDown();
   }
 
+  @UiThreadTest
   public void testOwnerUserTypeRecogintion() throws Throwable {
     RunnableTaskCouple testCouple = new RunnableTaskCouple(ownerCorrect);
-    runTestOnUiThread(testCouple.mRunnable);
+//    runTestOnUiThread(testCouple.mRunnable);
+    testCouple.mRunnable.run();
     testCouple.mSignal.await(30, TimeUnit.SECONDS);
     String userType = prefs.getString(Constants.USER_TYPE, "");
     assertEquals(UserType.OWNER.name(), userType);
 
   }
-
+  @UiThreadTest
   public void testAdminUserTypeRecogintion() throws Throwable {
     RunnableTaskCouple testCouple = new RunnableTaskCouple(adminCorrect);
-    runTestOnUiThread(testCouple.mRunnable);
+//    runTestOnUiThread(testCouple.mRunnable);
+    testCouple.mRunnable.run();
     String userType = prefs.getString(Constants.USER_TYPE, "");
     assertEquals(UserType.ADMIN.name(), userType);
 
   }
-
+  @UiThreadTest
   public void testUserUserTypeRecogintion() throws Throwable {
     RunnableTaskCouple testCouple = new RunnableTaskCouple(userCorrect);
-    runTestOnUiThread(testCouple.mRunnable);
+    testCouple.mRunnable.run();
     String userType = prefs.getString(Constants.USER_TYPE, "");
     assertEquals(UserType.USER.name(), userType);
 
@@ -83,11 +88,12 @@ public class LoginActivityUserVerificationTests extends
     final CountDownLatch mSignal = new CountDownLatch(1);
 
     public RunnableTaskCouple(final String[] params) {
-      mTestVerifyLoginTask = baseActivity.new VerifyLoginTask(){
+      mTestVerifyLoginTask = baseActivity.new VerifyLoginTask() {
         @Override
         protected void onPostExecute(Integer result) {
-          super.onPostExecute(result);
           mSignal.countDown();
+          super.onPostExecute(result);
+
         }
       };
       mRunnable = new Runnable() {

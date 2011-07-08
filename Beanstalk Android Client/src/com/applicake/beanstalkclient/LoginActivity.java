@@ -234,6 +234,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     @Override
     protected void onPostExecute(Integer result) {
+      Log.d("LoginActivity", "Did download task fail: " + String.valueOf(failed));
       progressDialog.dismiss();
 
       if (failed) {

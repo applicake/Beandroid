@@ -63,6 +63,8 @@ public class SyncService extends Service {
 
       mostRecentlyViewedChangesetId = prefs.getString(Constants.RECENT_CHANGESET_ID, "");
       Log.d(TAG, "the download has started");
+      
+      // starting the download task with or without custom LED colors
       new NotificationServiceTask(prefs.getBoolean(
           Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED, false)).execute();
       
@@ -76,6 +78,7 @@ public class SyncService extends Service {
     super.onDestroy();
   }
 
+  // scheduling the service to run at certain intervals read from sharedpreferences
   public static void initializeService(final Context context) {
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Intent intent = new Intent(context, SyncService.class);
@@ -96,6 +99,7 @@ public class SyncService extends Service {
 
   }
 
+  // rescheduling the service to run at certain intervals
   public static void updateServiceReloadTime(Context context, Integer minutes) {
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Intent intent = new Intent(context, SyncService.class);
@@ -112,6 +116,7 @@ public class SyncService extends Service {
 
   }
 
+  // canceling service schedule
   public static void stopService(final Context context) {
 
     Intent intent = new Intent(context, SyncService.class);
