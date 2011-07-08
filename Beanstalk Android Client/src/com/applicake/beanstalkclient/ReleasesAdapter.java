@@ -3,38 +3,66 @@ package com.applicake.beanstalkclient;
 import java.util.List;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 public class ReleasesAdapter extends BaseAdapter {
 
-  public ReleasesAdapter(Context context, int layoutResourceId, List<Release> objects) {
-    // TODO Auto-generated constructor stub
+  private List<Release> mReleases;
+  // private Context mContext;
+  private int mLayoutId;
+  private LayoutInflater mInflater;
+
+  public ReleasesAdapter(Context context, int layoutResourceId, List<Release> releases) {
+    // mContext = context;
+    mLayoutId = layoutResourceId;
+    mReleases = releases;
+    mInflater = LayoutInflater.from(context);
   }
 
   @Override
   public int getCount() {
-    // TODO Auto-generated method stub
-    return 0;
+    return mReleases.size();
   }
 
   @Override
-  public Object getItem(int arg0) {
-    // TODO Auto-generated method stub
-    return null;
+  public Object getItem(int position) {
+    return mReleases.get(position);
   }
 
   @Override
-  public long getItemId(int arg0) {
-    // TODO Auto-generated method stub
-    return 0;
+  public long getItemId(int position) {
+    return mReleases.get(position).getId();
   }
 
   @Override
-  public View getView(int arg0, View arg1, ViewGroup arg2) {
-    // TODO Auto-generated method stub
-    return null;
+  public View getView(int position, View convertView, ViewGroup parent) {
+    Release release = mReleases.get(position);
+
+    View view = convertView;
+
+    if (view == null) {
+      view = mInflater.inflate(mLayoutId, null);
+    }
+
+    TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
+    TextView comment = (TextView) view.findViewById(R.id.comment);
+    TextView state = (TextView) view.findViewById(R.id.state);
+    TextView revision = (TextView) view.findViewById(R.id.revision);
+    TextView author = (TextView) view.findViewById(R.id.author);
+    TextView deployedAt = (TextView) view.findViewById(R.id.deployed_at);
+
+    environmentName.setText(release.getEnvironmentName());
+    comment.setText(release.getComment());
+    state.setText(release.getStateLabel());
+    revision.setText(String.valueOf(release.getRevision()));
+    author.setText(release.getAuthor());
+    deployedAt.setText(release.getDeployedAt().toLocaleString());
+
+    return view;
   }
 
 }

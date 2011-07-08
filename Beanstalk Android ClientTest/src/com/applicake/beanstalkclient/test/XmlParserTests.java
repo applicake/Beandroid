@@ -35,7 +35,7 @@ import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 public class XmlParserTests extends InstrumentationTestCase {
 
   // valid xmls
-  private static final String RELEASES_XML_ADDRESS = "mockxmls/releases.xml";
+  static final String RELEASES_XML_ADDRESS = "mockxmls/releases.xml";
   private static final String CHANGESET_XML_ADDRESS = "mockxmls/changesets.xml";
   private static final String REPOSITORIES_XML_ADDRESS = "mockxmls/repositories.xml";
   private static final String USERS_XML_ADDRESS = "mockxmls/users.xml";
