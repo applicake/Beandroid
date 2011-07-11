@@ -19,6 +19,9 @@ import android.widget.TextView;
 public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     OnClickListener {
 
+  boolean serverListLoaded = false;
+  boolean releaseListLoaded = false;
+  
   private ListView mReleasesList;
   private ListView mServersList;
   private ReleasesAdapter mReleasesAdapter;
@@ -53,7 +56,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     
     // servers list
     mServersAdapter = new ServersAdapter(this, 0, mServersArray );
-    mReleasesList.setAdapter(mReleasesAdapter);
+    mServersList.setAdapter(mServersAdapter);
   }
 
   @Override
@@ -61,12 +64,16 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     int id = view.getId();
     switch (id) {
     case R.id.releases_button:
+      
     case R.id.servers_button:
       // switch tabs
       mReleasesList.setVisibility(id == R.id.releases_button ? View.VISIBLE : View.GONE);
       mServersList.setVisibility(id == R.id.servers_button ? View.VISIBLE : View.GONE);
       break;
+    
     }
   }
+  
+  
 
 }

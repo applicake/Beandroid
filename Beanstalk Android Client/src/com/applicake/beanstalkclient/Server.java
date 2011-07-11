@@ -134,6 +134,4 @@ public class Server {
     this.updatedAt = updatedAt;
   }
   
-  
-  
 }

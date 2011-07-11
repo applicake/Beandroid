@@ -25,6 +25,7 @@ import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpImproperStatusCodeException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.HttpSender;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
 import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
@@ -110,6 +111,8 @@ public class AccountSettingsActivity extends BeanstalkActivity implements OnClic
         return e.getStatusCode();
       } catch (HttpConnectionErrorException e) {
         failMessage = Strings.networkConnectionErrorMessage;
+      } catch (UnsuccessfulServerResponseException e) {
+        failMessage = "The target server failed to respond.";
       }
 
       failed = true;
