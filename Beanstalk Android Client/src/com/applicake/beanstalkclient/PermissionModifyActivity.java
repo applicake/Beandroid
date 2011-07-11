@@ -84,12 +84,11 @@ public class PermissionModifyActivity extends BeanstalkActivity implements
         repoAccessSpinner.setSelection(1);
         repoAccessSpinner.getBackground().setLevel(1);
       }
-      if (permission.isFullDeploymentAccess())
+      if (permission.isFullDeploymentAccess()) {
         deploymentAccessSpinner.setSelection(1);
-      deploymentAccessSpinner.getBackground().setLevel(0);
-
+        deploymentAccessSpinner.getBackground().setLevel(0);
+      }
     }
-
   }
 
   // a listener that changes color label of the spinner after selecting and
