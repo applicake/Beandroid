@@ -16,7 +16,7 @@ public class ServiceAutoStarter extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
     if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false)
-        && prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)) {
+        && prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
       SyncService.initializeService(context);
     }
   }

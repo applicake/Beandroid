@@ -29,7 +29,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class LoginActivity extends Activity implements OnClickListener {
@@ -37,7 +36,6 @@ public class LoginActivity extends Activity implements OnClickListener {
   private EditText domainaccountEditText;
   private EditText loginEditText;
   private EditText passwordEditText;
-  private CheckBox remeberMeCheckBox;
 
   private Context mContext;
   private SharedPreferences prefs;
@@ -52,8 +50,10 @@ public class LoginActivity extends Activity implements OnClickListener {
     prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     setContentView(R.layout.login_activity_layout);
     // auto login with previously stored user data
-    if (prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false)
-        && prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
+   
+    // TODO optimize memory usage
+    
+    if (prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
       // check credentials validity
 
       String storedDomain = prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
@@ -68,7 +68,6 @@ public class LoginActivity extends Activity implements OnClickListener {
     domainaccountEditText = (EditText) findViewById(R.id.accountdomain_edittext);
     loginEditText = (EditText) findViewById(R.id.login_edittext);
     passwordEditText = (EditText) findViewById(R.id.password_edittext);
-    remeberMeCheckBox = (CheckBox) findViewById(R.id.remember_me_check_box);
 
     // custom input filter that allows only alphanumeric characters and "-"
     // character, but not in the beginning or the end of the string
@@ -104,24 +103,9 @@ public class LoginActivity extends Activity implements OnClickListener {
       String password = passwordEditText.getText().toString();
       String domain = domainaccountEditText.getText().toString();
 
-      Editor editor = prefs.edit();
-      editor.putBoolean(Constants.REMEBER_ME_CHECKBOX, remeberMeCheckBox.isChecked());
-      editor.commit();
       new VerifyLoginTask().execute(domain, login, password);
 
     }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (resultCode) {
-    case Constants.CLOSE_ALL_ACTIVITIES:
-      if (!prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false))
-        clearCredentials();
-      setResult(Constants.CLOSE_ALL_ACTIVITIES);
-      finish();
-    }
-
   }
 
   public void clearCredentials() {
@@ -130,7 +114,6 @@ public class LoginActivity extends Activity implements OnClickListener {
     editor.putString(Constants.USER_ACCOUNT_DOMAIN, "");
     editor.putString(Constants.USER_LOGIN, "");
     editor.putString(Constants.USER_PASSWORD, "");
-    editor.putBoolean(Constants.REMEBER_ME_CHECKBOX, false);
     editor.commit();
   }
 
@@ -270,6 +253,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
           Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
           startActivityForResult(intent, 0);
+          finish();
 
         } else if (result == 302) {
           GUI.displayMonit(mContext, "Invalid account domain");

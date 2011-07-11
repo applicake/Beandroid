@@ -47,9 +47,6 @@ public abstract class BeanstalkActivity extends Activity {
     case R.id.logout:
       logoutWrapper();
       return true;
-    case R.id.exit:
-      exitApplication();
-      return true;
     default:
       return true;
     }
@@ -61,7 +58,6 @@ public abstract class BeanstalkActivity extends Activity {
     editor.putString(Constants.USER_ACCOUNT_DOMAIN, "");
     editor.putString(Constants.USER_LOGIN, "");
     editor.putString(Constants.USER_PASSWORD, "");
-    editor.putBoolean(Constants.REMEBER_ME_CHECKBOX, false);
     editor.commit();
   }
 
@@ -95,18 +91,6 @@ public abstract class BeanstalkActivity extends Activity {
 
   public void logout() {
     clearCredentials();
-    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    startActivity(intent);
-    setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
-    finish();
-  }
-
-  // closing all activities mechanism
-  public void exitApplication() {
-    if (!prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
-      clearCredentials();
-    }
     setResult(Constants.CLOSE_ALL_ACTIVITIES);
     finish();
   }
@@ -116,13 +100,7 @@ public abstract class BeanstalkActivity extends Activity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (resultCode) {
     case Constants.CLOSE_ALL_ACTIVITIES:
-      if (!prefs.getBoolean(Constants.REMEBER_ME_CHECKBOX, false))
-        clearCredentials();
       setResult(Constants.CLOSE_ALL_ACTIVITIES);
-      finish();
-      break;
-    case Constants.CLOSE_ALL_BUT_LOGOUT:
-      setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
       finish();
       break;
     case Constants.CLEAR_STACK_UP_TO_HOME:
