@@ -1,6 +1,5 @@
 package com.applicake.beanstalkclient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
