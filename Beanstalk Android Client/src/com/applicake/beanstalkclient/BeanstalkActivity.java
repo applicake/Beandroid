@@ -72,6 +72,7 @@ public abstract class BeanstalkActivity extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+              SyncService.stopService(getApplicationContext());
               logout();
             }
           }).setNegativeButton("No", new OnClickListener() {
