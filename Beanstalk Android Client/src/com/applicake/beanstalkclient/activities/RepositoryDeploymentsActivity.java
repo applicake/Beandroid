@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Release;
+import com.applicake.beanstalkclient.Server;
+import com.applicake.beanstalkclient.ServersAdapter;
 import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
 
 import android.content.Intent;
@@ -20,8 +22,10 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   private ListView mReleasesList;
   private ListView mServersList;
   private ReleasesAdapter mReleasesAdapter;
+  private ServersAdapter mServersAdapter;
   
   private ArrayList<Release> mReleaseArray = new ArrayList<Release>();
+  private ArrayList<Server> mServersArray = new ArrayList<Server>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,10 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
     // releases list
     mReleasesAdapter = new ReleasesAdapter(this, 0, mReleaseArray);
+    mReleasesList.setAdapter(mReleasesAdapter);
+    
+    // servers list
+    mServersAdapter = new ServersAdapter(this, 0, mServersArray );
     mReleasesList.setAdapter(mReleasesAdapter);
   }
 
