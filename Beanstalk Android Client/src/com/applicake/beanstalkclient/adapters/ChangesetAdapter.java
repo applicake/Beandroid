@@ -5,13 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
-import com.applicake.beanstalkclient.Changeset;
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.Repository;
-import com.applicake.beanstalkclient.utils.GravatarDowloader;
-import com.applicake.beanstalkclient.utils.RailsTimezones;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -21,6 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.applicake.beanstalkclient.Changeset;
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.utils.GravatarDowloader;
+import com.applicake.beanstalkclient.utils.RailsTimezones;
 
 public class ChangesetAdapter extends ArrayAdapter<Changeset> {
 

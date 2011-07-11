@@ -3,13 +3,6 @@ package com.applicake.beanstalkclient;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.applicake.beanstalkclient.enums.ColorLabels;
-import com.applicake.beanstalkclient.utils.HttpRetriever;
-import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
-import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
-import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -24,6 +17,14 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.applicake.beanstalkclient.activities.DashboardActivity;
+import com.applicake.beanstalkclient.enums.ColorLabels;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
+import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 // under construction!
 
@@ -63,11 +64,11 @@ public class SyncService extends Service {
 
       mostRecentlyViewedChangesetId = prefs.getString(Constants.RECENT_CHANGESET_ID, "");
       Log.d(TAG, "the download has started");
-      
+
       // starting the download task with or without custom LED colors
       new NotificationServiceTask(prefs.getBoolean(
           Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED, false)).execute();
-      
+
     } else
       Log.d(TAG, "no interet connection");
 
@@ -78,7 +79,8 @@ public class SyncService extends Service {
     super.onDestroy();
   }
 
-  // scheduling the service to run at certain intervals read from sharedpreferences
+  // scheduling the service to run at certain intervals read from
+  // sharedpreferences
   public static void initializeService(final Context context) {
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Intent intent = new Intent(context, SyncService.class);

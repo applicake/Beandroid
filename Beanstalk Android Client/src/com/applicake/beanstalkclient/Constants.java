@@ -17,12 +17,12 @@ public class Constants {
 
   // names for extras passed via intents
 
-  static final String CHANGESET_ENTRY = "changeset_entry";
-  static final String CHANGEDFILES_ARRAYLIST = "changed_files_array";
-  static final String CHANGEDDIRS_ARRAYLIST = "changed_dirs_array";
+  public static final String CHANGESET_ENTRY = "changeset_entry";
+  public static final String CHANGEDFILES_ARRAYLIST = "changed_files_array";
+  public static final String CHANGEDDIRS_ARRAYLIST = "changed_dirs_array";
 
-  static final String COMMIT_USERNAME = "commit_username";
-  static final String COMMIT_MESSAGE = "commit_message";
+  public static final String COMMIT_USERNAME = "commit_username";
+  public static final String COMMIT_MESSAGE = "commit_message";
 
   public static final String COMMIT_REPOSITORY_ID = "commit_repository_id";
 
@@ -47,7 +47,6 @@ public class Constants {
 
   public static final String ACCOUNT_PLAN = "account_plan_preference";
 
-
   public static final int CLEAR_STACK_UP_TO_HOME = 314;
 
   public static final String USER_TIMEZONE = "account timezone";
@@ -63,7 +62,7 @@ public class Constants {
   public static final String COMMIT_REPOSIOTRY_LABEL = "commit_repostory_label";
 
   // preferences and misc
-  
+
   // settings used for notifications
   public static final String RECENT_CHANGESET_ID = "recent_changeset_id";
   public static final int NOTIFICATION_ID = 90210;

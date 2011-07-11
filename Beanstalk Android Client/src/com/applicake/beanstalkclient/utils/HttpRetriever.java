@@ -24,10 +24,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.util.EntityUtils;
 
-import com.applicake.beanstalkclient.Constants;
-
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.applicake.beanstalkclient.Constants;
 
 public class HttpRetriever {
 

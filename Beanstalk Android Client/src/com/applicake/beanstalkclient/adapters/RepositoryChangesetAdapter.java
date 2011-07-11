@@ -3,10 +3,6 @@ package com.applicake.beanstalkclient.adapters;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import com.applicake.beanstalkclient.Changeset;
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.utils.GravatarDowloader;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.applicake.beanstalkclient.Changeset;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.utils.GravatarDowloader;
 
 public class RepositoryChangesetAdapter extends ArrayAdapter<Changeset> {
 

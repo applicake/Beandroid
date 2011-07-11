@@ -30,13 +30,14 @@ public class Changeset implements Serializable {
   private Date time;
   private boolean tooLarge;
   private int userId;
-  
+
   // generating a unique string id
 
-  public String getUniqueId(){
-    return String.valueOf(repositoryId) + String.valueOf(revision) + (hashId != null ? hashId : "");
+  public String getUniqueId() {
+    return String.valueOf(repositoryId) + String.valueOf(revision)
+        + (hashId != null ? hashId : "");
   }
-  
+
   public int getAccountId() {
     return accountId;
   }

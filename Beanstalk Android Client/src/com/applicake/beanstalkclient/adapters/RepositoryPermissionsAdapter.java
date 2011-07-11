@@ -1,10 +1,22 @@
 package com.applicake.beanstalkclient.adapters;
 
 import java.util.HashMap;
-
-import android.widget.Button;
 import java.util.List;
 import java.util.Map;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.R;
@@ -17,19 +29,6 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorExce
 import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
 

@@ -4,6 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
 import com.applicake.beanstalkclient.*;
+import com.applicake.beanstalkclient.activities.LoginActivity;
 
 public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginActivity> {
 

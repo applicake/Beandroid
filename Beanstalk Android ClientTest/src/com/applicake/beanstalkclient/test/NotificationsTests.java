@@ -92,16 +92,6 @@ public class NotificationsTests extends ServiceTestCase<SyncService> {
     mSignal = new CountDownLatch(1);
     // overriding SyncSerivces to enable communication between the service and
     // the test case
-    testedService = new SyncService() {
-      @Override
-      public void onStart(Intent intent, int startId) {
-        
-        super.onStart(intent, startId);
-        Tester.increment();
-        mSignal.countDown();
-        
-      }
-    };
 
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     prefs.edit().clear().commit();

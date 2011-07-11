@@ -3,10 +3,10 @@ package com.applicake.beanstalkclient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import com.applicake.beanstalkclient.enums.ColorLabels;
-
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.applicake.beanstalkclient.enums.ColorLabels;
 
 public class Repository implements Parcelable {
   static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");

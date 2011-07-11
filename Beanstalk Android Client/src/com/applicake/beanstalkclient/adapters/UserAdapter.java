@@ -2,11 +2,6 @@ package com.applicake.beanstalkclient.adapters;
 
 import java.util.List;
 
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.User;
-import com.applicake.beanstalkclient.enums.UserType;
-import com.applicake.beanstalkclient.utils.GravatarDowloader;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.User;
+import com.applicake.beanstalkclient.enums.UserType;
+import com.applicake.beanstalkclient.utils.GravatarDowloader;
 
 public class UserAdapter extends ArrayAdapter<User> {
 

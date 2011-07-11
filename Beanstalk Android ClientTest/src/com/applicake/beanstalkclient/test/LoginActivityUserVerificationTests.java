@@ -4,7 +4,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.LoginActivity;
+import com.applicake.beanstalkclient.activities.LoginActivity;
 import com.applicake.beanstalkclient.enums.UserType;
 
 import android.content.SharedPreferences;
