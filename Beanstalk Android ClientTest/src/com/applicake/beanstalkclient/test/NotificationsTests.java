@@ -156,14 +156,17 @@ public class NotificationsTests extends ServiceTestCase<SyncService> {
   }
   
   public static void notificationPreferencesSetter(SharedPreferences prefs, boolean isOn, String delay, boolean credentailsStored){
-    prefs.edit().putBoolean(Constants.CREDENTIALS_STORED, credentailsStored).commit();
-    prefs.edit().putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, isOn).commit();
-    prefs.edit().putString(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY, delay);
+    SharedPreferences.Editor editor = prefs.edit();
+    editor.putBoolean(Constants.CREDENTIALS_STORED, credentailsStored);
+    editor.putBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, isOn);
+    editor.putString(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY, delay);
     
     // setup credentials
-    prefs.edit().putString(Constants.USER_ACCOUNT_DOMAIN, SecretData.USER_ACCOUNT_DOMAIN);
-    prefs.edit().putString(Constants.USER_LOGIN, SecretData.USER_LOGIN);
-    prefs.edit().putString(Constants.USER_PASSWORD, SecretData.PASSWORD);
+    editor.putString(Constants.USER_ACCOUNT_DOMAIN, SecretData.USER_ACCOUNT_DOMAIN);
+    editor.putString(Constants.USER_LOGIN, SecretData.USER_LOGIN);
+    editor.putString(Constants.USER_PASSWORD, SecretData.PASSWORD);
+    editor.commit();
+    
   }
 
 }

@@ -1,10 +1,11 @@
-package com.applicake.beanstalkclient.test;
+package com.applicake.beanstalkclient.test.activites;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
 import com.applicake.beanstalkclient.*;
 import com.applicake.beanstalkclient.activities.LoginActivity;
+import com.applicake.beanstalkclient.test.SecretData;
 
 public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginActivity> {
 

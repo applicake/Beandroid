@@ -1,4 +1,4 @@
-package com.applicake.beanstalkclient.test;
+package com.applicake.beanstalkclient.test.utils;
 
 import java.util.ArrayList;
 import java.util.TimeZone;
