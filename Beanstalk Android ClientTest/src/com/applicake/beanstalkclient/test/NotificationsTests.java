@@ -23,7 +23,6 @@ public class NotificationsTests extends ServiceTestCase<SyncService> {
 
   public static final String PREFIX = "test.";
   private SharedPreferences prefs;
-  private SyncService testedService;
   private CountDownLatch mSignal;
   private MyMockContext context;
 

@@ -45,7 +45,7 @@ public abstract class BeanstalkActivity extends Activity {
       startActivity(new Intent(this, ApplicationSettingsActivity.class));
       return true;
     case R.id.logout:
-      logout();
+      logoutWrapper();
       return true;
     case R.id.exit:
       exitApplication();
@@ -65,7 +65,7 @@ public abstract class BeanstalkActivity extends Activity {
     editor.commit();
   }
 
-  public void logout() {
+  private void logoutWrapper() {
     if (prefs.getBoolean(Constants.AUTO_UPDATE_NOTIFICATION_SERVICE, false)) {
       AlertDialog.Builder builder = new AlertDialog.Builder(this);
       builder
@@ -76,15 +76,10 @@ public abstract class BeanstalkActivity extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              clearCredentials();
-              Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-              startActivity(intent);
-              setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
-              finish();
+              logout();
             }
           }).setNegativeButton("No", new OnClickListener() {
-            
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
               dialog.dismiss();
@@ -93,14 +88,18 @@ public abstract class BeanstalkActivity extends Activity {
       builder.show();
 
     } else {
-      clearCredentials();
-      Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      startActivity(intent);
-      setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
-      finish();
+      logout();
 
     }
+  }
+
+  public void logout() {
+    clearCredentials();
+    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    startActivity(intent);
+    setResult(Constants.CLOSE_ALL_BUT_LOGOUT);
+    finish();
   }
 
   // closing all activities mechanism
