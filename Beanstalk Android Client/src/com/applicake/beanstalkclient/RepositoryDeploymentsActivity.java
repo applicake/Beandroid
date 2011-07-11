@@ -1,5 +1,7 @@
 package com.applicake.beanstalkclient;
 
+import com.applicake.beanstalkclient.activities.BeanstalkActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
