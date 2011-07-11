@@ -81,6 +81,10 @@ public class HttpRetriever {
   private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
   private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
+  private static final String RELEASES_FOR_REPOSITORY_HTTP_SUFFIX = "/releases.xml";
+
+  private static final String RELEASES_FOR_REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+
   // checking credentials for Owner user
   public static String checkCredentialsAccount(String domain, String username,
       String password) throws HttpImproperStatusCodeException,
@@ -214,36 +218,13 @@ public class HttpRetriever {
   }
 
   public static String getAccountInfo(SharedPreferences prefs)
-      throws HttpImproperStatusCodeException, HttpConnectionErrorException {
+      throws HttpImproperStatusCodeException, HttpConnectionErrorException, UnsuccessfulServerResponseException {
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
 
     String auth_http = HTTP_PREFIX + domain + ACCOUNT_HTTP_SUFFIX;
 
-    HttpGet getRequest = new HttpGet(auth_http);
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      }
-      throw new HttpImproperStatusCodeException(statusCode);
-
-    } catch (IOException ioe) {
-      getRequest.abort();
-      throw new HttpConnectionErrorException(ioe);
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
+    return sendRequest(credentials, auth_http);
 
   }
 
@@ -255,33 +236,8 @@ public class HttpRetriever {
 
     String auth_http = HTTP_PREFIX + domain + USERS_HTTP_SUFFIX;
 
-    HttpGet getRequest = new HttpGet(auth_http);
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
+    return sendRequest(credentials, auth_http);
 
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      } else
-        throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-      getRequest.abort();
-      throw new HttpConnectionErrorException(ioe);
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
   }
 
   public static String getActivityListXML(SharedPreferences prefs, int pageNumber)
@@ -294,30 +250,7 @@ public class HttpRetriever {
         + String.valueOf(pageNumber);
     Log.w("Beansdroid", activity_http);
 
-    HttpGet getRequest = new HttpGet(activity_http);
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      } else
-        throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException ioe) {
-      throw new HttpConnectionErrorException(ioe);
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
+    return sendRequest(credentials, activity_http);
 
   }
 
@@ -331,30 +264,7 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain
         + SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX + repoId;
 
-    HttpGet getRequest = new HttpGet(activity_http);
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      } else
-        throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException ioe) {
-      throw new HttpConnectionErrorException(ioe);
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
+    return sendRequest(credentials, activity_http);
   }
 
   public static String getRepositoryListXML(SharedPreferences prefs)
@@ -365,31 +275,7 @@ public class HttpRetriever {
 
     String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_SUFFIX;
 
-    HttpGet getRequest = new HttpGet(activity_http);
-
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      } else
-        throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException ioe) {
-      throw new HttpConnectionErrorException(ioe);
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
+    return sendRequest(credentials, activity_http);
   }
 
   public static String getRepositoryXML(SharedPreferences prefs, int repoId)
@@ -401,32 +287,7 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_MIDDLE
         + String.valueOf(repoId) + ".xml";
 
-    HttpGet getRequest = new HttpGet(activity_http);
-
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
-
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      } else
-        throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException ioe) {
-      throw new HttpConnectionErrorException(ioe);
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
+    return sendRequest(credentials, activity_http);
   }
 
   public static String getCommentsListXML(SharedPreferences prefs, String repoId)
@@ -438,33 +299,7 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain + COMMENTS_HTTP_MIDDLE
         + String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX;
 
-    HttpGet getRequest = new HttpGet(activity_http);
-
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
-
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      } else
-        throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException ioe) {
-      throw new HttpConnectionErrorException(ioe);
-
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
+    return sendRequest(credentials, activity_http);
 
   }
 
@@ -479,33 +314,7 @@ public class HttpRetriever {
         + String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX + COMMENTS_REVISION_HTTP_SUFFIX
         + revision + "&page=" + String.valueOf(pageNumber);
 
-    HttpGet getRequest = new HttpGet(comments_http);
-
-    getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    HttpResponse getResponse = null;
-
-    try {
-      // parsing
-      getResponse = httpClient.execute(getRequest);
-      // response code
-      int statusCode = getResponse.getStatusLine().getStatusCode();
-      if (statusCode == HttpStatus.SC_OK) {
-        return EntityUtils.toString(getResponse.getEntity());
-      } else
-        throw new UnsuccessfulServerResponseException(getResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException ioe) {
-      throw new HttpConnectionErrorException(ioe);
-
-    } finally {
-      if (getResponse != null)
-        try {
-          getResponse.getEntity().consumeContent();
-        } catch (IOException e) {
-          throw new HttpConnectionErrorException(e);
-        }
-    }
+    return sendRequest(credentials, comments_http);
 
   }
 
@@ -518,7 +327,27 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain + PERMISSIONS_FOR_USER_HTTP_SUFFIX
         + String.valueOf(userId) + ".xml";
 
-    HttpGet getRequest = new HttpGet(activity_http);
+    return sendRequest(credentials, activity_http);
+
+  }
+
+  public static String getReleasesListForRepositoryXML(SharedPreferences prefs, int repoId)
+      throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    String activity_http = HTTP_PREFIX + domain + RELEASES_FOR_REPOSITORY_HTTP_MIDDLE
+        + String.valueOf(repoId) + RELEASES_FOR_REPOSITORY_HTTP_SUFFIX;
+
+    return sendRequest(credentials, activity_http);
+
+  }
+
+  private static String sendRequest(UsernamePasswordCredentials credentials,
+      String httpAddress) throws UnsuccessfulServerResponseException,
+      HttpConnectionErrorException {
+    HttpGet getRequest = new HttpGet(httpAddress);
 
     getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
     HttpResponse getResponse = null;
@@ -544,7 +373,6 @@ public class HttpRetriever {
           throw new HttpConnectionErrorException(e);
         }
     }
-
   }
 
   // this exception is passing the status code of failed Http Request up the
