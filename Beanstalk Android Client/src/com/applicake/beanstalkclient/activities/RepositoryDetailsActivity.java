@@ -133,7 +133,11 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
     }
 
     if (v.getId() == R.id.buttonDeployment) {
-      GUI.displayMonit(getApplicationContext(), "to be implemented");
+//      GUI.displayMonit(getApplicationContext(), "to be implemented");
+      Intent intent = new Intent(getApplicationContext(), RepositoryDeploymentsActivity.class);
+      intent.putExtra(Constants.REPOSITORY, repository);
+      startActivityForResult(intent, 0);
+      
     }
 
     if (v.getId() == R.id.buttonModifyProperties) {

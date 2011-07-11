@@ -1,4 +1,4 @@
-package com.applicake.beanstalkclient.test;
+package com.applicake.beanstalkclient.test.activites;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.RepositoryDeploymentsActivity;
+import com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity;
 
 /**
  * These are tests of layout and point-click UI interaction.

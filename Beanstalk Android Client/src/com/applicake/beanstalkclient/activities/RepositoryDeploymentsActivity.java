@@ -1,6 +1,11 @@
-package com.applicake.beanstalkclient;
+package com.applicake.beanstalkclient.activities;
 
-import com.applicake.beanstalkclient.activities.BeanstalkActivity;
+import java.util.ArrayList;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Release;
+import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +20,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   private ListView mReleasesList;
   private ListView mServersList;
   private ReleasesAdapter mReleasesAdapter;
+  
+  private ArrayList<Release> mReleaseArray = new ArrayList<Release>();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +44,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     findViewById(R.id.servers_button).setOnClickListener(this);
 
     // releases list
-    mReleasesAdapter = new ReleasesAdapter(this, 0, null);
+    mReleasesAdapter = new ReleasesAdapter(this, 0, mReleaseArray);
     mReleasesList.setAdapter(mReleasesAdapter);
   }
 

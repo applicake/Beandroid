@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Release;
-import com.applicake.beanstalkclient.ReleasesAdapter;
+import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
 
 public class ReleasesAdapterTest extends AndroidTestCase {
 

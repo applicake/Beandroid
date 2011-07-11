@@ -101,6 +101,10 @@
       android:name=".activities.ApplicationSettingsActivity"
       android:configChanges="orientation|keyboardHidden">
     </activity>
+    <activity
+      android:name=".activities.RepositoryDeploymentsActivity"
+      android:configChanges="orientation|keyboardHidden">
+    </activity>
 
   </application>
 
