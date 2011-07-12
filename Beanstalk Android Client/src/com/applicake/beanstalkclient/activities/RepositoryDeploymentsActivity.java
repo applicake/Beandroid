@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,6 +48,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   private ArrayList<Release> mReleaseArray = new ArrayList<Release>();
   private ArrayList<Server> mServersArray = new ArrayList<Server>();
   private Repository repository;
+  private Button releasesButton;
+  private Button serversButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +61,21 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
     // set repository title and label color based on intent
     ((TextView) findViewById(R.id.repoTitle)).setText(repository.getTitle());
-    findViewById(R.id.colorLabel).getBackground().setLevel(
-        repository.getColorLabelNo());
+    findViewById(R.id.colorLabel).getBackground().setLevel(repository.getColorLabelNo());
 
     // handle tab switching
     mReleasesList = (ListView) findViewById(R.id.releases_list);
     mServersList = (ListView) findViewById(R.id.servers_list);
-    findViewById(R.id.releases_button).setOnClickListener(this);
-    findViewById(R.id.servers_button).setOnClickListener(this);
 
+    releasesButton = (Button) findViewById(R.id.releases_button);
+    releasesButton.setOnClickListener(this);
+
+    serversButton = (Button) findViewById(R.id.servers_button);
+    serversButton.setOnClickListener(this);
+    
+    releasesButton.setSelected(true);
+    serversButton.setSelected(false);
+    
     // releases list
     mReleasesAdapter = new ReleasesAdapter(this, R.layout.releases_entry, mReleaseArray);
     mReleasesList.setAdapter(mReleasesAdapter);
@@ -74,7 +83,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     // servers list
     mServersAdapter = new ServersAdapter(this, 0, mServersArray);
     mServersList.setAdapter(mServersAdapter);
-    
+
     new DownloadReleaseListTask(this).execute();
   }
 
@@ -83,18 +92,22 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     int id = view.getId();
     switch (id) {
     case R.id.releases_button:
-       
-    case R.id.servers_button:
-      // switch tabs
-      mReleasesList.setVisibility(id == R.id.releases_button ? View.VISIBLE : View.GONE);
-      mServersList.setVisibility(id == R.id.servers_button ? View.VISIBLE : View.GONE);
+      mReleasesList.setVisibility(View.VISIBLE);
+      mServersList.setVisibility(View.GONE);
+      releasesButton.setSelected(true);
+      serversButton.setSelected(false);
       break;
 
+    case R.id.servers_button:
+      mReleasesList.setVisibility(View.GONE);
+      mServersList.setVisibility(View.VISIBLE);
+      releasesButton.setSelected(false);
+      serversButton.setSelected(true);
+      break;
     }
   }
 
-  public class DownloadReleaseListTask extends
-      AsyncTask<String, Void, List<Release>> {
+  public class DownloadReleaseListTask extends AsyncTask<String, Void, List<Release>> {
 
     private Context context;
     private ProgressDialog progressDialog;
@@ -131,7 +144,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     protected List<Release> doInBackground(String... params) {
 
       try {
-        String releasesXml = HttpRetriever.getReleasesListForRepositoryXML(prefs, repository.getId());
+        String releasesXml = HttpRetriever.getReleasesListForRepositoryXML(prefs,
+            repository.getId());
         return XmlParser.parseReleasesList(releasesXml);
 
       } catch (UnsuccessfulServerResponseException e) {
