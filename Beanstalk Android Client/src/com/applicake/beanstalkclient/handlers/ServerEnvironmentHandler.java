@@ -36,7 +36,7 @@ public class ServerEnvironmentHandler extends DefaultHandler {
       serverEnvironmentList = new ArrayList<ServerEnvironment>();
     }
 
-    if (localName == "server-enviroment") {
+    if (localName == "server-environment") {
       serverEnvironment = new ServerEnvironment();
     }
 
@@ -45,7 +45,7 @@ public class ServerEnvironmentHandler extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     if (serverEnvironment != null) {
-      if (localName == "server-enviroment") {
+      if (localName == "server-environment") {
         if (serverEnvironmentList != null) {
           serverEnvironmentList.add(serverEnvironment);
         }
