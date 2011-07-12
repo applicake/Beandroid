@@ -15,7 +15,12 @@
 
 package com.applicake.beanstalkclient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class ServerEnvironment {
+  
+  static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
   
   private int accountId;
   private boolean automatic;
@@ -26,7 +31,6 @@ public class ServerEnvironment {
   private String name;
   private int repositoryId;
   private long updatedAt;
-  
   
   public int getAccountId() {
     return accountId;
@@ -49,8 +53,8 @@ public class ServerEnvironment {
   public long getCreatedAt() {
     return createdAt;
   }
-  public void setCreatedAt(long createdAt) {
-    this.createdAt = createdAt;
+  public void setCreatedAt(String date) throws ParseException {
+    this.createdAt = FORMATTER.parse(date.trim()).getTime();
   }
   public String getCurrentVersion() {
     return currentVersion;
@@ -79,8 +83,8 @@ public class ServerEnvironment {
   public long getUpdatedAt() {
     return updatedAt;
   }
-  public void setUpdatedAt(long updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setUpdatedAt(String date) throws ParseException {
+    this.updatedAt = FORMATTER.parse(date.trim()).getTime();
   }
   
   
