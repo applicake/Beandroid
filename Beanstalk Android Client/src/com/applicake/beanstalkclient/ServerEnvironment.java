@@ -17,11 +17,13 @@ package com.applicake.beanstalkclient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class ServerEnvironment {
   
   static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
   
+  // basic server environment data
   private int accountId;
   private boolean automatic;
   private String branchName;
@@ -31,6 +33,12 @@ public class ServerEnvironment {
   private String name;
   private int repositoryId;
   private long updatedAt;
+  
+  // handling server lists 
+  private List<Server> serverList = null;
+  private boolean downloading = false;
+  private boolean downloaded = false;
+  
   
   public int getAccountId() {
     return accountId;
@@ -85,6 +93,24 @@ public class ServerEnvironment {
   }
   public void setUpdatedAt(String date) throws ParseException {
     this.updatedAt = FORMATTER.parse(date.trim()).getTime();
+  }
+  public void setDownloading(boolean downloading) {
+    this.downloading = downloading;
+  }
+  public boolean isDownloading() {
+    return downloading;
+  }
+  public void setServerList(List<Server> serverList) {
+    this.serverList = serverList;
+  }
+  public List<Server> getServerList() {
+    return serverList;
+  }
+  public void setDownloaded(boolean downloaded) {
+    this.downloaded = downloaded;
+  }
+  public boolean isDownloaded() {
+    return downloaded;
   }
   
   
