@@ -42,7 +42,7 @@ public class ReleasesAdapterTest extends AndroidTestCase {
 
     // set list adapter
     mReleases = new ArrayList<Release>();
-    mAdapter = new ReleasesAdapter(getContext(), R.layout.releases_list_item, mReleases);
+    mAdapter = new ReleasesAdapter(getContext(), R.layout.releases_entry, mReleases);
     mList.setAdapter(mAdapter);
   }
 

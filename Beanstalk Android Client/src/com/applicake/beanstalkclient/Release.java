@@ -13,7 +13,7 @@ import android.text.TextUtils;
 public class Release implements Parcelable {
 
   public static final SimpleDateFormat FORMATTER = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss'Z'");
+      "yyyy-MM-dd'T'HH:mm:ssZ");
   private static final String[] STATES = new String[] { "pending", "waiting", "failed",
       "success", "skipped", };
   private static final Map<String, Integer> STATES_TO_INT = new HashMap<String, Integer>();

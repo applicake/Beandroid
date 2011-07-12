@@ -47,6 +47,8 @@ public class RepositoriesActivity extends BeanstalkActivity implements
     setContentView(R.layout.repositories_layout);
 
     mContext = this;
+    
+    // TODO refactor 
     repositoriesList = (ListView) findViewById(R.id.repositoriesList);
     View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
         Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_repository_footer,
