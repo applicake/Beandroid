@@ -7,6 +7,7 @@
   <TextView
     android:layout_width="wrap_content"
     android:id="@+id/environment_name"
+    android:textAppearance="?android:attr/textAppearanceMedium"
     android:layout_height="wrap_content"
     android:text=""
     android:layout_alignParentTop="true"

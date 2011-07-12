@@ -253,6 +253,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     
     @Override
     protected void onPostExecute(List<ServerEnvironment> result) {
+      Log.d("xxx", String.valueOf(result.size()));
       progressDialog.dismiss();
       if (failed) {
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
@@ -260,7 +261,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
           
           @Override
           public void retryAction() {
-            new DownloadReleaseListTask(context).execute();
+            new DownloadServerEnvironmentsListTask(context).execute();
           }
           
           @Override
