@@ -3,24 +3,22 @@ package com.applicake.beanstalkclient.adapters;
 import java.util.List;
 
 import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.Server;
-import com.applicake.beanstalkclient.R.layout;
+import com.applicake.beanstalkclient.ServerEnvironment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 
 public class ServersAdapter extends BaseExpandableListAdapter {
 
-  private List<Server> mServersArray;
+  private List<ServerEnvironment> mServersArray;
   private LayoutInflater mInflater;
   
   
-  public ServersAdapter(Context context, int i, List<Server> mServersArray) {
-    this.mServersArray = mServersArray;
+  public ServersAdapter(Context context, int i, List<ServerEnvironment> serversArray) {
+    this.mServersArray = serversArray;
     mInflater = LayoutInflater.from(context); 
   }
 

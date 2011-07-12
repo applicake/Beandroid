@@ -8,6 +8,7 @@ import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Release;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.Server;
+import com.applicake.beanstalkclient.ServerEnvironment;
 import com.applicake.beanstalkclient.Strings;
 import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
 import com.applicake.beanstalkclient.adapters.ServersAdapter;
@@ -26,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -45,7 +47,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   private ServersAdapter mServersAdapter;
 
   private ArrayList<Release> mReleaseArray = new ArrayList<Release>();
-  private ArrayList<Server> mServersArray = new ArrayList<Server>();
+  private ArrayList<ServerEnvironment> mServersArray = new ArrayList<ServerEnvironment>();
   private Repository repository;
   private Button releasesButton;
   private Button serversButton;
@@ -80,7 +82,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     mReleasesList.setAdapter(mReleasesAdapter);
 
     // servers list
-    mServersAdapter = new ServersAdapter(this, 0, mServersArray);
+    mServersAdapter = new ServersAdapter(this, R.layout.environments_list_entry, mServersArray);
     mServersList.setAdapter(mServersAdapter);
 
     new DownloadReleaseListTask(this).execute();
@@ -98,6 +100,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       break;
 
     case R.id.servers_button:
+      new DownloadServerEnvironmentsListTask(this).execute();
       mReleasesList.setVisibility(View.GONE);
       mServersList.setVisibility(View.VISIBLE);
       releasesButton.setSelected(false);
@@ -106,7 +109,6 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     }
   }
 
-  
   // TODO change info dialog to list header 
   public class DownloadReleaseListTask extends AsyncTask<String, Void, List<Release>> {
 
@@ -194,7 +196,94 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
       }
     }
-
+  }
+  public class DownloadServerEnvironmentsListTask extends AsyncTask<String, Void, List<ServerEnvironment>> {
+    
+    private Context context;
+    private ProgressDialog progressDialog;
+    
+    @SuppressWarnings("rawtypes")
+    private AsyncTask thisTask;
+    private String errorMessage;
+    private String failMessage;
+    private boolean failed = false;
+    
+    public DownloadServerEnvironmentsListTask(Context context) {
+      this.context = context;
+      thisTask = this;
+    }
+    
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      progressDialog = ProgressDialog.show(context, "Loading server environments list",
+      "Please wait...");
+      progressDialog.setCancelable(true);
+      progressDialog.setOnCancelListener(new OnCancelListener() {
+        
+        @Override
+        public void onCancel(DialogInterface dialog) {
+          thisTask.cancel(true);
+          finish();
+        }
+      });
+      
+    }
+    
+    @Override
+    protected List<ServerEnvironment> doInBackground(String... params) {
+      
+      try {
+        String serverEnvironmentsXml = HttpRetriever.getServerEnvironmentListForRepositoryXML(prefs,
+            repository.getId());
+        Log.d("xxx", serverEnvironmentsXml);
+        return XmlParser.parseServerEnvironmentsList(serverEnvironmentsXml);
+        
+      } catch (UnsuccessfulServerResponseException e) {
+        errorMessage = e.getMessage();
+        return null;
+      } catch (HttpConnectionErrorException e) {
+        failMessage = Strings.networkConnectionErrorMessage;
+      } catch (XMLParserException e) {
+        failMessage = Strings.internalErrorMessage;
+      }
+      failed = true;
+      return null;
+    }
+    
+    @Override
+    protected void onPostExecute(List<ServerEnvironment> result) {
+      progressDialog.dismiss();
+      if (failed) {
+        SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
+            failMessage) {
+          
+          @Override
+          public void retryAction() {
+            new DownloadReleaseListTask(context).execute();
+          }
+          
+          @Override
+          public void noRetryAction(DialogInterface dialog) {
+            super.noRetryAction(dialog);
+            finish();
+          }
+          
+        };
+        
+        builder.displayDialog();
+      } else {
+        mServersArray.clear();
+        if (result != null) {
+          mServersArray.addAll(result);
+          mServersAdapter.notifyDataSetChanged();
+        }
+        
+        if (errorMessage != null)
+          GUI.displayMonit(context, errorMessage);
+        
+      }
+    }
   }
 
 }
