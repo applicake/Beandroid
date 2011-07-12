@@ -107,6 +107,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     }
   }
 
+  
+  // TODO change info dialog to list header 
   public class DownloadReleaseListTask extends AsyncTask<String, Void, List<Release>> {
 
     private Context context;
