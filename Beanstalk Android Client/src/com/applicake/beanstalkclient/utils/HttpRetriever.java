@@ -75,15 +75,23 @@ public class HttpRetriever {
   private static final String PERMISSIONS_FOR_USER_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions/";
   private static final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
   private static final String SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/repository.xml?repository_id=";
+  
   private static final String REPOSITORY_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
   private static final String REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
+  
   private static final String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
   private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
+  private static final String RELEASES_FOR_REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String RELEASES_FOR_REPOSITORY_HTTP_SUFFIX = "/releases.xml";
 
-  private static final String RELEASES_FOR_REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX = "/server_environments.xml";
+
+  private static final String SERVERS_FOR_ENVIRONMENT_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String SERVERS_FOR_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX = "/release_servers.xml?environment_id=";
+
 
   // checking credentials for Owner user
   public static String checkCredentialsAccount(String domain, String username,
@@ -224,7 +232,7 @@ public class HttpRetriever {
 
     String auth_http = HTTP_PREFIX + domain + ACCOUNT_HTTP_SUFFIX;
 
-    return sendRequest(credentials, auth_http);
+    return executeRequest(credentials, auth_http);
 
   }
 
@@ -236,7 +244,7 @@ public class HttpRetriever {
 
     String auth_http = HTTP_PREFIX + domain + USERS_HTTP_SUFFIX;
 
-    return sendRequest(credentials, auth_http);
+    return executeRequest(credentials, auth_http);
 
   }
 
@@ -250,7 +258,7 @@ public class HttpRetriever {
         + String.valueOf(pageNumber);
     Log.w("Beansdroid", activity_http);
 
-    return sendRequest(credentials, activity_http);
+    return executeRequest(credentials, activity_http);
 
   }
 
@@ -264,7 +272,7 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain
         + SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX + repoId;
 
-    return sendRequest(credentials, activity_http);
+    return executeRequest(credentials, activity_http);
   }
 
   public static String getRepositoryListXML(SharedPreferences prefs)
@@ -275,7 +283,7 @@ public class HttpRetriever {
 
     String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_SUFFIX;
 
-    return sendRequest(credentials, activity_http);
+    return executeRequest(credentials, activity_http);
   }
 
   public static String getRepositoryXML(SharedPreferences prefs, int repoId)
@@ -287,7 +295,7 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain + REPOSITORY_HTTP_MIDDLE
         + String.valueOf(repoId) + ".xml";
 
-    return sendRequest(credentials, activity_http);
+    return executeRequest(credentials, activity_http);
   }
 
   public static String getCommentsListXML(SharedPreferences prefs, String repoId)
@@ -299,7 +307,7 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain + COMMENTS_HTTP_MIDDLE
         + String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX;
 
-    return sendRequest(credentials, activity_http);
+    return executeRequest(credentials, activity_http);
 
   }
 
@@ -314,7 +322,7 @@ public class HttpRetriever {
         + String.valueOf(repoId) + COMMENTS_HTTP_SUFFIX + COMMENTS_REVISION_HTTP_SUFFIX
         + revision + "&page=" + String.valueOf(pageNumber);
 
-    return sendRequest(credentials, comments_http);
+    return executeRequest(credentials, comments_http);
 
   }
 
@@ -327,7 +335,7 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain + PERMISSIONS_FOR_USER_HTTP_SUFFIX
         + String.valueOf(userId) + ".xml";
 
-    return sendRequest(credentials, activity_http);
+    return executeRequest(credentials, activity_http);
 
   }
 
@@ -340,11 +348,35 @@ public class HttpRetriever {
     String activity_http = HTTP_PREFIX + domain + RELEASES_FOR_REPOSITORY_HTTP_MIDDLE
         + String.valueOf(repoId) + RELEASES_FOR_REPOSITORY_HTTP_SUFFIX;
 
-    return sendRequest(credentials, activity_http);
+    return executeRequest(credentials, activity_http);
 
   }
+  
+  public static String getServerEnvironmentListForRepositoryXML(SharedPreferences prefs, int repoId)
+  throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
+    
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+    
+    String activity_http = HTTP_PREFIX + domain + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE
+    + String.valueOf(repoId) + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX;
+    
+    return executeRequest(credentials, activity_http);
+  }
+  
+  public static String getServerListForEnviromentXML(SharedPreferences prefs, int repoId, int environmentId)
+  throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
+    
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+    
+    String activity_http = HTTP_PREFIX + domain + SERVERS_FOR_ENVIRONMENT_HTTP_MIDDLE
+    + String.valueOf(repoId) + SERVERS_FOR_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX + String.valueOf(environmentId);
+    
+    return executeRequest(credentials, activity_http);
+  }
 
-  private static String sendRequest(UsernamePasswordCredentials credentials,
+  private static String executeRequest(UsernamePasswordCredentials credentials,
       String httpAddress) throws UnsuccessfulServerResponseException,
       HttpConnectionErrorException {
     HttpGet getRequest = new HttpGet(httpAddress);
