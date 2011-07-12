@@ -156,8 +156,6 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       } catch (HttpConnectionErrorException e) {
         failMessage = Strings.networkConnectionErrorMessage;
       } catch (XMLParserException e) {
-        e.printStackTrace();
-        e.getException().printStackTrace();
         failMessage = Strings.internalErrorMessage;
       }
       failed = true;
