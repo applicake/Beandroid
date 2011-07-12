@@ -35,7 +35,7 @@ public class Release implements Parcelable {
   private String environmentName;
   private int environmentId;
   private int retries;
-  private int revision;
+  private String revision;
   private int state;
   private long updatedAt;
 
@@ -150,11 +150,11 @@ public class Release implements Parcelable {
     this.retries = retries;
   }
 
-  public int getRevision() {
+  public String getRevision() {
     return revision;
   }
 
-  public void setRevision(int revision) {
+  public void setRevision(String revision) {
     this.revision = revision;
   }
 
@@ -197,7 +197,7 @@ public class Release implements Parcelable {
     dest.writeString(environmentName);
     dest.writeInt(environmentId);
     dest.writeInt(retries);
-    dest.writeInt(revision);
+    dest.writeString(revision);
     dest.writeInt(state);
     dest.writeLong(updatedAt);
   }
@@ -215,7 +215,7 @@ public class Release implements Parcelable {
     environmentName = in.readString();
     environmentId = in.readInt();
     retries = in.readInt();
-    revision = in.readInt();
+    revision = in.readString();
     state = in.readInt();
     updatedAt = in.readLong();
   }

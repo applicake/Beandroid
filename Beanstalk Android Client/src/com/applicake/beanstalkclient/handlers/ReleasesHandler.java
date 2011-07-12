@@ -75,7 +75,7 @@ public class ReleasesHandler extends DefaultHandler {
       } else if (name == "retries") {
         release.setRetries(Integer.parseInt(value));
       } else if (name == "revision") {
-        release.setRevision(Integer.parseInt(value));
+        release.setRevision(value);
       } else if (name == "state") {
         release.setState(value);
       } else if (name == "updated-at") {
