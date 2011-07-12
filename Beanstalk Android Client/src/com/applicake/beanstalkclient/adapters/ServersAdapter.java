@@ -1,6 +1,10 @@
-package com.applicake.beanstalkclient;
+package com.applicake.beanstalkclient.adapters;
 
 import java.util.List;
+
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Server;
+import com.applicake.beanstalkclient.R.layout;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -42,7 +42,7 @@
       android:configChanges="orientation|keyboardHidden">
     </activity>
     <activity
-      android:name="activities.ChangesetActivity"
+      android:name=".activities.ChangesetActivity"
       android:configChanges="orientation|keyboardHidden">
     </activity>
     <activity

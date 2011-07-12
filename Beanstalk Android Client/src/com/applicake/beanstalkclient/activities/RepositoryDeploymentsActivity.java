@@ -6,8 +6,8 @@ import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Release;
 import com.applicake.beanstalkclient.Server;
-import com.applicake.beanstalkclient.ServersAdapter;
 import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
+import com.applicake.beanstalkclient.adapters.ServersAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
