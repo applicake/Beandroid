@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -20,6 +21,8 @@ import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.Plan;
 import com.applicake.beanstalkclient.Release;
 import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.Server;
+import com.applicake.beanstalkclient.ServerEnvironment;
 import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.handlers.AccountHandler;
 import com.applicake.beanstalkclient.handlers.ChangesetHandler;
@@ -29,6 +32,8 @@ import com.applicake.beanstalkclient.handlers.PermissionsHandler;
 import com.applicake.beanstalkclient.handlers.PlanHandler;
 import com.applicake.beanstalkclient.handlers.ReleasesHandler;
 import com.applicake.beanstalkclient.handlers.RepositoriesHandler;
+import com.applicake.beanstalkclient.handlers.ServerEnvironmentHandler;
+import com.applicake.beanstalkclient.handlers.ServersHandler;
 import com.applicake.beanstalkclient.handlers.UserHandler;
 
 public class XmlParser {
@@ -352,6 +357,48 @@ public class XmlParser {
       throw new XMLParserException(e);
     }
 
+  }
+  
+  public static List<ServerEnvironment> parseServerEnvironmentsList(String xml) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
+    
+    ServerEnvironmentHandler serverEnvironmentHandler = new ServerEnvironmentHandler();
+    // set handler
+    xmlReader.setContentHandler(serverEnvironmentHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    
+    try {
+      xmlReader.parse(is);
+      return serverEnvironmentHandler.retrieveServerEnvironmentList();
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
+    
+  }
+  
+  public static ArrayList<Server> parseServerList(String xml) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
+    
+    ServersHandler serverHandler = new ServersHandler();
+    // set handler
+    xmlReader.setContentHandler(serverHandler);
+    // parse
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    
+    try {
+      xmlReader.parse(is);
+      return serverHandler.retrieveServerList();
+    } catch (IOException e) {
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      throw new XMLParserException(e);
+    }
+    
   }
 
   public static class XMLParserException extends Exception {

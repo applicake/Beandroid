@@ -133,7 +133,7 @@ public class ServersHandler extends DefaultHandler {
     buffer.append(ch, start, length);
   }
 
-  public ArrayList<Server> retrieveUserList() {
+  public ArrayList<Server> retrieveServerList() {
     return serverList;
   }
 
