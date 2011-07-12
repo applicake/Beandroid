@@ -10,25 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
 
 public class ServersAdapter extends BaseExpandableListAdapter {
 
   private List<ServerEnvironment> mServersArray;
   private LayoutInflater mInflater;
-  
-  
+
   public ServersAdapter(Context context, int i, List<ServerEnvironment> serversArray) {
     this.mServersArray = serversArray;
-    mInflater = LayoutInflater.from(context); 
+    mInflater = LayoutInflater.from(context);
   }
-
-
-
-//  @Override
-  public long getItemId(int position) {
-    return position;
-  }
-
 
   @Override
   public int getGroupCount() {
@@ -54,8 +46,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
   @Override
   public long getGroupId(int groupPosition) {
-    // TODO Auto-generated method stub
-    return 0;
+    return groupPosition;
   }
 
   @Override
@@ -69,11 +60,10 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     // TODO Auto-generated method stub
     return false;
   }
-  
+
   // downloads server list for particular environment
-  public void downloadChildList(int groupId){
-    
-    
+  public void downloadChildList(int groupId) {
+
   }
 
   @Override
@@ -82,12 +72,23 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     View view;
     if (convertView == null)
       view = mInflater.inflate(R.layout.environments_list_entry, null);
-    else 
+    else
       view = convertView;
     
-    // TODO implement servers adapter
-    
-    
+    ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
+
+    if (serverEnvironment != null){
+      TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
+      TextView branchName = (TextView) view.findViewById(R.id.branch_name);
+      TextView automatic = (TextView) view.findViewById(R.id.automatic);
+
+      environmentName.setText(serverEnvironment.getName());
+      branchName.setText(serverEnvironment.getBranchName());
+      // TODO change to automatic/manual
+      automatic.setText(String.valueOf(serverEnvironment.isAutomatic()));
+    }
+
+
     return view;
   }
 
@@ -103,7 +104,5 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     // TODO Auto-generated method stub
     return false;
   }
-  
-  
 
 }
