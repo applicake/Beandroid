@@ -19,6 +19,7 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorExce
 import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
+import android.app.ExpandableListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +29,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +40,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   boolean releaseListLoaded = false;
 
   private ListView mReleasesList;
-  private ListView mServersList;
+  private ExpandableListView mServersList;
   private ReleasesAdapter mReleasesAdapter;
   private ServersAdapter mServersAdapter;
 
@@ -62,7 +64,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
     // handle tab switching
     mReleasesList = (ListView) findViewById(R.id.releases_list);
-    mServersList = (ListView) findViewById(R.id.servers_list);
+    mServersList = (ExpandableListView) findViewById(R.id.servers_list);
 
     releasesButton = (Button) findViewById(R.id.releases_button);
     releasesButton.setOnClickListener(this);
