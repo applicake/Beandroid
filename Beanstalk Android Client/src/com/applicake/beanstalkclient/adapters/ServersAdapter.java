@@ -6,6 +6,7 @@ import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.ServerEnvironment;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,10 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
   @Override
   public int getChildrenCount(int groupPosition) {
-    // TODO Auto-generated method stub
+    Log.d("xxx", "getting ChildrenCount for " + String.valueOf(groupPosition));
+    if (mServersArray != null && mServersArray.get(groupPosition).getServerList() != null){
+      return mServersArray.get(groupPosition).getServerList().size();
+    }
     return 0;
   }
 
@@ -63,7 +67,8 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
   // downloads server list for particular environment
   public void downloadChildList(int groupId) {
-
+    
+    
   }
 
   @Override
@@ -74,6 +79,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
       view = mInflater.inflate(R.layout.environments_list_entry, null);
     else
       view = convertView;
+    
     
     ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
 
@@ -102,7 +108,14 @@ public class ServersAdapter extends BaseExpandableListAdapter {
   @Override
   public boolean isChildSelectable(int groupPosition, int childPosition) {
     // TODO Auto-generated method stub
+     
     return false;
+  }
+  
+  @Override
+  public void onGroupExpanded(int groupPosition) {
+    // TODO Auto-generated method stub
+    super.onGroupExpanded(groupPosition);
   }
 
 }
