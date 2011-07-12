@@ -1,5 +1,8 @@
 package com.applicake.beanstalkclient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class Server {
 
   /*
@@ -17,8 +20,9 @@ public class Server {
     pre_release_hook — “http://yourhost.com/yourhook.php”. URL that we will POST information about current release to before starting deployment;
     post_release_hook — “http://yourhost.com/yourhook.php”. URL that we will POST information about current release to before after deployment was successful;
    */
+  static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
   
-  private String accountId;
+  private int accountId;
   private long createdAt;
   private int id;
   private String localPath;
@@ -37,17 +41,17 @@ public class Server {
   
   
   // le getters and setters
-  public String getAccountId() {
+  public int getAccountId() {
     return accountId;
   }
-  public void setAccountId(String accountId) {
-    this.accountId = accountId;
+  public void setAccountId(int i) {
+    this.accountId = i;
   }
   public long getCreatedAt() {
     return createdAt;
   }
-  public void setCreatedAt(long createdAt) {
-    this.createdAt = createdAt;
+  public void setCreatedAt(String date) throws ParseException {
+    this.createdAt = FORMATTER.parse(date.trim()).getTime();
   }
   public int getId() {
     return id;
@@ -112,7 +116,7 @@ public class Server {
   public String getEnvitonmentName() {
     return envitonmentName;
   }
-  public void setEnvitonmentName(String envitonmentName) {
+  public void setEnvironmentName(String envitonmentName) {
     this.envitonmentName = envitonmentName;
   }
   public String getServerEnvironmentId() {
@@ -130,8 +134,8 @@ public class Server {
   public long getUpdatedAt() {
     return updatedAt;
   }
-  public void setUpdatedAt(long updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setUpdatedAt(String date) throws ParseException {
+    this.updatedAt = FORMATTER.parse(date.trim()).getTime();
   }
   
 }
