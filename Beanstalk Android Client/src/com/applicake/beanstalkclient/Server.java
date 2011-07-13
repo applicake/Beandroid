@@ -36,7 +36,7 @@ public class Server {
   private int repositoryId;
   private String envitonmentName;
   private String serverEnvironmentId;
-  private int revision;
+  private String revision;
   private long updatedAt;
   
   
@@ -125,10 +125,10 @@ public class Server {
   public void setServerEnvironmentId(String serverEnvironmentId) {
     this.serverEnvironmentId = serverEnvironmentId;
   }
-  public int getRevision() {
+  public String getRevision() {
     return revision;
   }
-  public void setRevision(int revision) {
+  public void setRevision(String revision) {
     this.revision = revision;
   }
   public long getUpdatedAt() {
