@@ -268,6 +268,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
           public void noRetryAction(DialogInterface dialog) {
             super.noRetryAction(dialog);
             finish();
+            
           }
           
         };

@@ -5,6 +5,8 @@ import java.util.List;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Server;
 import com.applicake.beanstalkclient.ServerEnvironment;
+import com.applicake.beanstalkclient.activities.DashboardActivity;
+import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
@@ -12,12 +14,15 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerRespo
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
@@ -27,9 +32,11 @@ public class ServersAdapter extends BaseExpandableListAdapter {
   private List<ServerEnvironment> mServersArray;
   private LayoutInflater mInflater;
   private SharedPreferences prefs;
+  private Context mContext;
 
   public ServersAdapter(Context context, int i, List<ServerEnvironment> serversArray) {
     this.mServersArray = serversArray;
+    mContext = context;
     mInflater = LayoutInflater.from(context);
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
   }
@@ -52,14 +59,13 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
       if (mServersArray != null && serverEnvironment.getServerList() != null) {
         return serverEnvironment.getServerList().size() + 1;
-      }
-      else
+      } else
         return 1;
 
     } else if (serverEnvironment.isDownloading()) {
 
       return 1;
-      
+
     } else {
       new DownloadServerListForEnvironmentTask(serverEnvironment).execute();
       return 1;
@@ -125,7 +131,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
   }
 
   @Override
-  public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+  public View getChildView(final int groupPosition, int childPosition, boolean isLastChild,
       View convertView, ViewGroup parent) {
 
     View view;
@@ -148,13 +154,22 @@ public class ServersAdapter extends BaseExpandableListAdapter {
       }
     } else{
       view = mInflater.inflate(R.layout.environments_add_server_footer, null);
-//      view.setOnClickListener(l)
+      view.setOnClickListener(new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+          GUI.displayMonit(mContext, "create new server for " + mServersArray.get(groupPosition).getName());
+          // tests
+          mContext.startActivity(new Intent(mContext, DashboardActivity.class));
+          
+        }
+      });
     }
-  
     
     return view;
 
   }
+
 
   @Override
   public boolean isChildSelectable(int groupPosition, int childPosition) {
@@ -177,7 +192,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     public DownloadServerListForEnvironmentTask(ServerEnvironment serverEnvironment) {
       mServerEnvironment = serverEnvironment;
     }
-    
+
     @Override
     protected void onPreExecute() {
       mServerEnvironment.setDownloading(true);
