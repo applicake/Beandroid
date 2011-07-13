@@ -31,7 +31,7 @@ public class ServersHandler extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     if (server != null) {
-      if (localName == "server") {
+      if (localName == "release-server") {
         if (serverList != null) {
           serverList.add(server);
         }
@@ -114,7 +114,7 @@ public class ServersHandler extends DefaultHandler {
       }
 
       if (localName == "revision") {
-        server.setRevision(Integer.parseInt(buffer.toString()));
+        server.setRevision(buffer.toString());
       }
 
       if (localName == "updated-at") {
