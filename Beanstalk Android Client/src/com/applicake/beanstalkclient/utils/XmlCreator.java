@@ -5,6 +5,8 @@ import java.io.StringWriter;
 
 import org.xmlpull.v1.XmlSerializer;
 
+import com.applicake.beanstalkclient.ServerEnvironment;
+
 import android.util.Xml;
 
 public class XmlCreator {
@@ -199,6 +201,32 @@ public class XmlCreator {
     serializer.endTag("", "account");
     serializer.endDocument();
     return writer.toString();
+  }
+
+  public String createNewServerEnvironmentXML(ServerEnvironment serverEnvironment)
+      throws IllegalArgumentException, IllegalStateException, IOException {
+    serializer = Xml.newSerializer();
+    writer = new StringWriter();
+    serializer.setOutput(writer);
+
+    serializer.startDocument("UTF-8", null);
+    serializer.startTag("", "server-environment");
+
+    addName(serverEnvironment.getName());
+    addIsAutomatic(serverEnvironment.isAutomatic());
+
+    serializer.endTag("", "server-environment");
+    serializer.endDocument();
+    return writer.toString();
+  }
+
+  private void addIsAutomatic(boolean automatic) throws IllegalArgumentException, IllegalStateException,
+      IOException {
+    
+    serializer.startTag("", "automatic");
+    serializer.text(automatic ? "true" : "false");
+    serializer.endTag("", "automatic");
+
   }
 
   private void addTimezone(String timezone) throws IllegalArgumentException,
