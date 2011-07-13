@@ -392,12 +392,12 @@ public class XmlParser {
     
     try {
       xmlReader.parse(is);
-      return serverHandler.retrieveServerList();
     } catch (IOException e) {
       throw new XMLParserException(e);
     } catch (SAXException e) {
       throw new XMLParserException(e);
     }
+    return serverHandler.retrieveServerList();
     
   }
 

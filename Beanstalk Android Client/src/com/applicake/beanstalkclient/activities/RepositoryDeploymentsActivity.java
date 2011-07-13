@@ -253,7 +253,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     
     @Override
     protected void onPostExecute(List<ServerEnvironment> result) {
-      Log.d("xxx", String.valueOf(result.size()));
+      Log.d("xxx", String.valueOf(result != null ? result.size() : 0 ));
       progressDialog.dismiss();
       if (failed) {
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
