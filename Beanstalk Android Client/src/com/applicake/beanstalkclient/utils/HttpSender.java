@@ -43,15 +43,15 @@ public class HttpSender {
   private final static String USER_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/users.xml";
   private final static String PERMISSION_CREATE_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions.xml";
   private final static String PERMISSION_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/permissions/";
-  
- 
+
   private static final String SERVER_ENVIRONMENT_CREATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_ENVIRONMENT_CREATE_HTTP_SUFFIX = "/server_environments.xml";
-  
+
   private static final String ACCOUNT_UPDATE_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
 
   private static final DefaultHttpClient httpClient = getClient();
-
+  private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE = "beanstalkapp.com/api/";
+  private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX = "/server_environments.xml?";
 
   public static DefaultHttpClient getClient() {
     DefaultHttpClient httpClient = null;
@@ -180,26 +180,27 @@ public class HttpSender {
     }
 
   }
-  
-  public static int sendCreateNewServerEnvironmentXML(SharedPreferences prefs, String xml, int repoId)
-  throws UnsupportedEncodingException, HttpSenderException, XMLParserException,
-  HttpSenderServerErrorException {
-    
+
+  public static int sendCreateNewServerEnvironmentXML(SharedPreferences prefs,
+      String xml, int repoId) throws UnsupportedEncodingException, HttpSenderException,
+      XMLParserException, HttpSenderServerErrorException {
+
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
-    
+
     // create POST request with address
     HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain
-        + SERVER_ENVIRONMENT_CREATE_HTTP_MIDDLE + String.valueOf(repoId) + SERVER_ENVIRONMENT_CREATE_HTTP_SUFFIX);
-    
+        + SERVER_ENVIRONMENT_CREATE_HTTP_MIDDLE + String.valueOf(repoId)
+        + SERVER_ENVIRONMENT_CREATE_HTTP_SUFFIX);
+
     // add auth headers
     postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
     postRequest.addHeader("Content-Type", "application/xml");
-    
+
     // add xml entity
     StringEntity se = new StringEntity(xml, "UTF-8");
     postRequest.setEntity(se);
-    
+
     // TODO throw exceptions if an error occurs
     try {
       HttpResponse postResponse = httpClient.execute(postRequest);
@@ -207,25 +208,25 @@ public class HttpSender {
       String entity = EntityUtils.toString(postResponse.getEntity());
       Log.w("postResponse", entity);
       int statusCode = postResponse.getStatusLine().getStatusCode();
-      
+
       if (statusCode == 422) {
         StringBuilder sb = new StringBuilder();
         for (String s : XmlParser.parseErrors(entity)) {
           sb.append(s);
           sb.append("\n");
         }
-        
+
         throw new HttpSenderServerErrorException(sb.toString());
       } else {
         return statusCode;
       }
-      
+
     } catch (IOException e) {
       postRequest.abort();
       e.printStackTrace();
       throw new HttpSenderException("IOException");
     }
-    
+
   }
 
   public static int sendUpdateRepositoryXML(SharedPreferences prefs, String xml,
@@ -496,6 +497,54 @@ public class HttpSender {
 
     // create PUT request with address
     HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain + ACCOUNT_UPDATE_HTTP_SUFFIX);
+
+    // add auth headers
+    putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+    putRequest.addHeader("Content-Type", "application/xml");
+
+    // add xml entity
+    StringEntity se = new StringEntity(accountModificationXml, "UTF-8");
+    putRequest.setEntity(se);
+
+    // TODO throw exceptions if an error occurs
+    try {
+      HttpResponse putResponse = httpClient.execute(putRequest);
+      String entity = EntityUtils.toString(putResponse.getEntity());
+      int statusCode = putResponse.getStatusLine().getStatusCode();
+      if (statusCode == 200) {
+        return 200;
+      } else if (statusCode == 422) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : XmlParser.parseErrors(entity)) {
+          sb.append(s);
+          sb.append("\n");
+        }
+        throw new HttpSenderServerErrorException(sb.toString());
+      } else {
+        throw new HttpSenderServerErrorException(putResponse.getStatusLine()
+            .getReasonPhrase());
+      }
+
+    } catch (IOException e) {
+      putRequest.abort();
+      e.printStackTrace();
+      throw new HttpSenderException("IOException");
+    }
+
+  }
+
+  public static Integer sendModifyServerEnvironmentXML(SharedPreferences prefs,
+      String accountModificationXml, int repoId, int environmentId) throws XMLParserException,
+      HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // create PUT request with address
+    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
+        + SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE + String.valueOf(repoId)
+        + SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX + String.valueOf(environmentId) + ".xml");
+    
 
     // add auth headers
     putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));

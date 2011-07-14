@@ -219,6 +219,36 @@ public class XmlCreator {
     serializer.endDocument();
     return writer.toString();
   }
+  
+  public String createModifyServerEnvironmentXML(ServerEnvironment serverEnvironment)
+      throws IllegalArgumentException, IllegalStateException, IOException {
+    serializer = Xml.newSerializer();
+    writer = new StringWriter();
+    serializer.setOutput(writer);
+    
+    serializer.startDocument("UTF-8", null);
+    serializer.startTag("", "server-environment");
+    
+    addName(serverEnvironment.getName());
+    addIsAutomatic(serverEnvironment.isAutomatic());
+    addBranchName(serverEnvironment.getBranchName());
+    
+    serializer.endTag("", "server-environment");
+    serializer.endDocument();
+    return writer.toString();
+  }
+
+  private void addBranchName(String branchName) throws IllegalArgumentException, IllegalStateException, IOException {
+    if (branchName != null){
+      
+      serializer.startTag("", "branch_name");
+      serializer.text(branchName);
+      serializer.endTag("", "branch_name");
+      
+    }
+
+    
+  }
 
   private void addIsAutomatic(boolean automatic) throws IllegalArgumentException, IllegalStateException,
       IOException {
