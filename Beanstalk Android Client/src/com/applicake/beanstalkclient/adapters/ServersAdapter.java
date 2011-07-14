@@ -18,7 +18,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,20 +54,25 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     Log.d("xxx", "getting ChildrenCount for " + String.valueOf(groupPosition));
 
     ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
-    if (serverEnvironment.isDownloaded()) {
 
+    // the list is loaded
+    if (serverEnvironment.isDownloaded()) {
       if (mServersArray != null && serverEnvironment.getServerList() != null) {
         return serverEnvironment.getServerList().size() + 1;
       } else
         return 1;
 
+      // the list is being dowlnoaded
+      // displays 2 additional cells - loading cell and add new server cell
     } else if (serverEnvironment.isDownloading()) {
 
-      return 1;
+      return 2;
 
+      // the list has not been downloaded - start download
+      // displays 2 additional cells - loading cell and add new server cell
     } else {
       new DownloadServerListForEnvironmentTask(serverEnvironment).execute();
-      return 1;
+      return 2;
     }
 
   }
@@ -131,13 +135,31 @@ public class ServersAdapter extends BaseExpandableListAdapter {
   }
 
   @Override
-  public View getChildView(final int groupPosition, int childPosition, boolean isLastChild,
-      View convertView, ViewGroup parent) {
+  public View getChildView(final int groupPosition, int childPosition,
+      boolean isLastChild, View convertView, ViewGroup parent) {
 
     View view;
-    if (!isLastChild) {
+
+    if (isLastChild) {
+      view = mInflater.inflate(R.layout.environments_add_server_footer, null);
+      view.setOnClickListener(new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+          GUI.displayMonit(mContext,
+              "create new server for " + mServersArray.get(groupPosition).getName());
+          // tests
+          mContext.startActivity(new Intent(mContext, DashboardActivity.class));
+
+        }
+      });
+    } else if (mServersArray.get(groupPosition).isDownloading()) {
+      view = mInflater.inflate(R.layout.environments_servers_loading_field, null);
+    }
+
+    else {
       view = mInflater.inflate(R.layout.environments_server_list_entry, null);
-    // temporary
+      // temporary
       Server server = mServersArray.get(groupPosition).getServerList().get(childPosition);
 
       if (server != null) {
@@ -152,24 +174,11 @@ public class ServersAdapter extends BaseExpandableListAdapter {
         // TODO Auto-generated method stub
 
       }
-    } else{
-      view = mInflater.inflate(R.layout.environments_add_server_footer, null);
-      view.setOnClickListener(new OnClickListener() {
-        
-        @Override
-        public void onClick(View v) {
-          GUI.displayMonit(mContext, "create new server for " + mServersArray.get(groupPosition).getName());
-          // tests
-          mContext.startActivity(new Intent(mContext, DashboardActivity.class));
-          
-        }
-      });
     }
-    
+
     return view;
 
   }
-
 
   @Override
   public boolean isChildSelectable(int groupPosition, int childPosition) {
@@ -217,21 +226,21 @@ public class ServersAdapter extends BaseExpandableListAdapter {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
-      Log.d("xxx", "downloading server list failed");
+
       return null;
+
     }
 
     @Override
     protected void onPostExecute(List<Server> result) {
       Log.d("xxx", "server list size: " + (result != null ? result.size() : 0));
-      if (result != null) {
 
-        mServerEnvironment.setServerList(result);
-        mServerEnvironment.setDownloaded(true);
-        mServerEnvironment.setDownloading(false);
-        notifyDataSetChanged();
+      // TODO add retry feature
+      mServerEnvironment.setServerList(result);
+      mServerEnvironment.setDownloaded(true);
+      mServerEnvironment.setDownloading(false);
 
-      }
+      notifyDataSetChanged();
 
     }
 
