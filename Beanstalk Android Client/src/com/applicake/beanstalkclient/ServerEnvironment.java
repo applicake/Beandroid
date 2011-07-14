@@ -61,6 +61,10 @@ public class ServerEnvironment implements Parcelable {
     this.repositoryId = in.readInt();
   }
 
+  public ServerEnvironment() {
+    // TODO Auto-generated constructor stub
+  }
+
   @Override
   public int describeContents() {
     // TODO Auto-generated method stub
