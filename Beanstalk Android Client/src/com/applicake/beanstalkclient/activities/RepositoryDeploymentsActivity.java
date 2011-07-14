@@ -25,9 +25,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -76,6 +78,24 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     
     releasesButton.setSelected(true);
     serversButton.setSelected(false);
+    
+    View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
+        Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_server_environment_footer,
+        null, false);
+    
+    footerView.setOnClickListener(new OnClickListener() {
+      
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), CreateNewServerEnvironmentActivity.class);
+        intent.putExtra(Constants.REPOSITORY_ID, repository.getId());
+        startActivity(intent);
+        
+      }
+    });
+    
+    mServersList.addFooterView(footerView);
+    
     
     // releases list
     mReleasesAdapter = new ReleasesAdapter(this, R.layout.releases_entry, mReleaseArray);

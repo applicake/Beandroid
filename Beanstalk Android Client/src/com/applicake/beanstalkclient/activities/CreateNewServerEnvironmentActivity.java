@@ -42,14 +42,14 @@ public class CreateNewServerEnvironmentActivity extends BeanstalkActivity {
 
     repoId = getIntent().getIntExtra(Constants.REPOSITORY_ID, 0);
 
-    nameEditText = (EditText) findViewById(R.id.nameLabel);
+    nameEditText = (EditText) findViewById(R.id.nameEditText);
     automaticCheckBox = (CheckBox) findViewById(R.id.is_automatic_checkbox);
     branchName = (EditText) findViewById(R.id.branch_name_edittext);
 
     findViewById(R.id.createButton).setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        new SendNewServerEnvironment(getApplicationContext()).execute();
+        new SendNewServerEnvironment(CreateNewServerEnvironmentActivity.this).execute();
 
       }
     });
