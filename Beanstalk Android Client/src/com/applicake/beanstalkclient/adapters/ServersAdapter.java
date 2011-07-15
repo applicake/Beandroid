@@ -2,10 +2,12 @@ package com.applicake.beanstalkclient.adapters;
 
 import java.util.List;
 
+import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Server;
 import com.applicake.beanstalkclient.ServerEnvironment;
 import com.applicake.beanstalkclient.activities.DashboardActivity;
+import com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
@@ -24,6 +26,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ServersAdapter extends BaseExpandableListAdapter {
@@ -118,12 +122,22 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     else
       view = convertView;
 
-    ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
+    final ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
 
     if (serverEnvironment != null) {
       TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
       TextView branchName = (TextView) view.findViewById(R.id.branch_name);
       TextView automatic = (TextView) view.findViewById(R.id.automatic);
+      TextView editServerEnvironmentButton = (TextView) view.findViewById(R.id.edit_server_environment_button);
+      editServerEnvironmentButton.setOnClickListener(new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(mContext, ModifyServerEnvironmentProperties.class);
+          intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
+          mContext.startActivity(intent);
+        }
+      });
 
       environmentName.setText(serverEnvironment.getName());
       branchName.setText(serverEnvironment.getBranchName());
@@ -185,12 +199,6 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     // TODO Auto-generated method stub
 
     return false;
-  }
-
-  @Override
-  public void onGroupExpanded(int groupPosition) {
-    // TODO Auto-generated method stub
-    super.onGroupExpanded(groupPosition);
   }
 
   public class DownloadServerListForEnvironmentTask extends

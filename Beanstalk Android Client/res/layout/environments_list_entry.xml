@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
+  android:minHeight="@dimen/list_entry_height"
+  android:layout_height="wrap_content"
+  android:background="@color/dark_entry_bg">
   <TextView
     android:layout_width="wrap_content"
     android:id="@+id/environment_name"
@@ -21,13 +22,23 @@
     android:layout_below="@id/environment_name"
     android:layout_alignParentLeft="true"></TextView>
   <TextView
+    android:id="@+id/edit_server_environment_button"
+    android:text="Edit"
+    android:background="@drawable/bn_generic"
+    android:layout_height="@dimen/list_entry_height"
+    android:layout_width="60dp"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"></TextView>
+
+  <TextView
     android:layout_width="wrap_content"
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:id="@+id/automatic"
     android:layout_height="wrap_content"
+    android:layout_toLeftOf="@id/edit_server_environment_button"
     android:text=""
     android:layout_alignParentTop="true"
-    android:layout_alignParentRight="true"></TextView>
-
+    
+    ></TextView>
 
 </RelativeLayout>
