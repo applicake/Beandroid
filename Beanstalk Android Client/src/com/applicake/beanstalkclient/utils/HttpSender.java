@@ -52,6 +52,9 @@ public class HttpSender {
   private static final DefaultHttpClient httpClient = getClient();
   private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX = "/server_environments/";
+  
+  private static final String SERVER_CREATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String SERVER_CREATE_HTTP_SUFFIX = "/release_servers.xml?environment_id=";
 
   public static DefaultHttpClient getClient() {
     DefaultHttpClient httpClient = null;
@@ -244,6 +247,22 @@ public class HttpSender {
       postRequest.abort();
       throw new HttpSenderException("IOException");
     }
+
+  }
+
+  public static int sendCreateServerXML(SharedPreferences prefs, String xml, int repoId, int environmentId)
+      throws UnsupportedEncodingException, HttpSenderException,
+      HttpSenderServerErrorException, XMLParserException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // create POST request with address
+    HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain + SERVER_CREATE_HTTP_MIDDLE
+        + String.valueOf(repoId) + SERVER_CREATE_HTTP_SUFFIX
+        + String.valueOf(environmentId) + ".xml");
+
+    return executeCreatePost(xml, credentials, postRequest);
 
   }
 
