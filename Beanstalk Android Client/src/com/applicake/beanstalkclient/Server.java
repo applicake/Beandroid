@@ -6,19 +6,19 @@ import java.text.SimpleDateFormat;
 public class Server {
 
   /*
-   *     name Ñ must be unique in environment, name must be no longer than 20 chars;
-    local_path Ñ path inside the repository that will be deployed;
-    remote_path Ñ path on the remote server where Beanstalk will deploy to;
-    remote_addr Ñ remote server address;
-    protocol Ñ ÒftpÓ or ÒsftpÓ;
-    port Ñ FTP/SFTP port;
-    login Ñ FTP/SFTP user login;
-    password Ñ FTP/SFTP user password;
-    use_active_mode Ñ ÒtrueÓ or ÒfalseÓ;
-    authenticate_by_key Ñ ÒtrueÓ or ÒfalseÓ. For SFTP servers only, will try to authenticate using BeanstalkÕs public key;
-    use_feat Ñ ÒtrueÓ or ÒfalseÓ;
-    pre_release_hook Ñ Òhttp://yourhost.com/yourhook.phpÓ. URL that we will POST information about current release to before starting deployment;
-    post_release_hook Ñ Òhttp://yourhost.com/yourhook.phpÓ. URL that we will POST information about current release to before after deployment was successful;
+   *     name ï¿½ must be unique in environment, name must be no longer than 20 chars;
+    local_path ï¿½ path inside the repository that will be deployed;
+    remote_path ï¿½ path on the remote server where Beanstalk will deploy to;
+    remote_addr ï¿½ remote server address;
+    protocol ï¿½ ï¿½ftpï¿½ or ï¿½sftpï¿½;
+    port ï¿½ FTP/SFTP port;
+    login ï¿½ FTP/SFTP user login;
+    password ï¿½ FTP/SFTP user password;
+    use_active_mode ï¿½ ï¿½trueï¿½ or ï¿½falseï¿½;
+    authenticate_by_key ï¿½ ï¿½trueï¿½ or ï¿½falseï¿½. For SFTP servers only, will try to authenticate using Beanstalkï¿½s public key;
+    use_feat ï¿½ ï¿½trueï¿½ or ï¿½falseï¿½;
+    pre_release_hook ï¿½ ï¿½http://yourhost.com/yourhook.phpï¿½. URL that we will POST information about current release to before starting deployment;
+    post_release_hook ï¿½ ï¿½http://yourhost.com/yourhook.phpï¿½. URL that we will POST information about current release to before after deployment was successful;
    */
   static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
   
@@ -38,6 +38,8 @@ public class Server {
   private String serverEnvironmentId;
   private String revision;
   private long updatedAt;
+  private String preReleaseHook;
+  private String postReleaseHook;
   
   
   // le getters and setters
@@ -136,6 +138,18 @@ public class Server {
   }
   public void setUpdatedAt(String date) throws ParseException {
     this.updatedAt = FORMATTER.parse(date.trim()).getTime();
+  }
+  public String getPreReleaseHook() {
+    return preReleaseHook;
+  }
+  public void setPreReleaseHook(String preReleaseHook) {
+    this.preReleaseHook = preReleaseHook;
+  }
+  public String getPostReleaseHook() {
+    return postReleaseHook;
+  }
+  public void setPostReleaseHook(String postReleaseHook) {
+    this.postReleaseHook = postReleaseHook;
   }
   
 }
