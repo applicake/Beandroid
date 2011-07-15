@@ -6,7 +6,7 @@ import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Server;
 import com.applicake.beanstalkclient.ServerEnvironment;
-import com.applicake.beanstalkclient.activities.DashboardActivity;
+import com.applicake.beanstalkclient.activities.CreateNewServerActivity;
 import com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
@@ -26,8 +26,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ServersAdapter extends BaseExpandableListAdapter {
@@ -163,7 +161,10 @@ public class ServersAdapter extends BaseExpandableListAdapter {
           GUI.displayMonit(mContext,
               "create new server for " + mServersArray.get(groupPosition).getName());
           // tests
-          mContext.startActivity(new Intent(mContext, DashboardActivity.class));
+          Intent intent = new Intent(mContext, CreateNewServerActivity.class);
+          intent.putExtra(Constants.SERVER_ENVIRONMENT, mServersArray.get(groupPosition));
+          
+          mContext.startActivity(new Intent(mContext, CreateNewServerActivity.class));
 
         }
       });
