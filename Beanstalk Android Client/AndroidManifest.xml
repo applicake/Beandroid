@@ -110,6 +110,11 @@
       android:configChanges="orientation|keyboardHidden">
     </activity>
 
+    <activity
+      android:name=".activities.CreateNewServerActivity"
+      android:configChanges="orientation|keyboardHidden">
+    </activity>
+
   </application>
   
   <uses-permission android:name="android.permission.INTERNET" />
