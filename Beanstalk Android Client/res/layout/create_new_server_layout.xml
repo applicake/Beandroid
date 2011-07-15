@@ -121,11 +121,12 @@
       style="@style/edit_text_label"
       android:text="Port:"
       android:id="@+id/port_label"
-      android:layout_below="@id/remote_addr_edittext"
+      android:layout_below="@id/protocol_spinner"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"></TextView>
     <EditText
       style="@style/edit_text"
+      android:text="0"
       android:id="@+id/port_edittext"
       android:inputType="numberDecimal"
       android:layout_below="@id/port_label"
