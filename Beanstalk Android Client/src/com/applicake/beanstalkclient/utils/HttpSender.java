@@ -145,41 +145,11 @@ public class HttpSender {
     HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain
         + REPOSITORY_CREATE_HTTP_SUFFIX);
 
-    // add auth headers
-    postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    postRequest.addHeader("Content-Type", "application/xml");
-
-    // add xml entity
-    StringEntity se = new StringEntity(xml, "UTF-8");
-    postRequest.setEntity(se);
-
-    // TODO throw exceptions if an error occurs
-    try {
-      HttpResponse postResponse = httpClient.execute(postRequest);
-      Log.w("postRequestXml", xml);
-      String entity = EntityUtils.toString(postResponse.getEntity());
-      Log.w("postResponse", entity);
-      int statusCode = postResponse.getStatusLine().getStatusCode();
-
-      if (statusCode == 422) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : XmlParser.parseErrors(entity)) {
-          sb.append(s);
-          sb.append("\n");
-        }
-
-        throw new HttpSenderServerErrorException(sb.toString());
-      } else {
-        return statusCode;
-      }
-
-    } catch (IOException e) {
-      postRequest.abort();
-      e.printStackTrace();
-      throw new HttpSenderException("IOException");
-    }
+    return executeCreatePost(xml, credentials, postRequest);
 
   }
+
+ 
 
   public static int sendCreateNewServerEnvironmentXML(SharedPreferences prefs,
       String xml, int repoId) throws UnsupportedEncodingException, HttpSenderException,
@@ -193,39 +163,7 @@ public class HttpSender {
         + SERVER_ENVIRONMENT_CREATE_HTTP_MIDDLE + String.valueOf(repoId)
         + SERVER_ENVIRONMENT_CREATE_HTTP_SUFFIX);
 
-    // add auth headers
-    postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    postRequest.addHeader("Content-Type", "application/xml");
-
-    // add xml entity
-    StringEntity se = new StringEntity(xml, "UTF-8");
-    postRequest.setEntity(se);
-
-    // TODO throw exceptions if an error occurs
-    try {
-      HttpResponse postResponse = httpClient.execute(postRequest);
-      Log.w("postRequestXml", xml);
-      String entity = EntityUtils.toString(postResponse.getEntity());
-      Log.w("postResponse", entity);
-      int statusCode = postResponse.getStatusLine().getStatusCode();
-
-      if (statusCode == 422) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : XmlParser.parseErrors(entity)) {
-          sb.append(s);
-          sb.append("\n");
-        }
-
-        throw new HttpSenderServerErrorException(sb.toString());
-      } else {
-        return statusCode;
-      }
-
-    } catch (IOException e) {
-      postRequest.abort();
-      e.printStackTrace();
-      throw new HttpSenderException("IOException");
-    }
+    return executeCreatePost(xml, credentials, postRequest);
 
   }
 
@@ -240,40 +178,7 @@ public class HttpSender {
     HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
         + REPOSITORY_UPDATE_HTTP_MIDDLE + repoId + ".xml");
 
-    // add auth headers
-    putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    putRequest.addHeader("Content-Type", "application/xml");
-
-    // add xml entity
-    StringEntity se = new StringEntity(xml, "UTF-8");
-    putRequest.setEntity(se);
-
-    // TODO throw exceptions if an error occurs
-    try {
-      HttpResponse postResponse = httpClient.execute(putRequest);
-      Log.w("postRequestXml", xml);
-      String entity = EntityUtils.toString(postResponse.getEntity());
-      Log.w("postResponse", entity);
-      int statusCode = postResponse.getStatusLine().getStatusCode();
-
-      if (statusCode == 422) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : XmlParser.parseErrors(entity)) {
-          sb.append(s);
-          sb.append("\n");
-        }
-
-        throw new HttpSenderServerErrorException(sb.toString());
-      } else {
-        return statusCode;
-      }
-
-    } catch (IOException e) {
-      putRequest.abort();
-      e.printStackTrace();
-      throw new HttpSenderException("IOException");
-
-    }
+   return executeModifyPutRequst(xml, credentials, putRequest);
 
   }
 
@@ -288,40 +193,7 @@ public class HttpSender {
     HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain + USER_UPDATE_HTTP_MIDDLE
         + userId + ".xml");
 
-    // add auth headers
-    putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    putRequest.addHeader("Content-Type", "application/xml");
-
-    // add xml entity
-    StringEntity se = new StringEntity(xml, "UTF-8");
-    putRequest.setEntity(se);
-
-    // TODO throw exceptions if an error occurs
-    try {
-      HttpResponse putResponse = httpClient.execute(putRequest);
-      Log.w("postRequestXml", xml);
-      String entity = EntityUtils.toString(putResponse.getEntity());
-      Log.w("postResponse", entity);
-      int statusCode = putResponse.getStatusLine().getStatusCode();
-      if (statusCode == 200) {
-        return 200;
-      } else if (statusCode == 422) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : XmlParser.parseErrors(entity)) {
-          sb.append(s);
-          sb.append("\n");
-        }
-        throw new HttpSenderServerErrorException(sb.toString());
-      } else {
-        throw new HttpSenderServerErrorException(putResponse.getStatusLine()
-            .getReasonPhrase());
-      }
-
-    } catch (IOException e) {
-      putRequest.abort();
-      e.printStackTrace();
-      throw new HttpSenderException("IOException");
-    }
+    return executeModifyPutRequst(xml, credentials, putRequest);
 
   }
 
@@ -335,38 +207,7 @@ public class HttpSender {
     // create POST request with address
     HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain + USER_CREATE_HTTP_SUFFIX);
 
-    // add auth headers
-    postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    postRequest.addHeader("Content-Type", "application/xml");
-
-    // add xml entity
-    StringEntity se = new StringEntity(xml, "UTF-8");
-    postRequest.setEntity(se);
-
-    try {
-      HttpResponse postResponse = httpClient.execute(postRequest);
-      Log.w("postRequestXml", xml);
-      String entity = EntityUtils.toString(postResponse.getEntity());
-      Log.w("postResponse", entity);
-      int statusCode = postResponse.getStatusLine().getStatusCode();
-
-      if (statusCode == 201) {
-        return 201;
-      } else if (statusCode == 422) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : XmlParser.parseErrors(entity)) {
-          sb.append(s);
-          sb.append("\n");
-        }
-        throw new HttpSenderServerErrorException(sb.toString());
-      } else
-        throw new HttpSenderServerErrorException(postResponse.getStatusLine()
-            .getReasonPhrase());
-
-    } catch (IOException e) {
-      postRequest.abort();
-      throw new HttpSenderException("IOException");
-    }
+    return executeCreatePost(xml, credentials, postRequest);
 
   }
 
@@ -419,34 +260,7 @@ public class HttpSender {
     HttpPost deleteRequest = new HttpPost(HTTPS_PREFIX + domain
         + PERMISSION_DELETE_HTTP_MIDDLE + permissionId + ".xml");
 
-    deleteRequest.addHeader("X-HTTP-Method-Override", "delete");
-    deleteRequest.addHeader("Content-Type", "application/xml");
-    deleteRequest.addHeader("Accept", "application/xml");
-
-    deleteRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-
-    Log.w("deleteRequest", deleteRequest.getURI().toString());
-
-    try {
-      HttpResponse response = httpClient.execute(deleteRequest);
-      int statusCode = response.getStatusLine().getStatusCode();
-      if (statusCode == 200) {
-        return 200;
-      } else if (statusCode == 422) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : XmlParser.parseErrors(EntityUtils.toString(response.getEntity()))) {
-          sb.append(s);
-          sb.append("\n");
-        }
-        throw new HttpSenderServerErrorException(sb.toString());
-      } else {
-        throw new HttpSenderServerErrorException(response.getStatusLine()
-            .getReasonPhrase());
-      }
-
-    } catch (IOException e) {
-      throw new HttpSenderException("IOException");
-    }
+    return executeDeletePost(credentials, deleteRequest);
 
   }
 
@@ -457,12 +271,83 @@ public class HttpSender {
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
 
-    HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 20000);
-
     // create DELETE request with address
     HttpPost deleteRequest = new HttpPost(HTTPS_PREFIX + domain + USER_DELETE_HTTP_MIDDLE
         + userId + ".xml");
 
+    return executeDeletePost(credentials, deleteRequest);
+
+  }
+
+  public static Integer sendUpdateAccountXML(SharedPreferences prefs,
+      String accountModificationXml) throws XMLParserException,
+      HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // create PUT request with address
+    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain + ACCOUNT_UPDATE_HTTP_SUFFIX);
+
+    return executeModifyPutRequst(accountModificationXml, credentials, putRequest);
+
+  }
+
+  public static Integer sendModifyServerEnvironmentXML(SharedPreferences prefs,
+      String accountModificationXml, int repoId, int environmentId)
+      throws XMLParserException, HttpSenderServerErrorException, HttpSenderException,
+      UnsupportedEncodingException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // create PUT request with address
+    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
+        + SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE + String.valueOf(repoId)
+        + SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX + String.valueOf(environmentId) + ".xml");
+
+    return executeModifyPutRequst(accountModificationXml, credentials, putRequest);
+
+  }
+  
+  private static int executeCreatePost(String xml,
+      UsernamePasswordCredentials credentials, HttpPost postRequest)
+      throws UnsupportedEncodingException, XMLParserException,
+      HttpSenderServerErrorException, HttpSenderException {
+    // add auth headers
+    postRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+    postRequest.addHeader("Content-Type", "application/xml");
+
+    // add xml entity
+    StringEntity se = new StringEntity(xml, "UTF-8");
+    postRequest.setEntity(se);
+
+    try {
+      HttpResponse postResponse = httpClient.execute(postRequest);
+      String entity = EntityUtils.toString(postResponse.getEntity());
+      int statusCode = postResponse.getStatusLine().getStatusCode();
+
+      if (statusCode == 422) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : XmlParser.parseErrors(entity)) {
+          sb.append(s);
+          sb.append("\n");
+        }
+
+        throw new HttpSenderServerErrorException(sb.toString());
+      } else {
+        return statusCode;
+      }
+
+    } catch (IOException e) {
+      postRequest.abort();
+      e.printStackTrace();
+      throw new HttpSenderException("IOException");
+    }
+  }
+
+  private static int executeDeletePost(UsernamePasswordCredentials credentials,
+      HttpPost deleteRequest) throws HttpSenderServerErrorException, HttpSenderException {
     deleteRequest.addHeader("X-HTTP-Method-Override", "delete");
     deleteRequest.addHeader("Content-Type", "application/xml");
     deleteRequest.addHeader("Accept", "application/xml");
@@ -485,19 +370,12 @@ public class HttpSender {
       e.printStackTrace();
       throw new HttpSenderException("IOException");
     }
-
   }
 
-  public static Integer sendUpdateAccountXML(SharedPreferences prefs,
-      String accountModificationXml) throws XMLParserException,
-      HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
-
-    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
-    String domain = getAccountDomain(prefs);
-
-    // create PUT request with address
-    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain + ACCOUNT_UPDATE_HTTP_SUFFIX);
-
+  private static int executeModifyPutRequst(String accountModificationXml,
+      UsernamePasswordCredentials credentials, HttpPut putRequest)
+      throws UnsupportedEncodingException, XMLParserException,
+      HttpSenderServerErrorException, HttpSenderException {
     // add auth headers
     putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
     putRequest.addHeader("Content-Type", "application/xml");
@@ -506,7 +384,6 @@ public class HttpSender {
     StringEntity se = new StringEntity(accountModificationXml, "UTF-8");
     putRequest.setEntity(se);
 
-    // TODO throw exceptions if an error occurs
     try {
       HttpResponse putResponse = httpClient.execute(putRequest);
       String entity = EntityUtils.toString(putResponse.getEntity());
@@ -530,55 +407,6 @@ public class HttpSender {
       e.printStackTrace();
       throw new HttpSenderException("IOException");
     }
-
-  }
-
-  public static Integer sendModifyServerEnvironmentXML(SharedPreferences prefs,
-      String accountModificationXml, int repoId, int environmentId) throws XMLParserException,
-      HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
-
-    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
-    String domain = getAccountDomain(prefs);
-
-    // create PUT request with address
-    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
-        + SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE + String.valueOf(repoId)
-        + SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX + String.valueOf(environmentId) + ".xml");
-    
-
-    // add auth headers
-    putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
-    putRequest.addHeader("Content-Type", "application/xml");
-
-    // add xml entity
-    StringEntity se = new StringEntity(accountModificationXml, "UTF-8");
-    putRequest.setEntity(se);
-
-    // TODO throw exceptions if an error occurs
-    try {
-      HttpResponse putResponse = httpClient.execute(putRequest);
-      String entity = EntityUtils.toString(putResponse.getEntity());
-      int statusCode = putResponse.getStatusLine().getStatusCode();
-      if (statusCode == 200) {
-        return 200;
-      } else if (statusCode == 422) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : XmlParser.parseErrors(entity)) {
-          sb.append(s);
-          sb.append("\n");
-        }
-        throw new HttpSenderServerErrorException(sb.toString());
-      } else {
-        throw new HttpSenderServerErrorException(putResponse.getStatusLine()
-            .getReasonPhrase());
-      }
-
-    } catch (IOException e) {
-      putRequest.abort();
-      e.printStackTrace();
-      throw new HttpSenderException("IOException");
-    }
-
   }
 
   private static UsernamePasswordCredentials getCredentialsFromPreferences(
