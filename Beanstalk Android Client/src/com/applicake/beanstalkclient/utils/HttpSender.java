@@ -50,8 +50,8 @@ public class HttpSender {
   private static final String ACCOUNT_UPDATE_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
 
   private static final DefaultHttpClient httpClient = getClient();
-  private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE = "beanstalkapp.com/api/";
-  private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX = "/server_environments.xml?";
+  private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX = "/server_environments/";
 
   public static DefaultHttpClient getClient() {
     DefaultHttpClient httpClient = null;
@@ -149,8 +149,6 @@ public class HttpSender {
 
   }
 
- 
-
   public static int sendCreateNewServerEnvironmentXML(SharedPreferences prefs,
       String xml, int repoId) throws UnsupportedEncodingException, HttpSenderException,
       XMLParserException, HttpSenderServerErrorException {
@@ -178,7 +176,7 @@ public class HttpSender {
     HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
         + REPOSITORY_UPDATE_HTTP_MIDDLE + repoId + ".xml");
 
-   return executeModifyPutRequst(xml, credentials, putRequest);
+    return executeModifyPutRequst(xml, credentials, putRequest);
 
   }
 
@@ -279,7 +277,7 @@ public class HttpSender {
 
   }
 
-  public static Integer sendUpdateAccountXML(SharedPreferences prefs,
+  public static int sendUpdateAccountXML(SharedPreferences prefs,
       String accountModificationXml) throws XMLParserException,
       HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
 
@@ -293,10 +291,9 @@ public class HttpSender {
 
   }
 
-  public static Integer sendModifyServerEnvironmentXML(SharedPreferences prefs,
-      String accountModificationXml, int repoId, int environmentId)
-      throws XMLParserException, HttpSenderServerErrorException, HttpSenderException,
-      UnsupportedEncodingException {
+  public static int sendModifyServerEnvironmentXML(SharedPreferences prefs,
+      String modificationXml, int repoId, int environmentId) throws XMLParserException,
+      HttpSenderServerErrorException, HttpSenderException, UnsupportedEncodingException {
 
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
@@ -306,10 +303,10 @@ public class HttpSender {
         + SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE + String.valueOf(repoId)
         + SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX + String.valueOf(environmentId) + ".xml");
 
-    return executeModifyPutRequst(accountModificationXml, credentials, putRequest);
+    return executeModifyPutRequst(modificationXml, credentials, putRequest);
 
   }
-  
+
   private static int executeCreatePost(String xml,
       UsernamePasswordCredentials credentials, HttpPost postRequest)
       throws UnsupportedEncodingException, XMLParserException,
@@ -372,7 +369,7 @@ public class HttpSender {
     }
   }
 
-  private static int executeModifyPutRequst(String accountModificationXml,
+  private static int executeModifyPutRequst(String modificationXml,
       UsernamePasswordCredentials credentials, HttpPut putRequest)
       throws UnsupportedEncodingException, XMLParserException,
       HttpSenderServerErrorException, HttpSenderException {
@@ -381,7 +378,7 @@ public class HttpSender {
     putRequest.addHeader("Content-Type", "application/xml");
 
     // add xml entity
-    StringEntity se = new StringEntity(accountModificationXml, "UTF-8");
+    StringEntity se = new StringEntity(modificationXml, "UTF-8");
     putRequest.setEntity(se);
 
     try {
@@ -398,6 +395,11 @@ public class HttpSender {
         }
         throw new HttpSenderServerErrorException(sb.toString());
       } else {
+        // debug
+        Log.d("xxx", modificationXml);
+        Log.d("xxx", putRequest.getURI().toASCIIString());
+        Log.d("xxx", putResponse.getStatusLine().toString());
+
         throw new HttpSenderServerErrorException(putResponse.getStatusLine()
             .getReasonPhrase());
       }
