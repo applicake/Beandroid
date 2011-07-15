@@ -1,8 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-    
-</RelativeLayout>
+  android:layout_height="fill_parent"
+  android:fillViewport="true"
+  android:background="@drawable/app_bg">
+  <RelativeLayout
+
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <include
+      layout="@layout/actionbar"
+      android:layout_alignParentTop="true"
+      android:id="@+id/actionbar" />
+    <LinearLayout
+      android:background="@color/dark_entry_bg"
+      android:id="@+id/title"
+      android:gravity="center"
+      android:layout_width="fill_parent"
+      android:layout_height="@dimen/header_height"
+      android:orientation="horizontal"
+      android:layout_below="@id/actionbar"
+      android:layout_marginBottom="10dp">
+
+      <ImageView
+        android:src="@drawable/ic_extras_plus_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp" />
+      <TextView
+        android:text="@string/create_new_server"
+        android:textSize="@dimen/LargeTextSize"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/application_text_light"></TextView>
+    </LinearLayout>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="name:"
+      android:id="@+id/name_label"
+      android:layout_below="@id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/name_edittext"
+      android:layout_below="@id/name_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Local path:"
+      android:id="@+id/local_path_label"
+      android:layout_below="@id/name_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/local_path_edittext"
+      android:layout_below="@id/local_path_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Remote path:"
+      android:id="@+id/remote_path_label"
+      android:layout_below="@id/local_path_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/remote_path_edittext"
+      android:layout_below="@id/remote_path_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Remote address:"
+      android:id="@+id/remote_addr_label"
+      android:layout_below="@id/remote_path_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/remote_addr_edittext"
+      android:layout_below="@id/remote_addr_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    // protocol
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Protocol:"
+      android:id="@+id/protocol_label"
+      android:layout_below="@id/remote_addr_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+
+    <Spinner
+      style="@style/edit_text"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/protocol_spinner"
+      android:layout_below="@+id/protocol_label"></Spinner>
+
+    //port
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Port:"
+      android:id="@+id/port_label"
+      android:layout_below="@id/remote_addr_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/port_edittext"
+      android:inputType="numberDecimal"
+      android:layout_below="@id/port_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Login :"
+      android:id="@+id/login_label"
+      android:layout_below="@id/port_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/login_edittext"
+      android:layout_below="@id/login_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Password:"
+      android:id="@+id/password_label"
+      android:layout_below="@id/login_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+      
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/password_edittext"
+      android:layout_below="@id/password_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <CheckBox
+      style="@style/custom_checkbox"
+      android:text="Use active mode"
+      android:id="@+id/use_active_mode_checkbox"
+      android:layout_marginBottom="10dp"
+      android:layout_below="@id/password_edittext"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></CheckBox>
+
+    <CheckBox
+      style="@style/custom_checkbox"
+      android:text="Authenticate by key"
+      android:id="@+id/authenticate_by_key_checkbox"
+      android:layout_marginBottom="10dp"
+      android:layout_below="@id/use_active_mode_checkbox"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></CheckBox>
+
+    <CheckBox
+      style="@style/custom_checkbox"
+      android:text="Use feat"
+      android:id="@+id/use_feat_checkbox"
+      android:layout_marginBottom="10dp"
+      android:layout_below="@id/authenticate_by_key_checkbox"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></CheckBox>
+
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Pre release hook:"
+      android:id="@+id/pre_release_hook_label"
+      android:layout_below="@id/use_feat_checkbox"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/pre_release_hook_edittext"
+      android:layout_below="@id/pre_release_hook_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="Post release hook:"
+      android:id="@+id/post_release_hook_label"
+      android:layout_below="@id/pre_release_hook_edittext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/post_release_hook_edittext"
+      android:layout_below="@id/post_release_hook_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <Button
+      style="@style/button"
+      android:text="Create"
+      android:drawableLeft="@drawable/ic_extras_plus_normal"
+      android:id="@+id/create_button"
+      android:layout_below="@id/post_release_hook_edittext"></Button>
+
+  </RelativeLayout>
+</ScrollView>
