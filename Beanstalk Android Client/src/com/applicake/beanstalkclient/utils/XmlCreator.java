@@ -239,14 +239,11 @@ public class XmlCreator {
   }
 
   private void addBranchName(String branchName) throws IllegalArgumentException, IllegalStateException, IOException {
-    if (branchName != null){
-      
+    if (branchName != null && !branchName.equals("")){
       serializer.startTag("", "branch_name");
       serializer.text(branchName);
       serializer.endTag("", "branch_name");
-      
     }
-
     
   }
 
