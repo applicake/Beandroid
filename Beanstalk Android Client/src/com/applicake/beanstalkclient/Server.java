@@ -5,21 +5,7 @@ import java.text.SimpleDateFormat;
 
 public class Server {
 
-  /*
-   *     name � must be unique in environment, name must be no longer than 20 chars;
-    local_path � path inside the repository that will be deployed;
-    remote_path � path on the remote server where Beanstalk will deploy to;
-    remote_addr � remote server address;
-    protocol � �ftp� or �sftp�;
-    port � FTP/SFTP port;
-    login � FTP/SFTP user login;
-    password � FTP/SFTP user password;
-    use_active_mode � �true� or �false�;
-    authenticate_by_key � �true� or �false�. For SFTP servers only, will try to authenticate using Beanstalk�s public key;
-    use_feat � �true� or �false�;
-    pre_release_hook � �http://yourhost.com/yourhook.php�. URL that we will POST information about current release to before starting deployment;
-    post_release_hook � �http://yourhost.com/yourhook.php�. URL that we will POST information about current release to before after deployment was successful;
-   */
+
   static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
   
   private int accountId;
@@ -40,6 +26,10 @@ public class Server {
   private long updatedAt;
   private String preReleaseHook;
   private String postReleaseHook;
+  private boolean useActiveMode;
+  private boolean authenticateByKey;
+  private boolean useFeat;
+  
   
   
   // le getters and setters
@@ -150,6 +140,24 @@ public class Server {
   }
   public void setPostReleaseHook(String postReleaseHook) {
     this.postReleaseHook = postReleaseHook;
+  }
+  public boolean isUseActiveMode() {
+    return useActiveMode;
+  }
+  public void setUseActiveMode(boolean useActiveMode) {
+    this.useActiveMode = useActiveMode;
+  }
+  public boolean isAuthenticateByKey() {
+    return authenticateByKey;
+  }
+  public void setAuthenticateByKey(boolean authenticateByKey) {
+    this.authenticateByKey = authenticateByKey;
+  }
+  public boolean isUseFeat() {
+    return useFeat;
+  }
+  public void setUseFeat(boolean useFeat) {
+    this.useFeat = useFeat;
   }
   
 }
