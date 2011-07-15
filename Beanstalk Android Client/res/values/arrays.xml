@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array
-		name="repository_types">
-		<item>Subversion</item>
-		<item>Git</item>
-	</string-array>
+  <string-array name="repository_types">
+    <item>Subversion</item>
+    <item>Git</item>
+  </string-array>
 
-	<string-array
-		name="repoAccessLevels">
-		<item>No access</item>
-		<item>Read-only</item>
-		<item>Read/Write</item>
-	</string-array>
+  <string-array name="repoAccessLevels">
+    <item>No access</item>
+    <item>Read-only</item>
+    <item>Read/Write</item>
+  </string-array>
 
-	<string-array
-		name="deploymentAccessLevels">
-		<item>Read-only</item>
-		<item>Read/Write</item>
-	</string-array>
+  <string-array name="deploymentAccessLevels">
+    <item>Read-only</item>
+    <item>Read/Write</item>
+  </string-array>
 
-  <string-array
-    name="notification_delay_human_readable_entry_names">
+  <string-array name="notification_delay_human_readable_entry_names">
     <item>Every minute</item>
     <item>Every 5 minutes</item>
     <item>Every 15 minutes</item>
@@ -33,8 +29,7 @@
     <item>Every 24 hours</item>
   </string-array>
 
-  <string-array
-    name="notification_delay_entry_values">
+  <string-array name="notification_delay_entry_values">
     <item>1</item>
     <item>5</item>
     <item>15</item>
@@ -46,5 +41,9 @@
     <item>720</item>
     <item>1440</item>
   </string-array>
-  
+  <array name="ftp_entry_values">
+    <item>FTP</item>
+    <item>SFTP</item>
+  </array>
+
 </resources>
