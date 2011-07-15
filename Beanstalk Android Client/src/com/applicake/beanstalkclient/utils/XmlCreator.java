@@ -5,6 +5,7 @@ import java.io.StringWriter;
 
 import org.xmlpull.v1.XmlSerializer;
 
+import com.applicake.beanstalkclient.Server;
 import com.applicake.beanstalkclient.ServerEnvironment;
 
 import android.util.Xml;
@@ -219,37 +220,147 @@ public class XmlCreator {
     serializer.endDocument();
     return writer.toString();
   }
-  
+
   public String createModifyServerEnvironmentXML(ServerEnvironment serverEnvironment)
       throws IllegalArgumentException, IllegalStateException, IOException {
     serializer = Xml.newSerializer();
     writer = new StringWriter();
     serializer.setOutput(writer);
-    
+
     serializer.startDocument("UTF-8", null);
     serializer.startTag("", "server-environment");
-    
+
     addName(serverEnvironment.getName());
     addIsAutomatic(serverEnvironment.isAutomatic());
     addBranchName(serverEnvironment.getBranchName());
-    
+
     serializer.endTag("", "server-environment");
     serializer.endDocument();
     return writer.toString();
   }
 
-  private void addBranchName(String branchName) throws IllegalArgumentException, IllegalStateException, IOException {
-    if (branchName != null && !branchName.equals("")){
+  public String createNewServerXML(Server server) throws IllegalArgumentException,
+      IllegalStateException, IOException {
+    serializer = Xml.newSerializer();
+    writer = new StringWriter();
+    serializer.setOutput(writer);
+
+    serializer.startDocument("UTF-8", null);
+    serializer.startTag("", "server");
+
+    addName(server.getName());
+    addLocalPath(server.getLocalPath());
+    addRemotePath(server.getRemotePath());
+    addRemoteAddr(server.getRemoteAddr());
+    addProtocol(server.getProtocol());
+    addPort(server.getPort());
+    addLogin(server.getLogin());
+    addPassword(server.getPassword());
+    addUseActiveMode(server.isUseActiveMode());
+    addAuthenticateByKey(server.isAuthenticateByKey());
+    addUseFeat(server.isUseFeat());
+    addPreReleaseHook(server.getPreReleaseHook());
+    addPostReleaseHook(server.getPostReleaseHook());
+
+    serializer.endTag("", "server");
+    serializer.endDocument();
+    return writer.toString();
+  }
+
+  private void addPostReleaseHook(String postReleaseHook)
+      throws IllegalArgumentException, IllegalStateException, IOException {
+
+    serializer.startTag("", "post_release_hook");
+    serializer.text(postReleaseHook);
+    serializer.endTag("", "post_release_hook");
+
+  }
+
+  private void addPreReleaseHook(String preReleaseHook) throws IllegalArgumentException, IllegalStateException, IOException {
+    
+    serializer.startTag("", "pre_release_hook");
+    serializer.text(preReleaseHook);
+    serializer.endTag("", "pre_release_hook");
+
+  }
+
+  private void addUseFeat(boolean useFeat) throws IllegalArgumentException, IllegalStateException, IOException {
+    
+    serializer.startTag("", "use_feat");
+    serializer.text(useFeat ? "true" : "false");
+    serializer.endTag("", "use_feat");
+
+  }
+
+  private void addAuthenticateByKey(boolean authenticateByKey) throws IllegalArgumentException, IllegalStateException, IOException {
+
+    serializer.startTag("", "authenticate_by_key");
+    serializer.text(authenticateByKey ? "true" : "false");
+    serializer.endTag("", "authenticate_by_key");
+    
+  }
+
+  private void addUseActiveMode(boolean useActiveMode) throws IllegalArgumentException, IllegalStateException, IOException {
+
+    serializer.startTag("", "use_active_mode");
+    serializer.text(useActiveMode ? "true" : "false");
+    serializer.endTag("", "use_active_mode");
+    
+  }
+
+  private void addPort(int port) throws IllegalArgumentException, IllegalStateException, IOException {
+    
+    serializer.startTag("", "port");
+    serializer.text(String.valueOf(port));
+    serializer.endTag("", "port");
+    
+  }
+
+  private void addProtocol(String protocol) throws IllegalArgumentException, IllegalStateException, IOException {
+
+    serializer.startTag("", "protocol");
+    serializer.text(protocol);
+    serializer.endTag("", "protocol");
+        
+  }
+
+  private void addRemoteAddr(String remoteAddr) throws IllegalArgumentException, IllegalStateException, IOException {
+
+    serializer.startTag("", "remote_addr");
+    serializer.text(remoteAddr);
+    serializer.endTag("", "remote_addr");
+    
+  }
+
+  private void addRemotePath(String remotePath) throws IllegalArgumentException, IllegalStateException, IOException {
+    
+    serializer.startTag("", "remote_path");
+    serializer.text(remotePath);
+    serializer.endTag("", "remote_path");
+    
+  }
+
+  private void addLocalPath(String localPath) throws IllegalArgumentException, IllegalStateException, IOException {
+    
+    serializer.startTag("", "local_path");
+    serializer.text(localPath);
+    serializer.endTag("", "local_path");
+    
+  }
+
+  private void addBranchName(String branchName) throws IllegalArgumentException,
+      IllegalStateException, IOException {
+    if (branchName != null && !branchName.equals("")) {
       serializer.startTag("", "branch_name");
       serializer.text(branchName);
       serializer.endTag("", "branch_name");
     }
-    
+
   }
 
-  private void addIsAutomatic(boolean automatic) throws IllegalArgumentException, IllegalStateException,
-      IOException {
-    
+  private void addIsAutomatic(boolean automatic) throws IllegalArgumentException,
+      IllegalStateException, IOException {
+
     serializer.startTag("", "automatic");
     serializer.text(automatic ? "true" : "false");
     serializer.endTag("", "automatic");
