@@ -104,7 +104,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     // servers list
     mServersAdapter = new ServersAdapter(this, R.layout.environments_list_entry, mServersArray);
     mServersList.setAdapter(mServersAdapter);
-
+    
     new DownloadReleaseListTask(this).execute();
   }
 

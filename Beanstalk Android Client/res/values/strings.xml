@@ -31,4 +31,6 @@
 		name="account_settings">Account <b>settings</b></string>
 	<string name="create_new_server_environment">New
 		<b>server environment</b></string>
+	<string name="modify_server_environment">Modify
+		<b>server environment</b></string>
 </resources>

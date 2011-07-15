@@ -16,6 +16,7 @@ public class Constants {
   public static final int CLOSE_ALL_ACTIVITIES = 1996;
 
   // names for extras passed via intents
+  public static final String SERVER_ENVIRONMENT = "server_environment";
 
   public static final String CHANGESET_ENTRY = "changeset_entry";
   public static final String CHANGEDFILES_ARRAYLIST = "changed_files_array";
@@ -70,5 +71,8 @@ public class Constants {
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE = "auto_update_notification_service";
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY = "auto_update_notification_service_delay";
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED = "auto_update_notification_service_custom_led";
+
+
+  
 
 }
