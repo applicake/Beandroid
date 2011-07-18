@@ -52,9 +52,13 @@ public class HttpSender {
   private static final DefaultHttpClient httpClient = getClient();
   private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX = "/server_environments/";
-  
+
   private static final String SERVER_CREATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_CREATE_HTTP_SUFFIX = "/release_servers.xml?environment_id=";
+  
+  
+  private static final String SERVER_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String SERVER_UPDATE_HTTP_SUFFIX = "/release_servers/";
 
   public static DefaultHttpClient getClient() {
     DefaultHttpClient httpClient = null;
@@ -250,8 +254,8 @@ public class HttpSender {
 
   }
 
-  public static int sendCreateServerXML(SharedPreferences prefs, String xml, int repoId, int environmentId)
-      throws UnsupportedEncodingException, HttpSenderException,
+  public static int sendCreateServerXML(SharedPreferences prefs, String xml, int repoId,
+      int environmentId) throws UnsupportedEncodingException, HttpSenderException,
       HttpSenderServerErrorException, XMLParserException {
 
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
@@ -324,6 +328,22 @@ public class HttpSender {
 
     return executeModifyPutRequst(modificationXml, credentials, putRequest);
 
+  }
+
+  public static Integer sendModifyServerXML(SharedPreferences prefs,
+      String modificationXml, int repositoryId, int serverId)
+      throws UnsupportedEncodingException, XMLParserException,
+      HttpSenderServerErrorException, HttpSenderException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // create PUT request with address
+    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
+        + SERVER_UPDATE_HTTP_MIDDLE + String.valueOf(repositoryId)
+        + SERVER_UPDATE_HTTP_SUFFIX + String.valueOf(serverId) + ".xml");
+
+    return executeModifyPutRequst(modificationXml, credentials, putRequest);
   }
 
   private static int executeCreatePost(String xml,
@@ -405,6 +425,9 @@ public class HttpSender {
       String entity = EntityUtils.toString(putResponse.getEntity());
       int statusCode = putResponse.getStatusLine().getStatusCode();
       if (statusCode == 200) {
+        Log.d("xxx", modificationXml);
+        Log.d("xxx", putRequest.getURI().toASCIIString());
+        Log.d("xxx", putResponse.getStatusLine().toString());
         return 200;
       } else if (statusCode == 422) {
         StringBuilder sb = new StringBuilder();
