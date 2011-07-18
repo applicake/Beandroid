@@ -14,6 +14,10 @@ public class Release implements Parcelable {
 
   public static final SimpleDateFormat FORMATTER = new SimpleDateFormat(
       "yyyy-MM-dd'T'HH:mm:ssZ");
+
+  public static final SimpleDateFormat FORMATTER_ALTERNATIVE = new SimpleDateFormat(
+      "yyyy-MM-dd'T'HH:mm:ss'Z'");
+
   private static final String[] STATES = new String[] { "pending", "waiting", "failed",
       "success", "skipped", };
   private static final Map<String, Integer> STATES_TO_INT = new HashMap<String, Integer>();
@@ -83,7 +87,12 @@ public class Release implements Parcelable {
   }
 
   public void setCreatedAt(String createdAt) throws ParseException {
-    this.createdAt = FORMATTER.parse(createdAt.trim()).getTime();
+    try {
+      this.createdAt = FORMATTER.parse(createdAt.trim()).getTime();
+    } catch (ParseException e) {
+      this.createdAt = FORMATTER_ALTERNATIVE.parse(createdAt.trim()).getTime();
+    }
+
   }
 
   public Date getDeployedAt() {
@@ -91,7 +100,11 @@ public class Release implements Parcelable {
   }
 
   public void setDeployedAt(String deployedAt) throws ParseException {
-    this.deployedAt = FORMATTER.parse(deployedAt.trim()).getTime();
+    try {
+      this.deployedAt = FORMATTER.parse(deployedAt.trim()).getTime();
+    } catch (ParseException e) {
+      this.deployedAt = FORMATTER_ALTERNATIVE.parse(deployedAt.trim()).getTime();
+    }
   }
 
   public int getId() {
@@ -114,7 +127,11 @@ public class Release implements Parcelable {
     if (TextUtils.isEmpty(lastRetryAt)) {
       this.lastRetryAt = -1;
     } else {
-      this.lastRetryAt = FORMATTER.parse(lastRetryAt.trim()).getTime();
+      try {
+        this.lastRetryAt = FORMATTER.parse(lastRetryAt.trim()).getTime();
+      } catch (ParseException e) {
+        this.lastRetryAt = FORMATTER_ALTERNATIVE.parse(lastRetryAt.trim()).getTime();
+      }
     }
   }
 
@@ -175,7 +192,11 @@ public class Release implements Parcelable {
   }
 
   public void setUpdatedAt(String updatedAt) throws ParseException {
-    this.updatedAt = FORMATTER.parse(updatedAt.trim()).getTime();
+    try {
+      this.updatedAt = FORMATTER.parse(updatedAt.trim()).getTime();
+    } catch (ParseException e) {
+      this.updatedAt = FORMATTER_ALTERNATIVE.parse(updatedAt.trim()).getTime();
+    }
   }
 
   @Override
