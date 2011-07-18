@@ -4,8 +4,9 @@
   <string name="settings">Settings</string>
   <string name="logout">Logout</string>
   <string name="exit">Exit</string>
-  <string name="network_connection_error">An error occured while trying to connect to the
-    server.</string>
+  <string name="network_connection_error">An error occurred while trying to connect to the
+    server.
+  </string>
   <string name="internal_xml_error">The application encountered an internal error.
   </string>
   <string name="modify_repository_properties">
@@ -34,6 +35,10 @@
   </string>
   <string name="create_new_server">
     Create new
+    <b>server</b>
+  </string>
+  <string name="modify_server">
+    Modify
     <b>server</b>
   </string>
 </resources>

@@ -7,6 +7,7 @@ import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Server;
 import com.applicake.beanstalkclient.ServerEnvironment;
 import com.applicake.beanstalkclient.activities.CreateNewServerActivity;
+import com.applicake.beanstalkclient.activities.ModifyServerActivity;
 import com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
@@ -15,6 +16,7 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorExce
 import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -134,7 +136,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
           Log.d("xxx", "Server environment in OnClickListener" + serverEnvironment.toString());
           Intent intent = new Intent(mContext, ModifyServerEnvironmentProperties.class);
           intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
-          mContext.startActivity(intent);
+          ((Activity) mContext).startActivityForResult(intent, 0);
         }
       });
 
@@ -166,7 +168,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
           Intent intent = new Intent(mContext, CreateNewServerActivity.class);
           intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
           
-          mContext.startActivity(intent);
+          ((Activity) mContext).startActivityForResult(intent, 0);
 
         }
       });
@@ -177,12 +179,24 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     else {
       view = mInflater.inflate(R.layout.environments_server_list_entry, null);
       // temporary
-      Server server = mServersArray.get(groupPosition).getServerList().get(childPosition);
+      final Server server = mServersArray.get(groupPosition).getServerList().get(childPosition);
 
       if (server != null) {
         TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
         TextView branchName = (TextView) view.findViewById(R.id.branch_name);
         TextView automatic = (TextView) view.findViewById(R.id.automatic);
+        
+        view.setOnClickListener(new OnClickListener() {
+          
+          @Override
+          public void onClick(View v) {
+            Intent intent = new Intent(mContext, ModifyServerActivity.class);
+            intent.putExtra(Constants.SERVER_ENVIRONMENT, mServersArray.get(groupPosition));
+            intent.putExtra(Constants.SERVER, server);
+            
+            ((Activity) mContext).startActivityForResult(intent, 0);
+          }
+        });
 
         environmentName.setText(server.getName());
         branchName.setText(String.valueOf(server.getRevision()));
