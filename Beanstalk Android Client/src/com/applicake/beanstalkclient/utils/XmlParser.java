@@ -156,8 +156,10 @@ public class XmlParser {
     try {
       xmlReader.parse(is);
     } catch (IOException e) {
+      e.printStackTrace();
       throw new XMLParserException(e);
     } catch (SAXException e) {
+      e.printStackTrace();
       throw new XMLParserException(e);
     }
 
