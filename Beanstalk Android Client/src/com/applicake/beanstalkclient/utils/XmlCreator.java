@@ -266,10 +266,40 @@ public class XmlCreator {
     serializer.endDocument();
     return writer.toString();
   }
+  
+
+  public String createModifyServerXML(Server server) throws IllegalArgumentException, IllegalStateException, IOException {
+    serializer = Xml.newSerializer();
+    writer = new StringWriter();
+    serializer.setOutput(writer);
+
+    serializer.startDocument("UTF-8", null);
+    serializer.startTag("", "server");
+
+    // TODO refactor for better performance
+    addName(server.getName());
+    addLocalPath(server.getLocalPath());
+    addRemotePath(server.getRemotePath());
+    addRemoteAddr(server.getRemoteAddr());
+    addProtocol(server.getProtocol());
+    addPort(server.getPort());
+    addLogin(server.getLogin());
+    addPassword(server.getPassword());
+    addUseActiveMode(server.isUseActiveMode());
+    addAuthenticateByKey(server.isAuthenticateByKey());
+    addUseFeat(server.isUseFeat());
+    addPreReleaseHook(server.getPreReleaseHook());
+    addPostReleaseHook(server.getPostReleaseHook());
+
+    serializer.endTag("", "server");
+    serializer.endDocument();
+    return writer.toString();
+    
+  }
 
   private void addPostReleaseHook(String postReleaseHook)
       throws IllegalArgumentException, IllegalStateException, IOException {
-
+    
     serializer.startTag("", "post_release_hook");
     serializer.text(postReleaseHook);
     serializer.endTag("", "post_release_hook");
@@ -545,5 +575,6 @@ public class XmlCreator {
     serializer.text(name);
     serializer.endTag("", "name");
   }
+
 
 }
