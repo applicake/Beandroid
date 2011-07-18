@@ -3,8 +3,10 @@ package com.applicake.beanstalkclient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class Server {
+import android.os.Parcel;
+import android.os.Parcelable;
 
+public class Server implements Parcelable{
 
   static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
   
@@ -29,6 +31,79 @@ public class Server {
   private boolean useActiveMode;
   private boolean authenticateByKey;
   private boolean useFeat;
+  
+
+  // default constructor of Server
+  public Server(){
+  }
+  
+  // implementation of Parcelable interface
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(accountId);
+    dest.writeLong(createdAt);
+    dest.writeInt(id);
+    dest.writeString(localPath);
+    dest.writeString(login);
+    dest.writeString(name);
+    dest.writeString(password);
+    dest.writeInt(port);
+    dest.writeString(protocol);
+    dest.writeString(remoteAddr);
+    dest.writeString(remotePath);
+    dest.writeInt(repositoryId);
+    dest.writeString(envitonmentName);
+    dest.writeString(serverEnvironmentId);
+    dest.writeString(revision);
+    dest.writeLong(updatedAt);    
+    dest.writeString(preReleaseHook);
+    dest.writeString(postReleaseHook);
+    dest.writeInt(useActiveMode ? 1 : 0);
+    dest.writeInt(authenticateByKey ? 1 : 0);    
+    dest.writeInt(useFeat ? 1 : 0);    
+  }
+
+  public Server(Parcel in) {
+    this.accountId = in.readInt();
+    this.createdAt = in.readLong();
+    this.id = in.readInt();
+    this.localPath = in.readString();
+    this.login = in.readString();
+    this.name = in.readString();
+    this.password = in.readString();
+    this.port = in.readInt();
+    this.protocol = in.readString();
+    this.remoteAddr = in.readString();
+    this.remotePath = in.readString();
+    this.repositoryId = in.readInt();
+    this.envitonmentName = in.readString();
+    this.serverEnvironmentId = in.readString();
+    this.revision = in.readString();
+    this.updatedAt = in.readLong();
+    this.preReleaseHook = in.readString();
+    this.postReleaseHook = in.readString();
+    this.useActiveMode = in.readInt() == 1 ? true : false;
+    this.authenticateByKey = in.readInt() == 1 ? true : false;
+    this.useFeat = in.readInt() == 1 ? true : false;
+  }
+  
+  @Override
+  public int describeContents() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+  
+  
+  public static final Parcelable.Creator<Server> CREATOR = new Parcelable.Creator<Server>() {
+    public Server createFromParcel(Parcel in) {
+      return new Server(in);
+    }
+
+    public Server[] newArray(int size) {
+      return new Server[size];
+    }
+  };
+  // end of Parcelable implementation
   
   
   
