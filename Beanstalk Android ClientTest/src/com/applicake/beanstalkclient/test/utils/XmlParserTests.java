@@ -82,7 +82,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     assertEquals("Staging", release.getEnvironmentName());
     assertEquals(6, release.getEnvironmentId());
     assertEquals(0, release.getRetries());
-    assertEquals(81, release.getRevision());
+    assertEquals("81", release.getRevision());
     assertEquals("success", release.getStateLabel());
     assertEquals(new GregorianCalendar(2009, Calendar.NOVEMBER, 4, 10, 3, 40).getTime(),
         release.getUpdatedAt());
@@ -103,7 +103,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     assertEquals("Staging", release.getEnvironmentName());
     assertEquals(6, release.getEnvironmentId());
     assertEquals(2, release.getRetries());
-    assertEquals(249, release.getRevision());
+    assertEquals("249", release.getRevision());
     assertEquals("failed", release.getStateLabel());
     assertEquals(new GregorianCalendar(2008, Calendar.NOVEMBER, 4, 14, 50, 1).getTime(),
         release.getUpdatedAt());
@@ -119,7 +119,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     assertEquals(88998, changeset1.getAccountId());
     assertEquals("Han Solo", changeset1.getAuthor());
     // testing moved to YamlTesting
-    // assertEquals("--- []", changeset1.getChangedDirs());
+//     assertEquals("--- []", changeset1.getChangedDirs());
     // assertEquals("--- - - README  - :add", changeset1.getChangedFiles());
     // assertEquals("", changeset1.getChangedProperties());
     assertEquals("bartek.f+HanSolo@applicake.com", changeset1.getEmail());
