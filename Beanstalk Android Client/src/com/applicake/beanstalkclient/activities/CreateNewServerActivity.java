@@ -19,6 +19,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +38,8 @@ public class CreateNewServerActivity extends BeanstalkActivity implements OnClic
     super.onCreate(savedInstanceState);
     setContentView(R.layout.create_new_server_layout);
 
-    mServerEnvironment = getIntent().getParcelableExtra(Constants.SERVER_ENVIRONMENT);
+    Intent intent = getIntent();
+    mServerEnvironment = intent.getParcelableExtra(Constants.SERVER_ENVIRONMENT);
 
     // attach listener to "create" button
     ((Button) findViewById(R.id.create_button)).setOnClickListener(this);
@@ -58,9 +60,13 @@ public class CreateNewServerActivity extends BeanstalkActivity implements OnClic
         .toString());
     server.setProtocol(((Spinner) findViewById(R.id.protocol_spinner)).getSelectedItem()
         .toString().toLowerCase());
-    // TODO might be a buggy solution; consider storing port as a string
-    server.setPort(Integer.parseInt(((EditText) findViewById(R.id.port_edittext))
-        .getText().toString()));
+    try {
+      // TODO might be a buggy solution; consider storing port as a string
+      server.setPort(Integer.parseInt(((EditText) findViewById(R.id.port_edittext))
+          .getText().toString()));
+    } catch (NumberFormatException e) {
+//      server.setPort(0);
+    }
     server.setLogin(((EditText) findViewById(R.id.login_edittext)).getText().toString());
     server.setPassword(((EditText) findViewById(R.id.password_edittext)).getText()
         .toString());

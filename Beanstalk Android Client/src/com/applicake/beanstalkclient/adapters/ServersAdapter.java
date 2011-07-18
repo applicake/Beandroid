@@ -131,6 +131,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
         
         @Override
         public void onClick(View v) {
+          Log.d("xxx", "Server environment in OnClickListener" + serverEnvironment.toString());
           Intent intent = new Intent(mContext, ModifyServerEnvironmentProperties.class);
           intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
           mContext.startActivity(intent);
@@ -154,17 +155,18 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
     if (isLastChild) {
       view = mInflater.inflate(R.layout.environments_add_server_footer, null);
+      final ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
       view.setOnClickListener(new OnClickListener() {
 
         @Override
         public void onClick(View v) {
-          GUI.displayMonit(mContext,
-              "create new server for " + mServersArray.get(groupPosition).getName());
+          Log.d("xxx",
+              "create new server for " + serverEnvironment.getName());
           // tests
           Intent intent = new Intent(mContext, CreateNewServerActivity.class);
-          intent.putExtra(Constants.SERVER_ENVIRONMENT, mServersArray.get(groupPosition));
+          intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
           
-          mContext.startActivity(new Intent(mContext, CreateNewServerActivity.class));
+          mContext.startActivity(intent);
 
         }
       });

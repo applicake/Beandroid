@@ -116,7 +116,6 @@
       android:entries="@array/ftp_entry_values"
       android:layout_below="@+id/protocol_label"></Spinner>
 
-    //port
     <TextView
       style="@style/edit_text_label"
       android:text="Port:"
@@ -126,7 +125,6 @@
       android:layout_height="wrap_content"></TextView>
     <EditText
       style="@style/edit_text"
-      android:text="0"
       android:id="@+id/port_edittext"
       android:inputType="numberDecimal"
       android:layout_below="@id/port_label"
