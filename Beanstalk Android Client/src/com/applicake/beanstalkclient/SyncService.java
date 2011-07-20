@@ -53,6 +53,10 @@ public class SyncService extends Service {
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
     Log.d(TAG, "inOnStart");
+    // if the service's mContext is nulled due to Application lifecycle, get new context
+    if (mContext == null){
+      mContext = getApplicationContext();
+    }
     prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
     if (!prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
 
