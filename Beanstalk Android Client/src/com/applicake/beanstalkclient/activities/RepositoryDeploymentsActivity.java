@@ -53,6 +53,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   private Repository repository;
   private Button releasesButton;
   private Button serversButton;
+  private View relesaesLoadingFooterView;
+  private View serversLoadingFooterView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -66,45 +68,48 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     ((TextView) findViewById(R.id.repoTitle)).setText(repository.getTitle());
     findViewById(R.id.colorLabel).getBackground().setLevel(repository.getColorLabelNo());
 
-    // handle tab switching
-    mReleasesList = (ListView) findViewById(R.id.releases_list);
-    mServersList = (ExpandableListView) findViewById(R.id.servers_list);
-
+    // create releases list view and tab switching button, attach loading and
+    // footer and set button listeners
     releasesButton = (Button) findViewById(R.id.releases_button);
     releasesButton.setOnClickListener(this);
-
-    serversButton = (Button) findViewById(R.id.servers_button);
-    serversButton.setOnClickListener(this);
-    
     releasesButton.setSelected(true);
-    serversButton.setSelected(false);
-    
-    View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
-        Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_server_environment_footer,
-        null, false);
-    
-    footerView.setOnClickListener(new OnClickListener() {
-      
-      @Override
-      public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), CreateNewServerEnvironmentActivity.class);
-        intent.putExtra(Constants.REPOSITORY_ID, repository.getId());
-        startActivity(intent);
-        
-      }
-    });
-    
-    mServersList.addFooterView(footerView);
-    
-    
-    // releases list
+
+    mReleasesList = (ListView) findViewById(R.id.releases_list);
+    relesaesLoadingFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        .inflate(R.layout.releases_loading_footer, null, false);
+    mReleasesList.addFooterView(relesaesLoadingFooterView, null, false);
+
+    // releases list adapter
     mReleasesAdapter = new ReleasesAdapter(this, R.layout.releases_entry, mReleaseArray);
     mReleasesList.setAdapter(mReleasesAdapter);
 
-    // servers list
-    mServersAdapter = new ServersAdapter(this, R.layout.environments_list_entry, mServersArray);
+    // create servers list view and tab switching button, attach "loading" and
+    // "add new" footer and set button listeners
+    mServersList = (ExpandableListView) findViewById(R.id.servers_list);
+    serversLoadingFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        .inflate(R.layout.add_server_environment_footer, null, false);
+    View serversAddNewFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        .inflate(R.layout.add_server_environment_footer, null, false);
+    mServersList.addFooterView(serversLoadingFooterView, null, false);
+    mServersList.addFooterView(serversAddNewFooterView);
+    serversButton = (Button) findViewById(R.id.servers_button);
+    serversButton.setOnClickListener(this);
+    serversButton.setSelected(false);
+    // servers list adapter
+    mServersAdapter = new ServersAdapter(this, R.layout.environments_list_entry,
+        mServersArray);
     mServersList.setAdapter(mServersAdapter);
-    
+
+    serversAddNewFooterView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(getApplicationContext(),
+            CreateNewServerEnvironmentActivity.class);
+        intent.putExtra(Constants.REPOSITORY_ID, repository.getId());
+        startActivity(intent);
+      }
+    });
+
     new DownloadReleaseListTask(this).execute();
   }
 
@@ -120,7 +125,9 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       break;
 
     case R.id.servers_button:
-      new DownloadServerEnvironmentsListTask(this).execute();
+      if (!serverListLoaded) {
+        new DownloadServerEnvironmentsListTask(this).execute();
+      }
       mReleasesList.setVisibility(View.GONE);
       mServersList.setVisibility(View.VISIBLE);
       releasesButton.setSelected(false);
@@ -129,39 +136,19 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     }
   }
 
-  // TODO change info dialog to list header 
+  // TODO change info dialog to list header
   public class DownloadReleaseListTask extends AsyncTask<String, Void, List<Release>> {
 
     private Context context;
-    private ProgressDialog progressDialog;
 
-    @SuppressWarnings("rawtypes")
-    private AsyncTask thisTask;
     private String errorMessage;
     private String failMessage;
     private boolean failed = false;
 
     public DownloadReleaseListTask(Context context) {
       this.context = context;
-      thisTask = this;
     }
 
-    @Override
-    protected void onPreExecute() {
-      super.onPreExecute();
-      progressDialog = ProgressDialog.show(context, "Loading release list",
-          "Please wait...");
-      progressDialog.setCancelable(true);
-      progressDialog.setOnCancelListener(new OnCancelListener() {
-
-        @Override
-        public void onCancel(DialogInterface dialog) {
-          thisTask.cancel(true);
-          finish();
-        }
-      });
-
-    }
 
     @Override
     protected List<Release> doInBackground(String... params) {
@@ -185,7 +172,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
     @Override
     protected void onPostExecute(List<Release> result) {
-      progressDialog.dismiss();
+      mReleasesList.removeFooterView(relesaesLoadingFooterView);
       if (failed) {
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
             failMessage) {
@@ -217,48 +204,29 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       }
     }
   }
-  public class DownloadServerEnvironmentsListTask extends AsyncTask<String, Void, List<ServerEnvironment>> {
-    
+
+  public class DownloadServerEnvironmentsListTask extends
+      AsyncTask<String, Void, List<ServerEnvironment>> {
+
     private Context context;
-    private ProgressDialog progressDialog;
-    
-    @SuppressWarnings("rawtypes")
-    private AsyncTask thisTask;
+
     private String errorMessage;
     private String failMessage;
     private boolean failed = false;
-    
+
     public DownloadServerEnvironmentsListTask(Context context) {
       this.context = context;
-      thisTask = this;
     }
-    
-    @Override
-    protected void onPreExecute() {
-      super.onPreExecute();
-      progressDialog = ProgressDialog.show(context, "Loading server environments list",
-      "Please wait...");
-      progressDialog.setCancelable(true);
-      progressDialog.setOnCancelListener(new OnCancelListener() {
-        
-        @Override
-        public void onCancel(DialogInterface dialog) {
-          thisTask.cancel(true);
-          finish();
-        }
-      });
-      
-    }
-    
+
     @Override
     protected List<ServerEnvironment> doInBackground(String... params) {
-      
+
       try {
-        String serverEnvironmentsXml = HttpRetriever.getServerEnvironmentListForRepositoryXML(prefs,
-            repository.getId());
+        String serverEnvironmentsXml = HttpRetriever
+            .getServerEnvironmentListForRepositoryXML(prefs, repository.getId());
         Log.d("xxx", serverEnvironmentsXml);
         return XmlParser.parseServerEnvironmentsList(serverEnvironmentsXml);
-        
+
       } catch (UnsuccessfulServerResponseException e) {
         errorMessage = e.getMessage();
       } catch (HttpConnectionErrorException e) {
@@ -269,40 +237,41 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       failed = true;
       return null;
     }
-    
+
     @Override
     protected void onPostExecute(List<ServerEnvironment> result) {
-      Log.d("xxx", String.valueOf(result != null ? result.size() : 0 ));
-      progressDialog.dismiss();
+      Log.d("xxx", String.valueOf(result != null ? result.size() : 0));
+      mServersList.removeFooterView(serversLoadingFooterView);
       if (failed) {
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
             failMessage) {
-          
+
           @Override
           public void retryAction() {
             new DownloadServerEnvironmentsListTask(context).execute();
           }
-          
+
           @Override
           public void noRetryAction(DialogInterface dialog) {
             super.noRetryAction(dialog);
             finish();
-            
+
           }
-          
+
         };
-        
+
         builder.displayDialog();
       } else {
+        serverListLoaded = true;
         mServersArray.clear();
         if (result != null) {
           mServersArray.addAll(result);
           mServersAdapter.notifyDataSetChanged();
         }
-        
+
         if (errorMessage != null)
           GUI.displayMonit(context, errorMessage);
-        
+
       }
     }
   }
