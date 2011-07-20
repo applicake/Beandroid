@@ -87,7 +87,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     // "add new" footer and set button listeners
     mServersList = (ExpandableListView) findViewById(R.id.servers_list);
     serversLoadingFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-        .inflate(R.layout.add_server_environment_footer, null, false);
+        .inflate(R.layout.environments_server_environments_loading_field, null, false);
     View serversAddNewFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
         .inflate(R.layout.add_server_environment_footer, null, false);
     mServersList.addFooterView(serversLoadingFooterView, null, false);
