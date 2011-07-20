@@ -1,13 +1,14 @@
 package com.applicake.beanstalkclient.test.activites;
 
-import android.test.ActivityInstrumentationTestCase2;
+import android.os.AsyncTask;
+import android.test.SingleLaunchActivityTestCase;
 import android.util.Log;
 
-import com.applicake.beanstalkclient.*;
 import com.applicake.beanstalkclient.activities.LoginActivity;
 import com.applicake.beanstalkclient.test.SecretData;
 
-public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginActivity> {
+
+public class LoginActivityTests extends SingleLaunchActivityTestCase<LoginActivity> {
 
   public LoginActivityTests() {
     super("com.applicake.beanstalkclient", LoginActivity.class);
@@ -38,16 +39,18 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
   String[] invalidDomainValidLoginInvalidPassword = { "1bartosz-filipowicz",
       "bartoszfilipowicz", SecretData.PASSWORD + "xx" }; // 010
 
+  
   @Override
   protected void setUp() throws Exception {
-    Log.d("tests", "setup");
+    
     super.setUp();
+    Log.d("tests", "setup");
   }
 
   @Override
   protected void tearDown() throws Exception {
-    Log.d("tests", "teardown");
     super.tearDown();
+    Log.d("tests", "teardown");
   }
 
   // verify login task tests [on-line]
@@ -61,7 +64,6 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
   // the VerifyLoginTaskResult is an AsyncTask which checks login credentials
   // returning HTTP status code from the request
   // the task also returns 500 if the API is not enabled on Beanstalk website,
-  // and 666 in case of exception in the parsing process
 
   public void testVerifyLoginTaskResult111() throws Throwable {
 
@@ -70,7 +72,6 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
         validDomainValidLoginValidPassword);
     runTestOnUiThread(testCouple.mRunnable);
     assertEquals("111", new Integer(200), testCouple.mTestVerifyLoginTask.get());
-
   }
 
   public void testVerifyLoginTaskResult110() throws Throwable {
@@ -106,7 +107,6 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
         invalidDomainValidLoginValidPassword);
     runTestOnUiThread(testCouple.mRunnable);
     assertEquals("011", new Integer(302), testCouple.mTestVerifyLoginTask.get());
-
   }
 
   public void testVerifyLoginTaskResult001() throws Throwable {
@@ -128,14 +128,14 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
     assertEquals("010", new Integer(302), testCouple.mTestVerifyLoginTask.get());
 
   }
-
+  
   public void testVerifyLoginTaskResult000() throws Throwable {
 
     // 000
-    RunnableTaskCouple test011Couple = new RunnableTaskCouple(
+    RunnableTaskCouple testCouple = new RunnableTaskCouple(
         invalidDomainInvalidLoginInvalidPassword);
-    runTestOnUiThread(test011Couple.mRunnable);
-    assertEquals("110", new Integer(302), test011Couple.mTestVerifyLoginTask.get());
+    runTestOnUiThread(testCouple.mRunnable);
+    assertEquals("110", new Integer(302), testCouple.mTestVerifyLoginTask.get());
 
   }
 
@@ -145,13 +145,25 @@ public class LoginActivityTests extends ActivityInstrumentationTestCase2<LoginAc
 
   private class RunnableTaskCouple {
     public Runnable mRunnable;
-    public LoginActivity.VerifyLoginTask mTestVerifyLoginTask;
-
+    public AsyncTask<String, Void, Integer> mTestVerifyLoginTask;
+    private LoginActivity activity;
     public RunnableTaskCouple(final String[] params) {
-      mTestVerifyLoginTask = getActivity().new VerifyLoginTask();
+      activity = getActivity();
+      Log.d("tests", activity.toString());
       mRunnable = new Runnable() {
+      
         @Override
         public void run() {
+          mTestVerifyLoginTask = activity.new VerifyLoginTask(){
+            @Override
+            protected void onPreExecute() {
+             // override this method as it has nothing to do with the test subject
+            }
+            @Override
+            protected void onPostExecute(Integer result) {
+              // override this method as it has nothing to do with the test subject
+            }
+          };
           mTestVerifyLoginTask.execute(params);
         }
       };
