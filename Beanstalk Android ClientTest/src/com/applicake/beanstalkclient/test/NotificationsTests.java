@@ -4,27 +4,23 @@
 
 package com.applicake.beanstalkclient.test;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.test.ServiceTestCase;
+import android.test.mock.MockApplication;
+import android.util.Log;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.SyncService;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.test.ServiceTestCase;
-import android.test.mock.MockContext;
-
 
 public class NotificationsTests extends ServiceTestCase<SyncService> {
 
-  public static final String PREFIX = "test.";
+  
   private SharedPreferences prefs;
-  private CountDownLatch mSignal;
-  private MyMockContext context;
+  private Context context;
 
   public NotificationsTests() {
     super(SyncService.class);
@@ -50,49 +46,22 @@ public class NotificationsTests extends ServiceTestCase<SyncService> {
 
   }
   
-  private static class MyMockContext extends MockContext {
-
-    private Context mBaseContext;
-
-    public MyMockContext(Context context) {
-        mBaseContext = context;
-    }
-    
-    @Override
-    public String getPackageName() {
-      return mBaseContext.getPackageName();
-    }
-
-    @Override
-    public SharedPreferences getSharedPreferences(String name, int mode) {
-        return mBaseContext.getSharedPreferences(PREFIX + name, mode);
-    }
-    
-    @Override
-    public ContentResolver getContentResolver() {
-      // TODO Auto-generated method stub
-     return mBaseContext.getContentResolver();
-    }
-    
-    @Override
-    public Object getSystemService(String name) {
-      // TODO Auto-generated method stub
-     return mBaseContext.getSystemService(name);
-    }
-    
-}
-
 
   @Override
   protected void setUp() throws Exception {
    
-    MyMockContext mockContext = new MyMockContext(getContext());
+    final SharedPreferencesMockContext mockContext = new SharedPreferencesMockContext(getContext());
+    MockApplication mockApplication = new MockApplication(){
+      @Override
+      public Context getApplicationContext() {
+        Log.d("tests", "Im here");
+        return mockContext;
+      }
+    };
+    
 
     context = mockContext;
-    mSignal = new CountDownLatch(1);
-    // overriding SyncSerivces to enable communication between the service and
-    // the test case
-
+    setApplication(mockApplication);
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     prefs.edit().clear().commit();
 
@@ -112,44 +81,49 @@ public class NotificationsTests extends ServiceTestCase<SyncService> {
     
     // starting service
     SyncService.initializeService(context);
-    mSignal.await(5, TimeUnit.SECONDS);
     // checking if the service is scheduled
+    Thread.sleep(1000);
     assertTrue(SyncService.isServiceRunning(context));
 
     // stopping service
     SyncService.stopService(context);
+    Thread.sleep(1000);
     // checking if the service is not scheduled any more
     assertFalse(SyncService.isServiceRunning(context));
 
   }
   
-  public void testServiceInitializationAndStopCredsNotStoredNotificationsEnabled() {
+  public void testServiceInitializationAndStopCredsNotStoredNotificationsEnabled() throws InterruptedException {
     
     notificationPreferencesSetter(prefs, true, "1", false);
     
     // starting service
     SyncService.initializeService(context);
+    Thread.sleep(1000);
     // checking if the service is scheduled
-    assertTrue(SyncService.isServiceRunning(context));
+    assertFalse(SyncService.isServiceRunning(context));
     
     // stopping service
     SyncService.stopService(context);
+    Thread.sleep(1000);
     // checking if the service is not scheduled any more
     assertFalse(SyncService.isServiceRunning(context));
     
   }
   
-  public void testServiceInitializationAndStopCredsNotStoredNotificationsNotEnabled() {
+  public void testServiceInitializationAndStopCredsNotStoredNotificationsNotEnabled() throws InterruptedException {
     
-    notificationPreferencesSetter(prefs, true, "1", true);
+    notificationPreferencesSetter(prefs, false, "1", false);
     
     // starting service
     SyncService.initializeService(context);
+    Thread.sleep(1000);
     // checking if the service is scheduled
-    assertTrue(SyncService.isServiceRunning(context));
+    assertFalse(SyncService.isServiceRunning(context));
     
     // stopping service
     SyncService.stopService(context);
+    Thread.sleep(1000);
     // checking if the service is not scheduled any more
     assertFalse(SyncService.isServiceRunning(context));
     
