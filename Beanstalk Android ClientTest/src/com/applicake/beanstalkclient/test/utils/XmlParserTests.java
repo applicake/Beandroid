@@ -57,6 +57,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     super.setUp();
     TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
     calendar = Calendar.getInstance();
+    calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
   }
 
   public void testParseReleases() throws IOException, XMLParserException {
@@ -126,7 +127,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     assertEquals("aea1c74c112667bb458957778d016a4a66233110", changeset1.getHashId());
     assertEquals(207784, changeset1.getRepositoryId());
     assertEquals("aea1c74c", changeset1.getRevision());
-    calendar.set(2011, 4, 06, 13, 00, 29);
+//    calendar.set(2011, 4, 06, 13, 00, 29);
     assertEquals(new Date(111, 4, 06, 13, 00, 29), changeset1.getTime());
     // assertEquals("2011-05-06T15:00:29+02:00", changeset1.getTime());
     assertEquals(false, changeset1.isTooLarge());
