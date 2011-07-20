@@ -1,5 +1,8 @@
 package com.applicake.beanstalkclient.test.activites;
 
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
+import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.enums.ColorLabels;
 import com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity;
 
 /**
@@ -40,13 +45,23 @@ public class RepositoryDeploymentsActivityTest extends
     super.setUp();
 
     Intent intent = new Intent();
-    intent.putExtra(Constants.REPOSITORY_ID, 0);
-    intent.putExtra(Constants.REPOSITORY_TITLE, TITLE);
-    intent.putExtra(Constants.REPOSITORY_COLOR_NO, COLOR);
+    
+    Repository repository = new Repository();
+    repository.setId(0);
+    repository.setTitle(TITLE);
+    repository.setColorLabel(ColorLabels.getLabelFromNumber(COLOR));
+    
+    intent.putExtra(Constants.REPOSITORY, repository);
 
     setActivityIntent(intent);
 
     mActivity = getActivity();
+    
+    // a hack that unlocks devices screen in order to enable correct executon of tests
+    // TODO remove permission from Application AndroidManifest.xml before release
+    KeyguardManager mKeyGuardManager = (KeyguardManager) mActivity.getSystemService(Context.KEYGUARD_SERVICE);
+    KeyguardLock mLock = mKeyGuardManager.newKeyguardLock("RepositoryDeploymentsActivity");
+    mLock.disableKeyguard();
 
     mTitle = (TextView) mActivity.findViewById(R.id.repoTitle);
     mColor = mActivity.findViewById(R.id.colorLabel);
@@ -99,7 +114,7 @@ public class RepositoryDeploymentsActivityTest extends
     assertFalse("color label below title",
         colorLocation[1] > titleLocation[1] + mTitle.getHeight());
   }
-
+  
   public void testTabsUi() {
     // at first releases should be visible and servers hidden
     assertReleasesVisible();
