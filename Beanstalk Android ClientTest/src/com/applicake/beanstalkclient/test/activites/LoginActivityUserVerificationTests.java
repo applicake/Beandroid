@@ -1,21 +1,18 @@
 package com.applicake.beanstalkclient.test.activites;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.activities.LoginActivity;
-import com.applicake.beanstalkclient.enums.UserType;
-import com.applicake.beanstalkclient.test.SecretData;
-
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.test.AndroidTestCase;
-import android.test.UiThreadTest;
 import android.util.Log;
 
+import com.applicake.beanstalkclient.activities.LoginActivity;
+import com.applicake.beanstalkclient.test.SecretData;
+import com.applicake.beanstalkclient.enums.UserType;
 
-public class LoginActivityUserVerificationTests extends AndroidTestCase {
+public class LoginActivityUserVerificationTests extends
+    AndroidTestCase {
 
   public LoginActivityUserVerificationTests() {
     super();
@@ -28,20 +25,16 @@ public class LoginActivityUserVerificationTests extends AndroidTestCase {
   String[] userCorrect = { "bartosz-filipowicz", "user", "test" }; // USER
   String[] ownerIncorrect = { "bartosz-filipowicz", "bartoszfilipowicz",
       SecretData.PASSWORD + "xx" }; // OWNER INCORRECT
-  String[] adminIncorrect = { "bartosz-filipowicz", "login", "password" }; // ADMIN
+  String[] adminIncorrect = { "bartosz-filipowicz", "login", "password"+"xx" }; // ADMIN
   // INCORRECT
-  String[] userIncorrect = { "bartosz-filipowicz", "user", "test" }; // USER
+  String[] userIncorrect = { "bartosz-filipowicz", "user", "test"+"xx" }; // USER
   // INCORRECT
   private LoginActivity baseActivity;
-  private SharedPreferences prefs;
-  
 
   @Override
   protected void setUp() throws Exception {
     Log.d("tests", "setup");
     baseActivity = new LoginActivity();
-    prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-    prefs.edit().clear().commit();
     super.setUp();
   }
 
@@ -50,59 +43,69 @@ public class LoginActivityUserVerificationTests extends AndroidTestCase {
     Log.d("tests", "teardown");
     super.tearDown();
   }
+  
 
-  @UiThreadTest
-  public void testOwnerUserTypeRecogintion() throws Throwable {
-    RunnableTaskCouple testCouple = new RunnableTaskCouple(ownerCorrect);
-//    runTestOnUiThread(testCouple.mRunnable);
-    testCouple.mRunnable.run();
-    testCouple.mSignal.await(30, TimeUnit.SECONDS);
-    String userType = prefs.getString(Constants.USER_TYPE, "");
-    assertEquals(UserType.OWNER.name(), userType);
+  // if this test fails it means the device doesn't have network connection
+  public void testDeviceInternetConnection(){
+    String strUrl = "http://stackoverflow.com/about";
 
-  }
-  @UiThreadTest
-  public void testAdminUserTypeRecogintion() throws Throwable {
-    RunnableTaskCouple testCouple = new RunnableTaskCouple(adminCorrect);
-//    runTestOnUiThread(testCouple.mRunnable);
-    testCouple.mRunnable.run();
-    String userType = prefs.getString(Constants.USER_TYPE, "");
-    assertEquals(UserType.ADMIN.name(), userType);
+    try {
+      URL url = new URL(strUrl);
+      HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+      urlConn.connect();
 
-  }
-  @UiThreadTest
-  public void testUserUserTypeRecogintion() throws Throwable {
-    RunnableTaskCouple testCouple = new RunnableTaskCouple(userCorrect);
-    testCouple.mRunnable.run();
-    String userType = prefs.getString(Constants.USER_TYPE, "");
-    assertEquals(UserType.USER.name(), userType);
-
-  }
-
-  // helper class coupling a Runnable object with an AsyncTask for test
-  // purposes
-  // the constructor creates a Runnable task which executes the Task
-
-  private class RunnableTaskCouple {
-    public Runnable mRunnable;
-    public LoginActivity.VerifyLoginTask mTestVerifyLoginTask;
-    final CountDownLatch mSignal = new CountDownLatch(1);
-
-    public RunnableTaskCouple(final String[] params) {
-      mTestVerifyLoginTask = baseActivity.new VerifyLoginTask() {
-        @Override
-        protected void onPostExecute(Integer result) {
-          mSignal.countDown();
-          super.onPostExecute(result);
-
-        }
-      };
-      mRunnable = new Runnable() {
-        @Override
-        public void run() {
-          mTestVerifyLoginTask.execute(params);
-        }
-      };
+      assertEquals(HttpURLConnection.HTTP_OK, urlConn.getResponseCode());
+    } catch (IOException e) {
+      fail("Error creating HTTP connection");
     }
+
   }
+
+  public void testOwnerUserTypeRecogintion() throws Throwable {
+
+    UserType userType;
+    userType = baseActivity.authenticateAndCheckUserType(ownerCorrect[0],
+        ownerCorrect[1], ownerCorrect[2]);
+    assertEquals(UserType.OWNER, userType);
+    
+    try {
+       baseActivity.authenticateAndCheckUserType(ownerIncorrect[0],
+          ownerIncorrect[1], ownerIncorrect[2]);
+      fail();
+    } catch (Exception e) {
+    }
+
+  }
+  
+  public void testAdminUserTypeRecogintion() throws Throwable {
+    
+    UserType userType;
+    userType = baseActivity.authenticateAndCheckUserType(adminCorrect[0],
+        adminCorrect[1], adminCorrect[2]);
+    assertEquals(UserType.ADMIN, userType);
+    
+    try {
+      baseActivity.authenticateAndCheckUserType(adminIncorrect[0],
+          adminIncorrect[1], adminIncorrect[2]);
+      fail();
+    } catch (Exception e) {
+    }
+    
+  }
+  public void testUserUserTypeRecogintion() throws Throwable {
+    
+    UserType userType;
+    userType = baseActivity.authenticateAndCheckUserType(userCorrect[0],
+        userCorrect[1], userCorrect[2]);
+    assertEquals(UserType.USER, userType);
+    
+    try {
+      baseActivity.authenticateAndCheckUserType(userIncorrect[0],
+          userIncorrect[1], userIncorrect[2]);
+      fail();
+    } catch (Exception e) {
+    }
+    
+  }
+
 }
