@@ -3,13 +3,13 @@ package com.applicake.beanstalkclient.test.utils;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.test.InstrumentationTestCase;
+
 import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.YamlEntry;
 import com.applicake.beanstalkclient.utils.CustomYamlParser;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
-import android.test.InstrumentationTestCase;
 
 public class YamlTesting extends InstrumentationTestCase {
 

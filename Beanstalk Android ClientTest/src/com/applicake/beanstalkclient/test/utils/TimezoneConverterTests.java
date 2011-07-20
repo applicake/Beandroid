@@ -3,10 +3,10 @@ package com.applicake.beanstalkclient.test.utils;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
-import com.applicake.beanstalkclient.utils.RailsTimezones;
-
 import android.test.AndroidTestCase;
 import android.util.Log;
+
+import com.applicake.beanstalkclient.utils.RailsTimezones;
 
 public class TimezoneConverterTests extends AndroidTestCase {
 

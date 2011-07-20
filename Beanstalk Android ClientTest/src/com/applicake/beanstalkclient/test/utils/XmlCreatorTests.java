@@ -2,10 +2,10 @@ package com.applicake.beanstalkclient.test.utils;
 
 import java.io.IOException;
 
+import android.test.AndroidTestCase;
+
 import com.applicake.beanstalkclient.enums.ColorLabels;
 import com.applicake.beanstalkclient.utils.XmlCreator;
-
-import android.test.AndroidTestCase;
 
 public class XmlCreatorTests extends AndroidTestCase {
 
