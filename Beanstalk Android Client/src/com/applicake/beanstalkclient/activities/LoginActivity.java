@@ -54,9 +54,9 @@ public class LoginActivity extends Activity implements OnClickListener {
     prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     setContentView(R.layout.login_activity_layout);
     // auto login with previously stored user data
-   
+
     // TODO optimize memory usage
-    
+
     if (prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
       // check credentials validity
 
@@ -133,7 +133,7 @@ public class LoginActivity extends Activity implements OnClickListener {
   // credentials are verified against plans model (available for all users).
   // If user's credentails are valid, he is a USER.
 
-  private UserType authenticateAndCheckUserType(String domain, String username,
+  public UserType authenticateAndCheckUserType(String domain, String username,
       String password) throws HttpConnectionErrorException, XMLParserException,
       HttpImproperStatusCodeException {
 
@@ -165,7 +165,6 @@ public class LoginActivity extends Activity implements OnClickListener {
       }
     }
   }
-
   public class VerifyLoginTask extends AsyncTask<String, Void, Integer> {
 
     private String domain;
@@ -223,7 +222,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     protected void onPostExecute(Integer result) {
       Log.d("LoginActivity", "Did download task fail: " + String.valueOf(failed));
       progressDialog.dismiss();
-
+      
       if (failed) {
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(mContext,
             failMessage) {
