@@ -37,6 +37,7 @@ public class SyncService extends Service {
 
   private static SharedPreferences prefs;
   private String mostRecentlyViewedChangesetId;
+  private static Context mContext;
 
   @Override
   public IBinder onBind(Intent intent) {
@@ -52,14 +53,14 @@ public class SyncService extends Service {
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
     Log.d(TAG, "inOnStart");
-    prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
     if (!prefs.getBoolean(Constants.CREDENTIALS_STORED, false)) {
 
       // if the credentials are not stored, the service will be disabled
       // this can happen when user logouts from the application
 
       Log.d(TAG, "credentails are not stored - stopping service");
-      stopService(getApplicationContext());
+      stopService(mContext);
     } else if (isOnline()) {
 
       mostRecentlyViewedChangesetId = prefs.getString(Constants.RECENT_CHANGESET_ID, "");
@@ -82,6 +83,7 @@ public class SyncService extends Service {
   // scheduling the service to run at certain intervals read from
   // sharedpreferences
   public static void initializeService(final Context context) {
+    mContext = context;
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Intent intent = new Intent(context, SyncService.class);
     PendingIntent pi = PendingIntent.getService(context, 0, intent,
@@ -103,6 +105,7 @@ public class SyncService extends Service {
 
   // rescheduling the service to run at certain intervals
   public static void updateServiceReloadTime(Context context, Integer minutes) {
+    mContext = context;
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     Intent intent = new Intent(context, SyncService.class);
     PendingIntent pi = PendingIntent.getService(context, 0, intent,
@@ -120,7 +123,7 @@ public class SyncService extends Service {
 
   // canceling service schedule
   public static void stopService(final Context context) {
-
+    mContext = context;
     Intent intent = new Intent(context, SyncService.class);
     PendingIntent pi = PendingIntent.getService(context, 0, intent,
         PendingIntent.FLAG_CANCEL_CURRENT);
