@@ -175,7 +175,7 @@
 
 		<Button
 			style="@style/button"
-			android:drawableLeft="@drawable/ic_repository_delete_normal"
+			android:drawableLeft="@drawable/ic_menu_settings"
 			android:id="@+id/buttonModifyProperties"
 			android:layout_below="@id/buttonDeployment"
 			android:text="Modify properties"
