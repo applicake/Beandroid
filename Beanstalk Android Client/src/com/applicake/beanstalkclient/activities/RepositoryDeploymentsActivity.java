@@ -53,8 +53,9 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   private Repository repository;
   private Button releasesButton;
   private Button serversButton;
-  private View relesaesLoadingFooterView;
+  private View releasesLoadingFooterView;
   private View serversLoadingFooterView;
+  private View serversAddNewFooterView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +76,30 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     releasesButton.setSelected(true);
 
     mReleasesList = (ListView) findViewById(R.id.releases_list);
-    relesaesLoadingFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+    releasesLoadingFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
         .inflate(R.layout.releases_loading_footer, null, false);
-    mReleasesList.addFooterView(relesaesLoadingFooterView, null, false);
-
+    View releasesAddNewFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+        .inflate(R.layout.add_new_release_footer, null, false);
+    releasesAddNewFooterView.setOnClickListener(new OnClickListener() {
+      
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), CreateNewReleaseActivity.class);
+        intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
+        intent.putExtra(Constants.REPOSITORY_TITLE, String.valueOf(repository.getTitle()));
+        intent.putExtra(Constants.REPOSITORY_COLOR_NO, String.valueOf(repository.getColorLabelNo()));
+        
+        // add extras
+        startActivityForResult(intent, 0);
+        
+      }
+    });
+    
+    mReleasesList.addFooterView(releasesLoadingFooterView, null, false);
+    mReleasesList.addFooterView(releasesAddNewFooterView, null, true);
+    
+    
+    
     // releases list adapter
     mReleasesAdapter = new ReleasesAdapter(this, R.layout.releases_entry, mReleaseArray);
     mReleasesList.setAdapter(mReleasesAdapter);
@@ -88,7 +109,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     mServersList = (ExpandableListView) findViewById(R.id.servers_list);
     serversLoadingFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
         .inflate(R.layout.environments_server_environments_loading_field, null, false);
-    View serversAddNewFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+    serversAddNewFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
         .inflate(R.layout.add_server_environment_footer, null, false);
     mServersList.addFooterView(serversLoadingFooterView, null, false);
     mServersList.addFooterView(serversAddNewFooterView);
@@ -172,8 +193,10 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
     @Override
     protected void onPostExecute(List<Release> result) {
-      mReleasesList.removeFooterView(relesaesLoadingFooterView);
+      mReleasesList.removeFooterView(releasesLoadingFooterView);
+     
       if (failed) {
+        Log.d("xxx", failMessage);
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
             failMessage) {
 
@@ -210,7 +233,6 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
     private Context context;
 
-    private String errorMessage;
     private String failMessage;
     private boolean failed = false;
 
@@ -228,13 +250,15 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
         return XmlParser.parseServerEnvironmentsList(serverEnvironmentsXml);
 
       } catch (UnsuccessfulServerResponseException e) {
-        errorMessage = e.getMessage();
+        failMessage = e.getMessage();
+        return null;
       } catch (HttpConnectionErrorException e) {
         failMessage = Strings.networkConnectionErrorMessage;
       } catch (XMLParserException e) {
         failMessage = Strings.internalErrorMessage;
       }
       failed = true;
+      
       return null;
     }
 
@@ -243,6 +267,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       Log.d("xxx", String.valueOf(result != null ? result.size() : 0));
       mServersList.removeFooterView(serversLoadingFooterView);
       if (failed) {
+        Log.d("xxx", failMessage);
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
             failMessage) {
 
@@ -269,8 +294,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
           mServersAdapter.notifyDataSetChanged();
         }
 
-        if (errorMessage != null)
-          GUI.displayMonit(context, errorMessage);
+        if (failMessage != null)
+          GUI.displayMonit(context, failMessage);
 
       }
     }
