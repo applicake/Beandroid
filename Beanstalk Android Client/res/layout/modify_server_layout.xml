@@ -23,12 +23,12 @@
       android:orientation="horizontal"
       android:layout_below="@id/actionbar"
       android:layout_marginBottom="10dp">
-<!-- no icon for servermodification yer -->
-<!--       <ImageView -->
-<!--         android:src="@drawable/ic_extras_plus_normal" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_marginRight="5dp" /> -->
+      <!-- no icon for servermodification yet -->
+      <!-- <ImageView -->
+      <!-- android:src="@drawable/ic_extras_plus_normal" -->
+      <!-- android:layout_width="wrap_content" -->
+      <!-- android:layout_height="wrap_content" -->
+      <!-- android:layout_marginRight="5dp" /> -->
       <TextView
         android:text="@string/modify_server"
         android:textSize="@dimen/LargeTextSize"
@@ -38,11 +38,25 @@
         android:textColor="@color/application_text_light"></TextView>
     </LinearLayout>
 
+    <Button
+      android:drawableTop="@drawable/ic_button_delete"
+      android:text="Delete"
+      android:textColor="@color/red"
+      android:textSize="@dimen/LargeTextSize"
+      android:textStyle="bold"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:id="@+id/delete_button"
+      android:layout_below="@id/title"
+      android:paddingRight="10dp"
+      android:layout_alignParentRight="true"></Button>
+
+
     <TextView
       style="@style/edit_text_label"
       android:text="name:"
       android:id="@+id/name_label"
-      android:layout_below="@id/title"
+      android:layout_below="@id/delete_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"></TextView>
     <EditText
@@ -154,7 +168,7 @@
       android:layout_below="@id/login_edittext"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"></TextView>
-      
+
     <EditText
       style="@style/edit_text"
       android:id="@+id/password_edittext"
