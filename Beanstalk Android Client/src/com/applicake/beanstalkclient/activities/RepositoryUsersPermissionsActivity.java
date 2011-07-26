@@ -74,26 +74,22 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
 
   @Override
   public void onItemClick(AdapterView<?> arg0, View view, int itemNumber, long arg3) {
-    if (itemNumber < usersArray.size()) {
-      User user = usersArray.get(itemNumber);
-      if (user.getAdmin() == UserType.USER && (Boolean) view.getTag()) {
-        Permission permission = usersAdapter.getUserIdToPermissionMap().get(user.getId());
-        Intent intent = new Intent(mContext, PermissionModifyActivity.class);
-        intent.putExtra(Constants.REPOSITORY, repository);
-        intent.putExtra(Constants.USER, user);
+    User user = usersArray.get(itemNumber - 1);
+    if (user.getAdmin() == UserType.USER && (Boolean) view.getTag()) {
+      Permission permission = usersAdapter.getUserIdToPermissionMap().get(user.getId());
+      Intent intent = new Intent(mContext, PermissionModifyActivity.class);
+      intent.putExtra(Constants.REPOSITORY, repository);
+      intent.putExtra(Constants.USER, user);
 
-        if (permission != null) {
-          intent.putExtra(Constants.PERMISSION, permission);
-        }
-        startActivityForResult(intent, 0);
-      } else if (user.getAdmin() != UserType.USER) {
-        GUI.displayMonit(mContext,
-            "Owner and Admins have full access to all repositories");
-      } else {
-        GUI.displayMonit(mContext, "Loading...");
+      if (permission != null) {
+        intent.putExtra(Constants.PERMISSION, permission);
       }
+      startActivityForResult(intent, 0);
+    } else if (user.getAdmin() != UserType.USER) {
+      GUI.displayMonit(mContext, "Owner and Admins have full access to all repositories");
+    } else {
+      GUI.displayMonit(mContext, "Loading...");
     }
-
   }
 
   @Override
