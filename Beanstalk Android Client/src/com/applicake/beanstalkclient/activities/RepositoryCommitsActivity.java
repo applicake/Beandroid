@@ -106,7 +106,7 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
-      progressDialog = ProgressDialog.show(mContext, "Loading Activity list",
+      progressDialog = ProgressDialog.show(mContext, "Loading commit list",
           "Please wait...");
       progressDialog.setCancelable(true);
       progressDialog.setOnCancelListener(new OnCancelListener() {
@@ -132,11 +132,14 @@ public class RepositoryCommitsActivity extends BeanstalkActivity implements
 
       } catch (UnsuccessfulServerResponseException e) {
         errorMessage = e.getMessage();
+        e.printStackTrace();
         return null;
       } catch (HttpConnectionErrorException e) {
+        e.printStackTrace();
         failMessage = Strings.networkConnectionErrorMessage;
       } catch (XMLParserException e) {
         failMessage = Strings.internalErrorMessage;
+        e.printStackTrace();
       }
       failed = true;
       return null;
