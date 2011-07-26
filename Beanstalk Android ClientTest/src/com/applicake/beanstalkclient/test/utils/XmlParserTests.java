@@ -15,6 +15,9 @@ import java.util.TimeZone;
 import org.xml.sax.SAXException;
 
 import android.test.InstrumentationTestCase;
+import android.text.format.DateUtils;
+import android.text.format.Time;
+import android.util.Log;
 
 import com.applicake.beanstalkclient.Account;
 import com.applicake.beanstalkclient.Changeset;
@@ -56,6 +59,7 @@ public class XmlParserTests extends InstrumentationTestCase {
   protected void setUp() throws Exception {
     super.setUp();
     TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+    Log.d("xxx", "currnet timezone: " + Time.getCurrentTimezone());
     calendar = Calendar.getInstance();
     calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
   }

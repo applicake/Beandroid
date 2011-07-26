@@ -14,6 +14,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import android.util.Log;
+
 import com.applicake.beanstalkclient.Account;
 import com.applicake.beanstalkclient.Changeset;
 import com.applicake.beanstalkclient.Comment;
@@ -62,14 +64,17 @@ public class XmlParser {
     // set handler
     xmlReader.setContentHandler(changesetHandler);
     // parse
+    Log.d("xml", xml);
     StringReader sr = new StringReader(xml);
     InputSource is = new InputSource(sr);
     try {
       xmlReader.parse(is);
 
     } catch (IOException e) {
+      e.printStackTrace();
       throw new XMLParserException(e);
     } catch (SAXException e) {
+      e.printStackTrace();
       throw new XMLParserException(e);
     }
 
