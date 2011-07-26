@@ -90,7 +90,7 @@ public class ModifyServerEnvironmentProperties extends BeanstalkActivity impleme
         @Override
         public void onCancel(DialogInterface dialog) {
           thisTask.cancel(true);
-          GUI.displayMonit(mContext, "Download task was cancelled");
+          GUI.displayMonit(mContext, "Server environment modification task was cancelled");
         }
       });
       super.onPreExecute();
