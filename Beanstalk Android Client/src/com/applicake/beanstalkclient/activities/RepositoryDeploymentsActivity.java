@@ -86,8 +86,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       public void onClick(View v) {
         Intent intent = new Intent(getApplicationContext(), CreateNewReleaseActivity.class);
         intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
-        intent.putExtra(Constants.REPOSITORY_TITLE, String.valueOf(repository.getTitle()));
-        intent.putExtra(Constants.REPOSITORY_COLOR_NO, String.valueOf(repository.getColorLabelNo()));
+        intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
+        intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
         
         // add extras
         startActivityForResult(intent, 0);
