@@ -119,6 +119,14 @@
       android:name=".activities.ModifyServerActivity"
       android:configChanges="orientation|keyboardHidden">
     </activity>
+    <activity
+      android:name=".activities.CreateNewReleaseActivity"
+      android:configChanges="orientation|keyboardHidden">
+    </activity>
+    <activity
+      android:name=".activities.RepositoryRevisionPickerActivity"
+      android:configChanges="orientation|keyboardHidden">
+    </activity>
 
 
 

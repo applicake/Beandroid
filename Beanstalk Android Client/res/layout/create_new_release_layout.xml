@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:fillViewport="true">
+  <RelativeLayout
+
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/app_bg">
+    <include
+      layout="@layout/actionbar"
+      android:layout_alignParentTop="true"
+      android:id="@+id/actionbar" />
+    <LinearLayout
+      android:background="@color/dark_entry_bg"
+      android:id="@+id/title"
+      android:gravity="center"
+      android:layout_width="fill_parent"
+      android:layout_height="@dimen/header_height"
+      android:orientation="horizontal"
+      android:layout_below="@id/actionbar"
+      android:layout_marginBottom="10dp">
+      <ImageView
+        android:src="@drawable/ic_extras_plus_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp" />
+      <TextView
+        android:text="@string/create_new_release"
+        android:textSize="@dimen/LargeTextSize"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/application_text_light"></TextView>
+    </LinearLayout>
+    <TextView
+      style="@style/edit_text_label"
+      android:text="revision:"
+      android:id="@+id/revision_label"
+      android:layout_below="@id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/revision_edit_text"
+      android:layout_below="@id/revision_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+
+    <TextView
+      style="@style/edit_text_label"
+      android:text="comment:"
+      android:id="@+id/comment_label"
+      android:layout_below="@id/revision_edit_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"></TextView>
+
+    <EditText
+      style="@style/edit_text"
+      android:id="@+id/comment_edit_text"
+      android:minLines="4"
+      android:gravity="top|left"
+      android:layout_below="@id/comment_label"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></EditText>
+      
+    <CheckBox
+      style="@style/custom_checkbox"
+      android:text="deploy from scratch"
+      android:id="@+id/from_scratch_checkbox"
+      android:layout_marginBottom="10dp"
+      android:layout_below="@id/comment_edit_text"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="wrap_content"></CheckBox>
+
+    <Spinner
+      style="@style/edit_text"
+      android:id="@+id/environment_spinner"
+      android:layout_below="@id/from_scratch_checkbox"
+      android:layout_width="fill_parent"
+      android:layout_centerHorizontal="true"
+      android:layout_height="40dp"></Spinner>
+
+    <Button
+      style="@style/button"
+      android:text="Create"
+      android:drawableLeft="@drawable/ic_extras_plus_normal"
+      android:id="@+id/create_button"
+      android:layout_below="@id/environment_spinner"></Button>
+
+  </RelativeLayout>
+</ScrollView>
