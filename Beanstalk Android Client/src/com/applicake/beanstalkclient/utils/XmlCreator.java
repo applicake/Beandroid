@@ -8,6 +8,8 @@ import org.xmlpull.v1.XmlSerializer;
 import com.applicake.beanstalkclient.Server;
 import com.applicake.beanstalkclient.ServerEnvironment;
 
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Xml;
 
 public class XmlCreator {
@@ -266,9 +268,9 @@ public class XmlCreator {
     serializer.endDocument();
     return writer.toString();
   }
-  
 
-  public String createModifyServerXML(Server server) throws IllegalArgumentException, IllegalStateException, IOException {
+  public String createModifyServerXML(Server server) throws IllegalArgumentException,
+      IllegalStateException, IOException {
     serializer = Xml.newSerializer();
     writer = new StringWriter();
     serializer.setOutput(writer);
@@ -294,88 +296,141 @@ public class XmlCreator {
     serializer.endTag("", "server");
     serializer.endDocument();
     return writer.toString();
+
+  }
+
+  public String createNewReleaseXML(String revision, String comment,
+      boolean deployFromScratch, int environmentId) throws IllegalArgumentException, IllegalStateException, IOException {
+    // TODO Auto-generated method stub
+    serializer = Xml.newSerializer();
+    writer = new StringWriter();
+    serializer.setOutput(writer);
+    serializer.startDocument("UTF-8", null);
+    serializer.startTag("", "release");
+    
+    addRevision(revision);
+    addComment(comment);
+    addDeployFromScratch(deployFromScratch);
+    addEnvironmentId(environmentId);
+    
+    serializer.endTag("", "release");
+    serializer.endDocument();
+    return writer.toString();
+  }
+
+  private void addEnvironmentId(int environmentId) throws IllegalArgumentException, IllegalStateException, IOException {
+    if (environmentId != 0){
+      serializer.startTag("", "environment_id");
+      serializer.text(String.valueOf(environmentId));
+      serializer.endTag("", "environment_id");
+    }
+  }
+
+  private void addDeployFromScratch(boolean deployFromScratch) throws IllegalArgumentException, IllegalStateException, IOException {
+
+    serializer.startTag("", "deploy_from_scratch");
+    serializer.text(deployFromScratch ? "true" : "false");
+    serializer.endTag("", "deploy_from_scratch");
+    
+  }
+
+  private void addComment(String comment) throws IllegalArgumentException, IllegalStateException, IOException {
+    if (!TextUtils.isEmpty(comment)){
+      serializer.startTag("", "comment");
+      serializer.text(comment);
+      serializer.endTag("", "comment");
+    }
     
   }
 
   private void addPostReleaseHook(String postReleaseHook)
       throws IllegalArgumentException, IllegalStateException, IOException {
-    
+
     serializer.startTag("", "post_release_hook");
     serializer.text(postReleaseHook);
     serializer.endTag("", "post_release_hook");
 
   }
 
-  private void addPreReleaseHook(String preReleaseHook) throws IllegalArgumentException, IllegalStateException, IOException {
-    
+  private void addPreReleaseHook(String preReleaseHook) throws IllegalArgumentException,
+      IllegalStateException, IOException {
+
     serializer.startTag("", "pre_release_hook");
     serializer.text(preReleaseHook);
     serializer.endTag("", "pre_release_hook");
 
   }
 
-  private void addUseFeat(boolean useFeat) throws IllegalArgumentException, IllegalStateException, IOException {
-    
+  private void addUseFeat(boolean useFeat) throws IllegalArgumentException,
+      IllegalStateException, IOException {
+
     serializer.startTag("", "use_feat");
     serializer.text(useFeat ? "true" : "false");
     serializer.endTag("", "use_feat");
 
   }
 
-  private void addAuthenticateByKey(boolean authenticateByKey) throws IllegalArgumentException, IllegalStateException, IOException {
+  private void addAuthenticateByKey(boolean authenticateByKey)
+      throws IllegalArgumentException, IllegalStateException, IOException {
 
     serializer.startTag("", "authenticate_by_key");
     serializer.text(authenticateByKey ? "true" : "false");
     serializer.endTag("", "authenticate_by_key");
-    
+
   }
 
-  private void addUseActiveMode(boolean useActiveMode) throws IllegalArgumentException, IllegalStateException, IOException {
+  private void addUseActiveMode(boolean useActiveMode) throws IllegalArgumentException,
+      IllegalStateException, IOException {
 
     serializer.startTag("", "use_active_mode");
     serializer.text(useActiveMode ? "true" : "false");
     serializer.endTag("", "use_active_mode");
-    
+
   }
 
-  private void addPort(int port) throws IllegalArgumentException, IllegalStateException, IOException {
-    
+  private void addPort(int port) throws IllegalArgumentException, IllegalStateException,
+      IOException {
+
     serializer.startTag("", "port");
     serializer.text(String.valueOf(port));
     serializer.endTag("", "port");
-    
+
   }
 
-  private void addProtocol(String protocol) throws IllegalArgumentException, IllegalStateException, IOException {
+  private void addProtocol(String protocol) throws IllegalArgumentException,
+      IllegalStateException, IOException {
 
     serializer.startTag("", "protocol");
     serializer.text(protocol);
     serializer.endTag("", "protocol");
-        
+
   }
 
-  private void addRemoteAddr(String remoteAddr) throws IllegalArgumentException, IllegalStateException, IOException {
+  private void addRemoteAddr(String remoteAddr) throws IllegalArgumentException,
+      IllegalStateException, IOException {
 
     serializer.startTag("", "remote_addr");
     serializer.text(remoteAddr);
     serializer.endTag("", "remote_addr");
-    
+
   }
 
-  private void addRemotePath(String remotePath) throws IllegalArgumentException, IllegalStateException, IOException {
-    
+  private void addRemotePath(String remotePath) throws IllegalArgumentException,
+      IllegalStateException, IOException {
+
     serializer.startTag("", "remote_path");
     serializer.text(remotePath);
     serializer.endTag("", "remote_path");
-    
+
   }
 
-  private void addLocalPath(String localPath) throws IllegalArgumentException, IllegalStateException, IOException {
-    
+  private void addLocalPath(String localPath) throws IllegalArgumentException,
+      IllegalStateException, IOException {
+
     serializer.startTag("", "local_path");
     serializer.text(localPath);
     serializer.endTag("", "local_path");
-    
+
   }
 
   private void addBranchName(String branchName) throws IllegalArgumentException,
@@ -575,6 +630,5 @@ public class XmlCreator {
     serializer.text(name);
     serializer.endTag("", "name");
   }
-
 
 }
