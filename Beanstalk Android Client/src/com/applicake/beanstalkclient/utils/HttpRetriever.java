@@ -31,7 +31,7 @@ import com.applicake.beanstalkclient.Constants;
 
 public class HttpRetriever {
 
-  public static HttpClient getClient() {
+  public static HttpClient getClient(boolean allowRedirection) {
     DefaultHttpClient httpClient = null;
 
     // sets up parameters
@@ -39,7 +39,7 @@ public class HttpRetriever {
     HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
     HttpProtocolParams.setContentCharset(params, "utf-8");
 
-    HttpClientParams.setRedirecting(params, false);
+    HttpClientParams.setRedirecting(params, allowRedirection);
     params.setBooleanParameter("http.protocol.expect-continue", false);
 
     HttpConnectionParams.setStaleCheckingEnabled(params, false);
@@ -65,7 +65,8 @@ public class HttpRetriever {
   }
 
   // final static HttpClient httpClient = AndroidHttpClient.newInstance("");
-  final static HttpClient httpClient = getClient();
+  final static HttpClient httpClient = getClient(true);
+  final static HttpClient noRedirectionHttpClient = getClient(false);
 
   private static final String HTTP_PREFIX = "https://";
   private static final String ACCOUNT_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
@@ -108,7 +109,7 @@ public class HttpRetriever {
     HttpResponse getResponse = null;
     try {
       // parsing
-      getResponse = httpClient.execute(getRequest);
+      getResponse = noRedirectionHttpClient.execute(getRequest);
       for (Header h : getRequest.getAllHeaders()) {
         Log.w("request", h.getName() + " " + h.getValue());
       }
@@ -154,7 +155,7 @@ public class HttpRetriever {
     HttpResponse getResponse = null;
     try {
       // parsing
-      getResponse = httpClient.execute(getRequest);
+      getResponse = noRedirectionHttpClient.execute(getRequest);
       Log.w("request", getRequest.toString());
       // response code
       int statusCode = getResponse.getStatusLine().getStatusCode();
@@ -196,7 +197,7 @@ public class HttpRetriever {
     try {
       // parsing
 
-      getResponse = httpClient.execute(getRequest);
+      getResponse = noRedirectionHttpClient.execute(getRequest);
       Log.w("request", getRequest.toString());
       // response code
       int statusCode = getResponse.getStatusLine().getStatusCode();
@@ -364,6 +365,18 @@ public class HttpRetriever {
     return executeRequest(credentials, activity_http);
   }
   
+
+  public static String getServerEnvironmentListForRepositoryXML(SharedPreferences prefs,
+      String repoId) throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+    
+    String activity_http = HTTP_PREFIX + domain + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE
+    + String.valueOf(repoId) + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX;
+    
+    return executeRequest(credentials, activity_http);
+  }
+  
   public static String getServerListForEnviromentXML(SharedPreferences prefs, int repoId, int environmentId)
   throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
     
@@ -380,7 +393,7 @@ public class HttpRetriever {
       String httpAddress) throws UnsuccessfulServerResponseException,
       HttpConnectionErrorException {
     HttpGet getRequest = new HttpGet(httpAddress);
-
+    Log.d("http", httpAddress);
     getRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
     HttpResponse getResponse = null;
     try {
@@ -471,5 +484,6 @@ public class HttpRetriever {
   private static String getAccountDomain(SharedPreferences prefs) {
     return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
   }
+
 
 }
