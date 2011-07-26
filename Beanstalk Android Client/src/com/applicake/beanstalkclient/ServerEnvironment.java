@@ -176,5 +176,10 @@ public class ServerEnvironment implements Parcelable {
   public boolean isDownloaded() {
     return downloaded;
   }
+  
+  @Override
+  public String toString() {
+    return name;
+  }
 
 }
