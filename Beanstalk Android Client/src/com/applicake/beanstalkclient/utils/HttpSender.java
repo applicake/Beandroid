@@ -49,17 +49,22 @@ public class HttpSender {
 
   private static final String ACCOUNT_UPDATE_HTTP_SUFFIX = ".beanstalkapp.com/api/account.xml";
 
-  private static final DefaultHttpClient httpClient = getClient();
   private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_ENVIRONMENT_UPDATE_HTTP_SUFFIX = "/server_environments/";
 
   private static final String SERVER_CREATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_CREATE_HTTP_SUFFIX = "/release_servers.xml?environment_id=";
-  
-  
+
   private static final String SERVER_UPDATE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_UPDATE_HTTP_SUFFIX = "/release_servers/";
 
+  private static final String CREATE_RELEASE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String CREATE_RELEASE_HTTP_SUFFIX = "/releases.xml?environment_id=";
+
+  private static final String SERVER_DELETE_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String SERVER_DELETE_HTTP_SUFFIX = "/release_servers/";
+
+  private static final DefaultHttpClient httpClient = getClient();
   public static DefaultHttpClient getClient() {
     DefaultHttpClient httpClient = null;
 
@@ -68,7 +73,7 @@ public class HttpSender {
     HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
     HttpProtocolParams.setContentCharset(params, "utf-8");
 
-    HttpClientParams.setRedirecting(params, false);
+    HttpClientParams.setRedirecting(params, true);
     params.setBooleanParameter("http.protocol.expect-continue", false);
 
     HttpConnectionParams.setStaleCheckingEnabled(params, false);
@@ -339,11 +344,41 @@ public class HttpSender {
     String domain = getAccountDomain(prefs);
 
     // create PUT request with address
-    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain
-        + SERVER_UPDATE_HTTP_MIDDLE + String.valueOf(repositoryId)
-        + SERVER_UPDATE_HTTP_SUFFIX + String.valueOf(serverId) + ".xml");
+    HttpPut putRequest = new HttpPut(HTTPS_PREFIX + domain + SERVER_UPDATE_HTTP_MIDDLE
+        + String.valueOf(repositoryId) + SERVER_UPDATE_HTTP_SUFFIX
+        + String.valueOf(serverId) + ".xml");
 
     return executeModifyPutRequst(modificationXml, credentials, putRequest);
+  }
+
+  public static Integer sendCreateReleaseXML(SharedPreferences prefs,
+      String modificationXml, String repositoryId, int environmentId)
+      throws UnsupportedEncodingException, XMLParserException,
+      HttpSenderServerErrorException, HttpSenderException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // create PUT request with address
+    HttpPost postRequest = new HttpPost(HTTPS_PREFIX + domain
+        + CREATE_RELEASE_HTTP_MIDDLE + repositoryId + CREATE_RELEASE_HTTP_SUFFIX
+        + String.valueOf(environmentId));
+
+    return executeCreatePost(modificationXml, credentials, postRequest);
+  }
+
+  public static Integer sendDeleteServerRequest(SharedPreferences prefs,
+      int repositoryId, int serverId) throws HttpSenderServerErrorException,
+      HttpSenderException {
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // create DELETE request with address
+    HttpPost deleteRequest = new HttpPost(HTTPS_PREFIX + domain
+        + SERVER_DELETE_HTTP_MIDDLE + String.valueOf(repositoryId)
+        + SERVER_DELETE_HTTP_SUFFIX + String.valueOf(serverId) + ".xml");
+
+    return executeDeletePost(credentials, deleteRequest);
   }
 
   private static int executeCreatePost(String xml,
@@ -357,6 +392,8 @@ public class HttpSender {
     // add xml entity
     StringEntity se = new StringEntity(xml, "UTF-8");
     postRequest.setEntity(se);
+
+    Log.w("http", postRequest.getURI().toString());
 
     try {
       HttpResponse postResponse = httpClient.execute(postRequest);
@@ -390,7 +427,7 @@ public class HttpSender {
 
     deleteRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
 
-    Log.w("deleteRequest", deleteRequest.getURI().toString());
+    Log.w("http", deleteRequest.getURI().toString());
 
     // TODO throw exceptions if an error occurs
     try {
@@ -414,11 +451,14 @@ public class HttpSender {
       HttpSenderServerErrorException, HttpSenderException {
     // add auth headers
     putRequest.addHeader(BasicScheme.authenticate(credentials, "UTF-8", false));
+    // add put request headers
     putRequest.addHeader("Content-Type", "application/xml");
 
     // add xml entity
     StringEntity se = new StringEntity(modificationXml, "UTF-8");
     putRequest.setEntity(se);
+
+    Log.w("http", putRequest.getURI().toString());
 
     try {
       HttpResponse putResponse = httpClient.execute(putRequest);
