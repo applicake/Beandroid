@@ -1,6 +1,6 @@
 package com.applicake.beanstalkclient;
 
-public class Constants {
+public interface Constants {
 
   public static final String SHARED_PREFERENCES = "shared_preferences";
 
