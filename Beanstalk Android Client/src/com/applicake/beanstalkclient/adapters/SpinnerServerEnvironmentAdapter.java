@@ -2,8 +2,6 @@ package com.applicake.beanstalkclient.adapters;
 
 import java.util.List;
 
-import com.applicake.beanstalkclient.ServerEnvironment;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import com.applicake.beanstalkclient.ServerEnvironment;
 
 public class SpinnerServerEnvironmentAdapter extends ArrayAdapter<ServerEnvironment>
     implements SpinnerAdapter {

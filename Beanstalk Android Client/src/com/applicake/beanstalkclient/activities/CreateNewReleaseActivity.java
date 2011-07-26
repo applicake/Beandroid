@@ -4,45 +4,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.ServerEnvironment;
-import com.applicake.beanstalkclient.Strings;
-import com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity.SendNewServerEnvironment;
-import com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity.DownloadServerEnvironmentsListTask;
-import com.applicake.beanstalkclient.adapters.SpinnerServerEnvironmentAdapter;
-import com.applicake.beanstalkclient.utils.GUI;
-import com.applicake.beanstalkclient.utils.HttpRetriever;
-import com.applicake.beanstalkclient.utils.HttpSender;
-import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
-import com.applicake.beanstalkclient.utils.XmlCreator;
-import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
-import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
-import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
-import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
-import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.ServerEnvironment;
+import com.applicake.beanstalkclient.Strings;
+import com.applicake.beanstalkclient.adapters.SpinnerServerEnvironmentAdapter;
+import com.applicake.beanstalkclient.utils.GUI;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
+import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.XmlCreator;
+import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class CreateNewReleaseActivity extends BeanstalkActivity {
 

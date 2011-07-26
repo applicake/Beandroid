@@ -2,25 +2,13 @@ package com.applicake.beanstalkclient.activities;
 
 import java.io.IOException;
 
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.Server;
-import com.applicake.beanstalkclient.Strings;
-import com.applicake.beanstalkclient.utils.GUI;
-import com.applicake.beanstalkclient.utils.HttpSender;
-import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
-import com.applicake.beanstalkclient.utils.XmlCreator;
-import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
-import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
-import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +18,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Server;
+import com.applicake.beanstalkclient.Strings;
+import com.applicake.beanstalkclient.utils.GUI;
+import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.XmlCreator;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class ModifyServerActivity extends BeanstalkActivity implements OnClickListener {
 

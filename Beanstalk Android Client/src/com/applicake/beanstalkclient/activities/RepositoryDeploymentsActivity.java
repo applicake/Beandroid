@@ -3,28 +3,8 @@ package com.applicake.beanstalkclient.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.Release;
-import com.applicake.beanstalkclient.Repository;
-import com.applicake.beanstalkclient.Server;
-import com.applicake.beanstalkclient.ServerEnvironment;
-import com.applicake.beanstalkclient.Strings;
-import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
-import com.applicake.beanstalkclient.adapters.ServersAdapter;
-import com.applicake.beanstalkclient.utils.GUI;
-import com.applicake.beanstalkclient.utils.HttpRetriever;
-import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
-import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
-import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
-import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
-import android.app.ExpandableListActivity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +16,22 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Release;
+import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.ServerEnvironment;
+import com.applicake.beanstalkclient.Strings;
+import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
+import com.applicake.beanstalkclient.adapters.ServersAdapter;
+import com.applicake.beanstalkclient.utils.GUI;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     OnClickListener {

@@ -2,18 +2,6 @@ package com.applicake.beanstalkclient.activities;
 
 import java.io.IOException;
 
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.ServerEnvironment;
-import com.applicake.beanstalkclient.Strings;
-import com.applicake.beanstalkclient.utils.GUI;
-import com.applicake.beanstalkclient.utils.HttpSender;
-import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
-import com.applicake.beanstalkclient.utils.XmlCreator;
-import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
-import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
-import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,6 +12,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.ServerEnvironment;
+import com.applicake.beanstalkclient.Strings;
+import com.applicake.beanstalkclient.utils.GUI;
+import com.applicake.beanstalkclient.utils.HttpSender;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderException;
+import com.applicake.beanstalkclient.utils.HttpSender.HttpSenderServerErrorException;
+import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
+import com.applicake.beanstalkclient.utils.XmlCreator;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class ModifyServerEnvironmentProperties extends BeanstalkActivity implements OnClickListener {
 

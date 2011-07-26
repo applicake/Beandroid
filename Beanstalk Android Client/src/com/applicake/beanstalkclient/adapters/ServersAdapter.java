@@ -2,20 +2,6 @@ package com.applicake.beanstalkclient.adapters;
 
 import java.util.List;
 
-import com.applicake.beanstalkclient.Constants;
-import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.Server;
-import com.applicake.beanstalkclient.ServerEnvironment;
-import com.applicake.beanstalkclient.activities.CreateNewServerActivity;
-import com.applicake.beanstalkclient.activities.ModifyServerActivity;
-import com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties;
-import com.applicake.beanstalkclient.utils.GUI;
-import com.applicake.beanstalkclient.utils.HttpRetriever;
-import com.applicake.beanstalkclient.utils.XmlParser;
-import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
-import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
-import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +15,19 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Server;
+import com.applicake.beanstalkclient.ServerEnvironment;
+import com.applicake.beanstalkclient.activities.CreateNewServerActivity;
+import com.applicake.beanstalkclient.activities.ModifyServerActivity;
+import com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
+import com.applicake.beanstalkclient.utils.XmlParser;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class ServersAdapter extends BaseExpandableListAdapter {
 

@@ -5,12 +5,11 @@ import java.io.StringWriter;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import com.applicake.beanstalkclient.Server;
-import com.applicake.beanstalkclient.ServerEnvironment;
-
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Xml;
+
+import com.applicake.beanstalkclient.Server;
+import com.applicake.beanstalkclient.ServerEnvironment;
 
 public class XmlCreator {
 
