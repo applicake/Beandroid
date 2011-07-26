@@ -81,7 +81,7 @@ public class CreateNewServerEnvironmentActivity extends BeanstalkActivity {
         @Override
         public void onCancel(DialogInterface dialog) {
           thisTask.cancel(true);
-          GUI.displayMonit(mContext, "Logging in task was cancelled");
+          GUI.displayMonit(mContext, "Repository creating task was cancelled");
         }
       });
     }
