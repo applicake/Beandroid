@@ -127,6 +127,10 @@
       android:name=".activities.RepositoryRevisionPickerActivity"
       android:configChanges="orientation|keyboardHidden">
     </activity>
+    <activity 
+      android:name=".activities.ReleaseDetailsActivity"
+      android:configChanges="orientation|keyboardHidden">
+    </activity>
 
 
 

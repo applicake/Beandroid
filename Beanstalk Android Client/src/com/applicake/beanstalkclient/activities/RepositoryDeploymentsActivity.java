@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -77,28 +79,37 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     View releasesAddNewFooterView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE))
         .inflate(R.layout.add_new_release_footer, null, false);
     releasesAddNewFooterView.setOnClickListener(new OnClickListener() {
-      
+
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), CreateNewReleaseActivity.class);
+        Intent intent = new Intent(getApplicationContext(),
+            CreateNewReleaseActivity.class);
         intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
         intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
         intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
-        
+
         // add extras
         startActivityForResult(intent, 0);
-        
+
       }
     });
-    
+
     mReleasesList.addFooterView(releasesLoadingFooterView, null, false);
     mReleasesList.addFooterView(releasesAddNewFooterView, null, true);
-    
-    
-    
+
     // releases list adapter
     mReleasesAdapter = new ReleasesAdapter(this, R.layout.releases_entry, mReleaseArray);
     mReleasesList.setAdapter(mReleasesAdapter);
+
+    // listener for release details activity
+    mReleasesList.setOnItemClickListener(new OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(RepositoryDeploymentsActivity.this,
+            ReleaseDetailsActivity.class);
+        startActivity(intent);
+      }
+    });
 
     // create servers list view and tab switching button, attach "loading" and
     // "add new" footer and set button listeners
@@ -166,7 +177,6 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       this.context = context;
     }
 
-
     @Override
     protected List<Release> doInBackground(String... params) {
 
@@ -190,7 +200,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     @Override
     protected void onPostExecute(List<Release> result) {
       mReleasesList.removeFooterView(releasesLoadingFooterView);
-     
+
       if (failed) {
         Log.d("xxx", failMessage);
         SimpleRetryDialogBuilder builder = new SimpleRetryDialogBuilder(context,
@@ -254,7 +264,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
         failMessage = Strings.internalErrorMessage;
       }
       failed = true;
-      
+
       return null;
     }
 
