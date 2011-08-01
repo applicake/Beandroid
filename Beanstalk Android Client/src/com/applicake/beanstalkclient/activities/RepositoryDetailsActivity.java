@@ -115,6 +115,8 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 
   @Override
   public void onClick(View v) {
+    
+    // FIXME is getApplicationContext() really needed here?
 
     if (v.getId() == R.id.buttonViewCommits) {
       Intent intent = new Intent(getApplicationContext(), RepositoryCommitsActivity.class);

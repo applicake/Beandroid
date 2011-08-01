@@ -69,6 +69,7 @@
     android:paddingTop="10dp" />
   <ExpandableListView
     android:id="@+id/servers_list"
+    android:groupIndicator="@android:color/transparent"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:paddingTop="10dp"
