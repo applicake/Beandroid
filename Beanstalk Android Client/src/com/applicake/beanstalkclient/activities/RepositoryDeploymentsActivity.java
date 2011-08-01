@@ -107,6 +107,9 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(RepositoryDeploymentsActivity.this,
             ReleaseDetailsActivity.class);
+        intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
+        intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
+        intent.putExtra(Constants.RELEASE, (Release) parent.getItemAtPosition(position));
         startActivity(intent);
       }
     });

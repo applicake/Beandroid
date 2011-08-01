@@ -36,6 +36,7 @@ public interface Constants {
   public static final int REFRESH_ACTIVITY = 313;
   public static final String PERMISSION = "permission";
   public static final String ACCOUNT_PLAN = "account_plan_preference";
+  public static final String RELEASE = "release";
 
   public static final String USER_TIMEZONE = "account timezone";
 
@@ -58,6 +59,7 @@ public interface Constants {
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE = "auto_update_notification_service";
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE_DELAY = "auto_update_notification_service_delay";
   public static final String AUTO_UPDATE_NOTIFICATION_SERVICE_CUSTOM_LED = "auto_update_notification_service_custom_led";
+
 
 
 

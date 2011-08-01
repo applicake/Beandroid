@@ -84,6 +84,7 @@
       android:layout_toRightOf="@id/revision_label" />
 
     <TextView
+      android:text="Server environment:"
       android:id="@+id/server_label"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
