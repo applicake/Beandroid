@@ -6,37 +6,16 @@
   android:paddingLeft="10dp"
   android:paddingRight="10dp">
 
-  <RelativeLayout
+  <TextView
+    android:id="@+id/server_name"
+    android:inputType="text"
+    android:lines="1"
+    android:textSize="@dimen/LargeTextSize"
+    android:textColor="@color/black_night_rider"
+    android:textStyle="bold"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFF00"
-    android:padding="10dp">
-
-    <TextView
-      android:id="@+id/environment_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      android:text=""
-      android:layout_alignParentTop="true"
-      android:layout_alignParentLeft="true" />
-    <TextView
-      android:id="@+id/branch_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      android:text=""
-      android:layout_below="@id/environment_name"
-      android:layout_alignParentLeft="true" />
-    <TextView
-      android:id="@+id/automatic"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      android:text=""
-      android:layout_alignParentTop="true"
-      android:layout_alignParentRight="true" />
-
-  </RelativeLayout>
+    android:background="@color/white"
+    android:padding="10dp" />
 
 </FrameLayout>

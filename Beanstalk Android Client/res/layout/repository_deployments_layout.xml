@@ -47,8 +47,6 @@
   </RelativeLayout>
   <ListView
     android:id="@+id/releases_list"
-    android:divider="@color/grey_cloud"
-    android:dividerHeight="1dp"
     android:background="@color/list_bg_light"
     android:cacheColorHint="@android:color/transparent"
     android:layout_height="wrap_content"

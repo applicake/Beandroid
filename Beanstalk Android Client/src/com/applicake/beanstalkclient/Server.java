@@ -22,7 +22,7 @@ public class Server implements Parcelable{
   private String remoteAddr;
   private String remotePath;
   private int repositoryId;
-  private String envitonmentName;
+  private String environmentName;
   private String serverEnvironmentId;
   private String revision;
   private long updatedAt;
@@ -52,7 +52,7 @@ public class Server implements Parcelable{
     dest.writeString(remoteAddr);
     dest.writeString(remotePath);
     dest.writeInt(repositoryId);
-    dest.writeString(envitonmentName);
+    dest.writeString(environmentName);
     dest.writeString(serverEnvironmentId);
     dest.writeString(revision);
     dest.writeLong(updatedAt);    
@@ -76,7 +76,7 @@ public class Server implements Parcelable{
     this.remoteAddr = in.readString();
     this.remotePath = in.readString();
     this.repositoryId = in.readInt();
-    this.envitonmentName = in.readString();
+    this.environmentName = in.readString();
     this.serverEnvironmentId = in.readString();
     this.revision = in.readString();
     this.updatedAt = in.readLong();
@@ -180,11 +180,11 @@ public class Server implements Parcelable{
   public void setRepositoryId(int repositoryId) {
     this.repositoryId = repositoryId;
   }
-  public String getEnvitonmentName() {
-    return envitonmentName;
+  public String getEnvironmentName() {
+    return environmentName;
   }
-  public void setEnvironmentName(String envitonmentName) {
-    this.envitonmentName = envitonmentName;
+  public void setEnvironmentName(String environmentName) {
+    this.environmentName = environmentName;
   }
   public String getServerEnvironmentId() {
     return serverEnvironmentId;

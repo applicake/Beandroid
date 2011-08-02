@@ -184,11 +184,9 @@ public class ServersAdapter extends BaseExpandableListAdapter {
           .get(childPosition);
 
       if (server != null) {
-        TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
-        TextView branchName = (TextView) view.findViewById(R.id.branch_name);
-        TextView automatic = (TextView) view.findViewById(R.id.automatic);
+        TextView serverName = (TextView) view.findViewById(R.id.server_name);
 
-        view.setOnClickListener(new OnClickListener() {
+        serverName.setOnClickListener(new OnClickListener() {
 
           @Override
           public void onClick(View v) {
@@ -201,12 +199,7 @@ public class ServersAdapter extends BaseExpandableListAdapter {
           }
         });
 
-        environmentName.setText(server.getName());
-        branchName.setText(String.valueOf(server.getRevision()));
-        // TODO change to automatic/manual
-        automatic.setText(server.getEnvitonmentName());
-        // TODO Auto-generated method stub
-
+        serverName.setText(server.getName());
       }
     }
 

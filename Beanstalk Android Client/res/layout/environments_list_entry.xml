@@ -3,18 +3,15 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  android:background="#00FFFF"
   android:padding="10dp"
   android:orientation="horizontal">
 
   <LinearLayout
-    android:background="#00FF00"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:orientation="vertical">
     <TextView
-      android:background="#0000FF"
       android:id="@+id/environment_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -23,7 +20,6 @@
       android:textStyle="bold" />
 
     <TextView
-      android:background="#FF0000"
       android:id="@+id/automatic"
       android:textSize="@dimen/MediumTextSize"
       android:textColor="@color/grey"
