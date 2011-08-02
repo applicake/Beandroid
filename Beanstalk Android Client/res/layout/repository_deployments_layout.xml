@@ -2,38 +2,20 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
+  android:background="@drawable/app_bg"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
-  <include layout="@layout/actionbar"/>
+  <include layout="@layout/actionbar" />
+  <include layout="@layout/repo_name_header" />
   <RelativeLayout
     android:background="@color/dark_entry_bg"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    <View
-      android:id="@+id/colorLabel"
-      android:background="@drawable/repository_labels"
-      android:layout_width="@dimen/color_label_size"
-      android:layout_height="@dimen/color_label_size"
-      android:layout_marginRight="5dp"
-      android:layout_marginTop="5dp"
-      android:layout_marginLeft="3dp"
-      android:padding="2dp"
-      android:layout_alignParentTop="true"
-      android:layout_alignParentLeft="true" />
-    <TextView
-      style="@style/white_title"
-      android:id="@+id/repoTitle"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_toRightOf="@id/colorLabel"
-      android:layout_alignParentTop="true"
-      android:layout_marginLeft="5dp" />
     <LinearLayout
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentLeft="true"
-      android:layout_below="@+id/repoTitle"
-      android:layout_marginTop="15dp">
+      android:layout_below="@+id/repoTitle">
       <Button
         android:text="Releases"
         android:id="@+id/releases_button"
@@ -65,13 +47,19 @@
   </RelativeLayout>
   <ListView
     android:id="@+id/releases_list"
-    android:layout_height="fill_parent"
+    android:divider="@color/grey_cloud"
+    android:dividerHeight="1dp"
+    android:background="@color/list_bg_light"
+    android:cacheColorHint="@android:color/transparent"
+    android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:paddingTop="10dp" />
   <ExpandableListView
     android:id="@+id/servers_list"
+    android:background="@color/list_bg_light"
+    android:cacheColorHint="@android:color/transparent"
     android:groupIndicator="@android:color/transparent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:paddingTop="10dp"
     android:visibility="gone" />

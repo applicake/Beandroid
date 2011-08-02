@@ -64,7 +64,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     repository = getIntent().getParcelableExtra(Constants.REPOSITORY);
 
     // set repository title and label color based on intent
-    ((TextView) findViewById(R.id.repoTitle)).setText(repository.getTitle());
+    ((TextView) findViewById(R.id.repoName)).setText(repository.getTitle());
     findViewById(R.id.colorLabel).getBackground().setLevel(repository.getColorLabelNo());
 
     // create releases list view and tab switching button, attach loading and

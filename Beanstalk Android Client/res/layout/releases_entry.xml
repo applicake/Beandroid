@@ -3,39 +3,52 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
+  android:layout_height="fill_parent"
+  android:padding="10dp">
+  <TextView
+    android:id="@+id/environment_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:textSize="18dp"
+    android:textColor="@color/black_night_rider"
+    android:textStyle="bold" />
+  <TextView
+    android:id="@+id/deployed_at"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/black_night_rider"
+    android:layout_alignBaseline="@id/environment_name"
+    android:layout_alignParentRight="true" />
+
   <TextView
     android:id="@+id/comment"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:layout_below="@id/environment_name"
+    android:textColor="@color/grey_cloud"
+    android:layout_alignParentLeft="true" />
   <TextView
-    android:layout_width="wrap_content"
     android:id="@+id/state"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentRight="true"></TextView>
-  <TextView
     android:layout_width="wrap_content"
-    android:id="@+id/environment_name"
     android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"></TextView>
+    android:textColor="@color/grey_cloud"
+    android:layout_alignBaseline="@id/comment"
+    android:layout_alignParentRight="true" />
+
   <TextView
-    android:layout_width="wrap_content"
-    android:id="@+id/deployed_at"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/state"
-    android:layout_alignParentRight="true"></TextView>
-  <TextView
-    android:layout_width="wrap_content"
-    android:id="@+id/revision"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/deployed_at"
-    android:layout_alignParentLeft="true"></TextView>
-  <TextView
-    android:layout_width="wrap_content"
     android:id="@+id/author"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/revision"
-    android:layout_alignParentLeft="true"></TextView>
+    android:textColor="@color/grey_cloud"
+    android:layout_below="@id/comment"
+    android:layout_alignParentLeft="true" />
+
+  <!-- <TextView -->
+  <!-- android:id="@+id/revision" -->
+  <!-- android:layout_width="wrap_content" -->
+  <!-- android:layout_height="wrap_content" -->
+  <!-- android:layout_below="@+id/deployed_at" -->
+  <!-- android:layout_alignParentLeft="true"></TextView> -->
 </RelativeLayout>

@@ -1,61 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color
-		name="ActionBarSeparator">#FFFFFF</color>
-	<color
-		name="ActionBarMainColor">#9CBD7B</color>
-	<color
-		name="ApplicationBackground">#FBFCF5</color>
-	<color
-		name="ApplicationText">#333325</color>
-	<color
-		name="application_text_dark_grey">#333325</color>
-	<color
-		name="ApplicationButtonText">#FBFCF5</color>
 
-	<color
-		name="light">#F2FCF5</color>
-	<color
-		name="dark">#E1E8E3</color>
-	<color
-		name="white">#ffffff</color>
-	<color
-		name="red">#FF4D49</color>
-	<color
-		name="orange">#FFA93A</color>
-	<color
-		name="yellow">#F7D737</color>
-	<color
-		name="green">#94B06A</color>
-	<color
-		name="blue">#0DA2DE</color>
-	<color
-		name="pink">#EC60AD</color>
-	<color
-		name="grey">#929292</color>
-	<color
-		name="et_background">#BB5D9B00</color>
-	<color
-		name="lv_footer_background">#BB1F1711</color>
-	<color
-		name="homescreen_text">#5E4B3D</color>
-	<color
-		name="dark_entry_bg">#1F1711</color>
-	<color
-		name="application_text_light">#FFFFFF</color>
-	<color
-		name="application_text_dark">#837160</color>
-	<color
-		name="lv_dark_separator">#120E0C</color>
-	<color
-		name="black">#000000</color>
-	<color
-		name="selector_active">#ECEAE8</color>
-	<color
-		name="selector_active_dimmer">#DDD9D3</color>
-	<color
-		name="selector_inactive">#70C109</color>
-	<color
-		name="comment_input_background">#CBC5BE</color>
-	<color name="transparent">#00000000</color>
+  <color name="ActionBarSeparator">#FFFFFF</color>
+  <color name="ActionBarMainColor">#9CBD7B</color>
+  <color name="ApplicationBackground">#FBFCF5</color>
+  <color name="ApplicationText">#333325</color>
+  <color name="application_text_dark_grey">#333325</color>
+  <color name="ApplicationButtonText">#FBFCF5</color>
+
+  <color name="light">#F2FCF5</color>
+  <color name="dark">#E1E8E3</color>
+  <color name="white">#ffffff</color>
+  <color name="red">#FF4D49</color>
+  <color name="orange">#FFA93A</color>
+  <color name="yellow">#F7D737</color>
+  <color name="green">#94B06A</color>
+  <color name="blue">#0DA2DE</color>
+  <color name="pink">#EC60AD</color>
+  <color name="grey">#929292</color>
+  <color name="et_background">#BB5D9B00</color>
+  <color name="lv_footer_background">#BB1F1711</color>
+  <color name="homescreen_text">#5E4B3D</color>
+  <color name="dark_entry_bg">#1F1711</color>
+  <color name="application_text_light">#FFFFFF</color>
+  <color name="application_text_dark">#837160</color>
+  <color name="lv_dark_separator">#120E0C</color>
+  <color name="black">#000000</color>
+  <color name="selector_active">#ECEAE8</color>
+  <color name="selector_active_dimmer">#DDD9D3</color>
+  <color name="selector_inactive">#70C109</color>
+  <color name="comment_input_background">#CBC5BE</color>
+  <color name="transparent">#00000000</color>
+
+
+  <!-- colors from layouts, names from http://chir.ag/projects/name-that-color/ -->
+  <color name="green_atlantis">#86CD24</color>
+  <color name="grey_desert_storm">#F1F0EE</color>
+  <color name="grey_cloud">#BBB7B2</color>
+  <color name="black_night_rider">#241812</color>
+  
+  <color name="list_bg_light">@color/selector_active</color>
 </resources>
