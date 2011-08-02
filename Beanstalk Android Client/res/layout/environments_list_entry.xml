@@ -14,17 +14,19 @@
     android:layout_weight="1"
     android:orientation="vertical">
     <TextView
-    android:background="#0000FF"
+      android:background="#0000FF"
       android:id="@+id/environment_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="18dp"
+      android:textSize="@dimen/LargeTextSize"
       android:textColor="@color/black_night_rider"
       android:textStyle="bold" />
 
     <TextView
       android:background="#FF0000"
       android:id="@+id/automatic"
+      android:textSize="@dimen/MediumTextSize"
+      android:textColor="@color/grey"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
   </LinearLayout>
@@ -32,11 +34,12 @@
   <TextView
     android:id="@+id/edit_server_environment_button"
     android:text="edit"
+    android:textSize="@dimen/MediumTextSize"
     android:textColor="@color/black_night_rider"
     android:background="@color/grey_cotton_seed"
     android:padding="5dp"
     android:layout_gravity="center_vertical"
-    android:layout_marginRight="20dp"
+    android:layout_marginRight="10dp"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content" />
 

@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="10dp"
-  android:padding="10dp"
-  android:background="@color/list_bg_light"
-  >
-  
-  <TextView
-    android:layout_width="wrap_content"
-    android:id="@+id/environment_name"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:layout_height="wrap_content"
-    android:text=""
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"></TextView>
-  <TextView
-    android:layout_width="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:id="@+id/branch_name"
-    android:layout_height="wrap_content"
-    android:text=""
-    android:layout_below="@id/environment_name"
-    android:layout_alignParentLeft="true"></TextView>
-  <TextView
-    android:layout_width="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:id="@+id/automatic"
-    android:layout_height="wrap_content"
-    android:text=""
-    android:layout_alignParentTop="true"
-    android:layout_alignParentRight="true"></TextView>
+  android:paddingLeft="10dp"
+  android:paddingRight="10dp">
 
-</RelativeLayout>
+  <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFF00"
+    android:padding="10dp">
+
+    <TextView
+      android:id="@+id/environment_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:text=""
+      android:layout_alignParentTop="true"
+      android:layout_alignParentLeft="true" />
+    <TextView
+      android:id="@+id/branch_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:text=""
+      android:layout_below="@id/environment_name"
+      android:layout_alignParentLeft="true" />
+    <TextView
+      android:id="@+id/automatic"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:text=""
+      android:layout_alignParentTop="true"
+      android:layout_alignParentRight="true" />
+
+  </RelativeLayout>
+
+</FrameLayout>

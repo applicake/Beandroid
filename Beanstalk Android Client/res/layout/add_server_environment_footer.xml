@@ -2,10 +2,11 @@
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
-  android:minHeight="@dimen/list_entry_height"
   android:layout_height="@dimen/list_entry_height"
+  android:minHeight="@dimen/list_entry_height"
   android:paddingLeft="30dp"
-  android:background="@drawable/bn_generic">
+  android:background="@drawable/bn_generic"
+  >
   <TextView
     style="@style/white_title"
     android:id="@+id/add_user_label"
