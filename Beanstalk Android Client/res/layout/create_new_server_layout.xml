@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:background="@drawable/app_bg">
+  android:background="@drawable/app_bg"
+  android:orientation="vertical">
+  <include layout="@layout/actionbar" />
   <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -11,10 +13,6 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:background="@color/grey_desert_storm">
-      <include
-        layout="@layout/actionbar"
-        android:layout_alignParentTop="true"
-        android:id="@+id/actionbar" />
       <LinearLayout
         android:background="@color/dark_entry_bg"
         android:id="@+id/title"
@@ -22,7 +20,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/header_height"
         android:orientation="horizontal"
-        android:layout_below="@id/actionbar"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp">
 
         <ImageView
@@ -242,4 +240,4 @@
 
     </RelativeLayout>
   </ScrollView>
-</FrameLayout>
+</LinearLayout>
