@@ -41,6 +41,10 @@
     Modify
     <b>server</b>
   </string>
-  <string name="create_new_release">    Create new 
-    <b>release</b></string>
+  <string name="create_new_release">
+    Create new
+    <b>release</b>
+  </string>
+  <string name="automatic">automatic</string>
+  <string name="manual">manual</string>
 </resources>

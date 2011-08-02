@@ -125,14 +125,16 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
     if (serverEnvironment != null) {
       TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
-      TextView branchName = (TextView) view.findViewById(R.id.branch_name);
+      // TextView branchName = (TextView) view.findViewById(R.id.branch_name);
       TextView automatic = (TextView) view.findViewById(R.id.automatic);
-      TextView editServerEnvironmentButton = (TextView) view.findViewById(R.id.edit_server_environment_button);
+      TextView editServerEnvironmentButton = (TextView) view
+          .findViewById(R.id.edit_server_environment_button);
       editServerEnvironmentButton.setOnClickListener(new OnClickListener() {
-        
+
         @Override
         public void onClick(View v) {
-          Log.d("xxx", "Server environment in OnClickListener" + serverEnvironment.toString());
+          Log.d("xxx",
+              "Server environment in OnClickListener" + serverEnvironment.toString());
           Intent intent = new Intent(mContext, ModifyServerEnvironmentProperties.class);
           intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
           ((Activity) mContext).startActivityForResult(intent, 0);
@@ -140,9 +142,10 @@ public class ServersAdapter extends BaseExpandableListAdapter {
       });
 
       environmentName.setText(serverEnvironment.getName());
-      branchName.setText(serverEnvironment.getBranchName());
-      // TODO change to automatic/manual
-      automatic.setText(String.valueOf(serverEnvironment.isAutomatic()));
+      // branchName.setText(serverEnvironment.getBranchName());
+      automatic
+          .setText(mContext.getString(serverEnvironment.isAutomatic() ? R.string.automatic
+              : R.string.manual));
     }
 
     return view;
@@ -161,12 +164,11 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
         @Override
         public void onClick(View v) {
-          Log.d("xxx",
-              "create new server for " + serverEnvironment.getName());
+          Log.d("xxx", "create new server for " + serverEnvironment.getName());
           // tests
           Intent intent = new Intent(mContext, CreateNewServerActivity.class);
           intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
-          
+
           ((Activity) mContext).startActivityForResult(intent, 0);
 
         }
@@ -178,21 +180,23 @@ public class ServersAdapter extends BaseExpandableListAdapter {
     else {
       view = mInflater.inflate(R.layout.environments_server_list_entry, null);
       // temporary
-      final Server server = mServersArray.get(groupPosition).getServerList().get(childPosition);
+      final Server server = mServersArray.get(groupPosition).getServerList()
+          .get(childPosition);
 
       if (server != null) {
         TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
         TextView branchName = (TextView) view.findViewById(R.id.branch_name);
         TextView automatic = (TextView) view.findViewById(R.id.automatic);
-        
+
         view.setOnClickListener(new OnClickListener() {
-          
+
           @Override
           public void onClick(View v) {
             Intent intent = new Intent(mContext, ModifyServerActivity.class);
-            intent.putExtra(Constants.SERVER_ENVIRONMENT, mServersArray.get(groupPosition));
+            intent.putExtra(Constants.SERVER_ENVIRONMENT,
+                mServersArray.get(groupPosition));
             intent.putExtra(Constants.SERVER, server);
-            
+
             ((Activity) mContext).startActivityForResult(intent, 0);
           }
         });

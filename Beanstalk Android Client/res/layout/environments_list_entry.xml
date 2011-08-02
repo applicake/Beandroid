@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
-  android:minHeight="@dimen/list_entry_height"
   android:layout_height="wrap_content"
-  android:background="@color/dark_entry_bg">
-  <TextView
+  android:background="#00FFFF"
+  android:padding="10dp"
+  android:orientation="horizontal">
+
+  <LinearLayout
+    android:background="#00FF00"
     android:layout_width="wrap_content"
-    android:id="@+id/environment_name"
-    android:textAppearance="?android:attr/textAppearanceMedium"
     android:layout_height="wrap_content"
-    android:text=""
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"></TextView>
-  <TextView
-    android:layout_width="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:id="@+id/branch_name"
-    android:layout_height="wrap_content"
-    android:text=""
-    android:layout_below="@id/environment_name"
-    android:layout_alignParentLeft="true"></TextView>
+    android:layout_weight="1"
+    android:orientation="vertical">
+    <TextView
+    android:background="#0000FF"
+      android:id="@+id/environment_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="18dp"
+      android:textColor="@color/black_night_rider"
+      android:textStyle="bold" />
+
+    <TextView
+      android:background="#FF0000"
+      android:id="@+id/automatic"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  </LinearLayout>
+
   <TextView
     android:id="@+id/edit_server_environment_button"
-    android:text="Edit"
-    android:background="@drawable/bn_generic"
-    android:layout_height="@dimen/list_entry_height"
-    android:layout_width="60dp"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentRight="true"></TextView>
-
-  <TextView
-    android:layout_width="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:id="@+id/automatic"
+    android:text="edit"
+    android:textColor="@color/black_night_rider"
+    android:background="@color/grey_cotton_seed"
+    android:padding="5dp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginRight="20dp"
     android:layout_height="wrap_content"
-    android:layout_toLeftOf="@id/edit_server_environment_button"
-    android:text=""
-    android:layout_alignParentTop="true"
-    
-    ></TextView>
+    android:layout_width="wrap_content" />
 
-</RelativeLayout>
+  <!-- <TextView -->
+  <!-- android:layout_width="wrap_content" -->
+  <!-- android:textAppearance="?android:attr/textAppearanceMedium" -->
+  <!-- android:id="@+id/branch_name" -->
+  <!-- android:layout_height="wrap_content" -->
+  <!-- android:text="" -->
+  <!-- android:layout_below="@id/environment_name" -->
+  <!-- android:layout_alignParentLeft="true"></TextView> -->
+
+</LinearLayout>
