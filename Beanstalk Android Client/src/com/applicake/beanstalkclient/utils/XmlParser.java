@@ -82,6 +82,30 @@ public class XmlParser {
 
   }
 
+  public static Changeset parseChangeset(String xml) throws XMLParserException {
+    XMLReader xmlReader = initializeReader();
+
+    ChangesetHandler changesetHandler = new ChangesetHandler();
+    // set handler
+    xmlReader.setContentHandler(changesetHandler);
+    // parse
+    Log.d("xml", xml);
+    StringReader sr = new StringReader(xml);
+    InputSource is = new InputSource(sr);
+    try {
+      xmlReader.parse(is);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+      throw new XMLParserException(e);
+    } catch (SAXException e) {
+      e.printStackTrace();
+      throw new XMLParserException(e);
+    }
+
+    return changesetHandler.retrieveChangeset();
+  }
+
   public static ArrayList<User> parseUserList(String xml) throws XMLParserException {
 
     XMLReader xmlReader = initializeReader();
@@ -365,17 +389,18 @@ public class XmlParser {
     }
 
   }
-  
-  public static List<ServerEnvironment> parseServerEnvironmentsList(String xml) throws XMLParserException {
+
+  public static List<ServerEnvironment> parseServerEnvironmentsList(String xml)
+      throws XMLParserException {
     XMLReader xmlReader = initializeReader();
-    
+
     ServerEnvironmentHandler serverEnvironmentHandler = new ServerEnvironmentHandler();
     // set handler
     xmlReader.setContentHandler(serverEnvironmentHandler);
     // parse
     StringReader sr = new StringReader(xml);
     InputSource is = new InputSource(sr);
-    
+
     try {
       xmlReader.parse(is);
       return serverEnvironmentHandler.retrieveServerEnvironmentList();
@@ -384,19 +409,19 @@ public class XmlParser {
     } catch (SAXException e) {
       throw new XMLParserException(e);
     }
-    
+
   }
-  
+
   public static ArrayList<Server> parseServerList(String xml) throws XMLParserException {
     XMLReader xmlReader = initializeReader();
-    
+
     ServersHandler serverHandler = new ServersHandler();
     // set handler
     xmlReader.setContentHandler(serverHandler);
     // parse
     StringReader sr = new StringReader(xml);
     InputSource is = new InputSource(sr);
-    
+
     try {
       xmlReader.parse(is);
     } catch (IOException e) {
@@ -405,7 +430,7 @@ public class XmlParser {
       throw new XMLParserException(e);
     }
     return serverHandler.retrieveServerList();
-    
+
   }
 
   public static class XMLParserException extends Exception {

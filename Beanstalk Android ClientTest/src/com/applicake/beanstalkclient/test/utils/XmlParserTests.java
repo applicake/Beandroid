@@ -15,7 +15,6 @@ import java.util.TimeZone;
 import org.xml.sax.SAXException;
 
 import android.test.InstrumentationTestCase;
-import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.Log;
 
@@ -39,7 +38,8 @@ public class XmlParserTests extends InstrumentationTestCase {
 
   // valid xmls
   static final String RELEASES_XML_ADDRESS = "mockxmls/releases.xml";
-  private static final String CHANGESET_XML_ADDRESS = "mockxmls/changesets.xml";
+  private static final String CHANGESET_XML_ADDRESS = "mockxmls/changeset.xml";
+  private static final String CHANGESETS_XML_ADDRESS = "mockxmls/changesets.xml";
   private static final String REPOSITORIES_XML_ADDRESS = "mockxmls/repositories.xml";
   private static final String USERS_XML_ADDRESS = "mockxmls/users.xml";
   private static final String PERMISSIONS_XML_ADDRESS_1 = "mockxmls/permissions/185254.xml";
@@ -114,9 +114,25 @@ public class XmlParserTests extends InstrumentationTestCase {
         release.getUpdatedAt());
   }
 
-  public void testParseChangesets() throws IOException, XMLParserException {
+  public void testParseChangeset() throws IOException, XMLParserException {
     String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
         .open(CHANGESET_XML_ADDRESS));
+    Changeset changeset = XmlParser.parseChangeset(testXml);
+
+    assertNotNull("changeset is null", changeset);
+    assertEquals(46245, changeset.getAccountId());
+    assertEquals(9, changeset.getRepositoryId());
+    assertEquals("54", changeset.getRevision());
+    assertEquals("ilya", changeset.getAuthor());
+    assertEquals("ilya@example.com", changeset.getEmail());
+    // assertEquals(new Date(111, 4, 06, 13, 00, 29), changeset.getTime());
+    assertEquals(false, changeset.isTooLarge());
+    assertEquals(97523, changeset.getUserId());
+  }
+
+  public void testParseChangesets() throws IOException, XMLParserException {
+    String testXml = convertIStoString(getInstrumentation().getContext().getAssets()
+        .open(CHANGESETS_XML_ADDRESS));
     ArrayList<Changeset> changesetList = XmlParser.parseChangesetList(testXml);
 
     Changeset changeset1 = changesetList.get(0);
@@ -124,14 +140,14 @@ public class XmlParserTests extends InstrumentationTestCase {
     assertEquals(88998, changeset1.getAccountId());
     assertEquals("Han Solo", changeset1.getAuthor());
     // testing moved to YamlTesting
-//     assertEquals("--- []", changeset1.getChangedDirs());
+    // assertEquals("--- []", changeset1.getChangedDirs());
     // assertEquals("--- - - README  - :add", changeset1.getChangedFiles());
     // assertEquals("", changeset1.getChangedProperties());
     assertEquals("bartek.f+HanSolo@applicake.com", changeset1.getEmail());
     assertEquals("aea1c74c112667bb458957778d016a4a66233110", changeset1.getHashId());
     assertEquals(207784, changeset1.getRepositoryId());
     assertEquals("aea1c74c", changeset1.getRevision());
-//    calendar.set(2011, 4, 06, 13, 00, 29);
+    // calendar.set(2011, 4, 06, 13, 00, 29);
     assertEquals(new Date(111, 4, 06, 13, 00, 29), changeset1.getTime());
     // assertEquals("2011-05-06T15:00:29+02:00", changeset1.getTime());
     assertEquals(false, changeset1.isTooLarge());

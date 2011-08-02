@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<revision-cache>
+  <account-id type="integer">46245</account-id>
+  <repository-id type="integer">9</repository-id>
+  <revision type="integer">54</revision>
+  <message>Dummy commit</message>
+  <author>ilya</author>
+  <email>ilya@example.com</email>
+  <user_id>97523</user_id>
+  <changed-dirs type="yaml">--- []</changed-dirs>
+  <changed-files type="yaml">--- []</changed-files>
+  <changed-properties nil="true"></changed-properties>
+  <too-large type="boolean" nil="true"></too-large>
+  <time type="datetime">2009-20-18T14:59:12Z</time>    
+</revision-cache>

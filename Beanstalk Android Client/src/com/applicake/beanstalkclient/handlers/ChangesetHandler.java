@@ -31,7 +31,7 @@ public class ChangesetHandler extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     if (changeset != null) {
-      if (localName.equals("revision-cache")) {
+      if (localName.equals("revision-cache") && changesetList != null) {
         changesetList.add(changeset);
       }
 
@@ -97,7 +97,7 @@ public class ChangesetHandler extends DefaultHandler {
 
       }
 
-      if (localName.equals("user-id")) {
+      if (localName.equals("user-id") || localName.equals("user_id")) { // FIXME shouldn't this be user_id only, and not user-id (vide api examples)
         if (buffer.length() != 0) {
 
           try {
@@ -122,6 +122,10 @@ public class ChangesetHandler extends DefaultHandler {
     } else
       return new ArrayList<Changeset>();
 
+  }
+  
+  public Changeset retrieveChangeset(){
+    return changeset;
   }
 
 }

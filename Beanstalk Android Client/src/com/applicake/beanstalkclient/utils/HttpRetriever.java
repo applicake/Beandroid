@@ -76,10 +76,11 @@ public class HttpRetriever {
   private static final String PERMISSIONS_FOR_USER_HTTP_SUFFIX = ".beanstalkapp.com/api/permissions/";
   private static final String ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets.xml";
   private static final String SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/repository.xml?repository_id=";
-  
+  private static final String SINGLE_CHANGESET_HTTP_SUFFIX = ".beanstalkapp.com/api/changesets/%s.xml?repository_id=%d";
+
   private static final String REPOSITORY_HTTP_SUFFIX = ".beanstalkapp.com/api/repositories.xml";
   private static final String REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/repositories/";
-  
+
   private static final String COMMENTS_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
   private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
@@ -92,7 +93,6 @@ public class HttpRetriever {
 
   private static final String SERVERS_FOR_ENVIRONMENT_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVERS_FOR_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX = "/release_servers.xml?environment_id=";
-
 
   // checking credentials for Owner user
   public static String checkCredentialsAccount(String domain, String username,
@@ -227,7 +227,8 @@ public class HttpRetriever {
   }
 
   public static String getAccountInfo(SharedPreferences prefs)
-      throws HttpImproperStatusCodeException, HttpConnectionErrorException, UnsuccessfulServerResponseException {
+      throws HttpImproperStatusCodeException, HttpConnectionErrorException,
+      UnsuccessfulServerResponseException {
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
 
@@ -274,6 +275,22 @@ public class HttpRetriever {
         + SPECIFIED_REPOSITORY_ACTIVITY_HTTP_SUFFIX + repoId;
 
     return executeRequest(credentials, activity_http);
+  }
+
+  public static String getSingleChangesetXml(SharedPreferences prefs,
+      String revisionNumber, int repositoryId)
+      throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
+    // TODO got error because SINGLE_CHANGESET_HTTP_SUFFIX didn't include domain
+    // name, what test could help avoid this?
+    String activity_http = HTTP_PREFIX + domain
+        + String.format(SINGLE_CHANGESET_HTTP_SUFFIX, revisionNumber, repositoryId);
+
+    return executeRequest(credentials, activity_http);
+
   }
 
   public static String getRepositoryListXML(SharedPreferences prefs)
@@ -352,40 +369,45 @@ public class HttpRetriever {
     return executeRequest(credentials, activity_http);
 
   }
-  
-  public static String getServerEnvironmentListForRepositoryXML(SharedPreferences prefs, int repoId)
-  throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
-    
-    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
-    String domain = getAccountDomain(prefs);
-    
-    String activity_http = HTTP_PREFIX + domain + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE
-    + String.valueOf(repoId) + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX;
-    
-    return executeRequest(credentials, activity_http);
-  }
-  
 
   public static String getServerEnvironmentListForRepositoryXML(SharedPreferences prefs,
-      String repoId) throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
+      int repoId) throws HttpConnectionErrorException,
+      UnsuccessfulServerResponseException {
+
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
-    
-    String activity_http = HTTP_PREFIX + domain + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE
-    + String.valueOf(repoId) + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX;
-    
+
+    String activity_http = HTTP_PREFIX + domain
+        + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE + String.valueOf(repoId)
+        + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX;
+
     return executeRequest(credentials, activity_http);
   }
-  
-  public static String getServerListForEnviromentXML(SharedPreferences prefs, int repoId, int environmentId)
-  throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
-    
+
+  public static String getServerEnvironmentListForRepositoryXML(SharedPreferences prefs,
+      String repoId) throws UnsuccessfulServerResponseException,
+      HttpConnectionErrorException {
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
-    
+
+    String activity_http = HTTP_PREFIX + domain
+        + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE + String.valueOf(repoId)
+        + SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX;
+
+    return executeRequest(credentials, activity_http);
+  }
+
+  public static String getServerListForEnviromentXML(SharedPreferences prefs, int repoId,
+      int environmentId) throws HttpConnectionErrorException,
+      UnsuccessfulServerResponseException {
+
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+
     String activity_http = HTTP_PREFIX + domain + SERVERS_FOR_ENVIRONMENT_HTTP_MIDDLE
-    + String.valueOf(repoId) + SERVERS_FOR_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX + String.valueOf(environmentId);
-    
+        + String.valueOf(repoId) + SERVERS_FOR_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX
+        + String.valueOf(environmentId);
+
     return executeRequest(credentials, activity_http);
   }
 
@@ -484,6 +506,5 @@ public class HttpRetriever {
   private static String getAccountDomain(SharedPreferences prefs) {
     return prefs.getString(Constants.USER_ACCOUNT_DOMAIN, "");
   }
-
 
 }
