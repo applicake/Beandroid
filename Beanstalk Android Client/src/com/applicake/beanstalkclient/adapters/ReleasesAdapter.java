@@ -1,8 +1,10 @@
 package com.applicake.beanstalkclient.adapters;
 
+import java.text.Format;
 import java.util.List;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,14 @@ public class ReleasesAdapter extends BaseAdapter {
   // private Context mContext;
   private int mLayoutId;
   private LayoutInflater mInflater;
+  private Format mDf;
 
   public ReleasesAdapter(Context context, int layoutResourceId, List<Release> releases) {
     // mContext = context;
     mLayoutId = layoutResourceId;
     mReleases = releases;
     mInflater = LayoutInflater.from(context);
+    mDf = DateFormat.getDateFormat(context);
   }
 
   @Override
@@ -63,7 +67,7 @@ public class ReleasesAdapter extends BaseAdapter {
     state.setText(release.getStateLabel());
 //    revision.setText(String.valueOf(release.getRevision()));
     author.setText(release.getAuthor());
-    deployedAt.setText(release.getDeployedAt().toLocaleString());
+    deployedAt.setText(mDf.format(release.getDeployedAt()));
 
     return view;
   }
