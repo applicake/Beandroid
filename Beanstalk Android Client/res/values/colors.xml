@@ -36,7 +36,7 @@
   <!-- colors from layouts, names from http://chir.ag/projects/name-that-color/ -->
   <color name="green_atlantis">#86CD24</color>
   <color name="grey_desert_storm">#F1F0EE</color>
-  <color name="grey_cloud">#BBB7B2</color>
+  <color name="grey_cloud">#CCC7C2</color>
   <color name="black_night_rider">#241812</color>
   
   <color name="list_bg_light">@color/selector_active</color>

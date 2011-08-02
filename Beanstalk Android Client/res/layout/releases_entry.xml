@@ -27,13 +27,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@id/environment_name"
-    android:textColor="@color/grey_cloud"
+    android:textColor="@color/grey"
     android:layout_alignParentLeft="true" />
   <TextView
     android:id="@+id/state"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textColor="@color/grey_cloud"
+    android:textColor="@color/grey"
     android:layout_alignBaseline="@id/comment"
     android:layout_alignParentRight="true" />
 
@@ -41,7 +41,7 @@
     android:id="@+id/author"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textColor="@color/grey_cloud"
+    android:textColor="@color/grey"
     android:layout_below="@id/comment"
     android:layout_alignParentLeft="true" />
 
