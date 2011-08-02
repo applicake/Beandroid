@@ -44,18 +44,20 @@
     <item name="android:background">@drawable/et_background</item>
   </style>
   <style
+    name="edit_text_grey"
+    parent="edit_text">
+    <item name="android:background">@drawable/comment_input_bg</item>
+  </style>
+  <style
     name="edit_text_label"
     parent="android:Widget.TextView">
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">10dp</item>
     <item name="android:layout_marginRight">10dp</item>
-
-
     <item name="android:textSize">@dimen/MediumTextSize</item>
     <item name="android:textColor">@color/black</item>
     <item name="android:textStyle">bold</item>
     <item name="android:layout_width">fill_parent</item>
-
   </style>
   <style
     name="white_title"
