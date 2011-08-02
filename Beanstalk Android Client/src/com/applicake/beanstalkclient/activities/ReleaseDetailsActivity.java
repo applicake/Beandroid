@@ -45,6 +45,8 @@ public class ReleaseDetailsActivity extends BeanstalkActivity implements OnClick
     ((TextView) findViewById(R.id.repoName)).setText(mRepositoryTitle);
 
     mRelease = intent.getParcelableExtra(Constants.RELEASE);
+    ((TextView) findViewById(R.id.environment_name)).setText(mRelease
+        .getEnvironmentName());
     ((TextView) findViewById(R.id.created_at)).setText(mRelease.getCreatedAt()
         .toLocaleString());
     ((TextView) findViewById(R.id.author)).setText(mRelease.getAuthor());
@@ -52,7 +54,6 @@ public class ReleaseDetailsActivity extends BeanstalkActivity implements OnClick
         .toLocaleString());
     ((TextView) findViewById(R.id.comment)).setText(mRelease.getComment());
     ((TextView) findViewById(R.id.revision)).setText(mRelease.getRevision());
-    ((TextView) findViewById(R.id.server)).setText(mRelease.getEnvironmentName());
 
     findViewById(R.id.buttonViewChanges).setOnClickListener(this);
   }
