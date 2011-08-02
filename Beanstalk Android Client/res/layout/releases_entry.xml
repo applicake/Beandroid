@@ -11,7 +11,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
-    android:textSize="18dp"
+    android:textSize="@dimen/LargeTextSize"
     android:textColor="@color/black_night_rider"
     android:textStyle="bold" />
   <TextView
@@ -19,6 +19,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@color/black_night_rider"
+    android:textSize="@dimen/MediumTextSize"
     android:layout_alignBaseline="@id/environment_name"
     android:layout_alignParentRight="true" />
 
@@ -27,12 +28,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@id/environment_name"
+    android:textSize="@dimen/MediumTextSize"
     android:textColor="@color/grey"
     android:layout_alignParentLeft="true" />
   <TextView
     android:id="@+id/state"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:textSize="@dimen/MediumTextSize"
     android:textColor="@color/grey"
     android:layout_alignBaseline="@id/comment"
     android:layout_alignParentRight="true" />
@@ -41,6 +44,7 @@
     android:id="@+id/author"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:textSize="@dimen/MediumTextSize"
     android:textColor="@color/grey"
     android:layout_below="@id/comment"
     android:layout_alignParentLeft="true" />
