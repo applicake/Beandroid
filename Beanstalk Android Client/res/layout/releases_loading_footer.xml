@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:textSize="@dimen/MediumTextSize"
-    android:textColor="@color/application_text_light"></TextView>
+    android:textColor="@color/black"/>
 
   <ProgressBar
     android:layout_marginLeft="15dp"
