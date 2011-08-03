@@ -47,6 +47,7 @@
     name="edit_text_grey"
     parent="edit_text">
     <item name="android:background">@drawable/comment_input_bg</item>
+    <item name="android:inputType">text</item>
   </style>
   <style
     name="edit_text_label"
