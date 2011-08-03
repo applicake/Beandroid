@@ -1,7 +1,6 @@
 package com.applicake.beanstalkclient.activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,12 +14,8 @@ public class HomeActivity extends BeanstalkActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-     
-    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-      setContentView(R.layout.home_screen_activity_landscape);
 
-    else
-      setContentView(R.layout.home_screen_activity);
+    setContentView(R.layout.home_screen_activity);
 
     // hide home button
     // findViewById(R.id.ActionBarHomeIcon).setVisibility(View.GONE);
@@ -42,19 +37,6 @@ public class HomeActivity extends BeanstalkActivity {
     // TextView title = (TextView) findViewById(R.id.ActionBarTitle);
     // title.setText("Beansdroid");
 
-  }
-
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-
-    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-      setContentView(R.layout.home_screen_activity_landscape);
-
-    } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-      setContentView(R.layout.home_screen_activity);
-    }
-
-    super.onConfigurationChanged(newConfig);
   }
 
   // button handlers

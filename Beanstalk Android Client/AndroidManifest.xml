@@ -39,7 +39,7 @@
 
         <activity
             android:name=".activities.HomeActivity"
-            android:configChanges="orientation|keyboardHidden" >
+            android:configChanges="keyboardHidden" >
         </activity>
         <activity
             android:name=".activities.DashboardActivity"
