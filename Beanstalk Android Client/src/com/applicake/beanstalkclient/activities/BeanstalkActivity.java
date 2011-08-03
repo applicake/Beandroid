@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
@@ -143,12 +142,6 @@ public abstract class BeanstalkActivity extends Activity {
     startActivityForResult(intent, 0);
     if (!(this instanceof HomeActivity))
       finish();
-  }
-
-  public void onDeploymentButtonClick(View v) {
-
-    Toast.makeText(getApplicationContext(), "Deployment button clicked",
-        Toast.LENGTH_SHORT).show();
   }
 
   public void onHomeButtonClick(View v) {

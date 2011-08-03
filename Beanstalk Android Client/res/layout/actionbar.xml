@@ -37,15 +37,4 @@
 		android:layout_height="@dimen/ac_bar_height"
 		android:layout_width="@dimen/ac_bar_height"
 		></ImageView>
-	<ImageView
-		style="@style/ActionBarSeparator"
-		></ImageView>
-	<ImageView
-		android:id="@+id/ActionBarDeployButton"
-		android:layout_margin="@dimen/ac_margin"
-		android:src="@drawable/ic_ab_deployment"
-		android:layout_height="@dimen/ac_bar_height"
-		android:layout_width="@dimen/ac_bar_height"
-		android:clickable="true"
-		android:onClick="onDeploymentButtonClick"></ImageView>
 </LinearLayout>
