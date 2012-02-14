@@ -1,0 +1,8 @@
+package com.applicake.beanstalkclient.tasks;
+
+import android.os.AsyncTask;
+
+public abstract class BeanstalkAsyncTask<T, Y, Z> extends AsyncTask<T, Y, Z> {
+  
+  
+}

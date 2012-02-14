@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
@@ -76,8 +75,8 @@ public class HomeActivity extends BeanstalkActivity {
   }
 
   public void onHomeDeploymentClick(View v) {
-    Toast.makeText(getApplicationContext(), "Deploymnet clicked", Toast.LENGTH_SHORT)
-        .show();
+	  Intent intent = new Intent(this, RepositoryDeploymentsActivity.class);
+	  startActivityForResult(intent, 0);
   }
 
   public void onHomeSettingsClick(View v) {

@@ -38,6 +38,8 @@ public interface Constants {
   public static final String ACCOUNT_PLAN = "account_plan_preference";
   public static final String RELEASE = "release";
 
+  public static final String RETURN_RESULT_WHEN_CLICK = "return_result_when_click";
+  
   public static final String USER_TIMEZONE = "account timezone";
 
   public static final String USER_TYPE = "user_type";

@@ -109,6 +109,8 @@ public class ServerEnvironmentHandler extends DefaultHandler {
           throw new SAXException(e);
         }
       }
+    } else {
+      serverEnvironmentList = new ArrayList<ServerEnvironment>();
     }
 
   }

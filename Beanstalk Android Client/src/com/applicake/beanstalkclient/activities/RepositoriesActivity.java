@@ -31,10 +31,12 @@ import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
-public class RepositoriesActivity extends BeanstalkActivity implements
-    OnItemClickListener, OnClickListener {
+public class RepositoriesActivity extends BeanstalkActivity implements OnItemClickListener, OnClickListener {
+
+  public static final int RESULT_REPOSITORY = 91;
 
   private Context mContext;
+  private boolean returnAfterClick;
   public ArrayList<Repository> repositoriesArray;
   public RepositoriesAdapter repositoriesAdapter;
   public ListView repositoriesList;
@@ -47,8 +49,11 @@ public class RepositoriesActivity extends BeanstalkActivity implements
     setContentView(R.layout.repositories_layout);
 
     mContext = this;
-    
+
     // TODO refactor 
+
+    returnAfterClick = getIntent().getBooleanExtra(Constants.RETURN_RESULT_WHEN_CLICK, false);
+
     repositoriesList = (ListView) findViewById(R.id.repositoriesList);
     View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
         Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_repository_footer,
@@ -66,7 +71,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 
     repositoriesLeftCounter = (TextView) footerView.findViewById(R.id.repositoryCounter);
 
-    new DownloadChangesetListTask(this).execute();
+    new DownloadRepositoriesTask(this).execute();
 
   }
 
@@ -74,27 +79,33 @@ public class RepositoriesActivity extends BeanstalkActivity implements
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Constants.REFRESH_ACTIVITY)
-      new DownloadChangesetListTask(this).execute();
+      new DownloadRepositoriesTask(this).execute();
   }
 
   @Override
   public void onClick(View v) {
     Intent intent = new Intent(mContext, CreateNewRepositoryActivity.class);
     startActivityForResult(intent, 0);
-
   }
 
   @Override
   public void onItemClick(AdapterView<?> arg0, View arg1, int itemNumber, long arg3) {
     if (itemNumber < repositoriesArray.size()) {
-      Intent intent = new Intent(mContext, RepositoryDetailsActivity.class);
-      intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
-      startActivityForResult(intent, 0);
+      if (!returnAfterClick) {
+        Intent intent = new Intent(mContext, RepositoryDetailsActivity.class);
+        intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
+        startActivityForResult(intent, 0);
+      } else {
+        Intent intent = new Intent();
+        intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
+        setResult(RESULT_REPOSITORY, intent);
+        finish();
+      }
     }
 
   }
 
-  public class DownloadChangesetListTask extends
+  public class DownloadRepositoriesTask extends
       AsyncTask<String, Void, ArrayList<Repository>> {
 
     private Context context;
@@ -106,7 +117,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
     private String failMessage;
     private boolean failed = false;
 
-    public DownloadChangesetListTask(Context context) {
+    public DownloadRepositoriesTask(Context context) {
       this.context = context;
       thisTask = this;
     }
@@ -156,7 +167,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
 
           @Override
           public void retryAction() {
-            new DownloadChangesetListTask(context).execute();
+            new DownloadRepositoriesTask(context).execute();
           }
 
           @Override

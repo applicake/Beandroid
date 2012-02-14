@@ -3,6 +3,7 @@ package com.applicake.beanstalkclient.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import com.applicake.beanstalkclient.ServerEnvironment;
 import com.applicake.beanstalkclient.Strings;
 import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
 import com.applicake.beanstalkclient.adapters.ServersAdapter;
+import com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask;
+import com.applicake.beanstalkclient.tasks.ResponseHandler;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
@@ -36,8 +39,11 @@ import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 
 public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
-    OnClickListener {
-
+    OnClickListener, OnItemClickListener {
+  
+  private static final int REPOSITORY_ADD_RELEASE = 0x999;
+  private static final int REPOSITORY_ADD_ENVIROMENT = 0x123;
+  
   boolean serverListLoaded = false;
   boolean releaseListLoaded = false;
 
@@ -49,11 +55,15 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
   private ArrayList<Release> mReleaseArray = new ArrayList<Release>();
   private ArrayList<ServerEnvironment> mServersArray = new ArrayList<ServerEnvironment>();
   private Repository repository;
+  private List<Integer> listOfRepositoriesIds;
+
   private Button releasesButton;
   private Button serversButton;
   private View releasesLoadingFooterView;
   private View serversLoadingFooterView;
   private View serversAddNewFooterView;
+
+  private boolean activityStartedForSpecificRepository;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +72,17 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     setContentView(R.layout.repository_deployments_layout);
 
     repository = getIntent().getParcelableExtra(Constants.REPOSITORY);
+    if (repository == null) {
+      activityStartedForSpecificRepository = false;
+    } else {
+      listOfRepositoriesIds = new ArrayList<Integer>();
+      listOfRepositoriesIds.add(repository.getId());
+      activityStartedForSpecificRepository = true;
+      ((TextView) findViewById(R.id.repoName)).setText(repository.getTitle());
+      findViewById(R.id.colorLabel).getBackground().setLevel(repository.getColorLabelNo());
+    }
 
     // set repository title and label color based on intent
-    ((TextView) findViewById(R.id.repoName)).setText(repository.getTitle());
-    findViewById(R.id.colorLabel).getBackground().setLevel(repository.getColorLabelNo());
 
     // create releases list view and tab switching button, attach loading and
     // footer and set button listeners
@@ -82,15 +99,11 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(),
-            CreateNewReleaseActivity.class);
-        intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
-        intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
-        intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
-
-        // add extras
-        startActivityForResult(intent, 0);
-
+        if(activityStartedForSpecificRepository) {
+          startAddNewRelease(repository);
+        } else {
+          startRepositoriesListForResult(REPOSITORY_ADD_RELEASE);
+        }
       }
     });
 
@@ -102,17 +115,7 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     mReleasesList.setAdapter(mReleasesAdapter);
 
     // listener for release details activity
-    mReleasesList.setOnItemClickListener(new OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(RepositoryDeploymentsActivity.this,
-            ReleaseDetailsActivity.class);
-        intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
-        intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
-        intent.putExtra(Constants.RELEASE, (Release) parent.getItemAtPosition(position));
-        startActivity(intent);
-      }
-    });
+    mReleasesList.setOnItemClickListener(this);
 
     // create servers list view and tab switching button, attach "loading" and
     // "add new" footer and set button listeners
@@ -134,14 +137,62 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     serversAddNewFooterView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(),
-            CreateNewServerEnvironmentActivity.class);
-        intent.putExtra(Constants.REPOSITORY_ID, repository.getId());
-        startActivity(intent);
+        if(activityStartedForSpecificRepository) {
+          startAddNewServer(repository);
+        } else {
+          startRepositoriesListForResult(REPOSITORY_ADD_ENVIROMENT);
+        }
       }
     });
 
     new DownloadReleaseListTask(this).execute();
+  }
+
+  @Override
+  public void onItemClick(AdapterView<?> adapterView, View view, final int position,
+      long id) {
+    if (adapterView == mReleasesList) {
+      if (!activityStartedForSpecificRepository) {
+        final Release release = mReleaseArray.get(position);
+        ResponseHandler<Repository> handler = new ResponseHandler<Repository>() {
+          @Override
+          public void onResult(Repository result) {
+            startReleaseDetails(release, result);
+          }
+        };
+        new DownloadRepositoryDetailsTask(release.getRepositoryId(), this, handler).execute();
+      } else {
+        startReleaseDetails(mReleaseArray.get(position), repository);
+      }
+    }
+  }
+
+  private void startRepositoriesListForResult(int requestCode) {
+    Intent intent = new Intent(this, RepositoriesActivity.class);
+    intent.putExtra(Constants.RETURN_RESULT_WHEN_CLICK, true);
+    startActivityForResult(intent, requestCode);
+  }
+  
+  private void startAddNewServer(Repository repository) {
+    Intent intent = new Intent(this, CreateNewServerActivity.class);
+    intent.putExtra(Constants.REPOSITORY_ID, repository.getId());
+    startActivity(intent);
+  }
+  
+  private void startAddNewRelease(Repository repository) {
+    Intent intent = new Intent(this, CreateNewReleaseActivity.class);
+    intent.putExtra(Constants.REPOSITORY_ID, String.valueOf(repository.getId()));
+    intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
+    intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
+    startActivityForResult(intent, 0);
+  }
+  
+  private void startReleaseDetails(Release release, Repository repository) {
+    Intent intent = new Intent(RepositoryDeploymentsActivity.this, ReleaseDetailsActivity.class);
+    intent.putExtra(Constants.REPOSITORY_COLOR_NO, repository.getColorLabelNo());
+    intent.putExtra(Constants.REPOSITORY_TITLE, repository.getTitle());
+    intent.putExtra(Constants.RELEASE, release);
+    startActivity(intent);
   }
 
   @Override
@@ -156,14 +207,72 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
       break;
 
     case R.id.servers_button:
-      if (!serverListLoaded) {
-        new DownloadServerEnvironmentsListTask(this).execute();
+      if (!activityStartedForSpecificRepository && !serverListLoaded) {
+        new DownloadRepositoriesIdsTask().execute();
+      } else if (!serverListLoaded) {
+        downloadServerEnvironments();
       }
       mReleasesList.setVisibility(View.GONE);
       mServersList.setVisibility(View.VISIBLE);
       releasesButton.setSelected(false);
       serversButton.setSelected(true);
       break;
+    }
+  }
+
+  private void downloadServerEnvironments() {
+    new DownloadServerEnvironmentsListTask(this, listOfRepositoriesIds).execute();
+  }
+  
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if(resultCode == RepositoriesActivity.RESULT_REPOSITORY) {
+      Repository repository = (Repository)data.getParcelableExtra(Constants.REPOSITORY);
+      if(requestCode == REPOSITORY_ADD_ENVIROMENT) {
+        startAddNewServer(repository);
+      } else if(requestCode == REPOSITORY_ADD_RELEASE) {
+        startAddNewRelease(repository);
+      }
+    } else {
+      super.onActivityResult(requestCode, resultCode, data);
+    }
+  }
+
+  public class DownloadRepositoryDetailsTask extends
+      BeanstalkAsyncTask<Void, Void, Repository> {
+
+    private int repositoryId;
+    private ResponseHandler<Repository> responseHandler;
+
+    public DownloadRepositoryDetailsTask(int repositoryId, Activity activity) {
+      super(activity);
+      this.repositoryId = repositoryId;
+    }
+
+    public DownloadRepositoryDetailsTask(int repositoryId, Activity activity,
+        ResponseHandler<Repository> responseHandler) {
+      this(repositoryId, activity);
+      this.responseHandler = responseHandler;
+    }
+
+    @Override
+    protected Repository trueDoInBackground(Void[] params) throws Throwable {
+      String repositoryXML = HttpRetriever.getRepositoryXML(prefs, repositoryId);
+      Repository repository = XmlParser.parseRepository(repositoryXML);
+      return repository;
+    }
+
+    @Override
+    protected void trueOnPostExceute(Repository result) {
+      if (responseHandler != null) {
+        responseHandler.onResult(result);
+      }
+    }
+
+    @Override
+    protected void performTaskAgain() {
+      new DownloadRepositoryDetailsTask(repositoryId, RepositoryDeploymentsActivity.this,
+          responseHandler).execute();
     }
   }
 
@@ -184,10 +293,14 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     protected List<Release> doInBackground(String... params) {
 
       try {
-        String releasesXml = HttpRetriever.getReleasesListForRepositoryXML(prefs,
-            repository.getId());
+        String releasesXml = null;
+        if (activityStartedForSpecificRepository) {
+          releasesXml = HttpRetriever.getReleasesListForRepositoryXML(prefs,
+              repository.getId());
+        } else {
+          releasesXml = HttpRetriever.getReleasesListForAllRepositories(prefs);
+        }
         return XmlParser.parseReleasesList(releasesXml);
-
       } catch (UnsuccessfulServerResponseException e) {
         errorMessage = e.getMessage();
         return null;
@@ -237,6 +350,26 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     }
   }
 
+  public class DownloadRepositoriesIdsTask extends AsyncTask<Void, Void, List<Integer>> {
+
+    @Override
+    protected List<Integer> doInBackground(Void... arg) {
+      try {
+        String repositoriesXml = HttpRetriever.getRepositoryListXML(prefs);
+        return XmlParser.parseRepositoryIdsList(repositoriesXml);
+      } catch (Exception e) {
+
+      }
+      return null;
+    }
+
+    @Override
+    protected void onPostExecute(List<Integer> result) {
+      listOfRepositoriesIds = result;
+      downloadServerEnvironments();
+    }
+  }
+
   public class DownloadServerEnvironmentsListTask extends
       AsyncTask<String, Void, List<ServerEnvironment>> {
 
@@ -245,18 +378,33 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
     private String failMessage;
     private boolean failed = false;
 
-    public DownloadServerEnvironmentsListTask(Context context) {
+    private List<Integer> listOfRepositoriesIdsToDownload;
+
+    public DownloadServerEnvironmentsListTask(Context context, int singleRepoId) {
       this.context = context;
+      listOfRepositoriesIdsToDownload = new ArrayList<Integer>();
+      listOfRepositoriesIdsToDownload.add(singleRepoId);
+    }
+
+    public DownloadServerEnvironmentsListTask(Context context,
+        List<Integer> repositoriesIds) {
+      this.context = context;
+      this.listOfRepositoriesIdsToDownload = repositoriesIds;
     }
 
     @Override
     protected List<ServerEnvironment> doInBackground(String... params) {
 
       try {
-        String serverEnvironmentsXml = HttpRetriever
-            .getServerEnvironmentListForRepositoryXML(prefs, repository.getId());
-        Log.d("xxx", serverEnvironmentsXml);
-        return XmlParser.parseServerEnvironmentsList(serverEnvironmentsXml);
+        List<ServerEnvironment> enviroments = new ArrayList<ServerEnvironment>();
+        for (Integer singleRepoId : listOfRepositoriesIdsToDownload) {
+          String serverEnvironmentsXml = HttpRetriever
+              .getServerEnvironmentListForRepositoryXML(prefs, singleRepoId.intValue());
+          Log.d("xxx", serverEnvironmentsXml);
+          enviroments
+              .addAll(XmlParser.parseServerEnvironmentsList(serverEnvironmentsXml));
+        }
+        return enviroments;
 
       } catch (UnsuccessfulServerResponseException e) {
         failMessage = e.getMessage();
@@ -282,7 +430,8 @@ public class RepositoryDeploymentsActivity extends BeanstalkActivity implements
 
           @Override
           public void retryAction() {
-            new DownloadServerEnvironmentsListTask(context).execute();
+            new DownloadServerEnvironmentsListTask(context,
+                listOfRepositoriesIdsToDownload).execute();
           }
 
           @Override

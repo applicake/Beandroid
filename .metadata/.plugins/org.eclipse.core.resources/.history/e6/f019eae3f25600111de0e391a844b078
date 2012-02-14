@@ -1,0 +1,11 @@
+package com.applicake.beanstalkclient.tasks;
+
+import com.applicake.beanstalkclient.Repository;
+
+import android.os.AsyncTask;
+
+public class DownloadRepositoryDetails extends AsyncTask<Integer, Void, Repository> {
+  
+  
+
+}

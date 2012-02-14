@@ -1,0 +1,5 @@
+package com.applicake.beanstalkclient.tasks;
+
+public class BeanstalkAsyncTask {
+
+}

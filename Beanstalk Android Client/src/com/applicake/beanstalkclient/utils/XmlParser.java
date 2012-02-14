@@ -2,6 +2,7 @@ package com.applicake.beanstalkclient.utils;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.ContentHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -171,7 +172,7 @@ public class XmlParser {
 
     return planHandler.retrievePlanMap();
   }
-
+  
   public static ArrayList<Release> parseReleasesList(String xml)
       throws XMLParserException {
     XMLReader xmlReader = initializeReader();
@@ -194,7 +195,21 @@ public class XmlParser {
 
     return releasesHandler.retrieveReleasesList();
   }
-
+  
+  public static List<Integer> parseRepositoryIdsList(String xml) 
+    throws XMLParserException {
+        
+    ArrayList<Repository> repositories = parseRepositoryList(xml);
+    
+    List<Integer> repositoriesIds = new ArrayList<Integer>();
+    
+    for(Repository repository : repositories) {
+      repositoriesIds.add(repository.getId());
+    }
+    
+    return repositoriesIds;
+  }
+  
   public static ArrayList<Repository> parseRepositoryList(String xml)
       throws XMLParserException {
 

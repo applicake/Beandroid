@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity"/>
+<fullyQualifiedTypeName name="android.widget.Toast"/>
+<fullyQualifiedTypeName name="android.content.SharedPreferences"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException"/>
+<fullyQualifiedTypeName name="org.apache.http.auth.UsernamePasswordCredentials"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.utils.XmlParser.XMLParserException"/>
+<fullyQualifiedTypeName name="org.xml.sax.XMLReader"/>
+<fullyQualifiedTypeName name="java.net.ContentHandler"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.Repository"/>
+<fullyQualifiedTypeName name="android.os.AsyncTask"/>
+<fullyQualifiedTypeName name="java.lang.Void"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.utils.HttpRetriever"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.utils.XmlParser"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity.DownloadServerEnvironmentsListTask"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity.DownloadRepositoriesIdsTask"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.applicake.beanstalkclient.ServerEnvironment"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+</qualifiedTypeNameHistroy>

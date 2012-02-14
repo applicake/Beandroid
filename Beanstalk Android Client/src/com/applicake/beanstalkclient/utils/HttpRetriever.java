@@ -85,8 +85,8 @@ public class HttpRetriever {
   private static final String COMMENTS_HTTP_SUFFIX = "/comments.xml";
   private static final String COMMENTS_REVISION_HTTP_SUFFIX = "?revision=";
 
-  private static final String RELEASES_FOR_REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/";
-  private static final String RELEASES_FOR_REPOSITORY_HTTP_SUFFIX = "/releases.xml";
+  private static final String RELEASES_HTTP_MIDDLE = ".beanstalkapp.com/api/";
+  private static final String RELEASES_HTTP_SUFFIX = "/releases.xml";
 
   private static final String SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVER_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX = "/server_environments.xml";
@@ -363,11 +363,22 @@ public class HttpRetriever {
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
 
-    String activity_http = HTTP_PREFIX + domain + RELEASES_FOR_REPOSITORY_HTTP_MIDDLE
-        + String.valueOf(repoId) + RELEASES_FOR_REPOSITORY_HTTP_SUFFIX;
+    String activity_http = HTTP_PREFIX + domain + RELEASES_HTTP_MIDDLE
+        + String.valueOf(repoId) + RELEASES_HTTP_SUFFIX;
 
     return executeRequest(credentials, activity_http);
 
+  }
+  
+  public static String getReleasesListForAllRepositories(SharedPreferences prefs) 
+      throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
+    
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+    String domain = getAccountDomain(prefs);
+    
+    String activity_http = HTTP_PREFIX + domain + RELEASES_HTTP_MIDDLE + RELEASES_HTTP_SUFFIX;
+    
+    return executeRequest(credentials, activity_http);
   }
 
   public static String getServerEnvironmentListForRepositoryXML(SharedPreferences prefs,

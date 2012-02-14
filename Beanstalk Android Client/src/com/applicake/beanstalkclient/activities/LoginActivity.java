@@ -138,8 +138,7 @@ public class LoginActivity extends Activity implements OnClickListener {
       HttpImproperStatusCodeException {
 
     try {
-      String accountInfoXML = HttpRetriever.checkCredentialsAccount(domain, username,
-          password);
+      String accountInfoXML = HttpRetriever.checkCredentialsAccount(domain, username, password);
       account = XmlParser.parseAccountInfo(accountInfoXML);
       String plansXML = HttpRetriever.checkCredentialsPlan(domain, username, password);
       plansMap = XmlParser.parsePlan(plansXML);

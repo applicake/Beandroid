@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+/Users/part/Documents/workspace_beandroid/Beandroid/.metadata/.plugins/org.eclipse.jdt.core
+179761420.index
+3104699225.index

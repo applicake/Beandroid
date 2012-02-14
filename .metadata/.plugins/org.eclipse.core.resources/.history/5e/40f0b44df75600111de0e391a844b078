@@ -1,0 +1,61 @@
+package com.applicake.beanstalkclient.tasks;
+
+import com.applicake.beanstalkclient.Strings;
+import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
+import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
+
+import android.content.Context;
+import android.os.AsyncTask;
+
+public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+  
+  private Context mContext;
+  private Throwable th;
+  
+  public BeanstalkAsyncTask(Context context) {
+    this.mContext = context;
+  }
+  
+  protected Result doInBackground(Params[] params) {
+    try {
+      return trueDoInBackground(params);
+    } catch(Throwable th) {
+      this.th = th;
+      return null;
+    }
+  }
+  
+  protected abstract Result trueDoInBackground(Params[] params);
+  
+  protected void onPostExecute(Result result) {
+    if(th != null) {
+      handleError(th);
+    }
+  }
+  
+  protected void handleError(Throwable th) {
+    
+  }
+  
+  private String getErrorMessage(Throwable th) {
+    String message = th.getMessage();
+    
+    if(th instanceof HttpConnectionErrorException) {
+      message = Strings.networkConnectionErrorMessage;
+    } else if(th instanceof XMLParserException) {
+      message = Strings.internalErrorMessage;
+    } else {
+      message = th.getMessage();
+    }
+  } ca tch (HttpConnectionErrorException e) {
+    e.printStackTrace();
+    failMessage = Strings.networkConnectionErrorMessage;
+  } catch (XMLParserException e) {
+    failMessage = Strings.internalErrorMessage;
+    e.printStackTrace();
+  }
+
+  }
+  
+}
