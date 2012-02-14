@@ -1,0 +1,59 @@
+package com.applicake.beanstalkclient.activities;
+
+import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity.DownloadRepositoryDetailsTask;
+import com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask;
+import com.applicake.beanstalkclient.tasks.ResponseHandler;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.XmlParser;
+
+import android.app.Activity;
+import android.view.View;
+import android.widget.AdapterView;
+
+public class OverallRepoReleaseFragment extends SpecifiedRepoReleasesListFragment {
+
+  @Override
+  public void onItemClick(AdapterView<?> listView, View itemView, int position, long id) {
+
+  }
+
+  public class DownloadRepositoryDetailsTask extends
+      BeanstalkAsyncTask<Void, Void, Repository> {
+
+    private int repositoryId;
+    private ResponseHandler<Repository> responseHandler;
+
+    public DownloadRepositoryDetailsTask(int repositoryId, Activity activity) {
+      super(activity);
+      this.repositoryId = repositoryId;
+    }
+
+    public DownloadRepositoryDetailsTask(int repositoryId, Activity activity,
+        ResponseHandler<Repository> responseHandler) {
+      this(repositoryId, activity);
+      this.responseHandler = responseHandler;
+    }
+
+    @Override
+    protected Repository trueDoInBackground(Void[] params) throws Throwable {
+      String repositoryXML = HttpRetriever.getRepositoryXML(prefs, repositoryId);
+      Repository repository = XmlParser.parseRepository(repositoryXML);
+      return repository;
+    }
+
+    @Override
+    protected void trueOnPostExceute(Repository result) {
+      if (responseHandler != null) {
+        responseHandler.onResult(result);
+      }
+    }
+
+    @Override
+    protected void performTaskAgain() {
+      new DownloadRepositoryDetailsTask(repositoryId, RepositoryDeploymentsActivity.this,
+          responseHandler).execute();
+    }
+  }
+
+}

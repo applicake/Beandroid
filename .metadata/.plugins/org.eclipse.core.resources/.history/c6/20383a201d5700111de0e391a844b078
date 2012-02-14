@@ -1,0 +1,82 @@
+package com.applicake.beanstalkclient.activities;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.R;
+
+public class NewRepositoryDeploymentsActivity extends BeanstalkActivity implements OnClickListener {
+    
+  boolean serverListLoaded = false;
+  boolean releaseListLoaded = false;
+
+  private boolean activityStartedForSpecificRepository;
+    
+  private SpecifiedRepoReleasesListFragment releasesFragment;
+  private SpecificRepoServerEnviromentsFragment serversFragment;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    activityStartedForSpecificRepository = getIntent().getBooleanExtra(Constants.OVERALL_REPOS, false);
+    
+    setContentView(R.layout.new_repository_deployments_layout);
+        
+    releasesButton = (Button) findViewById(R.id.releases_button);
+    releasesButton.setOnClickListener(this);
+    releasesButton.setSelected(true);
+
+    setupReleasesFragment();
+  }
+  
+  private void setupReleasesFragment() {
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    if(releasesFragment == null) {
+      if(activityStartedForSpecificRepository) {
+        releasesFragment = new SpecifiedRepoReleasesListFragment();
+      } else {
+        releasesFragment = new OverallRepoReleaseFragment();
+      }
+    }
+    transaction.replace(R.id.fragment_container, releasesFragment);
+    transaction.commit();
+  }
+  
+  private void setupServersFragment() {
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    if(serversFragment == null) {
+      if(activityStartedForSpecificRepository) {
+        serversFragment = new SpecificRepoServerEnviromentsFragment();
+      } else {
+        serversFragment = new OverallRepoServerEnviromentsListFragment();
+      }
+    }
+    transaction.replace(R.id.fragment_container, releasesFragment);
+    transaction.commit();
+  }
+
+  @Override
+  public void onBackPressed() {
+    finish();
+  }
+
+  @Override
+  public void onClick(View view) {
+    int id = view.getId();
+    switch (id) {
+    case R.id.releases_button:
+      setupReleasesFragment();
+      break;
+
+    case R.id.servers_button:
+      setupServersFragment();
+      break;
+    }
+  }
+
+}

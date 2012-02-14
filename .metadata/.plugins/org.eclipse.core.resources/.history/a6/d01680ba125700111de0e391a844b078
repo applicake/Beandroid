@@ -1,0 +1,76 @@
+package com.applicake.beanstalkclient.activities;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+
+import com.applicake.beanstalkclient.Release;
+import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask;
+import com.applicake.beanstalkclient.tasks.ResponseHandler;
+import com.applicake.beanstalkclient.utils.HttpRetriever;
+import com.applicake.beanstalkclient.utils.XmlParser;
+
+public class OverallRepoReleaseFragment extends SpecifiedRepoReleasesListFragment {
+
+  private SharedPreferences prefs;
+  
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    prefs = 
+  }
+  
+  @Override
+  public void onItemClick(AdapterView<?> listView, View itemView, int position, long id) {
+    final Release release = mReleaseArray.get(position);
+    ResponseHandler<Repository> handler = new ResponseHandler<Repository>() {
+      @Override
+      public void onResult(Repository result) {
+        startReleaseDetails(release, result);
+      }
+    };
+    new DownloadRepositoryDetailsTask(release.getRepositoryId(), getActivity(), handler).execute();
+  }
+
+  public class DownloadRepositoryDetailsTask extends
+      BeanstalkAsyncTask<Void, Void, Repository> {
+
+    private int repositoryId;
+    private ResponseHandler<Repository> responseHandler;
+
+    public DownloadRepositoryDetailsTask(int repositoryId, Activity activity) {
+      super(activity);
+      this.repositoryId = repositoryId;
+    }
+
+    public DownloadRepositoryDetailsTask(int repositoryId, Activity activity,
+        ResponseHandler<Repository> responseHandler) {
+      this(repositoryId, activity);
+      this.responseHandler = responseHandler;
+    }
+
+    @Override
+    protected Repository trueDoInBackground(Void[] params) throws Throwable {
+      String repositoryXML = HttpRetriever.getRepositoryXML(prefs, repositoryId);
+      Repository repository = XmlParser.parseRepository(repositoryXML);
+      return repository;
+    }
+
+    @Override
+    protected void trueOnPostExceute(Repository result) {
+      if (responseHandler != null) {
+        responseHandler.onResult(result);
+      }
+    }
+
+    @Override
+    protected void performTaskAgain() {
+      new DownloadRepositoryDetailsTask(repositoryId, getActivity(),
+          responseHandler).execute();
+    }
+  }
+
+}

@@ -1,0 +1,39 @@
+package com.applicake.beanstalkclient.activities;
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Release;
+import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
+
+public class OverallReposReleasesListFragment extends Fragment implements OnItemClickListener {
+  
+  private Activity parentActivity; 
+  private ReleasesAdapter mAdapter;
+  private ArrayList<Release> mReleaseArray = new ArrayList<Release>();
+  
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    
+    parentActivity = getActivity();
+    mAdapter = new ReleasesAdapter(getActivity(), R.layout.releases_entry, mReleaseArray);
+  }
+  
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    ListView listView = (ListView)LayoutInflater.from(parentActivity).inflate(R.layout.releases_list_fragment, null);
+    listView.setAdapter(mAdapter);
+    
+    return listView;
+  }
+}

@@ -1,6 +1,5 @@
 package com.applicake.beanstalkclient.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -9,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +19,7 @@ import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.SyncService;
 
-public abstract class BeanstalkActivity extends Activity {
+public abstract class BeanstalkActivity extends FragmentActivity {
   // on create
 
   protected SharedPreferences prefs;
@@ -110,9 +110,11 @@ public abstract class BeanstalkActivity extends Activity {
       break;
     case Constants.CLEAR_STACK_UP_TO_HOME:
       finish();
+      break;
+    default:
+      super.onActivityResult(requestCode, resultCode, data);
     }
 
-    // super.onActivityResult(requestCode, resultCode, data);
   }
 
   @Override

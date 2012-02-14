@@ -1,0 +1,34 @@
+package com.applicake.beanstalkclient.activities;
+
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
+public class OverallReposReleasesListFragment extends Fragment {
+  
+  private Intent mIntent;
+  private Activity parentActivity; 
+  private ReleasesAdapter mAdapter;
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    
+    mIntent = getActivity().getIntent();
+    parentActivity = getActivity();
+  }
+  
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    ListView listView = (ListView)LayoutInflater.from(parentActivity).inflate(R.layout.releases_list_fragment, null);
+    
+    
+  }
+}

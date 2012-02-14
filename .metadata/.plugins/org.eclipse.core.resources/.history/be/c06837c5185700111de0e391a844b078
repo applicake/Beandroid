@@ -1,0 +1,6 @@
+package com.applicake.beanstalkclient.activities;
+
+public class OverallRepoServerEnviromentsListFragment extends SpecificRepoServerEnviromentsFragment {
+  
+  
+}

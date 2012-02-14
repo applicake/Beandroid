@@ -1,0 +1,11 @@
+package com.applicake.beanstalkclient.activities;
+
+import android.support.v4.app.Fragment;
+
+public class SpecificRepoServerEnviromentsFragment extends Fragment {
+  
+  public void onCreate(android.os.Bundle savedInstanceState) {
+    
+  }
+
+}
