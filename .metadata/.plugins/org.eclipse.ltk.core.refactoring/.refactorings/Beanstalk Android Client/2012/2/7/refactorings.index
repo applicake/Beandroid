@@ -1,9 +1,0 @@
-1329150173391	Rename field 'RELEASES_FOR_REPOSITORY_HTTP_MIDDLE'
-1329150185004	Rename field 'RELEASES_FOR_REPOSITORY_HTTP_SUFFIX'
-1329212279909	Rename type 'DownloadChangesetListTask'
-1329214935166	Delete elements
-1329226019069	Rename type 'OverallReposDeploymentsFragment'
-1329226647639	Rename type 'OverallReposReleasesListFragment'
-1329227478438	Rename field 'mAdapter'
-1329306058781	Delete element
-1329307305375	Delete element

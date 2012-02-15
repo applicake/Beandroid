@@ -1,5 +1,0 @@
-package com.applicake.beanstalkclient;
-
-public interface RepositoryDataHolder {
-
-}

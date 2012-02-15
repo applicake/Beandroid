@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-  <ExpandableListView
-    android:background="@color/list_bg_light"
-    android:cacheColorHint="@android:color/transparent"
-    android:groupIndicator="@android:color/transparent"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
-    android:paddingTop="10dp"
-    android:visibility="gone" />

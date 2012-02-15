@@ -1,7 +1,0 @@
-#Mon Feb 13 15:49:34 CET 2012
-org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
-org.eclipse.jdt.core.classpathVariable.JRE_LIB=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar
-org.eclipse.jdt.core.classpathVariable.JRE_SRC=
-eclipse.preferences.version=1
-org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
-org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
