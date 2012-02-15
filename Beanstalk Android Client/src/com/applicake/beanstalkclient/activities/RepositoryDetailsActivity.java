@@ -105,12 +105,11 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Constants.REFRESH_ACTIVITY) {
       setResult(resultCode);
       new DownloadRepositoryInfo().execute();
-
     }
+    super.onActivityResult(requestCode, resultCode, data);
   }
 
   @Override
@@ -135,11 +134,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
     }
 
     if (v.getId() == R.id.buttonDeployment) {
-//      GUI.displayMonit(getApplicationContext(), "to be implemented");
-      Intent intent = new Intent(getApplicationContext(), NewRepositoryDeploymentsActivity.class);
-      intent.putExtra(Constants.REPOSITORY, repository);
-      startActivityForResult(intent, 0);
-      
+      startActivityForResult(NewRepositoryDeploymentsActivity.generateIntentForSpecificRepo(this, repository), 0);      
     }
 
     if (v.getId() == R.id.buttonModifyProperties) {

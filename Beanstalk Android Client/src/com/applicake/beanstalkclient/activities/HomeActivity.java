@@ -76,10 +76,7 @@ public class HomeActivity extends BeanstalkActivity {
   }
 
   public void onHomeDeploymentClick(View v) {
-	  Intent intent = new Intent(this, NewRepositoryDeploymentsActivity.class);
-	  intent.putExtra(Constants.REPOSITORY, Repository.generateFakeRepositoryForOverall());
-	  intent.putExtra(Constants.OVERALL_REPOS, true);
-	  startActivityForResult(intent, 0);
+	  startActivityForResult(NewRepositoryDeploymentsActivity.generateIntentForOverallRepositories(this), 0);
   }
 
   public void onHomeSettingsClick(View v) {

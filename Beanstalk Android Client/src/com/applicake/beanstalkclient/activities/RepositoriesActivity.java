@@ -36,7 +36,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
   public static final int RESULT_REPOSITORY = 91;
 
   private Context mContext;
-  private boolean returnAfterClick;
+  private boolean returnAfterClick = false;
   public ArrayList<Repository> repositoriesArray;
   public RepositoriesAdapter repositoriesAdapter;
   public ListView repositoriesList;
@@ -52,15 +52,18 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
     // TODO refactor 
 
-    returnAfterClick = getIntent().getBooleanExtra(Constants.RETURN_RESULT_WHEN_CLICK, false);
+    if(getIntent().getAction() != null) {
+      returnAfterClick = getIntent().getAction().equals(Intent.ACTION_PICK);
+    }
 
     repositoriesList = (ListView) findViewById(R.id.repositoriesList);
     View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
         Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_repository_footer,
         null, false);
-    if (currentUser != UserType.USER.name()) {
+    if (currentUser != UserType.USER.name() && !returnAfterClick) {
       repositoriesList.addFooterView(footerView);
       footerView.setOnClickListener(this);
+      repositoriesLeftCounter = (TextView) footerView.findViewById(R.id.repositoryCounter);
     }
 
     repositoriesArray = new ArrayList<Repository>();
@@ -69,7 +72,6 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
     repositoriesList.setAdapter(repositoriesAdapter);
     repositoriesList.setOnItemClickListener(this);
 
-    repositoriesLeftCounter = (TextView) footerView.findViewById(R.id.repositoryCounter);
 
     new DownloadRepositoriesTask(this).execute();
 
@@ -77,9 +79,10 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Constants.REFRESH_ACTIVITY)
+    if (resultCode == Constants.REFRESH_ACTIVITY) {
       new DownloadRepositoriesTask(this).execute();
+    }
+    super.onActivityResult(requestCode, resultCode, data);
   }
 
   @Override
@@ -190,8 +193,10 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
             int repositoriesInPlan = prefs.getInt(Constants.NUMBER_OF_REPOS_AVAILABLE, 0);
             int numberLeft = repositoriesInPlan - repositoriesArray.size();
-            repositoriesLeftCounter.setText("available repositories: "
-                + String.valueOf(numberLeft) + "/" + String.valueOf(repositoriesInPlan));
+            if(repositoriesLeftCounter != null) {
+              repositoriesLeftCounter.setText("available repositories: "
+                  + String.valueOf(numberLeft) + "/" + String.valueOf(repositoriesInPlan));
+            }
           }
         }
 

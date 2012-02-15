@@ -90,4 +90,8 @@ public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends Async
     th.printStackTrace();
     return message;
   }  
+  
+  protected Activity getContext() {
+    return mContext;
+  }
 }

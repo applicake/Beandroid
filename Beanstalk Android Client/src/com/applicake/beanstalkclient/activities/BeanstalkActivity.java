@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
@@ -148,9 +147,13 @@ public abstract class BeanstalkActivity extends FragmentActivity {
   }
 
   public void onDeploymentButtonClick(View v) {
-
-    Toast.makeText(getApplicationContext(), "Deployment button clicked",
-        Toast.LENGTH_SHORT).show();
+    Intent intent = NewRepositoryDeploymentsActivity.generateIntentForOverallRepositories(this);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    setResult(Constants.CLEAR_STACK_UP_TO_HOME);
+    startActivity(intent);
+    if(!(this instanceof HomeActivity)) {
+      finish();
+    }
   }
 
   public void onHomeButtonClick(View v) {
@@ -161,4 +164,5 @@ public abstract class BeanstalkActivity extends FragmentActivity {
     if (!(this instanceof HomeActivity))
       finish();
   }
+
 }

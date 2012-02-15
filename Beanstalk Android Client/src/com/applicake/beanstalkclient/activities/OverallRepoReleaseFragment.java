@@ -35,7 +35,7 @@ public class OverallRepoReleaseFragment extends SpecifiedRepoReleasesListFragmen
   @Override
   public void onClick(View v) {
     Intent intent = new Intent(getActivity(), RepositoriesActivity.class);
-    intent.putExtra(Constants.RETURN_RESULT_WHEN_CLICK, true);
+    intent.setAction(Intent.ACTION_PICK);
     startActivityForResult(intent, REPOSITORY_ADD_RELEASE);
   }
   

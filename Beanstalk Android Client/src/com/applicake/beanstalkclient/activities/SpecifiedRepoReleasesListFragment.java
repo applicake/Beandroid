@@ -74,7 +74,12 @@ public class SpecifiedRepoReleasesListFragment extends Fragment implements OnIte
   }
   
   @Override
-  public void onViewCreated(View view, Bundle savedInstanceState) {
+  public void onResume() {
+    super.onResume();
+    downloadReleases();
+  }
+  
+  protected void downloadReleases() {
     new DownloadReleaseListTask(getActivity()).execute();
   }
   

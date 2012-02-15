@@ -2,31 +2,33 @@ package com.applicake.beanstalkclient.activities;
 
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.view.View;
+
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
-
-import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.RemoteViews.ActionException;
 
 public class OverallRepoServerEnviromentsListFragment extends SpecificRepoServerEnviromentsFragment {
   
   private static final int REPOSITORY_ADD_ENVIROMENT = 0x123;
   
   @Override
-  public void onViewCreated(View view, Bundle savedInstanceState) {
-    new DownloadRepositoriesIdsTask().execute();
+  protected void downloadEnviroments() {
+    new DownloadRepositoriesIdsTask(getActivity()).execute();
   }
   
-  public class DownloadRepositoriesIdsTask extends AsyncTask<Void, Void, List<Integer>> {
+  public class DownloadRepositoriesIdsTask extends BeanstalkAsyncTask<Void, Void, List<Integer>> {
+
+    public DownloadRepositoriesIdsTask(Activity context) {
+      super(context);
+    }
 
     @Override
-    protected List<Integer> doInBackground(Void... arg) {
+    protected List<Integer> trueDoInBackground(Void... arg) {
       try {
         String repositoriesXml = HttpRetriever.getRepositoryListXML(prefs);
         return XmlParser.parseRepositoryIdsList(repositoriesXml);
@@ -39,15 +41,17 @@ public class OverallRepoServerEnviromentsListFragment extends SpecificRepoServer
     protected void onPostExecute(List<Integer> result) {
       new DownloadServerEnvironmentsListTask(getActivity(), result).execute();
     }
+
+    @Override
+    protected void performTaskAgain() {
+      downloadEnviroments();
+    }
   }
   
   @Override
   public void onClick(View view) {
     Intent intent = new Intent(getActivity(), RepositoriesActivity.class);
-    //Intent intent = new Intent(Intent.ACTION_PICK);
-    intent.putExtra(Constants.RETURN_RESULT_WHEN_CLICK, true);
-    //intent.setDataAndType(Uri.EMPTY, "application/repos");
-    //intent.setType("application/repos");
+    intent.setAction(Intent.ACTION_PICK);
     startActivityForResult(intent, REPOSITORY_ADD_ENVIROMENT);
   }
   

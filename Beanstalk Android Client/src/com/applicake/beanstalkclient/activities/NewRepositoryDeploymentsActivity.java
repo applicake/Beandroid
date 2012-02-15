@@ -1,5 +1,7 @@
 package com.applicake.beanstalkclient.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -20,7 +22,19 @@ public class NewRepositoryDeploymentsActivity extends BeanstalkActivity implemen
   
   private Button releasesButton;
   private Button serversButton;
-
+  
+  public static Intent generateIntentForSpecificRepo(Context context, Repository repository) {
+    Intent intent = new Intent(context, NewRepositoryDeploymentsActivity.class);
+    intent.putExtra(Constants.REPOSITORY, repository);
+    return intent;
+  }
+  
+  public static Intent generateIntentForOverallRepositories(Context context) {
+    Intent intent = generateIntentForSpecificRepo(context, Repository.generateFakeRepositoryForOverall());
+    intent.putExtra(Constants.OVERALL_REPOS, true);
+    return intent;
+  }
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

@@ -53,6 +53,16 @@ public class SpecificRepoServerEnviromentsFragment extends Fragment implements O
   }
 
   @Override
+  public void onResume() {
+    super.onResume();
+    downloadEnviroments();
+  }
+  
+  protected void downloadEnviroments() {
+    new DownloadServerEnvironmentsListTask(getActivity(), repository.getId()).execute();
+  }
+  
+  @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mServersList = (ExpandableListView) inflater.inflate(
@@ -71,11 +81,6 @@ public class SpecificRepoServerEnviromentsFragment extends Fragment implements O
     serversAddNewFooterView.setOnClickListener(this);
 
     return mServersList;
-  }
-
-  @Override
-  public void onViewCreated(View view, Bundle savedInstanceState) {
-    new DownloadServerEnvironmentsListTask(getActivity(), repository.getId()).execute();
   }
   
   @Override

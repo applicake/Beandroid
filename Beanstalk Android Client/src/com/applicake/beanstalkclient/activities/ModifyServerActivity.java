@@ -60,7 +60,7 @@ public class ModifyServerActivity extends BeanstalkActivity implements OnClickLi
     ((EditText) findViewById(R.id.remote_path_edittext)).setText(server.getRemotePath());
     ((EditText) findViewById(R.id.remote_addr_edittext)).setText(server.getRemoteAddr());
     ((Spinner) findViewById(R.id.protocol_spinner)).setSelection(server.getProtocol()
-        .toLowerCase() == "ftp" ? 0 : 1);
+        .toLowerCase().equals("ftp") ? 0 : 1);
     ((EditText) findViewById(R.id.port_edittext))
         .setText(String.valueOf(server.getPort()));
     ((EditText) findViewById(R.id.login_edittext)).setText(server.getLogin());
@@ -74,6 +74,8 @@ public class ModifyServerActivity extends BeanstalkActivity implements OnClickLi
         .getPreReleaseHook());
     ((EditText) findViewById(R.id.post_release_hook_edittext)).setText(server
         .getPostReleaseHook());
+    
+    
 
   }
 
