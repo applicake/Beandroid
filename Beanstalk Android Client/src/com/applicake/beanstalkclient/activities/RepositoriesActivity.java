@@ -9,7 +9,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -30,13 +29,16 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerRespo
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
+import com.applicake.beanstalkclient.widgets.AddNewObjectView;
+import com.applicake.beanstalkclient.widgets.AddNewRepositoryViewController;
 
 public class RepositoriesActivity extends BeanstalkActivity implements OnItemClickListener, OnClickListener {
 
   public static final int RESULT_REPOSITORY = 91;
-
+  
   private Context mContext;
   private boolean returnAfterClick = false;
+  private AddNewObjectView addNewObjectView;
   public ArrayList<Repository> repositoriesArray;
   public RepositoriesAdapter repositoriesAdapter;
   public ListView repositoriesList;
@@ -55,15 +57,17 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
     if(getIntent().getAction() != null) {
       returnAfterClick = getIntent().getAction().equals(Intent.ACTION_PICK);
     }
-
+    
     repositoriesList = (ListView) findViewById(R.id.repositoriesList);
-    View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
+    /*View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
         Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_repository_footer,
-        null, false);
+        null, false);*/
+    addNewObjectView = new AddNewObjectView(this, new AddNewRepositoryViewController());
+    
     if (currentUser != UserType.USER.name() && !returnAfterClick) {
-      repositoriesList.addFooterView(footerView);
-      footerView.setOnClickListener(this);
-      repositoriesLeftCounter = (TextView) footerView.findViewById(R.id.repositoryCounter);
+      repositoriesList.addFooterView(addNewObjectView);
+      addNewObjectView.setOnClickListener(this);
+      //repositoriesLeftCounter = (TextView) footerView.findViewById(R.id.repositoryCounter);
     }
 
     repositoriesArray = new ArrayList<Repository>();
@@ -193,9 +197,10 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
             int repositoriesInPlan = prefs.getInt(Constants.NUMBER_OF_REPOS_AVAILABLE, 0);
             int numberLeft = repositoriesInPlan - repositoriesArray.size();
-            if(repositoriesLeftCounter != null) {
-              repositoriesLeftCounter.setText("available repositories: "
-                  + String.valueOf(numberLeft) + "/" + String.valueOf(repositoriesInPlan));
+            if(addNewObjectView != null) {
+              /*repositoriesLeftCounter.setText("available repositories: "
+                  + String.valueOf(numberLeft) + "/" + String.valueOf(repositoriesInPlan));*/
+              addNewObjectView.setAvailable(numberLeft, repositoriesInPlan);
             }
           }
         }

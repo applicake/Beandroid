@@ -47,4 +47,8 @@
   </string>
   <string name="automatic">automatic</string>
   <string name="manual">manual</string>
+  
+  <string name="add_new_repository">Add new repository</string>
+  <string name="available_repositories">available repositories: </string>
+  <string name="cant_add_new_repository">Can\'t add new repository</string>
 </resources>

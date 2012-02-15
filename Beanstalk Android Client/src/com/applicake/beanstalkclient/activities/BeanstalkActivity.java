@@ -108,6 +108,7 @@ public abstract class BeanstalkActivity extends FragmentActivity {
       finish();
       break;
     case Constants.CLEAR_STACK_UP_TO_HOME:
+      setResult(Constants.CLEAR_STACK_UP_TO_HOME);
       finish();
       break;
     default:
