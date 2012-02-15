@@ -28,6 +28,14 @@ public class Repository implements Parcelable {
   private String vcs;
   private String defaultBranch;
 
+  public static Repository generateFakeRepositoryForOverall() {
+    Repository repo = new Repository();
+    repo.setTitle("Overall repositories");
+    repo.setColorLabel("label-white");
+    
+    return repo;
+  }
+  
   @Override
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeInt(accountId);

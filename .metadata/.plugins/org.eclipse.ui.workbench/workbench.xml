@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="43" version="2.0">
+<workbench progressCount="34" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="21" y="56">
 <fastViewData fastViewLocation="1024"/>
@@ -32,7 +32,7 @@
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
-<page aggregateWorkingSetId="Aggregate for window 1329144878982" focus="true" label="Workspace - Java">
+<page aggregateWorkingSetId="Aggregate for window 1329144878982" focus="true" label="Workspace - Java EE">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
@@ -48,20 +48,33 @@
 <part id="7"/>
 <part id="8"/>
 <part id="9"/>
+<part id="10"/>
+<part id="11"/>
+<part id="12"/>
+<part id="13"/>
+<part id="14"/>
+<part id="15"/>
+<part id="16"/>
+<part id="17"/>
+<part id="18"/>
+<part id="19"/>
+<part id="20"/>
+<part id="21"/>
+<part id="22"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HomeActivity.java" partName="HomeActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/HomeActivity.java" title="HomeActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/HomeActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/HomeActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="289" selectionTopPixel="572"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2377" selectionTopPixel="572"/>
 </editor>
 <editor id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="home_screen_activity.xml" partName="home_screen_activity.xml" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/res/layout/home_screen_activity.xml" title="home_screen_activity.xml" tooltip="Beanstalk Android Client/res/layout/home_screen_activity.xml" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/res/layout/home_screen_activity.xml"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RepositoryDetailsActivity.java" partName="RepositoryDetailsActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDetailsActivity.java" title="RepositoryDetailsActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDetailsActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDetailsActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="8" selectionOffset="4489" selectionTopPixel="1300"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6910" selectionTopPixel="2265"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LoginActivity.java" partName="LoginActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/LoginActivity.java" title="LoginActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/LoginActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/LoginActivity.java"/>
@@ -70,9 +83,9 @@
 <editor id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="login_activity_layout.xml" partName="login_activity_layout.xml" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/res/layout/login_activity_layout.xml" title="login_activity_layout.xml" tooltip="Beanstalk Android Client/res/layout/login_activity_layout.xml" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/res/layout/login_activity_layout.xml"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RepositoryDeploymentsActivity.java" partName="RepositoryDeploymentsActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java" title="RepositoryDeploymentsActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RepositoryDeploymentsActivity.java" partName="RepositoryDeploymentsActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java" title="RepositoryDeploymentsActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2354" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="7" selectionOffset="8187" selectionTopPixel="2642"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Account.java" partName="Account.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/Account.java" title="Account.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/Account.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Account.java"/>
@@ -82,13 +95,60 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/XmlParser.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="12138" selectionTopPixel="5506"/>
 </editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Repository.java" partName="Repository.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/Repository.java" title="Repository.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/Repository.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Repository.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="268" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Release.java" partName="Release.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/Release.java" title="Release.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/Release.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Release.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SpecifiedRepoReleasesListFragment.java" partName="SpecifiedRepoReleasesListFragment.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecifiedRepoReleasesListFragment.java" title="SpecifiedRepoReleasesListFragment.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecifiedRepoReleasesListFragment.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecifiedRepoReleasesListFragment.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3140" selectionTopPixel="104"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="repository_deployments_layout.xml" partName="repository_deployments_layout.xml" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/res/layout/repository_deployments_layout.xml" title="repository_deployments_layout.xml" tooltip="Beanstalk Android Client/res/layout/repository_deployments_layout.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/res/layout/repository_deployments_layout.xml"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="releases_list_fragment.xml" partName="releases_list_fragment.xml" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/res/layout/releases_list_fragment.xml" title="releases_list_fragment.xml" tooltip="Beanstalk Android Client/res/layout/releases_list_fragment.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/res/layout/releases_list_fragment.xml"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OverallRepoReleaseFragment.java" partName="OverallRepoReleaseFragment.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoReleaseFragment.java" title="OverallRepoReleaseFragment.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoReleaseFragment.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoReleaseFragment.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1527" selectionTopPixel="256"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SpecificRepoServerEnviromentsFragment.java" partName="SpecificRepoServerEnviromentsFragment.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecificRepoServerEnviromentsFragment.java" title="SpecificRepoServerEnviromentsFragment.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecificRepoServerEnviromentsFragment.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecificRepoServerEnviromentsFragment.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4169" selectionTopPixel="1562"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="enviroment_servers_list.xml" partName="enviroment_servers_list.xml" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/res/layout/enviroment_servers_list.xml" title="enviroment_servers_list.xml" tooltip="Beanstalk Android Client/res/layout/enviroment_servers_list.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/res/layout/enviroment_servers_list.xml"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OverallRepoServerEnviromentsListFragment.java" partName="OverallRepoServerEnviromentsListFragment.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoServerEnviromentsListFragment.java" title="OverallRepoServerEnviromentsListFragment.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoServerEnviromentsListFragment.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoServerEnviromentsListFragment.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1666" selectionTopPixel="122"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NewRepositoryDeploymentsActivity.java" partName="NewRepositoryDeploymentsActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/NewRepositoryDeploymentsActivity.java" title="NewRepositoryDeploymentsActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/NewRepositoryDeploymentsActivity.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/NewRepositoryDeploymentsActivity.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="410" selectionTopPixel="0"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="new_repository_deployments_layout.xml" partName="new_repository_deployments_layout.xml" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/res/layout/new_repository_deployments_layout.xml" title="new_repository_deployments_layout.xml" tooltip="Beanstalk Android Client/res/layout/new_repository_deployments_layout.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/res/layout/new_repository_deployments_layout.xml"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Constants.java" partName="Constants.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/Constants.java" title="Constants.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/Constants.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Constants.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3113" selectionTopPixel="212"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" partName="Beanstalk Android Client Manifest" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/AndroidManifest.xml" title="Beanstalk Android Client Manifest" tooltip="Beanstalk Android Client/AndroidManifest.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/AndroidManifest.xml"/>
+</editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RepositoriesActivity.java" partName="RepositoriesActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java" title="RepositoriesActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4462" selectionTopPixel="815"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3906" selectionTopPixel="364"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServerEnvironmentHandler.java" partName="ServerEnvironmentHandler.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java" title="ServerEnvironmentHandler.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3338" selectionTopPixel="856"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BeanstalkActivity.java" partName="BeanstalkActivity.java" path="/Users/part/Documents/workspace_beandroid/Beandroid/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/BeanstalkActivity.java" title="BeanstalkActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/BeanstalkActivity.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/BeanstalkActivity.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3445" selectionTopPixel="969"/>
 </editor>
 </editors>
 <views>
@@ -98,10 +158,10 @@
 <view id="org.eclipse.debug.ui.BreakpointView" partName="Breakpoints">
 <viewState/>
 </view>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks"/>
 <view id="org.eclipse.debug.ui.VariableView" partName="Variables">
 <viewState/>
 </view>
-<view id="org.eclipse.ui.views.TaskList" partName="Tasks"/>
 <view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
@@ -113,8 +173,7 @@
 </view>
 <view id="org.eclipse.ui.views.AllMarkersView" partName="Markers">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.allSeverityField" categoryGroup="org.eclipse.ui.ide.type" markerContentGenerator="org.eclipse.ui.ide.allMarkersGenerator" partName="Markers">
-<expanded>
-<category IMemento.internal.id="Java Problems (1 item)"/>
+<expanded>&#x0A;<category IMemento.internal.id="Java Problems (1 item)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.allSeverityField="300" org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.allSeverityField"/>
@@ -133,7 +192,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Errors (2 items)"/>
+<category IMemento.internal.id="Errors (1 item)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -142,9 +201,6 @@
 <visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
-</view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
@@ -178,11 +234,12 @@
 </customFilters>
 </viewState>
 </view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
 <view id="org.eclipse.mylyn.tasks.ui.views.tasks" partName="Task List">
 <viewState linkWithEditor="true" presentation="org.eclipse.mylyn.tasks.ui.categorized">
-<sorter groupBy="CATEGORY_QUERY">
-<sorter>
-<sort0 sortDirection="1" sortKey="PRIORITY"/>
+<sorter groupBy="CATEGORY_QUERY">&#x0A;<sorter>&#x0A;<sort0 sortDirection="1" sortKey="PRIORITY"/>
 <sort1 sortDirection="1" sortKey="RANK"/>
 <sort2 sortDirection="1" sortKey="DATE_CREATED"/>
 <sort3 sortDirection="1" sortKey="NONE"/>
@@ -196,12 +253,12 @@
 </viewState>
 </view>
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
+<view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 <view id="org.eclipse.wst.server.ui.ServersView" partName="Servers">
 <viewState CommonNavigator.LINKING_ENABLED="0"/>
 </view>
-<view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="org.eclipse.jst.j2ee.J2EEPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jst.j2ee.internal.perspective.J2EEPerspective" id="org.eclipse.jst.j2ee.J2EEPerspective" label="Java EE"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -299,7 +356,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="254" ratioRight="762" relationship="2" relative="topLeft"/>
+<info part="org.eclipse.ui.editorss" ratio="0.18648507" ratioLeft="356" ratioRight="1553" relationship="2" relative="topLeft"/>
 <info folder="true" part="bottomRight" ratio="0.7531285" ratioLeft="662" ratioRight="217" relationship="4" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="0">
 <page content="org.eclipse.ui.views.AllMarkersView" label="LabelNotFound"/>
@@ -395,12 +452,18 @@
 <perspective_action id="org.eclipse.wst.jsdt.ui.JavaPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.ui.views.ProblemView"/>
-<view id="org.eclipse.jdt.ui.JavadocView"/>
-<view id="org.eclipse.jdt.ui.SourceView"/>
-<view id="com.android.ide.eclipse.ddms.views.LogCatView"/>
 <view id="org.eclipse.jdt.ui.PackageExplorer"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="131072" id="bottom" orientation="256" selectedTabId="com.android.ide.eclipse.ddms.views.LogCatView" style="0">
+<fastViews>
+<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.JavadocView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.SourceView" ratio="0.3"/>
+<view id="com.android.ide.eclipse.ddms.views.LogCatView" ratio="0.2993197"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.2993197"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
@@ -424,21 +487,16 @@
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="478" ratioRight="1434" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.7494331" ratioLeft="661" ratioRight="221" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
-<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
-<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.JavadocView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.SourceView" label="LabelNotFound"/>
+<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LabelNotFound"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@10eeab3" ratio="0.7496513" ratioLeft="1075" ratioRight="359" relationship="2" relative="org.eclipse.ui.editorss">
@@ -511,8 +569,13 @@
 <view id="org.eclipse.debug.ui.BreakpointView"/>
 <view id="org.eclipse.debug.ui.ExpressionView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
-<view id="com.android.ide.eclipse.ddms.views.LogCatView"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@1328ee3" orientation="256" selectedTabId="com.android.ide.eclipse.ddms.views.LogCatView" style="0">
+<fastViews>
+<view id="com.android.ide.eclipse.ddms.views.LogCatView" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
@@ -552,11 +615,9 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@1328ee3" ratio="0.5" ratioLeft="943" ratioRight="943" relationship="2" relative="org.eclipse.debug.internal.ui.ConsoleFolderView">
-<folder activePageID="com.android.ide.eclipse.ddms.views.LogCatView" appearance="2" expanded="2">
-<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LogCat"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<folder appearance="2" expanded="0">
+<page content="com.android.ide.eclipse.ddms.views.LogCatView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.4493192" ratioLeft="297" ratioRight="364" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
@@ -589,168 +650,135 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/NewRepositoryDeploymentsActivity.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoServerEnviromentsListFragment.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" path="/Beanstalk Android Client/AndroidManifest.xml"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Beanstalk Android Client/\/Users\/part\/android-sdks\/platforms\/android-4\/android.jar&lt;java.util.concurrent(ThreadPoolExecutor.class"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Beanstalk Android Client/\/Users\/part\/android-sdks\/platforms\/android-4\/android.jar&lt;android.os(AsyncTask.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/HttpRetriever.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/XmlParser.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/ReleaseDetailsActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDetailsActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/HomeActivity.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Account.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/LoginActivity.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/BeanstalkActivity.java"/>
 </editors>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11216" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1370" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11349" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1334" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11040" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1319" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="9869" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="AsyncTask.class" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="10147" y="0"/>
-</item>
-<item historyLabel="ThreadPoolExecutor.class" index="2">
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
 <position/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="10147" y="0"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11347" y="0"/>
-</item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11418" y="70"/>
-</item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="9840" y="0"/>
-</item>
-<item historyLabel="ThreadPoolExecutor.class" index="2">
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
 <position/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="9840" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="9784" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1536" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11053" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11135" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1095" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11261" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11350" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1095" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11396" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11418" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1095" y="0"/>
 </item>
-<item historyLabel="ThreadPoolExecutor.class" index="2">
-<position/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11441" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1095" y="0"/>
 </item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1599" y="0"/>
 </item>
-<item historyLabel="ThreadPoolExecutor.class" index="2">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1599" y="0"/>
 </item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1665" y="0"/>
 </item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="4227" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="4547" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1665" y="0"/>
 </item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="4462" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2290" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11313" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1665" y="0"/>
 </item>
-<item historyLabel="HttpRetriever.java" index="4">
-<position info="not_deleted" x="15325" y="40"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1133" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="11455" y="0"/>
+<item historyLabel="Beanstalk Android Client Manifest" index="2"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1133" y="0"/>
 </item>
-<item historyLabel="XmlParser.java" index="5">
-<position info="not_deleted" x="12138" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1503" y="0"/>
 </item>
-<item historyLabel="ServerEnvironmentHandler.java" index="6">
-<position info="not_deleted" x="2209" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="2035" y="0"/>
 </item>
-<item historyLabel="XmlParser.java" index="5">
-<position info="not_deleted" x="12138" y="0"/>
+<item historyLabel="RepositoriesActivity.java" index="3">
+<position info="not_deleted" x="3906" y="0"/>
 </item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="4462" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="2035" y="0"/>
 </item>
-<item historyLabel="ServerEnvironmentHandler.java" index="6">
-<position info="not_deleted" x="3338" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1701" y="25"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="4978" y="0"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="2783" y="0"/>
 </item>
-<item historyLabel="ReleaseDetailsActivity.java" index="7">
-<position info="not_deleted" x="1555" y="0"/>
+<item historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1666" y="0"/>
 </item>
-<item historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="4720" y="9"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="410" y="0"/>
 </item>
-<item historyLabel="RepositoryDetailsActivity.java" index="8">
-<position info="not_deleted" x="4489" y="8"/>
+<item historyLabel="BeanstalkActivity.java" index="4">
+<position info="not_deleted" x="3445" y="0"/>
 </item>
-<item historyLabel="HomeActivity.java" index="9">
-<position info="not_deleted" x="289" y="0"/>
+<item historyLabel="NewRepositoryDeploymentsActivity.java" index="0">
+<position info="not_deleted" x="410" y="0"/>
 </item>
-<item historyLabel="Account.java" index="10">
-<position info="not_deleted" x="145" y="7"/>
-</item>
-<item historyLabel="XmlParser.java" index="5">
-<position info="not_deleted" x="12138" y="0"/>
-</item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="4462" y="0"/>
-</item>
-<item historyLabel="ServerEnvironmentHandler.java" index="6">
-<position info="not_deleted" x="3338" y="0"/>
-</item>
-<item historyLabel="RepositoriesActivity.java" index="1">
-<position info="not_deleted" x="4462" y="0"/>
-</item>
-<item historyLabel="LoginActivity.java" index="11">
-<position info="not_deleted" x="5576" y="0"/>
-</item>
-<item historyLabel="RepositoryDetailsActivity.java" index="8">
-<position info="not_deleted" x="4489" y="8"/>
-</item>
-<item historyLabel="LoginActivity.java" index="11">
-<position info="not_deleted" x="5269" y="0"/>
-</item>
-<item active="true" historyLabel="RepositoryDeploymentsActivity.java" index="0">
-<position info="not_deleted" x="4720" y="9"/>
+<item active="true" historyLabel="OverallRepoServerEnviromentsListFragment.java" index="1">
+<position info="not_deleted" x="1666" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -766,12 +794,11 @@
 <trimItem IMemento.internal.id="org.eclipse.ui.editorss"/>
 <trimItem IMemento.internal.id="topRight"/>
 <trimItem IMemento.internal.id="bottom"/>
-<trimItem IMemento.internal.id="right"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@10eeab3"/>
 <trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.ConsoleFolderView"/>
 <trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
 <trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.ToolsFolderView"/>
 <trimItem IMemento.internal.id="org.eclipse.debug.internal.ui.OutlineFolderView"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@1328ee3"/>
 </trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
@@ -786,47 +813,50 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ReleaseDetailsActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/ReleaseDetailsActivity.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/ReleaseDetailsActivity.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServerEnvironmentHandler.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ThreadPoolExecutor.class" tooltip="java.util.concurrent.ThreadPoolExecutor">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Beanstalk Android Client/\/Users\/part\/android-sdks\/platforms\/android-4\/android.jar&lt;java.util.concurrent(ThreadPoolExecutor.class"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BeanstalkActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/BeanstalkActivity.java">
+<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/BeanstalkActivity.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RepositoriesActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java">
 <persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="XmlParser.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/XmlParser.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/XmlParser.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="R.java" tooltip="Beanstalk Android Client/gen/com/applicake/beanstalkclient/R.java">
+<persistable path="/Beanstalk Android Client/gen/com/applicake/beanstalkclient/R.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HttpRetriever.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/HttpRetriever.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/HttpRetriever.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="releases_loading_footer.xml" tooltip="Beanstalk Android Client/res/layout/releases_loading_footer.xml">
+<persistable path="/Beanstalk Android Client/res/layout/releases_loading_footer.xml"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PlanHandler.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/PlanHandler.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/PlanHandler.java"/>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ListView.class" tooltip="android.widget.ListView">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Beanstalk Android Client/\/Users\/part\/android-sdks\/platforms\/android-4\/android.jar&lt;android.widget(ListView.class"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Plan.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/Plan.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Plan.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.manifest.ManifestEditor" name="AndroidManifest.xml" tooltip="Beanstalk Android Client/AndroidManifest.xml">
+<persistable path="/Beanstalk Android Client/AndroidManifest.xml"/>
 </file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ClassLoader.class" tooltip="java.lang.ClassLoader">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Beanstalk Android Client/\/Users\/part\/android-sdks\/platforms\/android-4\/android.jar&lt;java.lang(ClassLoader.class"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Constants.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/Constants.java">
+<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Constants.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AccountHandler.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/AccountHandler.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/AccountHandler.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="new_repository_deployments_layout.xml" tooltip="Beanstalk Android Client/res/layout/new_repository_deployments_layout.xml">
+<persistable path="/Beanstalk Android Client/res/layout/new_repository_deployments_layout.xml"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Account.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/Account.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/Account.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NewRepositoryDeploymentsActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/NewRepositoryDeploymentsActivity.java">
+<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/NewRepositoryDeploymentsActivity.java"/>
 </file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="SharedPreferences.class" tooltip="android.content.SharedPreferences">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Beanstalk Android Client/\/Users\/part\/android-sdks\/platforms\/android-4\/android.jar&lt;android.content(SharedPreferences.class"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OverallRepoServerEnviromentsListFragment.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoServerEnviromentsListFragment.java">
+<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoServerEnviromentsListFragment.java"/>
 </file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="AsyncTask.class" tooltip="android.os.AsyncTask">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Beanstalk Android Client/\/Users\/part\/android-sdks\/platforms\/android-4\/android.jar&lt;android.os(AsyncTask.class"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServersAdapter.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/adapters/ServersAdapter.java">
+<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/adapters/ServersAdapter.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RepositoryDeploymentsActivity.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java">
-<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="enviroment_servers_list.xml" tooltip="Beanstalk Android Client/res/layout/enviroment_servers_list.xml">
+<persistable path="/Beanstalk Android Client/res/layout/enviroment_servers_list.xml"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SpecificRepoServerEnviromentsFragment.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecificRepoServerEnviromentsFragment.java">
+<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecificRepoServerEnviromentsFragment.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OverallRepoReleaseFragment.java" tooltip="Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoReleaseFragment.java">
+<persistable path="/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoReleaseFragment.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.layout.LayoutEditor" name="releases_list_fragment.xml" tooltip="Beanstalk Android Client/res/layout/releases_list_fragment.xml">
+<persistable path="/Beanstalk Android Client/res/layout/releases_list_fragment.xml"/>
 </file>
 </mruList>
 </workbench>

@@ -1,6 +1,7 @@
 package com.applicake.beanstalkclient.tasks;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 
@@ -13,6 +14,7 @@ public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends Async
   
   private Activity mContext;
   private Throwable th;
+  private ProgressDialog progressDialog;
   
   public BeanstalkAsyncTask(Activity context) {
     this.mContext = context;
@@ -30,9 +32,25 @@ public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends Async
   protected abstract Result trueDoInBackground(Params... params) throws Throwable;
   protected abstract void performTaskAgain();
   
+  @Override
+  protected void onPreExecute() {
+    String progressDialogTip = getProgressDialogTip();
+    if(progressDialogTip != null) {
+      progressDialog = ProgressDialog.show(mContext, getProgressDialogTip(), "Please wait...");
+      progressDialog.setCancelable(false);
+    }
+  }
+  
+  protected String getProgressDialogTip() {
+    return null;
+  }
+  
   protected void onPostExecute(Result result) {
     if(th != null) {
       handleError(th);
+    }
+    if(progressDialog != null) {
+      progressDialog.dismiss();
     }
     trueOnPostExceute(result);
   }

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="NewWizardAction">
+		<item value="com.android.ide.eclipse.editors.wizards.NewXmlFileWizard.Layout" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="com.android.ide.eclipse.wizards.category"/>
+			<item value="org.eclipse.jpt.dbws"/>
+			<item value="org.eclipse.emf.codegen.ecore.ui.wizardCategory"/>
+			<item value="org.eclipse.emf.codegen.ecore.ui.wizardCategory/org.eclipse.emf.codegen.ecore.ui.mappingWizardCategory"/>
+			<item value="org.eclipse.wst.XMLCategory"/>
+			<item value="org.eclipse.ui.Examples"/>
+		</list>
+	</section>
 	<section name="ImportExportAction">
 		<item value="org.eclipse.ui.wizards.import.ExternalProject" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
 		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">

@@ -136,7 +136,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 
     if (v.getId() == R.id.buttonDeployment) {
 //      GUI.displayMonit(getApplicationContext(), "to be implemented");
-      Intent intent = new Intent(getApplicationContext(), RepositoryDeploymentsActivity.class);
+      Intent intent = new Intent(getApplicationContext(), NewRepositoryDeploymentsActivity.class);
       intent.putExtra(Constants.REPOSITORY, repository);
       startActivityForResult(intent, 0);
       

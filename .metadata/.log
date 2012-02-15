@@ -515,3 +515,13 @@ Java Model Exception: Java Model Status [Timed out while retrieving the attached
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
 !SUBENTRY 1 org.eclipse.jdt.core 4 1012 2012-02-14 14:48:04.381
 !MESSAGE Timed out while retrieving the attached javadoc for AsyncTask [in AsyncTask.class [in android.os [in /Users/part/android-sdks/platforms/android-4/android.jar]]] 
+!SESSION 2012-02-15 11:57:40.896 -----------------------------------------------
+eclipse.buildId=M20110909-1335
+java.version=1.6.0_26
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/part/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86 -product org.eclipse.epp.package.jee.product -keyring /Users/part/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2012-02-15 11:57:52.217
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences

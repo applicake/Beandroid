@@ -69,6 +69,11 @@ public class OverallRepoReleaseFragment extends SpecifiedRepoReleasesListFragmen
       this(repositoryId, activity);
       this.responseHandler = responseHandler;
     }
+    
+    @Override
+    protected String getProgressDialogTip() {
+      return "Getting repository data";
+    }
 
     @Override
     protected Repository trueDoInBackground(Void... params) throws Throwable {

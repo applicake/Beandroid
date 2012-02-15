@@ -1,14 +1,15 @@
 package com.applicake.beanstalkclient.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Repository;
 
 public class NewRepositoryDeploymentsActivity extends BeanstalkActivity implements OnClickListener {
   
@@ -35,6 +36,10 @@ public class NewRepositoryDeploymentsActivity extends BeanstalkActivity implemen
     serversButton = (Button)findViewById(R.id.servers_button);
     serversButton.setOnClickListener(this);
     serversButton.setSelected(false);
+    
+    Repository repository = (Repository)getIntent().getParcelableExtra(Constants.REPOSITORY);
+    ((TextView) findViewById(R.id.repoName)).setText(repository.getTitle());
+    findViewById(R.id.colorLabel).getBackground().setLevel(repository.getColorLabelNo());
 
     setupReleasesFragment();
   }

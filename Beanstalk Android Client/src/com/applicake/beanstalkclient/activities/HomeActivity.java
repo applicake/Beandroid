@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.enums.UserType;
 
 public class HomeActivity extends BeanstalkActivity {
@@ -76,6 +77,7 @@ public class HomeActivity extends BeanstalkActivity {
 
   public void onHomeDeploymentClick(View v) {
 	  Intent intent = new Intent(this, NewRepositoryDeploymentsActivity.class);
+	  intent.putExtra(Constants.REPOSITORY, Repository.generateFakeRepositoryForOverall());
 	  intent.putExtra(Constants.OVERALL_REPOS, true);
 	  startActivityForResult(intent, 0);
   }

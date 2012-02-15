@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog">
-		<item value="false" key="ShowDerived"/>
 		<item value="true" key="ShowStatusLine"/>
+		<item value="false" key="ShowDerived"/>
 		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;" key="WorkingSet"/>
-		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/HomeActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/res/layout/home_screen_activity.xml&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDetailsActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/res/layout/login_activity_layout.xml&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/XmlParser.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/HttpRetriever.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/res/layout/home_screen_activity.xml&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/res/layout/login_activity_layout.xml&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/XmlParser.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/handlers/ServerEnvironmentHandler.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/utils/HttpRetriever.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/ReleaseDetailsActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDetailsActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoryDeploymentsActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/BeanstalkActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/res/layout/repository_deployments_layout.xml&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/Constants.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/HomeActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoReleaseFragment.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/SpecificRepoServerEnviromentsFragment.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/OverallRepoServerEnviromentsListFragment.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/AndroidManifest.xml&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/RepositoriesActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/Beanstalk Android Client/src/com/applicake/beanstalkclient/activities/NewRepositoryDeploymentsActivity.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
 		<section name="DialogBoundsSettings">
 			<item value="600" key="DIALOG_WIDTH"/>
 			<item value="150" key="DIALOG_Y_ORIGIN"/>
-			<item value="660" key="DIALOG_X_ORIGIN"/>
 			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="660" key="DIALOG_X_ORIGIN"/>
 			<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 		</section>
 	</section>
@@ -20,8 +20,8 @@
 	<section name="CleanDialogSettings">
 		<item value="484" key="DIALOG_WIDTH"/>
 		<item value="269" key="DIALOG_Y_ORIGIN"/>
-		<item value="354" key="DIALOG_HEIGHT"/>
 		<item value="718" key="DIALOG_X_ORIGIN"/>
+		<item value="354" key="DIALOG_HEIGHT"/>
 		<item value="false" key="TOGGLE_SELECTED"/>
 	</section>
 </section>
