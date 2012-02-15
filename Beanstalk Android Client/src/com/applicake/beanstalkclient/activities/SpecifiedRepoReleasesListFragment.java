@@ -25,7 +25,6 @@ import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Release;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.Strings;
-import com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity.DownloadReleaseListTask;
 import com.applicake.beanstalkclient.adapters.ReleasesAdapter;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
