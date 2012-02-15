@@ -13,7 +13,7 @@ import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Repository;
 
-public class NewRepositoryDeploymentsActivity extends BeanstalkActivity implements OnClickListener {
+public class RepositoryDeploymentsActivity extends BeanstalkActivity implements OnClickListener {
   
   private boolean activityStartedForSpecificRepository;
     
@@ -24,7 +24,7 @@ public class NewRepositoryDeploymentsActivity extends BeanstalkActivity implemen
   private Button serversButton;
   
   public static Intent generateIntentForSpecificRepo(Context context, Repository repository) {
-    Intent intent = new Intent(context, NewRepositoryDeploymentsActivity.class);
+    Intent intent = new Intent(context, RepositoryDeploymentsActivity.class);
     intent.putExtra(Constants.REPOSITORY, repository);
     return intent;
   }

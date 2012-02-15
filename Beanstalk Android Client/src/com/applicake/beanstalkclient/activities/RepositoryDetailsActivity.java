@@ -134,7 +134,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
     }
 
     if (v.getId() == R.id.buttonDeployment) {
-      startActivityForResult(NewRepositoryDeploymentsActivity.generateIntentForSpecificRepo(this, repository), 0);      
+      startActivityForResult(RepositoryDeploymentsActivity.generateIntentForSpecificRepo(this, repository), 0);      
     }
 
     if (v.getId() == R.id.buttonModifyProperties) {

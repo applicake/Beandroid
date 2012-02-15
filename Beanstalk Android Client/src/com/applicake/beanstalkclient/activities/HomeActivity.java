@@ -76,7 +76,7 @@ public class HomeActivity extends BeanstalkActivity {
   }
 
   public void onHomeDeploymentClick(View v) {
-	  startActivityForResult(NewRepositoryDeploymentsActivity.generateIntentForOverallRepositories(this), 0);
+	  startActivityForResult(RepositoryDeploymentsActivity.generateIntentForOverallRepositories(this), 0);
   }
 
   public void onHomeSettingsClick(View v) {

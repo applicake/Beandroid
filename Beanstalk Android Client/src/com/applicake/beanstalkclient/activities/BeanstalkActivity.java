@@ -147,7 +147,7 @@ public abstract class BeanstalkActivity extends FragmentActivity {
   }
 
   public void onDeploymentButtonClick(View v) {
-    Intent intent = NewRepositoryDeploymentsActivity.generateIntentForOverallRepositories(this);
+    Intent intent = RepositoryDeploymentsActivity.generateIntentForOverallRepositories(this);
     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     setResult(Constants.CLEAR_STACK_UP_TO_HOME);
     startActivity(intent);
