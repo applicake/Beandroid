@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
-import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.enums.UserType;
 
 public class HomeActivity extends BeanstalkActivity {

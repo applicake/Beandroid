@@ -5,7 +5,6 @@
 	android:minHeight="@dimen/list_entry_height"
 	android:layout_height="wrap_content"
 	android:paddingLeft="30dp"
-	android:background="@drawable/bn_generic"
 	android:id="@+id/footer_btn_layout">
 
 	<TextView

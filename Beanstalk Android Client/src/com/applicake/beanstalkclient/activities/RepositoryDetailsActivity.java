@@ -27,6 +27,7 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerRespo
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
+import com.applicake.beanstalkclient.widgets.DetailsView;
 
 public class RepositoryDetailsActivity extends BeanstalkActivity implements
     OnClickListener {
@@ -39,11 +40,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
   private String dateFormat = new String("yyyy-MM-dd");
   private TextView repoType;
   private TextView repoTitle;
-  private TextView repoCreatedAt;
-  private TextView repoLastCommit;
-  private TextView repoRevision;
-  private TextView repoStorageUsed;
-  private TextView repoUpdatedAt;
+  private DetailsView detailsView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +56,7 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
 
     repoType = (TextView) findViewById(R.id.repoType);
     repoTitle = (TextView) findViewById(R.id.repoTitle);
-    repoCreatedAt = (TextView) findViewById(R.id.repoCreatedAt);
-    repoLastCommit = (TextView) findViewById(R.id.repoLastCommit);
-    repoRevision = (TextView) findViewById(R.id.repoRevision);
-    repoStorageUsed = (TextView) findViewById(R.id.repoStorageUsed);
-    repoUpdatedAt = (TextView) findViewById(R.id.repoUpdatedAt);
+    detailsView = (DetailsView) findViewById(R.id.details_view);
 
     // add button listeners
     Button viewCommitsButton = (Button) findViewById(R.id.buttonViewCommits);
@@ -93,13 +86,15 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
     repoName.setText(repository.getName());
     repoType.setText(repository.getType().equals("SubversionRepository") ? "SVN" : "Git");
     repoTitle.setText(repository.getTitle());
-    repoCreatedAt.setText(DateFormat.format(dateFormat, repository.getCreatedAt()));
+
+    detailsView.addProperty("Created at", DateFormat.format(dateFormat, repository.getCreatedAt()));
     long lastCommit = repository.getLastCommitAt();
-    repoLastCommit.setText(lastCommit == 0 ? "no commits in this repository" : DateUtils
+    detailsView.addProperty("Last commit", lastCommit == 0 ? "no commits" : DateUtils
         .getRelativeTimeSpanString(lastCommit));
-    repoRevision.setText(String.valueOf(repository.getRevision()));
-    repoStorageUsed.setText(String.valueOf(repository.getStorageUsedBytes()));
-    repoUpdatedAt.setText(DateFormat.format(dateFormat, repository.getUpdatedAt()));
+    detailsView.addProperty("Revision", String.valueOf(repository.getRevision()));
+    detailsView.addProperty("Storage used", String.valueOf(repository.getStorageUsedBytes()));
+    detailsView.addProperty("Updated at", DateFormat.format(dateFormat, repository.getUpdatedAt()));
+
 
   }
 

@@ -9,13 +9,11 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.R;
@@ -30,6 +28,8 @@ import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerRespo
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
+import com.applicake.beanstalkclient.widgets.AddNewObjectView;
+import com.applicake.beanstalkclient.widgets.AddNewUserViewController;
 
 public class UserActivity extends BeanstalkActivity implements OnItemClickListener,
     OnClickListener {
@@ -38,7 +38,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
   private ArrayList<User> userArray;
   private ProgressDialog progressDialog;
   private Context mContext;
-  private TextView userLeftCounter;
+  private AddNewObjectView footerView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +51,15 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
 
     ListView userList = (ListView) findViewById(R.id.usersList);
 
-    View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
-        Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_user_footer, null, false);
+    footerView = new AddNewObjectView(this, new AddNewUserViewController());
     footerView.setOnClickListener(this);
 
     userList.addFooterView(footerView);
     userList.setAdapter(userAdapter);
     userList.setOnItemClickListener(this);
-
-    userLeftCounter = (TextView) footerView.findViewById(R.id.userCounter);
+    
+    setVisible(false);
+    
     new DownloadUsersListTask().execute();
 
   }
@@ -75,16 +75,16 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
   @Override
   public void onClick(View v) {
     startActivityForResult(new Intent(mContext, UserCreateNewActivity.class), 0);
-
   }
 
   @Override
   public void onItemClick(AdapterView<?> arg0, View arg1, int itemNumber, long arg3) {
-    Intent intent = new Intent(mContext, UserDetailsActivity.class);
-    User user = userArray.get(itemNumber);
-    intent.putExtra(Constants.USER, user);
-    startActivityForResult(intent, 0);
-
+    //if(itemNumber < userArray.size()) {
+      Intent intent = new Intent(mContext, UserDetailsActivity.class);
+      User user = userArray.get(itemNumber);
+      intent.putExtra(Constants.USER, user);
+      startActivityForResult(intent, 0);
+    //}
   }
 
   public class DownloadUsersListTask extends AsyncTask<Void, Void, ArrayList<User>> {
@@ -155,7 +155,6 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
         builder.displayDialog();
       } else {
         if (parsedArray != null) {
-
           userArray.clear();
           userArray.addAll(parsedArray);
           userAdapter.notifyDataSetChanged();
@@ -163,14 +162,16 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
           if (currentUser.equals(UserType.OWNER.name())) {
             int usersInPlan = prefs.getInt(Constants.NUMBER_OF_USERS_AVAILABLE, 0);
             int numberLeft = usersInPlan - userArray.size();
-            userLeftCounter.setText("available users: " + String.valueOf(numberLeft)
-                + "/" + String.valueOf(usersInPlan));
+
+            footerView.setAvailable(numberLeft, usersInPlan);
           }
+          setVisible(true);
         } else if (errorMessage != null) {
           GUI.displayMonit(mContext, "Server error: " + errorMessage);
+          finish();
         } else
           GUI.displayMonit(mContext, "Unexpected error, please try again later");
-
+          finish();
       }
     }
 

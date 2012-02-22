@@ -32,10 +32,11 @@ import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
 import com.applicake.beanstalkclient.widgets.AddNewObjectView;
 import com.applicake.beanstalkclient.widgets.AddNewRepositoryViewController;
 
-public class RepositoriesActivity extends BeanstalkActivity implements OnItemClickListener, OnClickListener {
+public class RepositoriesActivity extends BeanstalkActivity implements
+    OnItemClickListener, OnClickListener {
 
   public static final int RESULT_REPOSITORY = 91;
-  
+
   private Context mContext;
   private boolean returnAfterClick = false;
   private AddNewObjectView addNewObjectView;
@@ -54,16 +55,19 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
     // TODO refactor 
 
-    if(getIntent().getAction() != null) {
+    if (getIntent().getAction() != null) {
       returnAfterClick = getIntent().getAction().equals(Intent.ACTION_PICK);
     }
-    
+
     repositoriesList = (ListView) findViewById(R.id.repositoriesList);
-    /*View footerView = ((LayoutInflater) getApplicationContext().getSystemService(
-        Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_repository_footer,
-        null, false);*/
+    /*
+     * View footerView = ((LayoutInflater)
+     * getApplicationContext().getSystemService(
+     * Context.LAYOUT_INFLATER_SERVICE)
+     * ).inflate(R.layout.add_new_repository_footer, null, false);
+     */
     addNewObjectView = new AddNewObjectView(this, new AddNewRepositoryViewController());
-    
+
     if (currentUser != UserType.USER.name() && !returnAfterClick) {
       repositoriesList.addFooterView(addNewObjectView);
       addNewObjectView.setOnClickListener(this);
@@ -75,8 +79,9 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
         R.layout.repositories_entry, repositoriesArray);
     repositoriesList.setAdapter(repositoriesAdapter);
     repositoriesList.setOnItemClickListener(this);
-
-
+    
+    setVisible(false);
+    
     new DownloadRepositoriesTask(this).execute();
 
   }
@@ -97,19 +102,16 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
   @Override
   public void onItemClick(AdapterView<?> arg0, View arg1, int itemNumber, long arg3) {
-    if (itemNumber < repositoriesArray.size()) {
-      if (!returnAfterClick) {
-        Intent intent = new Intent(mContext, RepositoryDetailsActivity.class);
-        intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
-        startActivityForResult(intent, 0);
-      } else {
-        Intent intent = new Intent();
-        intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
-        setResult(RESULT_REPOSITORY, intent);
-        finish();
-      }
+    if (!returnAfterClick) {
+      Intent intent = new Intent(mContext, RepositoryDetailsActivity.class);
+      intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
+      startActivityForResult(intent, 0);
+    } else {
+      Intent intent = new Intent();
+      intent.putExtra(Constants.REPOSITORY, repositoriesArray.get(itemNumber));
+      setResult(RESULT_REPOSITORY, intent);
+      finish();
     }
-
   }
 
   public class DownloadRepositoriesTask extends
@@ -182,7 +184,6 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
             super.noRetryAction(dialog);
             finish();
           }
-
         };
 
         builder.displayDialog();
@@ -197,17 +198,23 @@ public class RepositoriesActivity extends BeanstalkActivity implements OnItemCli
 
             int repositoriesInPlan = prefs.getInt(Constants.NUMBER_OF_REPOS_AVAILABLE, 0);
             int numberLeft = repositoriesInPlan - repositoriesArray.size();
-            if(addNewObjectView != null) {
-              /*repositoriesLeftCounter.setText("available repositories: "
-                  + String.valueOf(numberLeft) + "/" + String.valueOf(repositoriesInPlan));*/
+            if (addNewObjectView != null) {
+              /*
+               * repositoriesLeftCounter.setText("available repositories: " +
+               * String.valueOf(numberLeft) + "/" +
+               * String.valueOf(repositoriesInPlan));
+               */
               addNewObjectView.setAvailable(numberLeft, repositoriesInPlan);
             }
           }
+          setVisible(true);
         }
 
-        if (errorMessage != null)
+        if (errorMessage != null) {
           GUI.displayMonit(context, errorMessage);
-
+          finish();
+        }
+        
       }
     }
 

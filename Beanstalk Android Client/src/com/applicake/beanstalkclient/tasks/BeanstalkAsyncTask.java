@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 
+import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Strings;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
@@ -36,7 +37,7 @@ public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends Async
   protected void onPreExecute() {
     String progressDialogTip = getProgressDialogTip();
     if(progressDialogTip != null) {
-      progressDialog = ProgressDialog.show(mContext, getProgressDialogTip(), "Please wait...");
+      progressDialog = ProgressDialog.show(mContext, getContext().getString(R.string.please_wait_label), getProgressDialogTip());
       progressDialog.setCancelable(false);
     }
   }

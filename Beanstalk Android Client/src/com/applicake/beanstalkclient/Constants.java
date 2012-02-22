@@ -66,5 +66,10 @@ public interface Constants {
 
   public static final String OVERALL_REPOS = "overall";
   
+  public static final String PLAN_ID = "plan_id";
+  public static final String PLAN = "plan";
+  
+  public static final String DEFAULT_CURRENCY_SYMBOL = "$";
+  
 
 }

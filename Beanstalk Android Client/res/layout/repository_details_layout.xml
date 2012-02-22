@@ -53,7 +53,14 @@
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="10dp"></TextView>
 
-		<TextView
+		<com.applicake.beanstalkclient.widgets.DetailsView
+		    android:id="@+id/details_view"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content" 
+		    android:layout_below="@+id/repoName"
+		    android:layout_toRightOf="@+id/colorLabel"/>
+		
+		<!--<TextView
 			android:text="Created at: "
 			android:id="@+id/repo_date_created_prefix"
 			android:textColor="@color/application_text_dark"
@@ -147,13 +154,13 @@
 			android:layout_below="@id/repoStorageUsed"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="20dp"></TextView>
+			android:layout_marginBottom="20dp"></TextView>-->
 
 		<Button
 			style="@style/button"
 			android:drawableLeft="@drawable/ic_repository_viewcommits_normal"
 			android:id="@+id/buttonViewCommits"
-			android:layout_below="@id/repoUpdatedAt"
+			android:layout_below="@id/details_view"
 			android:text="View Commits"
 			android:layout_width="fill_parent"></Button>
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/actionbar" />
+
+    <include layout="@layout/plan_list_header" />
+
+    <ListView
+        android:id="@+id/plans_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light"
+        android:dividerHeight="0.5dp"
+        android:divider="@color/grey"
+        android:cacheColorHint="@android:color/transparent"
+        android:groupIndicator="@android:color/transparent"
+        android:paddingTop="10dp" />
+
+</LinearLayout>

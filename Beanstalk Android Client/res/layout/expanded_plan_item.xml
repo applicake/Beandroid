@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/dark_entry_bg"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <include
+            android:id="@+id/actionbar"
+            android:layout_alignParentTop="true"
+            layout="@layout/actionbar" />
+
+        <TableRow
+            android:id="@+id/topRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/actionbar"
+            android:layout_margin="3dp" >
+
+            <TextView
+                android:id="@+id/plan_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:textColor="@color/application_text_light"
+                android:textSize="@dimen/LargeTextSize"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/current_plan_marker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:background="@color/green"
+                android:padding="3dp"
+                android:text="@string/current_plan_marker_label"
+                android:textColor="@color/white"
+                android:textSize="@dimen/SmallTextSize"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/plan_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:paddingRight="3dp" >
+            </TextView>
+        </TableRow>
+
+        <com.applicake.beanstalkclient.widgets.DetailsView
+            android:id="@+id/details_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topRow"
+            android:layout_margin="3dp"
+            android:stretchColumns="1" />
+
+        <Button
+            android:id="@+id/upgradeButton"
+            style="@style/button"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/details_view"
+            android:layout_gravity="bottom"
+            android:layout_margin="3dp"
+            android:text="@string/upgrade_button_label"
+            android:visibility="gone" >
+        </Button>
+    </RelativeLayout>
+
+</ScrollView>

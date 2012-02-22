@@ -32,35 +32,36 @@ public class PlanHandler extends DefaultHandler {
 
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
-    if (plan != null && planList != null) {
-
-      if (localName == "plan") {
-        planList.add(plan);
-      }
-      if (localName == "id") {
-        try {
+    try {
+      if (plan != null && planList != null) {
+        if (localName.equals("plan")) {
+          planList.add(plan);
+        }
+        else if (localName.equals("name")) {
+          plan.setName(buffer.toString());
+        }
+        else if (localName.equals("price")) {
+          plan.setPrice(Integer.parseInt(buffer.toString()));
+        }
+        else if (localName.equals("storage")) {
+          plan.setStorageInMegaBytes(Integer.parseInt(buffer.toString()));
+        }
+        else if (localName.equals("id")) {
           plan.setId(Integer.parseInt(buffer.toString()));
-        } catch (NumberFormatException nfe) {
-          throw new SAXException(nfe);
         }
-      }
-      if (localName == "repositories") {
-        try {
+        else if (localName.equals("repositories")) {
           plan.setNumberOfRepos(Integer.parseInt(buffer.toString()));
-        } catch (NumberFormatException nfe) {
-          throw new SAXException(nfe);
         }
-      }
-      if (localName == "users") {
-        try {
+        else if (localName.equals("users")) {
           plan.setNumberOfUsers(Integer.parseInt(buffer.toString()));
-        } catch (NumberFormatException nfe) {
-          throw new SAXException(nfe);
+        }
+        else if (localName.equals("servers")) {
+          plan.setNumberOfServers(Integer.parseInt(buffer.toString()));
         }
       }
-
+    } catch (NumberFormatException nfe) {
+      throw new SAXException(nfe);
     }
-
   }
 
   @Override

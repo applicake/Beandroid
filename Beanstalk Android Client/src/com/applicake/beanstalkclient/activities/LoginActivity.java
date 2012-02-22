@@ -143,6 +143,7 @@ public class LoginActivity extends Activity implements OnClickListener {
       String plansXML = HttpRetriever.checkCredentialsPlan(domain, username, password);
       plansMap = XmlParser.parsePlan(plansXML);
       currentPlan = plansMap.get(account.getPlanId());
+      
       return UserType.OWNER;
     } catch (HttpImproperStatusCodeException e) {
       if (e.getStatusCode() != 401) {
@@ -245,6 +246,8 @@ public class LoginActivity extends Activity implements OnClickListener {
           editor.putBoolean(Constants.CREDENTIALS_STORED, true);
           editor.putString(Constants.USER_TYPE, usertype.name());
           if (usertype == UserType.OWNER) {
+            editor.putInt(Constants.PLAN_ID, currentPlan.getId());
+            
             editor.putInt(Constants.NUMBER_OF_REPOS_AVAILABLE,
                 currentPlan.getNumberOfRepos());
             editor.putInt(Constants.NUMBER_OF_USERS_AVAILABLE,

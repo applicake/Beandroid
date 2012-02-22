@@ -250,6 +250,18 @@ public class HttpRetriever {
 
   }
 
+  public static String getAvailablePlans(SharedPreferences prefs)
+      throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
+    UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
+
+    String domain = getAccountDomain(prefs);
+
+    String url = HTTP_PREFIX + domain + PLANS_HTTP_SUFFIX;
+
+    return executeRequest(credentials, url);
+
+  }
+
   public static String getActivityListXML(SharedPreferences prefs, int pageNumber)
       throws UnsuccessfulServerResponseException, HttpConnectionErrorException {
 
@@ -369,15 +381,16 @@ public class HttpRetriever {
     return executeRequest(credentials, activity_http);
 
   }
-  
-  public static String getReleasesListForAllRepositories(SharedPreferences prefs) 
+
+  public static String getReleasesListForAllRepositories(SharedPreferences prefs)
       throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
-    
+
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
-    
-    String activity_http = HTTP_PREFIX + domain + RELEASES_HTTP_MIDDLE + RELEASES_HTTP_SUFFIX;
-    
+
+    String activity_http = HTTP_PREFIX + domain + RELEASES_HTTP_MIDDLE
+        + RELEASES_HTTP_SUFFIX;
+
     return executeRequest(credentials, activity_http);
   }
 

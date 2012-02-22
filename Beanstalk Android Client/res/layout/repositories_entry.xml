@@ -4,8 +4,8 @@
 	android:layout_width="fill_parent"
 	android:minHeight="80dp"
 	android:orientation="horizontal"
-	android:paddingRight="5dp"
-	android:background="@color/dark_entry_bg">
+	android:paddingRight="5dp">
+	
 	<View
 		android:id="@+id/colorLabel"
 		android:background="@drawable/repository_labels"

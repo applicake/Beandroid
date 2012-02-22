@@ -51,4 +51,18 @@
   <string name="add_new_repository">Add new repository</string>
   <string name="available_repositories">available repositories: </string>
   <string name="cant_add_new_repository">Can\'t add new repository</string>
+  
+  <string name="add_new_user">Add new user</string>
+  <string name="available_users">available users: </string>
+  <string name="cant_add_new_user">Can\'t add new user</string>
+  <string name="current_plan_marker_label">CURRENT</string>
+  <string name="available_storage_label">"Available storage "</string>
+  <string name="available_repositories_label">"Available repositories "</string>
+  <string name="available_deployment_servers_label">"Available deployment servers "</string>
+  <string name="available_users_label">"Available users "</string>
+  <string name="upgrade_button_label">Upgrade</string>
+  <string name="please_wait_label">Please wait...</string>
+  <string name="downloading_available_plans_label">Downloading available plans...</string>
+  <string name="current_plan_list_label">"Current plan: "</string>
+  
 </resources>

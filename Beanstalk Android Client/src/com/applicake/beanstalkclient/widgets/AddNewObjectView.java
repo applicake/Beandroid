@@ -1,15 +1,17 @@
 package com.applicake.beanstalkclient.widgets;
 
-import com.applicake.beanstalkclient.R;
-
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.applicake.beanstalkclient.R;
+import com.applicake.beanstalkclient.activities.BeanstalkActivity;
+import com.applicake.beanstalkclient.activities.PlansActivity;
 
 public class AddNewObjectView extends RelativeLayout {
 
@@ -20,10 +22,13 @@ public class AddNewObjectView extends RelativeLayout {
   private int available;
   private int max;
   private boolean currentState = true;
-  private View footerBtnLayout;
-    
-  public AddNewObjectView(Context context, AddNewObjectViewController viewData) {
+  private OnClickListener onClickListener;
+  private OnClickListener disabledClickListener;
+  private BeanstalkActivity contextActivity;
+  
+  public AddNewObjectView(BeanstalkActivity context, AddNewObjectViewController viewData) {
     this(context, null, viewData);
+    this.contextActivity = context;
   }
   
   public AddNewObjectView(Context context, AttributeSet attrs, AddNewObjectViewController viewData) {
@@ -32,7 +37,6 @@ public class AddNewObjectView extends RelativeLayout {
 
     LayoutInflater.from(getContext()).inflate(R.layout.add_new_object_layout, this);
     
-    footerBtnLayout = findViewById(R.id.footer_btn_layout);
     imageView = (ImageView)findViewById(R.id.plusSign);
     mainTextView = (TextView)findViewById(R.id.add_object_label);
     availbilityInfoTextView = (TextView)findViewById(R.id.objectCounter);
@@ -62,17 +66,38 @@ public class AddNewObjectView extends RelativeLayout {
     availbilityInfoTextView.setText(getResources().getString(viewData.getAvailbilityStringId()) + " " + available + "/" + max);
     if(currentState != newState) {
       refreshViewAccordingToViewData(viewData);
-      if(!newState) {
-        setClickable(false);
-      }
+      super.setOnClickListener(newState ? onClickListener : generateDisabledViewListener());
     }
     this.currentState = newState;
+  }
+  
+  @Override
+  public void setOnClickListener(OnClickListener l) {
+    this.onClickListener = l;
+    if(currentState) {
+      super.setOnClickListener(l);
+    }
   }
   
   private void refreshViewAccordingToViewData(AddNewObjectViewData viewData) {
     imageView.setImageDrawable(getResources().getDrawable(viewData.getImageResId()));
     mainTextView.setText(viewData.getMainTextStringId());
-    footerBtnLayout.setBackgroundResource(viewData.getBackgroundResId());
+    setBackgroundResource(viewData.getBackgroundResId());
   }
+  
+  private OnClickListener generateDisabledViewListener() {
+    if(disabledClickListener == null) {
+      disabledClickListener = new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(getContext(), PlansActivity.class);
+          contextActivity.startActivityForResult(intent, 0);
+        }
+      };
+    }
+    return disabledClickListener;
+  }
+  
   
 }
