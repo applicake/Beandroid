@@ -27,8 +27,14 @@
             style="@style/HomeButton"
             android:drawableTop="@drawable/ic_es_repositories"
             android:onClick="onHomeRepositoriesClick"
-            android:text="Repositories" >
-        </Button>
+            android:text="Repositories" />
+
+        <Button
+            android:id="@+id/users_button"
+            style="@style/HomeButton"
+            android:drawableTop="@drawable/ic_es_users"
+            android:onClick="onHomeUsersClick"
+            android:text="Users" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,11 +43,11 @@
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/users_button"
+            android:id="@+id/deployment_button"
             style="@style/HomeButton"
-            android:drawableTop="@drawable/ic_es_users"
-            android:onClick="onHomeUsersClick"
-            android:text="Users" >
+            android:drawableTop="@drawable/ic_es_deployment"
+            android:onClick="onHomeDeploymentClick"
+            android:text="Deployment" >
         </Button>
 
         <Button
