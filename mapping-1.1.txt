@@ -1,0 +1,2775 @@
+android.support.v4.app.BackStackRecord -> android.support.v4.app.d:
+    android.support.v4.app.FragmentManagerImpl mManager -> a
+    android.support.v4.app.BackStackRecord$Op mHead -> b
+    android.support.v4.app.BackStackRecord$Op mTail -> c
+    int mNumOp -> d
+    int mEnterAnim -> n
+    int mExitAnim -> o
+    int mPopEnterAnim -> p
+    int mPopExitAnim -> q
+    int mTransition -> e
+    int mTransitionStyle -> f
+    boolean mAddToBackStack -> g
+    boolean mAllowAddToBackStack -> r
+    java.lang.String mName -> h
+    boolean mCommitted -> s
+    int mIndex -> i
+    int mBreadCrumbTitleRes -> j
+    java.lang.CharSequence mBreadCrumbTitleText -> k
+    int mBreadCrumbShortTitleRes -> l
+    java.lang.CharSequence mBreadCrumbShortTitleText -> m
+    void dump$ec96877(java.lang.String,java.io.PrintWriter) -> a
+    void addOp(android.support.v4.app.BackStackRecord$Op) -> a
+    android.support.v4.app.FragmentTransaction replace(int,android.support.v4.app.Fragment) -> a
+    android.support.v4.app.FragmentTransaction addToBackStack(java.lang.String) -> a
+    void bumpBackStackNesting(int) -> a
+    int commit() -> a
+    void run() -> run
+android.support.v4.app.BackStackRecord$Op -> android.support.v4.app.b:
+    android.support.v4.app.BackStackRecord$Op next -> a
+    android.support.v4.app.BackStackRecord$Op prev -> b
+    int cmd -> c
+    android.support.v4.app.Fragment fragment -> d
+    int enterAnim -> e
+    int exitAnim -> f
+    int popEnterAnim -> g
+    int popExitAnim -> h
+    java.util.ArrayList removed -> i
+android.support.v4.app.BackStackState -> android.support.v4.app.BackStackState:
+    int[] mOps -> a
+    int mTransition -> b
+    int mTransitionStyle -> c
+    java.lang.String mName -> d
+    int mIndex -> e
+    int mBreadCrumbTitleRes -> f
+    java.lang.CharSequence mBreadCrumbTitleText -> g
+    int mBreadCrumbShortTitleRes -> h
+    java.lang.CharSequence mBreadCrumbShortTitleText -> i
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    android.support.v4.app.BackStackRecord instantiate(android.support.v4.app.FragmentManagerImpl) -> a
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.BackStackState$1 -> android.support.v4.app.u:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.Fragment -> android.support.v4.app.Fragment:
+    java.util.HashMap sClassMap -> a
+    int mState -> d
+    android.view.View mAnimatingAway -> e
+    int mStateAfterAnimating -> f
+    android.os.Bundle mSavedFragmentState -> g
+    android.util.SparseArray mSavedViewState -> h
+    int mIndex -> i
+    java.lang.String mWho -> b
+    android.os.Bundle mArguments -> j
+    android.support.v4.app.Fragment mTarget -> k
+    int mTargetIndex -> l
+    int mTargetRequestCode -> m
+    boolean mAdded -> n
+    boolean mRemoving -> o
+    boolean mResumed -> p
+    boolean mFromLayout -> q
+    boolean mInLayout -> r
+    boolean mRestored -> s
+    int mBackStackNesting -> t
+    android.support.v4.app.FragmentManagerImpl mFragmentManager -> u
+    android.support.v4.app.FragmentActivity mActivity -> v
+    int mFragmentId -> w
+    int mContainerId -> x
+    java.lang.String mTag -> y
+    boolean mHidden -> z
+    boolean mDetached -> A
+    boolean mRetainInstance -> B
+    boolean mRetaining -> C
+    boolean mHasMenu -> D
+    boolean mMenuVisible -> E
+    boolean mCalled -> F
+    int mNextAnim -> G
+    android.view.ViewGroup mContainer -> H
+    android.view.View mView -> I
+    android.view.View mInnerView -> J
+    boolean mDeferStart -> K
+    boolean mUserVisibleHint -> L
+    android.support.v4.app.LoaderManagerImpl mLoaderManager -> M
+    boolean mLoadersStarted -> c
+    boolean mCheckedForLoaderManager -> N
+    android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String) -> a
+    android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String,android.os.Bundle) -> a
+    void restoreViewState() -> c
+    void setIndex(int) -> a
+    boolean isInBackStack() -> d
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+    android.support.v4.app.FragmentActivity getActivity() -> e
+    void startActivity(android.content.Intent) -> a
+    void startActivityForResult(android.content.Intent,int) -> a
+    void onActivityResult(int,int,android.content.Intent) -> a
+    android.view.LayoutInflater getLayoutInflater$2ee30c11() -> f
+    void onInflate$423a76cd() -> g
+    void onAttach$63a22f9() -> h
+    void onCreate(android.os.Bundle) -> a
+    android.view.View onCreateView$469ccb8a(android.view.LayoutInflater) -> a
+    void onActivityCreated$79e5e33f() -> i
+    void onResume() -> b
+    void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    void onPause() -> j
+    void onLowMemory() -> onLowMemory
+    void onDestroy() -> k
+    void initState() -> l
+    void onDetach() -> m
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
+    void performStart() -> n
+    void performStop() -> o
+    void performReallyStop() -> p
+    void performDestroyView() -> q
+android.support.v4.app.Fragment$InstantiationException -> android.support.v4.app.n:
+android.support.v4.app.Fragment$SavedState -> android.support.v4.app.Fragment$SavedState:
+    android.os.Bundle mState -> a
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.Fragment$SavedState$1 -> android.support.v4.app.m:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentActivity -> android.support.v4.app.FragmentActivity:
+    android.os.Handler mHandler -> c
+    android.support.v4.app.FragmentManagerImpl mFragments -> d
+    boolean mCreated -> a
+    boolean mResumed -> b
+    boolean mStopped -> e
+    boolean mReallyStopped -> i
+    boolean mRetaining -> f
+    boolean mOptionsMenuInvalidated -> g
+    boolean mCheckedForLoaderManager -> j
+    boolean mLoadersStarted -> k
+    android.support.v4.app.HCSparseArray mAllLoaderManagers -> h
+    android.support.v4.app.LoaderManagerImpl mLoaderManager -> l
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onBackPressed() -> b
+    void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onCreatePanelMenu(int,android.view.Menu) -> onCreatePanelMenu
+    android.view.View onCreateView(java.lang.String,android.content.Context,android.util.AttributeSet) -> onCreateView
+    void onDestroy() -> onDestroy
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void onLowMemory() -> onLowMemory
+    boolean onMenuItemSelected(int,android.view.MenuItem) -> onMenuItemSelected
+    void onPanelClosed(int,android.view.Menu) -> onPanelClosed
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void onPostResume() -> onPostResume
+    boolean onPreparePanel(int,android.view.View,android.view.Menu) -> onPreparePanel
+    java.lang.Object onRetainNonConfigurationInstance() -> onRetainNonConfigurationInstance
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onStart() -> onStart
+    void onStop() -> onStop
+    void doReallyStop(boolean) -> a
+    android.support.v4.app.FragmentManager getSupportFragmentManager() -> c
+    void startActivityForResult(android.content.Intent,int) -> startActivityForResult
+    void startActivityFromFragment(android.support.v4.app.Fragment,android.content.Intent,int) -> a
+    android.support.v4.app.LoaderManagerImpl getLoaderManager(int,boolean,boolean) -> a
+android.support.v4.app.FragmentActivity$1 -> android.support.v4.app.v:
+    android.support.v4.app.FragmentActivity this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
+android.support.v4.app.FragmentActivity$FragmentTag -> android.support.v4.app.s:
+    int[] Fragment -> a
+android.support.v4.app.FragmentActivity$NonConfigurationInstances -> android.support.v4.app.h:
+    java.lang.Object activity -> a
+    java.lang.Object custom -> b
+    java.util.HashMap children -> c
+    java.util.ArrayList fragments -> d
+    android.support.v4.app.HCSparseArray loaders -> e
+android.support.v4.app.FragmentManager -> android.support.v4.app.p:
+    android.support.v4.app.FragmentTransaction beginTransaction() -> a
+android.support.v4.app.FragmentManagerImpl -> android.support.v4.app.i:
+    boolean DEBUG -> a
+    boolean HONEYCOMB -> f
+    java.util.ArrayList mPendingActions -> g
+    java.lang.Runnable[] mTmpActions -> h
+    boolean mExecutingActions -> i
+    java.util.ArrayList mActive -> b
+    java.util.ArrayList mAdded -> c
+    java.util.ArrayList mAvailIndices -> j
+    java.util.ArrayList mBackStack -> k
+    java.util.ArrayList mCreatedMenus -> l
+    java.util.ArrayList mBackStackIndices -> m
+    java.util.ArrayList mAvailBackStackIndices -> n
+    java.util.ArrayList mBackStackChangeListeners -> o
+    int mCurState -> d
+    android.support.v4.app.FragmentActivity mActivity -> p
+    boolean mNeedMenuInvalidate -> q
+    boolean mStateSaved -> r
+    boolean mDestroyed -> s
+    java.lang.String mNoTransactionsBecause -> e
+    boolean mHavePendingDeferredStart -> t
+    android.os.Bundle mStateBundle -> u
+    android.util.SparseArray mStateArray -> v
+    java.lang.Runnable mExecCommit -> w
+    android.view.animation.Interpolator DECELERATE_QUINT -> x
+    android.view.animation.Interpolator DECELERATE_CUBIC -> y
+    android.view.animation.Interpolator ACCELERATE_QUINT -> z
+    android.view.animation.Interpolator ACCELERATE_CUBIC -> A
+    android.support.v4.app.FragmentTransaction beginTransaction() -> a
+    boolean popBackStackImmediate() -> b
+    java.lang.String toString() -> toString
+    void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
+    android.view.animation.Animation makeOpenCloseAnimation$376f30fd(float,float,float,float) -> a
+    android.view.animation.Animation makeFadeAnimation$424ea1bd(float,float) -> a
+    android.view.animation.Animation loadAnimation(android.support.v4.app.Fragment,int,boolean,int) -> a
+    void moveToState(android.support.v4.app.Fragment,int,int,int) -> a
+    void moveToState(android.support.v4.app.Fragment) -> a
+    void moveToState(int,boolean) -> a
+    void moveToState(int,int,int,boolean) -> a
+    void startPendingDeferredFragments() -> p
+    void addFragment(android.support.v4.app.Fragment,boolean) -> a
+    void removeFragment(android.support.v4.app.Fragment,int,int) -> a
+    void hideFragment(android.support.v4.app.Fragment,int,int) -> b
+    void showFragment(android.support.v4.app.Fragment,int,int) -> c
+    void detachFragment(android.support.v4.app.Fragment,int,int) -> d
+    void attachFragment(android.support.v4.app.Fragment,int,int) -> e
+    android.support.v4.app.Fragment findFragmentById(int) -> a
+    android.support.v4.app.Fragment findFragmentByTag(java.lang.String) -> a
+    void checkStateLoss() -> q
+    void enqueueAction(java.lang.Runnable,boolean) -> a
+    int allocBackStackIndex(android.support.v4.app.BackStackRecord) -> a
+    void setBackStackIndex(int,android.support.v4.app.BackStackRecord) -> a
+    void freeBackStackIndex(int) -> b
+    boolean execPendingActions() -> c
+    void reportBackStackChanged() -> r
+    void addBackStackState(android.support.v4.app.BackStackRecord) -> b
+    java.util.ArrayList retainNonConfig() -> d
+    void saveFragmentViewState(android.support.v4.app.Fragment) -> b
+    android.os.Parcelable saveAllState() -> e
+    void restoreAllState(android.os.Parcelable,java.util.ArrayList) -> a
+    void attachActivity(android.support.v4.app.FragmentActivity) -> a
+    void noteStateNotSaved() -> f
+    void dispatchCreate() -> g
+    void dispatchActivityCreated() -> h
+    void dispatchStart() -> i
+    void dispatchResume() -> j
+    void dispatchPause() -> k
+    void dispatchStop() -> l
+    void dispatchReallyStop() -> m
+    void dispatchDestroy() -> n
+    void dispatchConfigurationChanged(android.content.res.Configuration) -> a
+    void dispatchLowMemory() -> o
+    boolean dispatchCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> a
+    boolean dispatchPrepareOptionsMenu(android.view.Menu) -> a
+    boolean dispatchOptionsItemSelected(android.view.MenuItem) -> a
+    boolean dispatchContextItemSelected(android.view.MenuItem) -> b
+    void dispatchOptionsMenuClosed(android.view.Menu) -> b
+    int reverseTransit(int) -> c
+android.support.v4.app.FragmentManagerImpl$1 -> android.support.v4.app.k:
+    android.support.v4.app.FragmentManagerImpl this$0 -> a
+    void run() -> run
+android.support.v4.app.FragmentManagerImpl$5 -> android.support.v4.app.j:
+    android.support.v4.app.Fragment val$fragment -> a
+    android.support.v4.app.FragmentManagerImpl this$0 -> b
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+android.support.v4.app.FragmentManagerState -> android.support.v4.app.FragmentManagerState:
+    android.support.v4.app.FragmentState[] mActive -> a
+    int[] mAdded -> b
+    android.support.v4.app.BackStackState[] mBackStack -> c
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.FragmentManagerState$1 -> android.support.v4.app.l:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentState -> android.support.v4.app.FragmentState:
+    java.lang.String mClassName -> c
+    int mIndex -> d
+    boolean mFromLayout -> e
+    int mFragmentId -> f
+    int mContainerId -> g
+    java.lang.String mTag -> h
+    boolean mRetainInstance -> i
+    boolean mDetached -> j
+    android.os.Bundle mArguments -> k
+    android.os.Bundle mSavedFragmentState -> a
+    android.support.v4.app.Fragment mInstance -> b
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    android.support.v4.app.Fragment instantiate(android.support.v4.app.FragmentActivity) -> a
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.FragmentState$1 -> android.support.v4.app.t:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentTransaction -> android.support.v4.app.r:
+    android.support.v4.app.FragmentTransaction replace(int,android.support.v4.app.Fragment) -> a
+    android.support.v4.app.FragmentTransaction addToBackStack(java.lang.String) -> a
+    int commit() -> a
+android.support.v4.app.HCSparseArray -> android.support.v4.app.e:
+    java.lang.Object DELETED -> a
+    boolean mGarbage -> b
+    int[] mKeys -> c
+    java.lang.Object[] mValues -> d
+    int mSize -> e
+    java.lang.Object get(int) -> a
+    void remove(int) -> b
+    void removeAt(int) -> c
+    void gc() -> c
+    int size() -> a
+    int keyAt(int) -> d
+    java.lang.Object valueAt(int) -> e
+    void clear() -> b
+    int binarySearch(int[],int,int,int) -> a
+    int idealIntArraySize(int) -> f
+android.support.v4.app.LoaderManager -> android.support.v4.app.g:
+    boolean hasRunningLoaders() -> a
+android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.f:
+    android.support.v4.content.Loader onCreateLoader$e57f803() -> a
+android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.o:
+    boolean DEBUG -> a
+    android.support.v4.app.HCSparseArray mLoaders -> d
+    android.support.v4.app.HCSparseArray mInactiveLoaders -> e
+    android.support.v4.app.FragmentActivity mActivity -> b
+    boolean mStarted -> f
+    boolean mRetaining -> c
+    void updateActivity(android.support.v4.app.FragmentActivity) -> a
+    void doStart() -> b
+    void doStop() -> c
+    void doRetain() -> d
+    void finishRetain() -> e
+    void doReportNextStart() -> f
+    void doReportStart() -> g
+    void doDestroy() -> h
+    java.lang.String toString() -> toString
+    void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
+    boolean hasRunningLoaders() -> a
+android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.a:
+    int mId -> a
+    android.os.Bundle mArgs -> l
+    android.support.v4.app.LoaderManager$LoaderCallbacks mCallbacks -> b
+    android.support.v4.content.Loader mLoader -> c
+    boolean mHaveData -> d
+    boolean mDeliveredData -> e
+    java.lang.Object mData -> f
+    boolean mStarted -> g
+    boolean mRetaining -> h
+    boolean mRetainingStarted -> i
+    boolean mReportNextStart -> j
+    boolean mDestroyed -> m
+    boolean mListenerRegistered -> k
+    android.support.v4.app.LoaderManagerImpl$LoaderInfo mPendingLoader -> n
+    android.support.v4.app.LoaderManagerImpl this$0 -> o
+    void stop() -> a
+    void destroy() -> b
+    void callOnLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> a
+    java.lang.String toString() -> toString
+    void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
+android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.q:
+    android.view.ViewGroup wrap(android.view.View) -> a
+    void dispatchSaveInstanceState(android.util.SparseArray) -> dispatchSaveInstanceState
+    void dispatchRestoreInstanceState(android.util.SparseArray) -> dispatchRestoreInstanceState
+android.support.v4.app.SuperNotCalledException -> android.support.v4.app.c:
+android.support.v4.content.Loader -> android.support.v4.c.b:
+    int mId -> a
+    android.support.v4.content.Loader$OnLoadCompleteListener mListener -> b
+    boolean mStarted -> c
+    boolean mAbandoned -> d
+    boolean mReset -> e
+    boolean mContentChanged -> f
+    void registerListener(int,android.support.v4.content.Loader$OnLoadCompleteListener) -> a
+    void unregisterListener(android.support.v4.content.Loader$OnLoadCompleteListener) -> a
+    void startLoading() -> a
+    void stopLoading() -> b
+    void reset() -> c
+    java.lang.String toString() -> toString
+    void dump$ec96877(java.lang.String,java.io.PrintWriter) -> a
+android.support.v4.content.Loader$OnLoadCompleteListener -> android.support.v4.c.a:
+android.support.v4.os.ParcelableCompat -> android.support.v4.b.c:
+    android.os.Parcelable$Creator newCreator(android.support.v4.os.ParcelableCompatCreatorCallbacks) -> a
+android.support.v4.os.ParcelableCompat$CompatCreator -> android.support.v4.b.d:
+    android.support.v4.os.ParcelableCompatCreatorCallbacks mCallbacks -> a
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    java.lang.Object[] newArray(int) -> newArray
+android.support.v4.os.ParcelableCompatCreatorCallbacks -> android.support.v4.b.a:
+    java.lang.Object createFromParcel(android.os.Parcel,java.lang.ClassLoader) -> a
+    java.lang.Object[] newArray(int) -> a
+android.support.v4.os.ParcelableCompatCreatorHoneycombMR2 -> android.support.v4.b.b:
+    android.support.v4.os.ParcelableCompatCreatorCallbacks mCallbacks -> a
+android.support.v4.util.DebugUtils -> android.support.v4.d.a:
+    void buildShortClassTag(java.lang.Object,java.lang.StringBuilder) -> a
+android.support.v4.util.LogWriter -> android.support.v4.d.b:
+    java.lang.String mTag -> a
+    java.lang.StringBuilder mBuilder -> b
+    void close() -> close
+    void flush() -> flush
+    void write(char[],int,int) -> write
+    void flushBuilder() -> a
+android.support.v4.view.KeyEventCompat -> android.support.v4.view.ac:
+    android.support.v4.view.KeyEventCompat$KeyEventVersionImpl IMPL -> a
+    boolean hasModifiers(android.view.KeyEvent,int) -> a
+    boolean hasNoModifiers(android.view.KeyEvent) -> a
+android.support.v4.view.KeyEventCompat$BaseKeyEventVersionImpl -> android.support.v4.view.d:
+    int metaStateFilterDirectionalModifiers(int,int,int,int,int) -> a
+    int normalizeMetaState(int) -> b
+    boolean metaStateHasModifiers(int,int) -> a
+    boolean metaStateHasNoModifiers(int) -> a
+android.support.v4.view.KeyEventCompat$HoneycombKeyEventVersionImpl -> android.support.v4.view.p:
+    boolean metaStateHasModifiers(int,int) -> a
+    boolean metaStateHasNoModifiers(int) -> a
+android.support.v4.view.KeyEventCompat$KeyEventVersionImpl -> android.support.v4.view.k:
+    boolean metaStateHasModifiers(int,int) -> a
+    boolean metaStateHasNoModifiers(int) -> a
+android.support.v4.view.MotionEventCompat -> android.support.v4.view.w:
+    android.support.v4.view.MotionEventCompat$MotionEventVersionImpl IMPL -> a
+    int getActionIndex(android.view.MotionEvent) -> a
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.MotionEventCompat$BaseMotionEventVersionImpl -> android.support.v4.view.b:
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.MotionEventCompat$EclairMotionEventVersionImpl -> android.support.v4.view.v:
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.MotionEventCompat$MotionEventVersionImpl -> android.support.v4.view.g:
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.PagerAdapter -> android.support.v4.view.a:
+    android.database.DataSetObservable mObservable -> a
+    int getCount() -> a
+    boolean isViewFromObject$171eb1dd() -> b
+    void registerDataSetObserver(android.database.DataSetObserver) -> a
+    void unregisterDataSetObserver(android.database.DataSetObserver) -> b
+android.support.v4.view.PagerTitleStrip -> android.support.v4.view.PagerTitleStrip:
+    android.support.v4.view.ViewPager mPager -> a
+    android.widget.TextView mPrevText -> b
+    android.widget.TextView mCurrText -> c
+    android.widget.TextView mNextText -> d
+    int mLastKnownCurrentPage -> e
+    float mLastKnownPositionOffset -> f
+    int mScaledTextSpacing -> g
+    boolean mUpdatingText -> h
+    boolean mUpdatingPositions -> i
+    android.support.v4.view.PagerTitleStrip$PageListener mPageListener -> j
+    int[] ATTRS -> k
+    void onAttachedToWindow() -> onAttachedToWindow
+    void onDetachedFromWindow() -> onDetachedFromWindow
+    void updateText(int,android.support.v4.view.PagerAdapter) -> a
+    void requestLayout() -> requestLayout
+    void updateAdapter(android.support.v4.view.PagerAdapter,android.support.v4.view.PagerAdapter) -> a
+    void updateTextPositions(int,float) -> a
+    void onMeasure(int,int) -> onMeasure
+    void onLayout(boolean,int,int,int,int) -> onLayout
+android.support.v4.view.PagerTitleStrip$PageListener -> android.support.v4.view.ad:
+    int mScrollState -> a
+    android.support.v4.view.PagerTitleStrip this$0 -> b
+    void onPageScrolled$486775f1(int,float) -> a
+    void onPageSelected$13462e() -> a
+    void onPageScrollStateChanged(int) -> a
+    void onChanged() -> onChanged
+android.support.v4.view.VelocityTrackerCompat -> android.support.v4.view.aa:
+    android.support.v4.view.VelocityTrackerCompat$VelocityTrackerVersionImpl IMPL -> a
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.VelocityTrackerCompat$BaseVelocityTrackerVersionImpl -> android.support.v4.view.r:
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.VelocityTrackerCompat$HoneycombVelocityTrackerVersionImpl -> android.support.v4.view.e:
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.VelocityTrackerCompat$VelocityTrackerVersionImpl -> android.support.v4.view.j:
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.ViewCompat -> android.support.v4.view.o:
+    android.support.v4.view.ViewCompat$ViewCompatImpl IMPL -> a
+    boolean canScrollHorizontally(android.view.View,int) -> a
+    int getOverScrollMode(android.view.View) -> a
+android.support.v4.view.ViewCompat$BaseViewCompatImpl -> android.support.v4.view.ab:
+    boolean canScrollHorizontally(android.view.View,int) -> a
+    int getOverScrollMode(android.view.View) -> a
+android.support.v4.view.ViewCompat$GBViewCompatImpl -> android.support.v4.view.f:
+    int getOverScrollMode(android.view.View) -> a
+android.support.v4.view.ViewCompat$ICSViewCompatImpl -> android.support.v4.view.q:
+    boolean canScrollHorizontally(android.view.View,int) -> a
+android.support.v4.view.ViewCompat$ViewCompatImpl -> android.support.v4.view.l:
+    boolean canScrollHorizontally(android.view.View,int) -> a
+    int getOverScrollMode(android.view.View) -> a
+android.support.v4.view.ViewConfigurationCompat -> android.support.v4.view.n:
+    android.support.v4.view.ViewConfigurationCompat$ViewConfigurationVersionImpl IMPL -> a
+    int getScaledPagingTouchSlop(android.view.ViewConfiguration) -> a
+android.support.v4.view.ViewConfigurationCompat$BaseViewConfigurationVersionImpl -> android.support.v4.view.i:
+    int getScaledPagingTouchSlop(android.view.ViewConfiguration) -> a
+android.support.v4.view.ViewConfigurationCompat$FroyoViewConfigurationVersionImpl -> android.support.v4.view.y:
+    int getScaledPagingTouchSlop(android.view.ViewConfiguration) -> a
+android.support.v4.view.ViewConfigurationCompat$ViewConfigurationVersionImpl -> android.support.v4.view.c:
+    int getScaledPagingTouchSlop(android.view.ViewConfiguration) -> a
+android.support.v4.view.ViewPager -> android.support.v4.view.ViewPager:
+    int[] LAYOUT_ATTRS -> a
+    java.util.Comparator COMPARATOR -> b
+    android.view.animation.Interpolator sInterpolator -> c
+    java.util.ArrayList mItems -> d
+    android.support.v4.view.PagerAdapter mAdapter -> e
+    int mCurItem -> f
+    int mRestoredCurItem -> g
+    android.os.Parcelable mRestoredAdapterState -> h
+    java.lang.ClassLoader mRestoredClassLoader -> i
+    android.widget.Scroller mScroller -> j
+    int mPageMargin -> k
+    android.graphics.drawable.Drawable mMarginDrawable -> l
+    int mTopPageBounds -> m
+    int mBottomPageBounds -> n
+    int mChildWidthMeasureSpec -> o
+    int mChildHeightMeasureSpec -> p
+    boolean mInLayout -> q
+    boolean mScrollingCacheEnabled -> r
+    boolean mPopulatePending -> s
+    boolean mScrolling -> t
+    int mOffscreenPageLimit -> u
+    boolean mIsBeingDragged -> v
+    boolean mIsUnableToDrag -> w
+    int mTouchSlop -> x
+    float mInitialMotionX -> y
+    float mLastMotionX -> z
+    float mLastMotionY -> A
+    int mActivePointerId -> B
+    android.view.VelocityTracker mVelocityTracker -> C
+    int mMinimumVelocity -> D
+    int mMaximumVelocity -> E
+    int mFlingDistance -> F
+    boolean mFakeDragging -> G
+    android.support.v4.widget.EdgeEffectCompat mLeftEdge -> H
+    android.support.v4.widget.EdgeEffectCompat mRightEdge -> I
+    boolean mFirstLayout -> J
+    boolean mCalledSuper -> K
+    int mDecorChildCount -> L
+    android.support.v4.view.ViewPager$OnPageChangeListener mOnPageChangeListener -> M
+    android.support.v4.view.ViewPager$OnPageChangeListener mInternalPageChangeListener -> N
+    android.support.v4.view.ViewPager$OnAdapterChangeListener mAdapterChangeListener -> O
+    int mScrollState -> P
+    void initViewPager() -> d
+    void setScrollState(int) -> a
+    android.support.v4.view.PagerAdapter getAdapter() -> a
+    void setOnAdapterChangeListener(android.support.v4.view.ViewPager$OnAdapterChangeListener) -> a
+    void setCurrentItem(int,boolean) -> a
+    int getCurrentItem() -> b
+    void setCurrentItemInternal(int,boolean,boolean) -> a
+    void setCurrentItemInternal(int,boolean,boolean,int) -> a
+    android.support.v4.view.ViewPager$OnPageChangeListener setInternalPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener) -> a
+    boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
+    void drawableStateChanged() -> drawableStateChanged
+    void addNewItem(int,int) -> a
+    void populate() -> e
+    android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
+    void addView(android.view.View,int,android.view.ViewGroup$LayoutParams) -> addView
+    android.support.v4.view.ViewPager$ItemInfo infoForChild(android.view.View) -> a
+    android.support.v4.view.ViewPager$ItemInfo infoForAnyChild(android.view.View) -> b
+    void onAttachedToWindow() -> onAttachedToWindow
+    void onMeasure(int,int) -> onMeasure
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    void computeScroll() -> computeScroll
+    void pageScrolled(int) -> b
+    void completeScroll() -> f
+    boolean onInterceptTouchEvent(android.view.MotionEvent) -> onInterceptTouchEvent
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    void draw(android.graphics.Canvas) -> draw
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void onSecondaryPointerUp(android.view.MotionEvent) -> a
+    void endDrag() -> g
+    void setScrollingCacheEnabled(boolean) -> a
+    boolean canScroll(android.view.View,boolean,int,int,int) -> a
+    boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
+    boolean arrowScroll(int) -> c
+    boolean pageLeft() -> h
+    boolean pageRight() -> i
+    void addFocusables(java.util.ArrayList,int,int) -> addFocusables
+    void addTouchables(java.util.ArrayList) -> addTouchables
+    boolean onRequestFocusInDescendants(int,android.graphics.Rect) -> onRequestFocusInDescendants
+    boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent) -> dispatchPopulateAccessibilityEvent
+    android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
+    boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
+    android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
+    int[] access$100() -> c
+android.support.v4.view.ViewPager$1 -> android.support.v4.view.t:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+android.support.v4.view.ViewPager$2 -> android.support.v4.view.s:
+    float getInterpolation(float) -> getInterpolation
+android.support.v4.view.ViewPager$Decor -> android.support.v4.view.z:
+android.support.v4.view.ViewPager$ItemInfo -> android.support.v4.view.x:
+    java.lang.Object object -> a
+    int position -> b
+    boolean scrolling -> c
+android.support.v4.view.ViewPager$LayoutParams -> android.support.v4.view.ViewPager$LayoutParams:
+    boolean isDecor -> a
+    int gravity -> b
+android.support.v4.view.ViewPager$OnAdapterChangeListener -> android.support.v4.view.h:
+android.support.v4.view.ViewPager$OnPageChangeListener -> android.support.v4.view.u:
+    void onPageScrolled$486775f1(int,float) -> a
+    void onPageSelected$13462e() -> a
+    void onPageScrollStateChanged(int) -> a
+android.support.v4.view.ViewPager$SavedState -> android.support.v4.view.ViewPager$SavedState:
+    int position -> a
+    android.os.Parcelable adapterState -> b
+    java.lang.ClassLoader loader -> c
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    java.lang.String toString() -> toString
+android.support.v4.view.ViewPager$SavedState$1 -> android.support.v4.view.m:
+    java.lang.Object[] newArray(int) -> a
+    java.lang.Object createFromParcel(android.os.Parcel,java.lang.ClassLoader) -> a
+android.support.v4.widget.EdgeEffectCompat -> android.support.v4.a.d:
+    java.lang.Object mEdgeEffect -> a
+    android.support.v4.widget.EdgeEffectCompat$EdgeEffectImpl IMPL -> b
+    void setSize(int,int) -> a
+    boolean isFinished() -> a
+    void finish() -> b
+    boolean onPull(float) -> a
+    boolean onRelease() -> c
+    boolean draw(android.graphics.Canvas) -> a
+android.support.v4.widget.EdgeEffectCompat$BaseEdgeEffectImpl -> android.support.v4.a.b:
+    java.lang.Object newEdgeEffect(android.content.Context) -> a
+    void setSize(java.lang.Object,int,int) -> a
+    boolean isFinished(java.lang.Object) -> a
+    void finish(java.lang.Object) -> b
+    boolean onPull(java.lang.Object,float) -> a
+    boolean onRelease(java.lang.Object) -> c
+    boolean draw(java.lang.Object,android.graphics.Canvas) -> a
+android.support.v4.widget.EdgeEffectCompat$EdgeEffectIcsImpl -> android.support.v4.a.a:
+    java.lang.Object newEdgeEffect(android.content.Context) -> a
+    void setSize(java.lang.Object,int,int) -> a
+    boolean isFinished(java.lang.Object) -> a
+    void finish(java.lang.Object) -> b
+    boolean onPull(java.lang.Object,float) -> a
+    boolean onRelease(java.lang.Object) -> c
+    boolean draw(java.lang.Object,android.graphics.Canvas) -> a
+android.support.v4.widget.EdgeEffectCompat$EdgeEffectImpl -> android.support.v4.a.c:
+    java.lang.Object newEdgeEffect(android.content.Context) -> a
+    void setSize(java.lang.Object,int,int) -> a
+    boolean isFinished(java.lang.Object) -> a
+    void finish(java.lang.Object) -> b
+    boolean onPull(java.lang.Object,float) -> a
+    boolean onRelease(java.lang.Object) -> c
+    boolean draw(java.lang.Object,android.graphics.Canvas) -> a
+com.applicake.beanstalkclient.Account -> com.applicake.beanstalkclient.j:
+    java.text.SimpleDateFormat FORMATTER -> a
+    java.util.Date createdAt -> b
+    int id -> c
+    java.lang.String name -> d
+    int ownerId -> e
+    int planId -> f
+    boolean suspended -> g
+    java.lang.String thirdLevelDomain -> h
+    java.lang.String timeZone -> i
+    java.util.Date updatedAt -> j
+    void setCreatedAt(java.lang.String) -> a
+    void setId(int) -> a
+    java.lang.String getName() -> a
+    void setName(java.lang.String) -> b
+    void setOwnerId(int) -> b
+    int getPlanId() -> b
+    void setPlanId(int) -> c
+    void setSuspended(boolean) -> a
+    void setThirdLevelDomain(java.lang.String) -> c
+    java.lang.String getTimeZone() -> c
+    void setTimeZone(java.lang.String) -> d
+    void setUpdatedAt(java.lang.String) -> e
+com.applicake.beanstalkclient.Changeset -> com.applicake.beanstalkclient.a:
+    java.text.SimpleDateFormat FORMATTER -> a
+    com.applicake.beanstalkclient.utils.CustomYamlParser yamlParser -> b
+    int accountId -> c
+    java.lang.String author -> d
+    java.util.ArrayList changedDirs -> e
+    java.util.ArrayList changedFiles -> f
+    java.util.ArrayList changedProperties -> g
+    java.lang.String email -> h
+    java.lang.String hashId -> i
+    java.lang.String message -> j
+    int repositoryId -> k
+    java.lang.String revision -> l
+    java.util.Date time -> m
+    boolean tooLarge -> n
+    int userId -> o
+    java.lang.String getUniqueId() -> a
+    void setAccountId(int) -> a
+    java.lang.String getAuthor() -> b
+    void setAuthor(java.lang.String) -> a
+    java.util.ArrayList getChangedDirs() -> c
+    void setChangedDirs(java.lang.String) -> b
+    java.util.ArrayList getChangedFiles() -> d
+    void setChangedFiles(java.lang.String) -> c
+    void setChangedProperties(java.lang.String) -> d
+    java.lang.String getEmail() -> e
+    void setEmail(java.lang.String) -> e
+    java.lang.String getHashId() -> f
+    void setHashId(java.lang.String) -> f
+    java.lang.String getMessage() -> g
+    void setMessage(java.lang.String) -> g
+    int getRepositoryId() -> h
+    void setRepositoryId(int) -> b
+    java.lang.String getRevision() -> i
+    void setRevision(java.lang.String) -> h
+    java.util.Date getTime() -> j
+    void setTime(java.lang.String) -> i
+    void setTooLarge(boolean) -> a
+    void setUserId(int) -> c
+com.applicake.beanstalkclient.Comment -> com.applicake.beanstalkclient.k:
+    java.text.SimpleDateFormat FORMATTER -> a
+    int accountId -> b
+    java.lang.String authorEmail -> c
+    int authorId -> d
+    java.lang.String authorLogin -> e
+    java.lang.String authorName -> f
+    java.lang.String body -> g
+    java.util.Date createdAt -> h
+    java.lang.String filePath -> i
+    int id -> j
+    java.lang.String lineNumber -> k
+    java.lang.String renderedBody -> l
+    int repositoryId -> m
+    java.lang.String revision -> n
+    java.util.Date updatedAt -> o
+    void setAccountId(int) -> a
+    java.lang.String getAuthorEmail() -> a
+    void setAuthorEmail(java.lang.String) -> a
+    void setAuthorId(int) -> b
+    void setAuthorLogin(java.lang.String) -> b
+    java.lang.String getAuthorName() -> b
+    void setAuthorName(java.lang.String) -> c
+    void setBody(java.lang.String) -> d
+    void setCreatedAt(java.lang.String) -> e
+    void setFilePath(java.lang.String) -> f
+    void setId(int) -> c
+    void setLineNumber(java.lang.String) -> g
+    java.lang.String getRenderedBody() -> c
+    void setRenderedBody(java.lang.String) -> h
+    void setRepositoryId(int) -> d
+    void setRevision(java.lang.String) -> i
+    java.util.Date getUpdatedAt() -> d
+    void setUpdatedAt(java.lang.String) -> j
+com.applicake.beanstalkclient.Permission -> com.applicake.beanstalkclient.Permission:
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    boolean fullDeploymentAccess -> a
+    int id -> b
+    int repositoryId -> c
+    int serverEnvironmentId -> d
+    int userId -> e
+    boolean readAccess -> f
+    boolean writeAccess -> g
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    boolean isFullDeploymentAccess() -> a
+    void setFullDeploymentAccess(boolean) -> a
+    int getId() -> b
+    void setId(int) -> a
+    int getRepositoryId() -> c
+    void setRepositoryId(int) -> b
+    int getServerEnvironmentId() -> d
+    void setServerEnvironmentId(int) -> c
+    void setUserId(int) -> d
+    boolean isReadAccess() -> e
+    void setReadAccess(boolean) -> b
+    boolean isWriteAccess() -> f
+    void setWriteAccess(boolean) -> c
+com.applicake.beanstalkclient.Permission$1 -> com.applicake.beanstalkclient.b:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.applicake.beanstalkclient.Plan -> com.applicake.beanstalkclient.c:
+    java.lang.String name -> a
+    int price -> b
+    int id -> c
+    int storageInMegaBytes -> d
+    int numberOfRepos -> e
+    int numberOfUsers -> f
+    int numberOfServers -> g
+    int getId() -> a
+    void setId(int) -> a
+    int getNumberOfRepos() -> b
+    void setNumberOfRepos(int) -> b
+    int getNumberOfUsers() -> c
+    void setNumberOfUsers(int) -> c
+    int getNumberOfServers() -> d
+    void setNumberOfServers(int) -> d
+    java.lang.String getName() -> e
+    void setName(java.lang.String) -> a
+    int getPrice() -> f
+    void setPrice(int) -> e
+    int getStorageInMegaBytes() -> g
+    void setStorageInMegaBytes(int) -> f
+com.applicake.beanstalkclient.Release -> com.applicake.beanstalkclient.Release:
+    java.text.SimpleDateFormat FORMATTER -> a
+    java.text.SimpleDateFormat FORMATTER_ALTERNATIVE -> b
+    java.lang.String[] STATES -> c
+    java.util.Map STATES_TO_INT -> d
+    int accountId -> e
+    java.lang.String author -> f
+    int userId -> g
+    java.lang.String comment -> h
+    long createdAt -> i
+    long deployedAt -> j
+    int id -> k
+    long lastRetryAt -> l
+    int repositoryId -> m
+    java.lang.String environmentName -> n
+    int environmentId -> o
+    int retries -> p
+    java.lang.String revision -> q
+    int state -> r
+    long updatedAt -> s
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    void setAccountId(int) -> a
+    java.lang.String getAuthor() -> a
+    void setAuthor(java.lang.String) -> a
+    void setUserId(int) -> b
+    java.lang.String getComment() -> b
+    void setComment(java.lang.String) -> b
+    java.util.Date getCreatedAt() -> c
+    void setCreatedAt(java.lang.String) -> c
+    java.util.Date getDeployedAt() -> d
+    void setDeployedAt(java.lang.String) -> d
+    int getId() -> e
+    void setId(int) -> c
+    void setLastRetryAt(java.lang.String) -> e
+    int getRepositoryId() -> f
+    void setRepositoryId(int) -> d
+    java.lang.String getEnvironmentName() -> g
+    void setEnvironmentName(java.lang.String) -> f
+    void setEnvironmentId(int) -> e
+    void setRetries(int) -> f
+    java.lang.String getRevision() -> h
+    void setRevision(java.lang.String) -> g
+    java.lang.String getStateLabel() -> i
+    void setState(java.lang.String) -> h
+    void setUpdatedAt(java.lang.String) -> i
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+com.applicake.beanstalkclient.Release$1 -> com.applicake.beanstalkclient.f:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.applicake.beanstalkclient.Repository -> com.applicake.beanstalkclient.Repository:
+    java.text.SimpleDateFormat FORMATTER -> a
+    java.text.SimpleDateFormat FORMATTER_NOTIMEZONE -> b
+    int accountId -> c
+    boolean anonymous -> d
+    java.lang.String colorLabel -> e
+    long createdAt -> f
+    int id -> g
+    long lastCommitAt -> h
+    java.lang.String name -> i
+    int revision -> j
+    int storageUsedBytes -> k
+    java.lang.String title -> l
+    java.lang.String type -> m
+    long updatedAt -> n
+    java.lang.String vcs -> o
+    java.lang.String defaultBranch -> p
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    com.applicake.beanstalkclient.Repository generateFakeRepositoryForOverall() -> a
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    int describeContents() -> describeContents
+    void setAccountId(int) -> a
+    void setAnonymous(boolean) -> a
+    java.lang.String getColorLabel() -> b
+    void setColorLabel(java.lang.String) -> a
+    long getCreatedAt() -> c
+    void setCreatedAt(java.lang.String) -> b
+    int getId() -> d
+    void setId(int) -> b
+    long getLastCommitAt() -> e
+    void setLastCommitAt(java.lang.String) -> c
+    java.lang.String getName() -> f
+    void setName(java.lang.String) -> d
+    int getRevision() -> g
+    void setRevision(int) -> c
+    int getStorageUsedBytes() -> h
+    void setStorageUsedBytes(int) -> d
+    java.lang.String getTitle() -> i
+    void setTitle(java.lang.String) -> e
+    java.lang.String getType() -> j
+    void setType(java.lang.String) -> f
+    long getUpdatedAt() -> k
+    void setUpdatedAt(java.lang.String) -> g
+    void setVcs(java.lang.String) -> h
+    void setDefaultBranch(java.lang.String) -> i
+    int getColorLabelNo() -> l
+com.applicake.beanstalkclient.Repository$1 -> com.applicake.beanstalkclient.i:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.applicake.beanstalkclient.RepositoryDataHolder -> com.applicake.beanstalkclient.RepositoryDataHolder:
+com.applicake.beanstalkclient.Server -> com.applicake.beanstalkclient.Server:
+    java.text.SimpleDateFormat FORMATTER -> a
+    int accountId -> b
+    long createdAt -> c
+    int id -> d
+    java.lang.String localPath -> e
+    java.lang.String login -> f
+    java.lang.String name -> g
+    java.lang.String password -> h
+    int port -> i
+    java.lang.String protocol -> j
+    java.lang.String remoteAddr -> k
+    java.lang.String remotePath -> l
+    int repositoryId -> m
+    java.lang.String environmentName -> n
+    java.lang.String serverEnvironmentId -> o
+    java.lang.String revision -> p
+    long updatedAt -> q
+    java.lang.String preReleaseHook -> r
+    java.lang.String postReleaseHook -> s
+    boolean useActiveMode -> t
+    boolean authenticateByKey -> u
+    boolean useFeat -> v
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    int describeContents() -> describeContents
+    void setAccountId(int) -> a
+    void setCreatedAt(java.lang.String) -> a
+    int getId() -> a
+    void setId(int) -> b
+    java.lang.String getLocalPath() -> b
+    void setLocalPath(java.lang.String) -> b
+    java.lang.String getLogin() -> c
+    void setLogin(java.lang.String) -> c
+    java.lang.String getName() -> d
+    void setName(java.lang.String) -> d
+    java.lang.String getPassword() -> e
+    void setPassword(java.lang.String) -> e
+    int getPort() -> f
+    void setPort(int) -> c
+    java.lang.String getProtocol() -> g
+    void setProtocol(java.lang.String) -> f
+    java.lang.String getRemoteAddr() -> h
+    void setRemoteAddr(java.lang.String) -> g
+    java.lang.String getRemotePath() -> i
+    void setRemotePath(java.lang.String) -> h
+    int getRepositoryId() -> j
+    void setRepositoryId(int) -> d
+    void setEnvironmentName(java.lang.String) -> i
+    void setServerEnvironmentId(java.lang.String) -> j
+    void setRevision(java.lang.String) -> k
+    void setUpdatedAt(java.lang.String) -> l
+    java.lang.String getPreReleaseHook() -> k
+    void setPreReleaseHook(java.lang.String) -> m
+    java.lang.String getPostReleaseHook() -> l
+    void setPostReleaseHook(java.lang.String) -> n
+    boolean isUseActiveMode() -> m
+    void setUseActiveMode(boolean) -> a
+    boolean isAuthenticateByKey() -> n
+    void setAuthenticateByKey(boolean) -> b
+    boolean isUseFeat() -> o
+    void setUseFeat(boolean) -> c
+com.applicake.beanstalkclient.Server$1 -> com.applicake.beanstalkclient.g:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.applicake.beanstalkclient.ServerEnvironment -> com.applicake.beanstalkclient.ServerEnvironment:
+    java.text.SimpleDateFormat FORMATTER -> a
+    int accountId -> b
+    boolean automatic -> c
+    java.lang.String branchName -> d
+    long createdAt -> e
+    java.lang.String currentVersion -> f
+    int id -> g
+    java.lang.String name -> h
+    int repositoryId -> i
+    long updatedAt -> j
+    java.util.List serverList -> k
+    boolean downloading -> l
+    boolean downloaded -> m
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    int describeContents() -> describeContents
+    void setAccountId(int) -> a
+    boolean isAutomatic() -> a
+    void setAutomatic(boolean) -> a
+    java.lang.String getBranchName() -> b
+    void setBranchName(java.lang.String) -> a
+    void setCreatedAt(java.lang.String) -> b
+    void setCurrentVersion(java.lang.String) -> c
+    int getId() -> c
+    void setId(int) -> b
+    java.lang.String getName() -> d
+    void setName(java.lang.String) -> d
+    int getRepositoryId() -> e
+    void setRepositoryId(int) -> c
+    void setUpdatedAt(java.lang.String) -> e
+    void setDownloading(boolean) -> b
+    boolean isDownloading() -> f
+    void setServerList(java.util.List) -> a
+    java.util.List getServerList() -> g
+    void setDownloaded(boolean) -> c
+    boolean isDownloaded() -> h
+    java.lang.String toString() -> toString
+com.applicake.beanstalkclient.ServerEnvironment$1 -> com.applicake.beanstalkclient.e:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.applicake.beanstalkclient.ServiceAutoStarter -> com.applicake.beanstalkclient.ServiceAutoStarter:
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.applicake.beanstalkclient.SyncService -> com.applicake.beanstalkclient.SyncService:
+    java.lang.String TAG -> a
+    android.content.SharedPreferences prefs -> b
+    java.lang.String mostRecentlyViewedChangesetId -> c
+    android.content.Context mContext -> d
+    android.os.IBinder onBind(android.content.Intent) -> onBind
+    void onCreate() -> onCreate
+    void onStart(android.content.Intent,int) -> onStart
+    void onDestroy() -> onDestroy
+    void initializeService(android.content.Context) -> a
+    void updateServiceReloadTime(android.content.Context,java.lang.Integer) -> a
+    void stopService(android.content.Context) -> b
+    android.content.SharedPreferences access$000() -> a
+    java.lang.String access$100(com.applicake.beanstalkclient.SyncService) -> a
+com.applicake.beanstalkclient.SyncService$NotificationServiceTask -> com.applicake.beanstalkclient.d:
+    boolean LEDcolorFitsRepoLabel -> a
+    java.util.HashMap idToRepoMap -> b
+    com.applicake.beanstalkclient.SyncService this$0 -> c
+    java.util.ArrayList doInBackground$2b2655bf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.applicake.beanstalkclient.User -> com.applicake.beanstalkclient.User:
+    java.text.SimpleDateFormat FORMATTER -> a
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    int accountId -> b
+    com.applicake.beanstalkclient.enums.UserType userType -> c
+    long createdAt -> d
+    java.lang.String email -> e
+    java.lang.String firstName -> f
+    int id -> g
+    java.lang.String lastName -> h
+    java.lang.String login -> i
+    java.lang.String timezone -> j
+    long updatedAt -> k
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    void setAccountId(int) -> a
+    com.applicake.beanstalkclient.enums.UserType getUserType() -> a
+    void setUserType(com.applicake.beanstalkclient.enums.UserType) -> a
+    void setCreatedAt(java.lang.String) -> a
+    java.lang.String getEmail() -> b
+    void setEmail(java.lang.String) -> b
+    java.lang.String getFirstName() -> c
+    void setFirstName(java.lang.String) -> c
+    int getId() -> d
+    void setId(int) -> b
+    java.lang.String getLastName() -> e
+    void setLastName(java.lang.String) -> d
+    java.lang.String getLogin() -> f
+    void setLogin(java.lang.String) -> e
+    java.lang.String getTimezone() -> g
+    void setTimezone(java.lang.String) -> f
+    void setUpdatedAt(java.lang.String) -> g
+com.applicake.beanstalkclient.User$1 -> com.applicake.beanstalkclient.l:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.applicake.beanstalkclient.YamlEntry -> com.applicake.beanstalkclient.YamlEntry:
+    java.lang.String value -> a
+    java.lang.String property -> b
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    java.lang.String getValue() -> a
+    java.lang.String getProperty() -> b
+com.applicake.beanstalkclient.YamlEntry$1 -> com.applicake.beanstalkclient.h:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.applicake.beanstalkclient.activities.AccountSettingsActivity -> com.applicake.beanstalkclient.activities.AccountSettingsActivity:
+    android.widget.EditText accountName -> a
+    android.widget.Spinner timezoneSpinner -> b
+    java.util.ArrayList popupValuesList -> k
+    java.util.ArrayList spinnerValuesList -> l
+    android.content.Context mContext -> m
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.content.Context access$000(com.applicake.beanstalkclient.activities.AccountSettingsActivity) -> a
+    android.widget.EditText access$200(com.applicake.beanstalkclient.activities.AccountSettingsActivity) -> b
+    java.util.ArrayList access$300(com.applicake.beanstalkclient.activities.AccountSettingsActivity) -> c
+    android.widget.Spinner access$400(com.applicake.beanstalkclient.activities.AccountSettingsActivity) -> d
+com.applicake.beanstalkclient.activities.AccountSettingsActivity$DownloadAccountInfoTask -> com.applicake.beanstalkclient.activities.dh:
+    android.os.AsyncTask thisTask -> b
+    boolean failed -> c
+    java.lang.String failMessage -> d
+    android.app.ProgressDialog progressDialog -> e
+    com.applicake.beanstalkclient.Account account -> f
+    com.applicake.beanstalkclient.activities.AccountSettingsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$5cbeabcf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$100(com.applicake.beanstalkclient.activities.AccountSettingsActivity$DownloadAccountInfoTask) -> a
+com.applicake.beanstalkclient.activities.AccountSettingsActivity$DownloadAccountInfoTask$1 -> com.applicake.beanstalkclient.activities.cd:
+    com.applicake.beanstalkclient.activities.AccountSettingsActivity$DownloadAccountInfoTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.AccountSettingsActivity$DownloadAccountInfoTask$2 -> com.applicake.beanstalkclient.activities.cf:
+    com.applicake.beanstalkclient.activities.AccountSettingsActivity$DownloadAccountInfoTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.AccountSettingsActivity$SendUpdateAccountPropertiesTask -> com.applicake.beanstalkclient.activities.cc:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String failMessage -> e
+    boolean failed -> f
+    com.applicake.beanstalkclient.activities.AccountSettingsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$500(com.applicake.beanstalkclient.activities.AccountSettingsActivity$SendUpdateAccountPropertiesTask) -> a
+com.applicake.beanstalkclient.activities.AccountSettingsActivity$SendUpdateAccountPropertiesTask$1 -> com.applicake.beanstalkclient.activities.d:
+    com.applicake.beanstalkclient.activities.AccountSettingsActivity$SendUpdateAccountPropertiesTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.AccountSettingsActivity$SendUpdateAccountPropertiesTask$2 -> com.applicake.beanstalkclient.activities.b:
+    com.applicake.beanstalkclient.activities.AccountSettingsActivity$SendUpdateAccountPropertiesTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.ApplicationSettingsActivity -> com.applicake.beanstalkclient.activities.ApplicationSettingsActivity:
+    java.lang.String TAG -> a
+    void onCreate(android.os.Bundle) -> onCreate
+com.applicake.beanstalkclient.activities.ApplicationSettingsActivity$1 -> com.applicake.beanstalkclient.activities.ax:
+    android.preference.CheckBoxPreference val$notificationsCheckboxPreference -> a
+    com.applicake.beanstalkclient.activities.ApplicationSettingsActivity this$0 -> b
+    boolean onPreferenceChange(android.preference.Preference,java.lang.Object) -> onPreferenceChange
+com.applicake.beanstalkclient.activities.ApplicationSettingsActivity$2 -> com.applicake.beanstalkclient.activities.bb:
+    com.applicake.beanstalkclient.activities.ApplicationSettingsActivity this$0 -> a
+    boolean onPreferenceChange(android.preference.Preference,java.lang.Object) -> onPreferenceChange
+com.applicake.beanstalkclient.activities.BeanstalkActivity -> com.applicake.beanstalkclient.activities.BeanstalkActivity:
+    android.content.SharedPreferences prefs -> i
+    java.lang.String currentUser -> j
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void logout() -> d
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onDestroy() -> onDestroy
+    void cancelAllDownloadTasks() -> e
+    void onRepositoriesButtonClick(android.view.View) -> onRepositoriesButtonClick
+    void onUsersButtonClick(android.view.View) -> onUsersButtonClick
+    void onDeploymentButtonClick(android.view.View) -> onDeploymentButtonClick
+    void onHomeButtonClick(android.view.View) -> onHomeButtonClick
+com.applicake.beanstalkclient.activities.BeanstalkActivity$1 -> com.applicake.beanstalkclient.activities.g:
+    com.applicake.beanstalkclient.activities.BeanstalkActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.activities.BeanstalkActivity$2 -> com.applicake.beanstalkclient.activities.c:
+    com.applicake.beanstalkclient.activities.BeanstalkActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.activities.ChangesetActivity -> com.applicake.beanstalkclient.activities.ChangesetActivity:
+    android.widget.ListView changesList -> a
+    android.widget.Button changesetButton -> b
+    android.widget.Button commentsButton -> k
+    java.util.ArrayList commentsArray -> l
+    android.widget.ListView commentList -> m
+    com.applicake.beanstalkclient.adapters.CommentAdapter commentAdapter -> n
+    boolean commentListParsed -> o
+    int repoId -> p
+    java.lang.String revisionId -> q
+    android.widget.EditText newCommentBody -> r
+    android.widget.Button submitButton -> s
+    android.content.Context mContext -> t
+    int lastLoadedPage -> u
+    android.view.View footerRefreshButtonView -> v
+    android.widget.ProgressBar footerRefreshProgressBar -> w
+    android.widget.TextView footerRefreshBodyText -> x
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.content.Context access$000(com.applicake.beanstalkclient.activities.ChangesetActivity) -> a
+    java.util.ArrayList access$300(com.applicake.beanstalkclient.activities.ChangesetActivity) -> b
+    android.widget.ProgressBar access$400(com.applicake.beanstalkclient.activities.ChangesetActivity) -> c
+    android.view.View access$500(com.applicake.beanstalkclient.activities.ChangesetActivity) -> d
+    android.widget.TextView access$600(com.applicake.beanstalkclient.activities.ChangesetActivity) -> e
+    android.widget.ListView access$700(com.applicake.beanstalkclient.activities.ChangesetActivity) -> f
+    int access$802(com.applicake.beanstalkclient.activities.ChangesetActivity,int) -> a
+    com.applicake.beanstalkclient.adapters.CommentAdapter access$900(com.applicake.beanstalkclient.activities.ChangesetActivity) -> g
+    int access$800(com.applicake.beanstalkclient.activities.ChangesetActivity) -> h
+    int access$808(com.applicake.beanstalkclient.activities.ChangesetActivity) -> i
+    java.lang.String access$1300(com.applicake.beanstalkclient.activities.ChangesetActivity) -> j
+    int access$1400(com.applicake.beanstalkclient.activities.ChangesetActivity) -> k
+    android.widget.EditText access$1600(com.applicake.beanstalkclient.activities.ChangesetActivity) -> l
+com.applicake.beanstalkclient.activities.ChangesetActivity$ParseCommentListTask -> com.applicake.beanstalkclient.activities.cx:
+    boolean failed -> b
+    java.lang.String failMessage -> c
+    java.lang.String repoId -> d
+    java.lang.String revision -> e
+    com.applicake.beanstalkclient.activities.ChangesetActivity this$0 -> a
+    java.util.ArrayList doInBackground(java.lang.String[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    java.lang.String access$100(com.applicake.beanstalkclient.activities.ChangesetActivity$ParseCommentListTask) -> a
+    java.lang.String access$200(com.applicake.beanstalkclient.activities.ChangesetActivity$ParseCommentListTask) -> b
+com.applicake.beanstalkclient.activities.ChangesetActivity$ParseCommentListTask$1 -> com.applicake.beanstalkclient.activities.bo:
+    com.applicake.beanstalkclient.activities.ChangesetActivity$ParseCommentListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.ChangesetActivity$ParseMoreCommentListTask -> com.applicake.beanstalkclient.activities.bq:
+    boolean failed -> b
+    java.lang.String failMessage -> c
+    java.lang.String repoId -> d
+    java.lang.String revision -> e
+    com.applicake.beanstalkclient.activities.ChangesetActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.util.ArrayList doInBackground(java.lang.String[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    java.lang.String access$1000(com.applicake.beanstalkclient.activities.ChangesetActivity$ParseMoreCommentListTask) -> a
+    java.lang.String access$1100(com.applicake.beanstalkclient.activities.ChangesetActivity$ParseMoreCommentListTask) -> b
+com.applicake.beanstalkclient.activities.ChangesetActivity$ParseMoreCommentListTask$1 -> com.applicake.beanstalkclient.activities.v:
+    com.applicake.beanstalkclient.activities.ChangesetActivity$ParseMoreCommentListTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.ChangesetActivity$SendCommentTask -> com.applicake.beanstalkclient.activities.ao:
+    boolean failed -> b
+    java.lang.String failMessage -> c
+    android.app.ProgressDialog progressDialog -> d
+    java.lang.String errorMessage -> e
+    android.os.AsyncTask thisTask -> f
+    java.lang.String commentBody -> g
+    com.applicake.beanstalkclient.activities.ChangesetActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.String doInBackground(java.lang.String[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$1200(com.applicake.beanstalkclient.activities.ChangesetActivity$SendCommentTask) -> a
+    java.lang.String access$1500(com.applicake.beanstalkclient.activities.ChangesetActivity$SendCommentTask) -> b
+com.applicake.beanstalkclient.activities.ChangesetActivity$SendCommentTask$1 -> com.applicake.beanstalkclient.activities.aa:
+    com.applicake.beanstalkclient.activities.ChangesetActivity$SendCommentTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.ChangesetActivity$SendCommentTask$2 -> com.applicake.beanstalkclient.activities.z:
+    com.applicake.beanstalkclient.activities.ChangesetActivity$SendCommentTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity -> com.applicake.beanstalkclient.activities.CreateNewReleaseActivity:
+    android.widget.EditText revision -> a
+    java.util.List serverEnvironmentList -> b
+    com.applicake.beanstalkclient.adapters.SpinnerServerEnvironmentAdapter serverEnvironmentSpinnerAdapter -> k
+    java.lang.String repoId -> l
+    android.widget.EditText comment -> m
+    android.widget.CheckBox deployFromScratch -> n
+    android.widget.Spinner serverEnvironmentSpinner -> o
+    android.content.Context mContext -> p
+    void onCreate(android.os.Bundle) -> onCreate
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    android.content.Context access$000(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> a
+    java.lang.String access$100(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> b
+    java.util.List access$300(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> c
+    com.applicake.beanstalkclient.adapters.SpinnerServerEnvironmentAdapter access$400(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> d
+    android.widget.Spinner access$700(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> e
+    android.widget.EditText access$800(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> f
+    android.widget.EditText access$900(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> g
+    android.widget.CheckBox access$1000(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity) -> h
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$1 -> com.applicake.beanstalkclient.activities.cn:
+    com.applicake.beanstalkclient.activities.CreateNewReleaseActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$2 -> com.applicake.beanstalkclient.activities.ch:
+    com.applicake.beanstalkclient.activities.CreateNewReleaseActivity this$0 -> a
+    void onFocusChange(android.view.View,boolean) -> onFocusChange
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$DownloadServerEnvironmentsListTask -> com.applicake.beanstalkclient.activities.br:
+    android.content.Context context -> b
+    java.lang.String failMessage -> c
+    boolean failed -> d
+    com.applicake.beanstalkclient.activities.CreateNewReleaseActivity this$0 -> a
+    java.util.List doInBackground$528b683() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.content.Context access$200(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$DownloadServerEnvironmentsListTask) -> a
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$DownloadServerEnvironmentsListTask$1 -> com.applicake.beanstalkclient.activities.bj:
+    com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$DownloadServerEnvironmentsListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$SendNewRelease -> com.applicake.beanstalkclient.activities.ap:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    android.content.Context mContext -> e
+    java.lang.String failMessage -> f
+    boolean failed -> g
+    com.applicake.beanstalkclient.activities.CreateNewReleaseActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$500(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$SendNewRelease) -> a
+    android.content.Context access$600(com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$SendNewRelease) -> b
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$SendNewRelease$1 -> com.applicake.beanstalkclient.activities.bz:
+    com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$SendNewRelease this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$SendNewRelease$2 -> com.applicake.beanstalkclient.activities.ca:
+    com.applicake.beanstalkclient.activities.CreateNewReleaseActivity$SendNewRelease this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity -> com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity:
+    android.content.Context mContext -> b
+    int colorLabelNo -> a
+    android.widget.EditText repoTitleEditText -> k
+    android.view.View$OnClickListener dialogButtonsListener -> l
+    android.widget.Button colorLabelButton -> m
+    android.app.Dialog dialog -> n
+    android.widget.EditText repoNameEditText -> o
+    android.widget.Spinner repoTypeSpinner -> p
+    android.widget.CheckBox repoCreateStructCheckbox -> q
+    void onCreate(android.os.Bundle) -> onCreate
+    android.app.Dialog onCreateDialog(int) -> onCreateDialog
+    void onClick(android.view.View) -> onClick
+    android.widget.Button access$000(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity) -> a
+    android.app.Dialog access$100(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity) -> b
+    android.widget.CheckBox access$200(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity) -> c
+    android.content.Context access$300(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity) -> d
+    android.widget.Spinner access$500(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity) -> e
+    android.widget.EditText access$600(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity) -> f
+    android.widget.EditText access$700(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity) -> g
+com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$1 -> com.applicake.beanstalkclient.activities.bc:
+    com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$2 -> com.applicake.beanstalkclient.activities.az:
+    com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity this$0 -> a
+    void onItemSelected(android.widget.AdapterView,android.view.View,int,long) -> onItemSelected
+    void onNothingSelected(android.widget.AdapterView) -> onNothingSelected
+com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$SendRepositoryCreateTask -> com.applicake.beanstalkclient.activities.bu:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String failMessage -> e
+    boolean failed -> f
+    com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$400(com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$SendRepositoryCreateTask) -> a
+com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$SendRepositoryCreateTask$1 -> com.applicake.beanstalkclient.activities.an:
+    com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$SendRepositoryCreateTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$SendRepositoryCreateTask$2 -> com.applicake.beanstalkclient.activities.am:
+    com.applicake.beanstalkclient.activities.CreateNewRepositoryActivity$SendRepositoryCreateTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.CreateNewServerActivity -> com.applicake.beanstalkclient.activities.CreateNewServerActivity:
+    com.applicake.beanstalkclient.ServerEnvironment mServerEnvironment -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    com.applicake.beanstalkclient.ServerEnvironment access$200(com.applicake.beanstalkclient.activities.CreateNewServerActivity) -> a
+com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer -> com.applicake.beanstalkclient.activities.n:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    android.content.Context mContext -> e
+    com.applicake.beanstalkclient.Server mServer -> f
+    java.lang.String failMessage -> g
+    boolean failed -> h
+    com.applicake.beanstalkclient.activities.CreateNewServerActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$000(com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer) -> b
+    com.applicake.beanstalkclient.Server access$300(com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer) -> c
+com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer$1 -> com.applicake.beanstalkclient.activities.cj:
+    com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer$2 -> com.applicake.beanstalkclient.activities.co:
+    com.applicake.beanstalkclient.activities.CreateNewServerActivity$SendNewServer this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity -> com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity:
+    android.widget.EditText nameEditText -> a
+    android.widget.CheckBox automaticCheckBox -> b
+    android.widget.EditText branchName -> k
+    int repoId -> l
+    void onCreate(android.os.Bundle) -> onCreate
+    android.widget.EditText access$200(com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity) -> a
+    android.widget.CheckBox access$300(com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity) -> b
+    android.widget.EditText access$400(com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity) -> c
+    int access$500(com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity) -> d
+com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$1 -> com.applicake.beanstalkclient.activities.r:
+    com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$SendNewServerEnvironment -> com.applicake.beanstalkclient.activities.ag:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    android.content.Context mContext -> e
+    java.lang.String failMessage -> f
+    boolean failed -> g
+    com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$000(com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$SendNewServerEnvironment) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$SendNewServerEnvironment) -> b
+com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$SendNewServerEnvironment$1 -> com.applicake.beanstalkclient.activities.x:
+    com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$SendNewServerEnvironment this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$SendNewServerEnvironment$2 -> com.applicake.beanstalkclient.activities.y:
+    com.applicake.beanstalkclient.activities.CreateNewServerEnvironmentActivity$SendNewServerEnvironment this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.DashboardActivity -> com.applicake.beanstalkclient.activities.DashboardActivity:
+    com.applicake.beanstalkclient.adapters.ChangesetAdapter changesetAdapter -> a
+    java.util.ArrayList changesetArray -> b
+    android.content.Context mContext -> k
+    boolean loading -> l
+    boolean listMightHaveMoreItems -> m
+    int lastLoadedPage -> n
+    android.view.View footerView -> o
+    java.util.HashMap repositoryMap -> p
+    android.widget.ListView changesetList -> q
+    void onCreate(android.os.Bundle) -> onCreate
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    void onScroll(android.widget.AbsListView,int,int,int) -> onScroll
+    void onScrollStateChanged(android.widget.AbsListView,int) -> onScrollStateChanged
+    boolean access$002(com.applicake.beanstalkclient.activities.DashboardActivity,boolean) -> a
+    java.util.HashMap access$102(com.applicake.beanstalkclient.activities.DashboardActivity,java.util.HashMap) -> a
+    android.content.Context access$200(com.applicake.beanstalkclient.activities.DashboardActivity) -> a
+    android.view.View access$300(com.applicake.beanstalkclient.activities.DashboardActivity) -> b
+    android.widget.ListView access$400(com.applicake.beanstalkclient.activities.DashboardActivity) -> c
+    boolean access$502(com.applicake.beanstalkclient.activities.DashboardActivity,boolean) -> b
+    java.util.ArrayList access$600(com.applicake.beanstalkclient.activities.DashboardActivity) -> d
+    java.util.HashMap access$100(com.applicake.beanstalkclient.activities.DashboardActivity) -> e
+    com.applicake.beanstalkclient.adapters.ChangesetAdapter access$700(com.applicake.beanstalkclient.activities.DashboardActivity) -> f
+    int access$800(com.applicake.beanstalkclient.activities.DashboardActivity) -> g
+    int access$808(com.applicake.beanstalkclient.activities.DashboardActivity) -> h
+com.applicake.beanstalkclient.activities.DashboardActivity$DownloadAnotherPageOfChangesetListTask -> com.applicake.beanstalkclient.activities.bh:
+    boolean failed -> b
+    java.lang.String failMessage -> c
+    com.applicake.beanstalkclient.activities.DashboardActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.util.ArrayList doInBackground$2b2655bf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.applicake.beanstalkclient.activities.DashboardActivity$DownloadAnotherPageOfChangesetListTask$1 -> com.applicake.beanstalkclient.activities.o:
+    com.applicake.beanstalkclient.activities.DashboardActivity$DownloadAnotherPageOfChangesetListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.DashboardActivity$DownloadChangesetListTask -> com.applicake.beanstalkclient.activities.by:
+    boolean failed -> b
+    java.lang.String failMessage -> c
+    com.applicake.beanstalkclient.activities.DashboardActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.util.ArrayList doInBackground$2b2655bf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.applicake.beanstalkclient.activities.DashboardActivity$DownloadChangesetListTask$1 -> com.applicake.beanstalkclient.activities.ck:
+    com.applicake.beanstalkclient.activities.DashboardActivity$DownloadChangesetListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.HomeActivity -> com.applicake.beanstalkclient.activities.HomeActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+    void onHomeDashboardClick(android.view.View) -> onHomeDashboardClick
+    void onHomeRepositoriesClick(android.view.View) -> onHomeRepositoriesClick
+    void onHomeUsersClick(android.view.View) -> onHomeUsersClick
+    void onHomeDeploymentClick(android.view.View) -> onHomeDeploymentClick
+    void onHomeSettingsClick(android.view.View) -> onHomeSettingsClick
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+com.applicake.beanstalkclient.activities.LoginActivity -> com.applicake.beanstalkclient.activities.LoginActivity:
+    android.widget.EditText domainaccountEditText -> a
+    android.widget.EditText loginEditText -> b
+    android.widget.EditText passwordEditText -> c
+    android.content.Context mContext -> d
+    android.content.SharedPreferences prefs -> e
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.content.Context access$000(com.applicake.beanstalkclient.activities.LoginActivity) -> a
+    android.content.SharedPreferences access$500(com.applicake.beanstalkclient.activities.LoginActivity) -> b
+com.applicake.beanstalkclient.activities.LoginActivity$1 -> com.applicake.beanstalkclient.activities.t:
+    com.applicake.beanstalkclient.activities.LoginActivity this$0 -> a
+    java.lang.CharSequence filter(java.lang.CharSequence,int,int,android.text.Spanned,int,int) -> filter
+com.applicake.beanstalkclient.activities.LoginActivity$AuthorizationData -> com.applicake.beanstalkclient.activities.j:
+    com.applicake.beanstalkclient.Plan plan -> a
+    com.applicake.beanstalkclient.permissions.PermissionsData permissionsData -> b
+    com.applicake.beanstalkclient.Account account -> c
+    com.applicake.beanstalkclient.activities.LoginActivity this$0 -> d
+    com.applicake.beanstalkclient.User getUser() -> a
+    void setUser(com.applicake.beanstalkclient.User) -> a
+    void setPlan(com.applicake.beanstalkclient.Plan) -> a
+    com.applicake.beanstalkclient.Plan getPlan() -> b
+    com.applicake.beanstalkclient.Account getAccount() -> c
+    void setAccount(com.applicake.beanstalkclient.Account) -> a
+    void setPermissions(java.util.List) -> a
+    com.applicake.beanstalkclient.permissions.PermissionsData getPermissionsData() -> d
+com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask -> com.applicake.beanstalkclient.activities.ac:
+    java.lang.String domain -> b
+    java.lang.String login -> c
+    java.lang.String password -> d
+    android.os.AsyncTask thisTask -> e
+    boolean failed -> f
+    java.lang.String failMessage -> g
+    android.app.ProgressDialog progressDialog -> h
+    com.applicake.beanstalkclient.activities.LoginActivity$AuthorizationData authData -> i
+    com.applicake.beanstalkclient.activities.LoginActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground(java.lang.String[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$100(com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask) -> a
+    java.lang.String access$200(com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask) -> b
+    java.lang.String access$300(com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask) -> c
+    java.lang.String access$400(com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask) -> d
+com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask$1 -> com.applicake.beanstalkclient.activities.m:
+    com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask$2 -> com.applicake.beanstalkclient.activities.l:
+    com.applicake.beanstalkclient.activities.LoginActivity$VerifyLoginTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.ModifyServerActivity -> com.applicake.beanstalkclient.activities.ModifyServerActivity:
+    com.applicake.beanstalkclient.Server activityServer -> a
+    android.content.Context mContext -> b
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.app.Dialog onCreateDialog(int) -> onCreateDialog
+    android.content.Context access$300(com.applicake.beanstalkclient.activities.ModifyServerActivity) -> a
+    com.applicake.beanstalkclient.Server access$500(com.applicake.beanstalkclient.activities.ModifyServerActivity) -> b
+com.applicake.beanstalkclient.activities.ModifyServerActivity$1 -> com.applicake.beanstalkclient.activities.bs:
+    com.applicake.beanstalkclient.activities.ModifyServerActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.activities.ModifyServerActivity$2 -> com.applicake.beanstalkclient.activities.cb:
+    com.applicake.beanstalkclient.activities.ModifyServerActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.activities.ModifyServerActivity$SendDeleteUserRequest -> com.applicake.beanstalkclient.activities.af:
+    android.os.AsyncTask thisTask -> b
+    java.lang.String failMessage -> c
+    java.lang.String errorMessage -> d
+    boolean failed -> e
+    android.app.ProgressDialog progressDialog -> f
+    com.applicake.beanstalkclient.activities.ModifyServerActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$400(com.applicake.beanstalkclient.activities.ModifyServerActivity$SendDeleteUserRequest) -> a
+com.applicake.beanstalkclient.activities.ModifyServerActivity$SendDeleteUserRequest$1 -> com.applicake.beanstalkclient.activities.av:
+    com.applicake.beanstalkclient.activities.ModifyServerActivity$SendDeleteUserRequest this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.ModifyServerActivity$SendDeleteUserRequest$2 -> com.applicake.beanstalkclient.activities.au:
+    com.applicake.beanstalkclient.activities.ModifyServerActivity$SendDeleteUserRequest this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask -> com.applicake.beanstalkclient.activities.aj:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String failMessage -> e
+    boolean failed -> f
+    android.content.Context mContext -> g
+    com.applicake.beanstalkclient.Server mServer -> h
+    com.applicake.beanstalkclient.activities.ModifyServerActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground(com.applicake.beanstalkclient.Server[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$000(com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask) -> b
+    com.applicake.beanstalkclient.Server access$200(com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask) -> c
+com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask$1 -> com.applicake.beanstalkclient.activities.p:
+    com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask$2 -> com.applicake.beanstalkclient.activities.q:
+    com.applicake.beanstalkclient.activities.ModifyServerActivity$SendModifyServerTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties -> com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties:
+    android.widget.EditText nameEditText -> a
+    android.widget.CheckBox automaticCheckBox -> b
+    android.widget.EditText branchNameEditText -> k
+    com.applicake.beanstalkclient.ServerEnvironment serverEnvironment -> l
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.widget.EditText access$200(com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties) -> a
+    com.applicake.beanstalkclient.ServerEnvironment access$300(com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties) -> b
+    android.widget.CheckBox access$400(com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties) -> c
+    android.widget.EditText access$500(com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties) -> d
+com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties$SendServerEnvironmentModificationTask -> com.applicake.beanstalkclient.activities.be:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String failMessage -> e
+    boolean failed -> f
+    android.content.Context mContext -> g
+    com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$000(com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties$SendServerEnvironmentModificationTask) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties$SendServerEnvironmentModificationTask) -> b
+com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties$SendServerEnvironmentModificationTask$1 -> com.applicake.beanstalkclient.activities.bf:
+    com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties$SendServerEnvironmentModificationTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties$SendServerEnvironmentModificationTask$2 -> com.applicake.beanstalkclient.activities.bd:
+    com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties$SendServerEnvironmentModificationTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.OverallRepoReleaseFragment -> com.applicake.beanstalkclient.activities.k:
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    void onClick(android.view.View) -> onClick
+    void onActivityResult(int,int,android.content.Intent) -> a
+    java.lang.String getReleasesListXML() -> a
+com.applicake.beanstalkclient.activities.OverallRepoReleaseFragment$1 -> com.applicake.beanstalkclient.activities.ce:
+    com.applicake.beanstalkclient.Release val$release -> a
+    com.applicake.beanstalkclient.activities.OverallRepoReleaseFragment this$0 -> b
+    void onResult(java.lang.Object) -> a
+com.applicake.beanstalkclient.activities.OverallRepoReleaseFragment$DownloadRepositoryDetailsTask -> com.applicake.beanstalkclient.activities.u:
+    int repositoryId -> a
+    com.applicake.beanstalkclient.tasks.ResponseHandler responseHandler -> b
+    com.applicake.beanstalkclient.activities.OverallRepoReleaseFragment this$0 -> c
+    java.lang.String getProgressDialogTip() -> a
+    boolean finishActivityAfterError() -> b
+    void performTaskAgain() -> c
+    void trueOnPostExceute(java.lang.Object) -> a
+    java.lang.Object trueDoInBackground(java.lang.Object[]) -> a
+com.applicake.beanstalkclient.activities.OverallRepoServerEnviromentsListFragment -> com.applicake.beanstalkclient.activities.s:
+    void downloadEnviroments() -> a
+    void onClick(android.view.View) -> onClick
+    void onActivityResult(int,int,android.content.Intent) -> a
+com.applicake.beanstalkclient.activities.OverallRepoServerEnviromentsListFragment$DownloadRepositoriesIdsTask -> com.applicake.beanstalkclient.activities.dj:
+    com.applicake.beanstalkclient.activities.OverallRepoServerEnviromentsListFragment this$0 -> a
+    java.util.List trueDoInBackground$68cf9880() -> e
+    void performTaskAgain() -> c
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object trueDoInBackground(java.lang.Object[]) -> a
+com.applicake.beanstalkclient.activities.PermissionModifyActivity -> com.applicake.beanstalkclient.activities.PermissionModifyActivity:
+    com.applicake.beanstalkclient.User user -> a
+    com.applicake.beanstalkclient.Repository repository -> b
+    com.applicake.beanstalkclient.Permission permission -> k
+    android.content.Context mContext -> l
+    android.widget.Spinner repoAccessSpinner -> m
+    android.widget.Spinner deploymentAccessSpinner -> n
+    android.widget.AdapterView$OnItemSelectedListener listener -> o
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.content.Context access$000(com.applicake.beanstalkclient.activities.PermissionModifyActivity) -> a
+    com.applicake.beanstalkclient.User access$200(com.applicake.beanstalkclient.activities.PermissionModifyActivity) -> b
+    com.applicake.beanstalkclient.Repository access$300(com.applicake.beanstalkclient.activities.PermissionModifyActivity) -> c
+com.applicake.beanstalkclient.activities.PermissionModifyActivity$1 -> com.applicake.beanstalkclient.activities.di:
+    com.applicake.beanstalkclient.activities.PermissionModifyActivity this$0 -> a
+    void onItemSelected(android.widget.AdapterView,android.view.View,int,long) -> onItemSelected
+    void onNothingSelected(android.widget.AdapterView) -> onNothingSelected
+com.applicake.beanstalkclient.activities.PermissionModifyActivity$DeletePermissionsTask -> com.applicake.beanstalkclient.activities.ak:
+    android.app.ProgressDialog progressDialog -> b
+    android.os.AsyncTask thisTask -> c
+    java.lang.String failMessage -> d
+    java.lang.String errorMessage -> e
+    boolean failed -> f
+    java.lang.Integer permissionId -> g
+    com.applicake.beanstalkclient.activities.PermissionModifyActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground(java.lang.Integer[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$600(com.applicake.beanstalkclient.activities.PermissionModifyActivity$DeletePermissionsTask) -> a
+    java.lang.Integer access$700(com.applicake.beanstalkclient.activities.PermissionModifyActivity$DeletePermissionsTask) -> b
+com.applicake.beanstalkclient.activities.PermissionModifyActivity$DeletePermissionsTask$1 -> com.applicake.beanstalkclient.activities.f:
+    com.applicake.beanstalkclient.activities.PermissionModifyActivity$DeletePermissionsTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.PermissionModifyActivity$DeletePermissionsTask$2 -> com.applicake.beanstalkclient.activities.e:
+    com.applicake.beanstalkclient.activities.PermissionModifyActivity$DeletePermissionsTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask -> com.applicake.beanstalkclient.activities.dg:
+    android.app.ProgressDialog progressDialog -> b
+    android.os.AsyncTask thisTask -> c
+    java.lang.String failMessage -> d
+    boolean failed -> e
+    java.lang.String errorMessage -> f
+    int repoAccess -> g
+    int deploymentAccess -> h
+    com.applicake.beanstalkclient.activities.PermissionModifyActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground(java.lang.Integer[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$100(com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask) -> a
+    int access$400(com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask) -> b
+    int access$500(com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask) -> c
+com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask$1 -> com.applicake.beanstalkclient.activities.df:
+    com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask$2 -> com.applicake.beanstalkclient.activities.de:
+    com.applicake.beanstalkclient.activities.PermissionModifyActivity$ModifyPermissionsTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.PlanDetailsActivity -> com.applicake.beanstalkclient.activities.PlanDetailsActivity:
+    com.applicake.beanstalkclient.Plan plan -> a
+    android.widget.Button upgradeButton -> b
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.PlansActivity -> com.applicake.beanstalkclient.activities.PlansActivity:
+    android.widget.ListView planListView -> a
+    com.applicake.beanstalkclient.adapters.PlansAdapter plansAdapter -> b
+    java.util.List plansList -> k
+    com.applicake.beanstalkclient.Plan currentPlan -> l
+    int currentPlanId -> m
+    android.widget.TextView currentPlanName -> n
+    com.applicake.beanstalkclient.widgets.DetailsView currentPlanDetails -> o
+    void onCreate(android.os.Bundle) -> onCreate
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    java.util.List access$000(com.applicake.beanstalkclient.activities.PlansActivity) -> a
+    int access$100(com.applicake.beanstalkclient.activities.PlansActivity) -> b
+    com.applicake.beanstalkclient.adapters.PlansAdapter access$300(com.applicake.beanstalkclient.activities.PlansActivity) -> c
+    com.applicake.beanstalkclient.Plan access$402(com.applicake.beanstalkclient.activities.PlansActivity,com.applicake.beanstalkclient.Plan) -> a
+    com.applicake.beanstalkclient.Plan access$400(com.applicake.beanstalkclient.activities.PlansActivity) -> d
+    android.widget.TextView access$500(com.applicake.beanstalkclient.activities.PlansActivity) -> e
+    com.applicake.beanstalkclient.widgets.DetailsView access$600(com.applicake.beanstalkclient.activities.PlansActivity) -> f
+com.applicake.beanstalkclient.activities.PlansActivity$AvailablePlans -> com.applicake.beanstalkclient.activities.ae:
+    com.applicake.beanstalkclient.Plan currentPlan -> a
+    java.util.List availablePlans -> b
+    com.applicake.beanstalkclient.activities.PlansActivity this$0 -> c
+    com.applicake.beanstalkclient.Plan getCurrentPlan() -> a
+    void setCurrentPlan(com.applicake.beanstalkclient.Plan) -> a
+    void setAvailablePlans(java.util.List) -> a
+com.applicake.beanstalkclient.activities.PlansActivity$DownloadPlansAsyncTask -> com.applicake.beanstalkclient.activities.ad:
+    com.applicake.beanstalkclient.activities.PlansActivity this$0 -> a
+    java.lang.String getProgressDialogTip() -> a
+    void performTaskAgain() -> c
+    void trueOnPostExceute(java.lang.Object) -> a
+    java.lang.Object trueDoInBackground(java.lang.Object[]) -> a
+com.applicake.beanstalkclient.activities.ReleaseDetailsActivity -> com.applicake.beanstalkclient.activities.ReleaseDetailsActivity:
+    android.app.ProgressDialog mProgressDialog -> a
+    com.applicake.beanstalkclient.Release mRelease -> b
+    java.lang.String mRepositoryTitle -> k
+    int mLabelColor -> l
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    com.applicake.beanstalkclient.Release access$100(com.applicake.beanstalkclient.activities.ReleaseDetailsActivity) -> a
+    java.lang.String access$200(com.applicake.beanstalkclient.activities.ReleaseDetailsActivity) -> b
+    int access$300(com.applicake.beanstalkclient.activities.ReleaseDetailsActivity) -> c
+com.applicake.beanstalkclient.activities.ReleaseDetailsActivity$DownloadChangesetTask -> com.applicake.beanstalkclient.activities.bp:
+    android.os.AsyncTask thisTask -> b
+    java.lang.String errorMessage -> c
+    java.lang.String failMessage -> d
+    boolean failed -> e
+    com.applicake.beanstalkclient.activities.ReleaseDetailsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    com.applicake.beanstalkclient.Changeset doInBackground$70c70c62() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$000(com.applicake.beanstalkclient.activities.ReleaseDetailsActivity$DownloadChangesetTask) -> a
+com.applicake.beanstalkclient.activities.ReleaseDetailsActivity$DownloadChangesetTask$1 -> com.applicake.beanstalkclient.activities.ay:
+    com.applicake.beanstalkclient.activities.ReleaseDetailsActivity$DownloadChangesetTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.ReleaseDetailsActivity$DownloadChangesetTask$2 -> com.applicake.beanstalkclient.activities.aw:
+    com.applicake.beanstalkclient.activities.ReleaseDetailsActivity$DownloadChangesetTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.RepositoriesActivity -> com.applicake.beanstalkclient.activities.RepositoriesActivity:
+    android.content.Context mContext -> k
+    boolean returnAfterClick -> l
+    com.applicake.beanstalkclient.widgets.AddNewObjectView addNewObjectView -> m
+    com.applicake.beanstalkclient.permissions.ObjectsFilter objectsFilter -> n
+    java.util.ArrayList repositoriesArray -> a
+    com.applicake.beanstalkclient.adapters.RepositoriesAdapter repositoriesAdapter -> b
+    android.widget.ListView repositoriesList -> o
+    void onCreate(android.os.Bundle) -> onCreate
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onClick(android.view.View) -> onClick
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    com.applicake.beanstalkclient.permissions.ObjectsFilter getObjectsFilter() -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.RepositoriesActivity) -> a
+    com.applicake.beanstalkclient.widgets.AddNewObjectView access$300(com.applicake.beanstalkclient.activities.RepositoriesActivity) -> b
+com.applicake.beanstalkclient.activities.RepositoriesActivity$DownloadRepositoriesTask -> com.applicake.beanstalkclient.activities.bl:
+    android.content.Context context -> b
+    android.app.ProgressDialog progressDialog -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String errorMessage -> e
+    java.lang.String failMessage -> f
+    boolean failed -> g
+    com.applicake.beanstalkclient.activities.RepositoriesActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.util.ArrayList doInBackground$6b117e64() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$000(com.applicake.beanstalkclient.activities.RepositoriesActivity$DownloadRepositoriesTask) -> a
+    android.content.Context access$200(com.applicake.beanstalkclient.activities.RepositoriesActivity$DownloadRepositoriesTask) -> b
+com.applicake.beanstalkclient.activities.RepositoriesActivity$DownloadRepositoriesTask$1 -> com.applicake.beanstalkclient.activities.cl:
+    com.applicake.beanstalkclient.activities.RepositoriesActivity$DownloadRepositoriesTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.RepositoriesActivity$DownloadRepositoriesTask$2 -> com.applicake.beanstalkclient.activities.cg:
+    com.applicake.beanstalkclient.activities.RepositoriesActivity$DownloadRepositoriesTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.RepositoryCommitsActivity -> com.applicake.beanstalkclient.activities.RepositoryCommitsActivity:
+    com.applicake.beanstalkclient.adapters.RepositoryChangesetAdapter changesetAdapter -> a
+    java.util.ArrayList changesetArray -> b
+    android.app.ProgressDialog progressDialog -> k
+    android.content.Context mContext -> l
+    java.lang.String repoId -> m
+    java.lang.String repoTitle -> n
+    int repoColorLabelNo -> o
+    void onCreate(android.os.Bundle) -> onCreate
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    android.app.ProgressDialog access$002(com.applicake.beanstalkclient.activities.RepositoryCommitsActivity,android.app.ProgressDialog) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.RepositoryCommitsActivity) -> a
+    android.app.ProgressDialog access$000(com.applicake.beanstalkclient.activities.RepositoryCommitsActivity) -> b
+    java.lang.String access$300(com.applicake.beanstalkclient.activities.RepositoryCommitsActivity) -> c
+    java.util.ArrayList access$400(com.applicake.beanstalkclient.activities.RepositoryCommitsActivity) -> d
+    com.applicake.beanstalkclient.adapters.RepositoryChangesetAdapter access$500(com.applicake.beanstalkclient.activities.RepositoryCommitsActivity) -> e
+com.applicake.beanstalkclient.activities.RepositoryCommitsActivity$DownloadChangesetListTask -> com.applicake.beanstalkclient.activities.ct:
+    android.os.AsyncTask thisTask -> b
+    java.lang.String errorMessage -> c
+    java.lang.String failMessage -> d
+    boolean failed -> e
+    com.applicake.beanstalkclient.activities.RepositoryCommitsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.util.ArrayList doInBackground$2b2655bf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$200(com.applicake.beanstalkclient.activities.RepositoryCommitsActivity$DownloadChangesetListTask) -> a
+com.applicake.beanstalkclient.activities.RepositoryCommitsActivity$DownloadChangesetListTask$1 -> com.applicake.beanstalkclient.activities.dk:
+    com.applicake.beanstalkclient.activities.RepositoryCommitsActivity$DownloadChangesetListTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.RepositoryCommitsActivity$DownloadChangesetListTask$2 -> com.applicake.beanstalkclient.activities.dl:
+    com.applicake.beanstalkclient.activities.RepositoryCommitsActivity$DownloadChangesetListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity -> com.applicake.beanstalkclient.activities.RepositoryDeploymentsActivity:
+    boolean activityStartedForSpecificRepository -> a
+    com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment releasesFragment -> b
+    com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment serversFragment -> k
+    android.widget.Button releasesButton -> l
+    android.widget.Button serversButton -> m
+    android.content.Intent generateIntentForSpecificRepo(android.content.Context,com.applicake.beanstalkclient.Repository) -> a
+    android.content.Intent generateIntentForOverallRepositories(android.content.Context) -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    void setupReleasesFragment() -> a
+    void onBackPressed() -> b
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.RepositoryDetailsActivity -> com.applicake.beanstalkclient.activities.RepositoryDetailsActivity:
+    android.content.Context mContext -> a
+    com.applicake.beanstalkclient.Repository repository -> b
+    android.view.View colorLabel -> k
+    android.widget.TextView repoName -> l
+    java.lang.String dateFormat -> m
+    android.widget.TextView repoType -> n
+    android.widget.TextView repoTitle -> o
+    com.applicake.beanstalkclient.widgets.DetailsView detailsView -> p
+    void onCreate(android.os.Bundle) -> onCreate
+    void loadRepositoryData() -> a
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onClick(android.view.View) -> onClick
+    android.content.Context access$000(com.applicake.beanstalkclient.activities.RepositoryDetailsActivity) -> a
+    com.applicake.beanstalkclient.Repository access$200(com.applicake.beanstalkclient.activities.RepositoryDetailsActivity) -> b
+    com.applicake.beanstalkclient.Repository access$202(com.applicake.beanstalkclient.activities.RepositoryDetailsActivity,com.applicake.beanstalkclient.Repository) -> a
+com.applicake.beanstalkclient.activities.RepositoryDetailsActivity$DownloadRepositoryInfo -> com.applicake.beanstalkclient.activities.bk:
+    android.os.AsyncTask thisTask -> b
+    android.app.ProgressDialog progressDialog -> c
+    boolean failed -> d
+    java.lang.String failMessage -> e
+    java.lang.String errorMessage -> f
+    com.applicake.beanstalkclient.activities.RepositoryDetailsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Boolean doInBackground$5f8445a4() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$100(com.applicake.beanstalkclient.activities.RepositoryDetailsActivity$DownloadRepositoryInfo) -> a
+com.applicake.beanstalkclient.activities.RepositoryDetailsActivity$DownloadRepositoryInfo$1 -> com.applicake.beanstalkclient.activities.cy:
+    com.applicake.beanstalkclient.activities.RepositoryDetailsActivity$DownloadRepositoryInfo this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.RepositoryDetailsActivity$DownloadRepositoryInfo$2 -> com.applicake.beanstalkclient.activities.cz:
+    com.applicake.beanstalkclient.activities.RepositoryDetailsActivity$DownloadRepositoryInfo this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity -> com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity:
+    android.widget.Button saveChangesButton -> k
+    android.content.Context mContext -> l
+    java.lang.String repoId -> a
+    java.lang.String repoTitle -> m
+    int colorLabelNo -> b
+    android.widget.EditText repoTitleEditText -> n
+    android.view.View$OnClickListener dialogButtonsListener -> o
+    android.widget.Button colorLabelButton -> p
+    android.app.Dialog dialog -> q
+    void onCreate(android.os.Bundle) -> onCreate
+    android.app.Dialog onCreateDialog(int) -> onCreateDialog
+    void onClick(android.view.View) -> onClick
+    android.widget.Button access$000(com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity) -> a
+    android.app.Dialog access$100(com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity) -> b
+    android.content.Context access$200(com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity) -> c
+    android.widget.EditText access$400(com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity) -> d
+com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity$1 -> com.applicake.beanstalkclient.activities.as:
+    com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity$SendRepositoryPropertiesTask -> com.applicake.beanstalkclient.activities.cp:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String failMessage -> e
+    boolean failed -> f
+    com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$300(com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity$SendRepositoryPropertiesTask) -> a
+com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity$SendRepositoryPropertiesTask$1 -> com.applicake.beanstalkclient.activities.bn:
+    com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity$SendRepositoryPropertiesTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity$SendRepositoryPropertiesTask$2 -> com.applicake.beanstalkclient.activities.bm:
+    com.applicake.beanstalkclient.activities.RepositoryModifyPropertiesActivity$SendRepositoryPropertiesTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.RepositoryRevisionPickerActivity -> com.applicake.beanstalkclient.activities.RepositoryRevisionPickerActivity:
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity -> com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity:
+    android.content.Context mContext -> a
+    android.app.ProgressDialog progressDialog -> b
+    java.util.ArrayList usersArray -> k
+    com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter usersAdapter -> l
+    android.widget.ListView usersList -> m
+    com.applicake.beanstalkclient.Repository repository -> n
+    void onCreate(android.os.Bundle) -> onCreate
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    android.app.ProgressDialog access$002(com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity,android.app.ProgressDialog) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity) -> a
+    android.app.ProgressDialog access$000(com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity) -> b
+    java.util.ArrayList access$300(com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity) -> c
+    com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter access$400(com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity) -> d
+com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity$DownloadUsersListTask -> com.applicake.beanstalkclient.activities.a:
+    android.os.AsyncTask thisTask -> b
+    java.lang.String errorMessage -> c
+    java.lang.String failMessage -> d
+    boolean failed -> e
+    com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.util.ArrayList doInBackground$2b2655bf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$200(com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity$DownloadUsersListTask) -> a
+com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity$DownloadUsersListTask$1 -> com.applicake.beanstalkclient.activities.bg:
+    com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity$DownloadUsersListTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity$DownloadUsersListTask$2 -> com.applicake.beanstalkclient.activities.bi:
+    com.applicake.beanstalkclient.activities.RepositoryUsersPermissionsActivity$DownloadUsersListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment -> com.applicake.beanstalkclient.activities.ai:
+    com.applicake.beanstalkclient.Repository repository -> b
+    android.content.SharedPreferences prefs -> a
+    java.util.List enviromentsList -> c
+    com.applicake.beanstalkclient.adapters.ServersAdapter mAdapter -> N
+    android.view.View serversLoadingFooterView -> O
+    android.view.View serversAddNewFooterView -> P
+    android.widget.ExpandableListView mServersList -> Q
+    void onCreate(android.os.Bundle) -> a
+    void onResume() -> b
+    void downloadEnviroments() -> a
+    android.view.View onCreateView$469ccb8a(android.view.LayoutInflater) -> a
+    void onClick(android.view.View) -> onClick
+    void startAddNewServer(com.applicake.beanstalkclient.Repository) -> a
+    android.view.View access$000(com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment) -> a
+    android.widget.ExpandableListView access$100(com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment) -> b
+    java.util.List access$400(com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment) -> c
+    com.applicake.beanstalkclient.adapters.ServersAdapter access$500(com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment) -> d
+com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment$DownloadServerEnvironmentsListTask -> com.applicake.beanstalkclient.activities.dm:
+    android.content.Context context -> b
+    java.lang.String failMessage -> c
+    boolean failed -> d
+    java.util.List listOfRepositoriesIdsToDownload -> e
+    com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment this$0 -> a
+    java.util.List doInBackground$528b683() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.content.Context access$200(com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment$DownloadServerEnvironmentsListTask) -> a
+    java.util.List access$300(com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment$DownloadServerEnvironmentsListTask) -> b
+com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment$DownloadServerEnvironmentsListTask$1 -> com.applicake.beanstalkclient.activities.cq:
+    com.applicake.beanstalkclient.activities.SpecificRepoServerEnviromentsFragment$DownloadServerEnvironmentsListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment -> com.applicake.beanstalkclient.activities.al:
+    com.applicake.beanstalkclient.adapters.ReleasesAdapter mReleasesAdapter -> N
+    com.applicake.beanstalkclient.Repository repository -> O
+    java.util.List mReleaseArray -> a
+    android.content.SharedPreferences prefs -> b
+    android.widget.ListView mReleasesList -> c
+    android.view.View releasesLoadingFooterView -> P
+    android.view.View releasesAddNewFooterView -> Q
+    void onCreate(android.os.Bundle) -> a
+    android.view.View onCreateView$469ccb8a(android.view.LayoutInflater) -> a
+    void onResume() -> b
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    void onClick(android.view.View) -> onClick
+    void startAddNewRelease(com.applicake.beanstalkclient.Repository) -> a
+    void startReleaseDetails(com.applicake.beanstalkclient.Release,com.applicake.beanstalkclient.Repository) -> a
+    java.lang.String getReleasesListXML() -> a
+    android.view.View access$000(com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment) -> a
+    com.applicake.beanstalkclient.adapters.ReleasesAdapter access$200(com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment) -> b
+com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment$DownloadReleaseListTask -> com.applicake.beanstalkclient.activities.bw:
+    android.content.Context context -> b
+    java.lang.String errorMessage -> c
+    java.lang.String failMessage -> d
+    boolean failed -> e
+    com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment this$0 -> a
+    java.util.List doInBackground$528b683() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment$DownloadReleaseListTask) -> a
+com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment$DownloadReleaseListTask$1 -> com.applicake.beanstalkclient.activities.ba:
+    com.applicake.beanstalkclient.activities.SpecifiedRepoReleasesListFragment$DownloadReleaseListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.UserActivity -> com.applicake.beanstalkclient.activities.UserActivity:
+    com.applicake.beanstalkclient.adapters.UserAdapter userAdapter -> a
+    java.util.ArrayList userArray -> b
+    android.app.ProgressDialog progressDialog -> k
+    android.content.Context mContext -> l
+    com.applicake.beanstalkclient.widgets.AddNewObjectView footerView -> m
+    void onCreate(android.os.Bundle) -> onCreate
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onClick(android.view.View) -> onClick
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    android.app.ProgressDialog access$002(com.applicake.beanstalkclient.activities.UserActivity,android.app.ProgressDialog) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.UserActivity) -> a
+    android.app.ProgressDialog access$000(com.applicake.beanstalkclient.activities.UserActivity) -> b
+    java.util.ArrayList access$300(com.applicake.beanstalkclient.activities.UserActivity) -> c
+    com.applicake.beanstalkclient.adapters.UserAdapter access$400(com.applicake.beanstalkclient.activities.UserActivity) -> d
+    com.applicake.beanstalkclient.widgets.AddNewObjectView access$500(com.applicake.beanstalkclient.activities.UserActivity) -> e
+com.applicake.beanstalkclient.activities.UserActivity$DownloadUsersListTask -> com.applicake.beanstalkclient.activities.bt:
+    android.os.AsyncTask thisTask -> b
+    java.lang.String errorMessage -> c
+    java.lang.String failMessage -> d
+    boolean failed -> e
+    com.applicake.beanstalkclient.activities.UserActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.util.ArrayList doInBackground$2b2655bf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$200(com.applicake.beanstalkclient.activities.UserActivity$DownloadUsersListTask) -> a
+com.applicake.beanstalkclient.activities.UserActivity$DownloadUsersListTask$1 -> com.applicake.beanstalkclient.activities.h:
+    com.applicake.beanstalkclient.activities.UserActivity$DownloadUsersListTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.UserActivity$DownloadUsersListTask$2 -> com.applicake.beanstalkclient.activities.i:
+    com.applicake.beanstalkclient.activities.UserActivity$DownloadUsersListTask this$1 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.activities.UserCreateNewActivity -> com.applicake.beanstalkclient.activities.UserCreateNewActivity:
+    android.widget.Button createButton -> a
+    android.content.Context mContext -> b
+    android.widget.EditText loginEditText -> k
+    android.widget.EditText nameEditText -> l
+    android.widget.EditText lastNameEditText -> m
+    android.widget.EditText emailEditText -> n
+    android.widget.Spinner timezoneSpinner -> o
+    android.widget.CheckBox adminCheckBox -> p
+    android.widget.EditText passwordEditText -> q
+    java.util.ArrayList popupValuesList -> r
+    java.util.ArrayList spinnerValuesList -> s
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.content.Context access$000(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> a
+    android.widget.EditText access$200(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> b
+    android.widget.EditText access$300(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> c
+    android.widget.EditText access$400(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> d
+    android.widget.EditText access$500(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> e
+    android.widget.Spinner access$600(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> f
+    java.util.ArrayList access$700(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> g
+    android.widget.CheckBox access$800(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> h
+    android.widget.EditText access$900(com.applicake.beanstalkclient.activities.UserCreateNewActivity) -> i
+com.applicake.beanstalkclient.activities.UserCreateNewActivity$SendUserCreateTask -> com.applicake.beanstalkclient.activities.bv:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String failMessage -> e
+    boolean failed -> f
+    com.applicake.beanstalkclient.activities.UserCreateNewActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$100(com.applicake.beanstalkclient.activities.UserCreateNewActivity$SendUserCreateTask) -> a
+com.applicake.beanstalkclient.activities.UserCreateNewActivity$SendUserCreateTask$1 -> com.applicake.beanstalkclient.activities.cw:
+    com.applicake.beanstalkclient.activities.UserCreateNewActivity$SendUserCreateTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.UserCreateNewActivity$SendUserCreateTask$2 -> com.applicake.beanstalkclient.activities.cv:
+    com.applicake.beanstalkclient.activities.UserCreateNewActivity$SendUserCreateTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.UserDetailsActivity -> com.applicake.beanstalkclient.activities.UserDetailsActivity:
+    com.applicake.beanstalkclient.User user -> a
+    android.content.Context mContext -> b
+    android.app.ProgressDialog progressDialog -> k
+    void onCreate(android.os.Bundle) -> onCreate
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    android.app.Dialog onCreateDialog(int) -> onCreateDialog
+    void onClick(android.view.View) -> onClick
+    android.app.ProgressDialog access$002(com.applicake.beanstalkclient.activities.UserDetailsActivity,android.app.ProgressDialog) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.UserDetailsActivity) -> a
+    android.app.ProgressDialog access$000(com.applicake.beanstalkclient.activities.UserDetailsActivity) -> b
+    com.applicake.beanstalkclient.User access$300(com.applicake.beanstalkclient.activities.UserDetailsActivity) -> c
+com.applicake.beanstalkclient.activities.UserDetailsActivity$1 -> com.applicake.beanstalkclient.activities.da:
+    com.applicake.beanstalkclient.activities.UserDetailsActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.activities.UserDetailsActivity$2 -> com.applicake.beanstalkclient.activities.db:
+    com.applicake.beanstalkclient.activities.UserDetailsActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.activities.UserDetailsActivity$SendDeleteUserRequest -> com.applicake.beanstalkclient.activities.ab:
+    android.os.AsyncTask thisTask -> b
+    java.lang.String failMessage -> c
+    java.lang.String errorMessage -> d
+    boolean failed -> e
+    com.applicake.beanstalkclient.activities.UserDetailsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$200(com.applicake.beanstalkclient.activities.UserDetailsActivity$SendDeleteUserRequest) -> a
+com.applicake.beanstalkclient.activities.UserDetailsActivity$SendDeleteUserRequest$1 -> com.applicake.beanstalkclient.activities.dc:
+    com.applicake.beanstalkclient.activities.UserDetailsActivity$SendDeleteUserRequest this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.UserDetailsActivity$SendDeleteUserRequest$2 -> com.applicake.beanstalkclient.activities.dd:
+    com.applicake.beanstalkclient.activities.UserDetailsActivity$SendDeleteUserRequest this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity -> com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity:
+    android.widget.Button applyChangesButton -> a
+    android.content.Context mContext -> b
+    com.applicake.beanstalkclient.User user -> k
+    android.widget.Button passwordChangeButton -> l
+    android.app.Dialog dialog -> m
+    android.widget.EditText nameEditText -> n
+    android.widget.EditText lastNameEditText -> o
+    android.widget.EditText emailEditText -> p
+    android.widget.Spinner timezoneSpinner -> q
+    android.widget.CheckBox adminCheckBox -> r
+    android.widget.EditText newPasswordEditText -> s
+    android.widget.EditText retypedPasswordEditText -> t
+    java.util.ArrayList popupValuesList -> u
+    java.util.ArrayList spinnerValuesList -> v
+    void onCreate(android.os.Bundle) -> onCreate
+    void onClick(android.view.View) -> onClick
+    android.app.Dialog onCreateDialog(int) -> onCreateDialog
+    android.widget.EditText access$000(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> a
+    android.widget.EditText access$100(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> b
+    android.app.Dialog access$200(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> c
+    android.content.Context access$300(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> d
+    android.widget.EditText access$500(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> e
+    android.widget.EditText access$600(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> f
+    android.widget.EditText access$700(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> g
+    android.widget.Spinner access$800(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> h
+    java.util.ArrayList access$900(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> i
+    android.widget.CheckBox access$1000(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> j
+    com.applicake.beanstalkclient.User access$1100(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity) -> k
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$1 -> com.applicake.beanstalkclient.activities.cm:
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$2 -> com.applicake.beanstalkclient.activities.ci:
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPasswordTask -> com.applicake.beanstalkclient.activities.bx:
+    android.app.ProgressDialog progressDialog -> b
+    android.os.AsyncTask thisTask -> c
+    java.lang.String failMessage -> d
+    java.lang.String errorMessage -> e
+    boolean failed -> f
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground(java.lang.String[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$1200(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPasswordTask) -> a
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPasswordTask$1 -> com.applicake.beanstalkclient.activities.ar:
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPasswordTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPasswordTask$2 -> com.applicake.beanstalkclient.activities.at:
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPasswordTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPropertiesTask -> com.applicake.beanstalkclient.activities.cu:
+    android.app.ProgressDialog progressDialog -> b
+    java.lang.String errorMessage -> c
+    android.os.AsyncTask thisTask -> d
+    java.lang.String failMessage -> e
+    boolean failed -> f
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$9ecd34e() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$400(com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPropertiesTask) -> a
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPropertiesTask$1 -> com.applicake.beanstalkclient.activities.aq:
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPropertiesTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPropertiesTask$2 -> com.applicake.beanstalkclient.activities.ah:
+    com.applicake.beanstalkclient.activities.UserModifyPropertiesActivity$SendUserPropertiesTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.activities.UserPermissionsActivity -> com.applicake.beanstalkclient.activities.UserPermissionsActivity:
+    com.applicake.beanstalkclient.User user -> a
+    android.content.Context mContext -> b
+    android.app.ProgressDialog progressDialog -> k
+    java.util.ArrayList repositoriesArray -> l
+    java.util.Map repoIdToPermission -> m
+    com.applicake.beanstalkclient.adapters.UserPermissionsAdapter repositoriesAdapter -> n
+    android.widget.ListView repositoriesList -> o
+    com.applicake.beanstalkclient.activities.UserPermissionsActivity$DownloadRepositoryListTask task -> p
+    void onCreate(android.os.Bundle) -> onCreate
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void cancelAllDownloadTasks() -> e
+    android.app.ProgressDialog access$002(com.applicake.beanstalkclient.activities.UserPermissionsActivity,android.app.ProgressDialog) -> a
+    android.content.Context access$100(com.applicake.beanstalkclient.activities.UserPermissionsActivity) -> a
+    android.app.ProgressDialog access$000(com.applicake.beanstalkclient.activities.UserPermissionsActivity) -> b
+    java.util.ArrayList access$300(com.applicake.beanstalkclient.activities.UserPermissionsActivity) -> c
+    com.applicake.beanstalkclient.User access$400(com.applicake.beanstalkclient.activities.UserPermissionsActivity) -> d
+    java.util.Map access$502(com.applicake.beanstalkclient.activities.UserPermissionsActivity,java.util.Map) -> a
+    java.util.Map access$500(com.applicake.beanstalkclient.activities.UserPermissionsActivity) -> e
+    com.applicake.beanstalkclient.adapters.UserPermissionsAdapter access$600(com.applicake.beanstalkclient.activities.UserPermissionsActivity) -> f
+com.applicake.beanstalkclient.activities.UserPermissionsActivity$DownloadRepositoryListTask -> com.applicake.beanstalkclient.activities.w:
+    android.os.AsyncTask thisTask -> b
+    java.lang.String errorMessage -> c
+    java.lang.String failMessage -> d
+    boolean failed -> e
+    com.applicake.beanstalkclient.activities.UserPermissionsActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    java.lang.Integer doInBackground$5cbeabcf() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    android.os.AsyncTask access$200(com.applicake.beanstalkclient.activities.UserPermissionsActivity$DownloadRepositoryListTask) -> a
+com.applicake.beanstalkclient.activities.UserPermissionsActivity$DownloadRepositoryListTask$1 -> com.applicake.beanstalkclient.activities.cs:
+    com.applicake.beanstalkclient.activities.UserPermissionsActivity$DownloadRepositoryListTask this$1 -> a
+    void onCancel(android.content.DialogInterface) -> onCancel
+com.applicake.beanstalkclient.activities.UserPermissionsActivity$DownloadRepositoryListTask$2 -> com.applicake.beanstalkclient.activities.cr:
+    com.applicake.beanstalkclient.activities.UserPermissionsActivity$DownloadRepositoryListTask this$1 -> a
+    void retryAction() -> a
+com.applicake.beanstalkclient.adapters.ChangesAdapter -> com.applicake.beanstalkclient.b.s:
+    android.view.LayoutInflater mInflater -> a
+    java.util.List changesArray -> b
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.ChangesetAdapter -> com.applicake.beanstalkclient.b.f:
+    android.view.LayoutInflater mInflater -> a
+    java.util.List changesetArray -> b
+    java.text.SimpleDateFormat dateFormatter -> c
+    java.text.SimpleDateFormat timeFormatter -> d
+    java.util.HashMap repoMap -> e
+    void setRepoHashMap(java.util.HashMap) -> a
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.CommentAdapter -> com.applicake.beanstalkclient.b.c:
+    java.util.List commentsArray -> a
+    android.text.Spanned spannedText -> b
+    android.view.LayoutInflater mInflater -> c
+    int rowColorSwapper -> d
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.PlansAdapter -> com.applicake.beanstalkclient.b.p:
+    int currentPlanId -> a
+    com.applicake.beanstalkclient.helpers.MegabytesConverter mbConverter -> b
+    java.util.Map descriptionsMap -> c
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void setCurrentPlanId(int) -> a
+com.applicake.beanstalkclient.adapters.ReleasesAdapter -> com.applicake.beanstalkclient.b.o:
+    java.util.List mReleases -> a
+    int mLayoutId -> b
+    android.view.LayoutInflater mInflater -> c
+    java.text.Format mDf -> d
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.RepositoriesAdapter -> com.applicake.beanstalkclient.b.b:
+    android.view.LayoutInflater mInflater -> a
+    java.text.SimpleDateFormat dateFormatter -> b
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.RepositoryChangesetAdapter -> com.applicake.beanstalkclient.b.k:
+    android.view.LayoutInflater mInflater -> a
+    java.util.List changesetArray -> b
+    java.text.SimpleDateFormat dateFormatter -> c
+    java.text.SimpleDateFormat timeFormatter -> d
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter -> com.applicake.beanstalkclient.b.i:
+    com.applicake.beanstalkclient.Repository repository -> a
+    java.util.List userArray -> b
+    java.util.Map userIdToPermissionMap -> c
+    android.content.SharedPreferences prefs -> d
+    android.view.LayoutInflater mInflater -> e
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    java.util.Map getUserIdToPermissionMap() -> a
+    android.content.SharedPreferences access$000(com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter) -> a
+    com.applicake.beanstalkclient.Repository access$400(com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter) -> b
+    java.util.Map access$500(com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter) -> c
+com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter$DownloadPermissionsTask -> com.applicake.beanstalkclient.b.g:
+    android.widget.ProgressBar loadingBar -> b
+    android.widget.TextView repoPermissionLabel -> c
+    android.widget.TextView deploymentPermissionLabel -> d
+    android.widget.TextView repoPermissionTitle -> e
+    android.widget.TextView deploymentPermissionTitle -> f
+    java.lang.String userId -> g
+    android.view.View view -> h
+    boolean failed -> i
+    android.widget.Button refreshButton -> j
+    com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter this$0 -> a
+    java.util.HashMap doInBackground(java.lang.Object[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    java.lang.String access$100(com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter$DownloadPermissionsTask) -> a
+    android.view.View access$200(com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter$DownloadPermissionsTask) -> b
+    android.widget.Button access$300(com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter$DownloadPermissionsTask) -> c
+com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter$DownloadPermissionsTask$1 -> com.applicake.beanstalkclient.b.d:
+    com.applicake.beanstalkclient.adapters.RepositoryPermissionsAdapter$DownloadPermissionsTask this$1 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.adapters.ServersAdapter -> com.applicake.beanstalkclient.b.e:
+    java.util.List mServersArray -> a
+    android.view.LayoutInflater mInflater -> b
+    android.content.SharedPreferences prefs -> c
+    android.content.Context mContext -> d
+    com.applicake.beanstalkclient.permissions.ServerEnviromentsPermissions permissions -> e
+    int getGroupCount() -> getGroupCount
+    int getChildrenCount(int) -> getChildrenCount
+    java.lang.Object getGroup(int) -> getGroup
+    java.lang.Object getChild(int,int) -> getChild
+    long getGroupId(int) -> getGroupId
+    long getChildId(int,int) -> getChildId
+    boolean hasStableIds() -> hasStableIds
+    android.view.View getGroupView(int,boolean,android.view.View,android.view.ViewGroup) -> getGroupView
+    android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
+    boolean isChildSelectable(int,int) -> isChildSelectable
+    android.content.Context access$000(com.applicake.beanstalkclient.adapters.ServersAdapter) -> a
+    java.util.List access$100(com.applicake.beanstalkclient.adapters.ServersAdapter) -> b
+    android.content.SharedPreferences access$200(com.applicake.beanstalkclient.adapters.ServersAdapter) -> c
+com.applicake.beanstalkclient.adapters.ServersAdapter$1 -> com.applicake.beanstalkclient.b.j:
+    com.applicake.beanstalkclient.ServerEnvironment val$serverEnvironment -> a
+    com.applicake.beanstalkclient.adapters.ServersAdapter this$0 -> b
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.adapters.ServersAdapter$2 -> com.applicake.beanstalkclient.b.m:
+    com.applicake.beanstalkclient.ServerEnvironment val$serverEnvironment -> a
+    com.applicake.beanstalkclient.adapters.ServersAdapter this$0 -> b
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.adapters.ServersAdapter$3 -> com.applicake.beanstalkclient.b.l:
+    int val$groupPosition -> a
+    com.applicake.beanstalkclient.Server val$server -> b
+    com.applicake.beanstalkclient.adapters.ServersAdapter this$0 -> c
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.adapters.ServersAdapter$DownloadServerListForEnvironmentTask -> com.applicake.beanstalkclient.b.h:
+    com.applicake.beanstalkclient.ServerEnvironment mServerEnvironment -> a
+    com.applicake.beanstalkclient.adapters.ServersAdapter this$0 -> b
+    void onPreExecute() -> onPreExecute
+    java.util.List doInBackground$68cf9880() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.applicake.beanstalkclient.adapters.SpinnerServerEnvironmentAdapter -> com.applicake.beanstalkclient.b.a:
+    android.view.LayoutInflater mInflater -> a
+    int textViewResourceId -> b
+    java.util.List environmentsArray -> c
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    int getCount() -> getCount
+    android.view.View getDropDownView(int,android.view.View,android.view.ViewGroup) -> getDropDownView
+com.applicake.beanstalkclient.adapters.SpinnerTimezoneAdapter -> com.applicake.beanstalkclient.b.n:
+    android.view.LayoutInflater mInflater -> a
+    java.util.List displayedValues -> b
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.UserAdapter -> com.applicake.beanstalkclient.b.q:
+    java.util.List userArray -> a
+    android.view.LayoutInflater mInflater -> b
+    com.applicake.beanstalkclient.utils.GravatarDowloader gravatarDownloader -> c
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.adapters.UserPermissionsAdapter -> com.applicake.beanstalkclient.b.r:
+    java.util.List repositoriesArray -> a
+    java.util.Map repoIdToPermissionMap -> b
+    android.view.LayoutInflater mInflater -> c
+    void setRepoIdToPermissionMap(java.util.Map) -> a
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.applicake.beanstalkclient.enums.ColorLabels -> com.applicake.beanstalkclient.g.c:
+    com.applicake.beanstalkclient.enums.ColorLabels WHITE -> a
+    com.applicake.beanstalkclient.enums.ColorLabels RED -> b
+    com.applicake.beanstalkclient.enums.ColorLabels ORANGE -> c
+    com.applicake.beanstalkclient.enums.ColorLabels YELLOW -> d
+    com.applicake.beanstalkclient.enums.ColorLabels GREEN -> e
+    com.applicake.beanstalkclient.enums.ColorLabels BLUE -> f
+    com.applicake.beanstalkclient.enums.ColorLabels PINK -> g
+    com.applicake.beanstalkclient.enums.ColorLabels GREY -> h
+    java.util.Map intToString -> i
+    java.util.Map stringToInt -> j
+    java.util.Map stringToColor -> k
+    int code -> l
+    java.lang.String label -> m
+    int color -> n
+    com.applicake.beanstalkclient.enums.ColorLabels[] $VALUES -> o
+    com.applicake.beanstalkclient.enums.ColorLabels[] values() -> values
+    com.applicake.beanstalkclient.enums.ColorLabels valueOf(java.lang.String) -> valueOf
+    int getNumber() -> a
+    java.lang.String getLabelFromNumber(int) -> a
+    java.lang.String getLabelFromNumberForButton(int) -> b
+    int getNumberFromLabel(java.lang.String) -> a
+    int getColorFromLabel(java.lang.String) -> b
+com.applicake.beanstalkclient.enums.PlanColors -> com.applicake.beanstalkclient.g.b:
+    java.util.Map colorsForPlans -> a
+    int getColorResIdForPlan(com.applicake.beanstalkclient.Plan) -> a
+com.applicake.beanstalkclient.enums.UserType -> com.applicake.beanstalkclient.g.a:
+    com.applicake.beanstalkclient.enums.UserType ADMIN -> a
+    com.applicake.beanstalkclient.enums.UserType OWNER -> b
+    com.applicake.beanstalkclient.enums.UserType USER -> c
+    com.applicake.beanstalkclient.enums.UserType[] $VALUES -> d
+    com.applicake.beanstalkclient.enums.UserType[] values() -> values
+    com.applicake.beanstalkclient.enums.UserType valueOf(java.lang.String) -> valueOf
+com.applicake.beanstalkclient.handlers.AccountHandler -> com.applicake.beanstalkclient.c.d:
+    com.applicake.beanstalkclient.Account account -> a
+    java.lang.StringBuilder buffer -> b
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    com.applicake.beanstalkclient.Account retrieveAccount() -> a
+com.applicake.beanstalkclient.handlers.ChangesetHandler -> com.applicake.beanstalkclient.c.j:
+    java.util.ArrayList changesetList -> a
+    com.applicake.beanstalkclient.Changeset changeset -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrieveChangesetList() -> a
+    com.applicake.beanstalkclient.Changeset retrieveChangeset() -> b
+com.applicake.beanstalkclient.handlers.CommentsHandler -> com.applicake.beanstalkclient.c.g:
+    java.util.ArrayList commentList -> a
+    com.applicake.beanstalkclient.Comment comment -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrieveCommentList() -> a
+    com.applicake.beanstalkclient.Comment retrieveComment() -> b
+com.applicake.beanstalkclient.handlers.ErrorHandler -> com.applicake.beanstalkclient.c.e:
+    java.lang.String error -> a
+    java.util.ArrayList errorList -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrieveErrorList() -> a
+com.applicake.beanstalkclient.handlers.PermissionsHandler -> com.applicake.beanstalkclient.c.f:
+    java.util.ArrayList permissionList -> a
+    com.applicake.beanstalkclient.Permission permission -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrievePermissionList() -> a
+    java.util.HashMap retrievePermissionHashMap() -> b
+com.applicake.beanstalkclient.handlers.PlanHandler -> com.applicake.beanstalkclient.c.b:
+    com.applicake.beanstalkclient.Plan plan -> a
+    java.util.ArrayList planList -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.HashMap retrievePlanMap() -> a
+com.applicake.beanstalkclient.handlers.ReleasesHandler -> com.applicake.beanstalkclient.c.h:
+    java.util.ArrayList releases -> a
+    com.applicake.beanstalkclient.Release release -> b
+    java.lang.StringBuilder buffer -> c
+    void characters(char[],int,int) -> characters
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    java.util.ArrayList retrieveReleasesList() -> a
+com.applicake.beanstalkclient.handlers.RepositoriesHandler -> com.applicake.beanstalkclient.c.i:
+    java.util.ArrayList repositoryList -> a
+    com.applicake.beanstalkclient.Repository repository -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrieveRepositoryList() -> a
+    java.util.HashMap retrieveRepositoryHashMap() -> b
+    com.applicake.beanstalkclient.Repository retrieveRepository() -> c
+com.applicake.beanstalkclient.handlers.ServerEnvironmentHandler -> com.applicake.beanstalkclient.c.a:
+    java.util.ArrayList serverEnvironmentList -> a
+    com.applicake.beanstalkclient.ServerEnvironment serverEnvironment -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrieveServerEnvironmentList() -> a
+com.applicake.beanstalkclient.handlers.ServersHandler -> com.applicake.beanstalkclient.c.c:
+    java.util.ArrayList serverList -> a
+    com.applicake.beanstalkclient.Server server -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrieveServerList() -> a
+com.applicake.beanstalkclient.handlers.UserHandler -> com.applicake.beanstalkclient.c.k:
+    java.util.ArrayList userList -> a
+    com.applicake.beanstalkclient.User user -> b
+    java.lang.StringBuilder buffer -> c
+    void startElement(java.lang.String,java.lang.String,java.lang.String,org.xml.sax.Attributes) -> startElement
+    void endElement(java.lang.String,java.lang.String,java.lang.String) -> endElement
+    void characters(char[],int,int) -> characters
+    java.util.ArrayList retrieveUserList() -> a
+    com.applicake.beanstalkclient.User retrieveUser() -> b
+com.applicake.beanstalkclient.helpers.MegabytesConverter -> com.applicake.beanstalkclient.d.f:
+    java.lang.String parseMegabytes(int) -> a
+com.applicake.beanstalkclient.helpers.NumberToStringOrInfinityConverter -> com.applicake.beanstalkclient.d.b:
+    java.lang.String convertNumberToTextOrInfinity(int) -> a
+com.applicake.beanstalkclient.helpers.PlanPropertiesHolder -> com.applicake.beanstalkclient.d.d:
+    java.util.List properties -> a
+    com.applicake.beanstalkclient.helpers.MegabytesConverter mbConverter -> b
+    java.util.List getProperties() -> a
+com.applicake.beanstalkclient.helpers.PlansCostsComparator -> com.applicake.beanstalkclient.d.a:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.applicake.beanstalkclient.helpers.PropertiesHolder -> com.applicake.beanstalkclient.d.e:
+    java.util.List getProperties() -> a
+com.applicake.beanstalkclient.helpers.Property -> com.applicake.beanstalkclient.d.c:
+    int nameResId -> a
+    java.lang.CharSequence value -> b
+    int getName() -> a
+    java.lang.CharSequence getValue() -> b
+com.applicake.beanstalkclient.permissions.CanAddNewEnvironmentToRepositoryFilter -> com.applicake.beanstalkclient.a.i:
+    com.applicake.beanstalkclient.permissions.ServerEnviromentsPermissions permissions -> a
+    boolean fits(java.lang.Object) -> a
+com.applicake.beanstalkclient.permissions.CanReleaseFromRepositoryFilter -> com.applicake.beanstalkclient.a.c:
+    com.applicake.beanstalkclient.permissions.ServerEnviromentsPermissions permissions -> a
+    boolean fits(java.lang.Object) -> a
+com.applicake.beanstalkclient.permissions.ObjectsFilter -> com.applicake.beanstalkclient.a.d:
+    android.content.Context context -> a
+    boolean fits(java.lang.Object) -> a
+com.applicake.beanstalkclient.permissions.ObjectsFilterFactory -> com.applicake.beanstalkclient.a.h:
+com.applicake.beanstalkclient.permissions.PermissionsData -> com.applicake.beanstalkclient.a.f:
+    com.applicake.beanstalkclient.User user -> a
+    java.util.ArrayList permissions -> b
+    com.applicake.beanstalkclient.User getUser() -> a
+    void setUser(com.applicake.beanstalkclient.User) -> a
+    java.util.ArrayList getPermissions() -> b
+    void setPermissions(java.util.ArrayList) -> a
+com.applicake.beanstalkclient.permissions.PermissionsInterpreter -> com.applicake.beanstalkclient.a.j:
+    android.content.Context mContext -> a
+    void setPermissionsData(com.applicake.beanstalkclient.permissions.PermissionsData) -> a
+    void initialize() -> a
+com.applicake.beanstalkclient.permissions.PermissionsPersistenceException -> com.applicake.beanstalkclient.a.a:
+com.applicake.beanstalkclient.permissions.PermissionsPersistenceUtil -> com.applicake.beanstalkclient.a.b:
+    android.content.Context mContext -> a
+    com.applicake.beanstalkclient.permissions.PermissionsData readStoredPermissionsData() -> a
+    void savePermissionsDataToFile(com.applicake.beanstalkclient.permissions.PermissionsData) -> a
+    java.lang.String generateFileName() -> b
+com.applicake.beanstalkclient.permissions.ServerEnviromentsPermissions -> com.applicake.beanstalkclient.a.e:
+    java.util.Map parsedEnviromentPermissions -> a
+    java.util.Set fullDeploymentsAccessRepositoriesIds -> b
+    com.applicake.beanstalkclient.User loggedUser -> c
+    void initialize() -> a
+    void setPermissionsData(com.applicake.beanstalkclient.permissions.PermissionsData) -> a
+    boolean hasDeploymentAccessForRepository(com.applicake.beanstalkclient.Repository) -> a
+    boolean hasFullDeploymentsAccessForRepository(com.applicake.beanstalkclient.Repository) -> b
+    boolean hasFullDeploymentsAccessForRepository(int) -> a
+    boolean hasAccessForThisEnvironment(com.applicake.beanstalkclient.ServerEnvironment) -> a
+com.applicake.beanstalkclient.permissions.TransparentObjectsFilter -> com.applicake.beanstalkclient.a.g:
+    boolean fits(java.lang.Object) -> a
+com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask -> com.applicake.beanstalkclient.f.b:
+    android.app.Activity mContext -> a
+    java.lang.Throwable th -> b
+    android.app.ProgressDialog progressDialog -> c
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    java.lang.Object trueDoInBackground(java.lang.Object[]) -> a
+    void performTaskAgain() -> c
+    void onPreExecute() -> onPreExecute
+    java.lang.String getProgressDialogTip() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    void trueOnPostExceute(java.lang.Object) -> a
+    boolean finishActivityAfterError() -> b
+    android.app.Activity getContext() -> d
+    android.app.Activity access$000(com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask) -> a
+com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask$1 -> com.applicake.beanstalkclient.f.c:
+    com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask this$0 -> a
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.tasks.ResponseHandler -> com.applicake.beanstalkclient.f.a:
+    void onResult(java.lang.Object) -> a
+com.applicake.beanstalkclient.utils.CustomYamlParser -> com.applicake.beanstalkclient.e.k:
+    java.util.ArrayList parseEntriesList(java.lang.String) -> a
+com.applicake.beanstalkclient.utils.GUI -> com.applicake.beanstalkclient.e.l:
+    void displayMonit(android.content.Context,java.lang.String) -> a
+    void displayServerErrorMonit(android.content.Context,java.lang.String) -> b
+    void displayUnexpectedErrorMonit(android.content.Context) -> a
+com.applicake.beanstalkclient.utils.GravatarDowloader -> com.applicake.beanstalkclient.e.u:
+    com.applicake.beanstalkclient.utils.GravatarDowloader instance -> a
+    java.util.HashMap sHardBitmapCache -> b
+    java.util.concurrent.ConcurrentHashMap sSoftBitmapCache -> c
+    android.os.Handler purgeHandler -> d
+    java.lang.Runnable purger -> e
+    com.applicake.beanstalkclient.utils.GravatarDowloader getInstance() -> a
+    java.lang.String md5(java.lang.String) -> b
+    void download(java.lang.String,android.widget.ImageView) -> a
+    android.graphics.Bitmap downloadBitmap(java.lang.String) -> a
+    boolean cancelPotentialDownload(java.lang.String,android.widget.ImageView) -> b
+    com.applicake.beanstalkclient.utils.GravatarDowloader$BitmapDownloaderTask getBitmapDownloaderTask(android.widget.ImageView) -> a
+    android.graphics.Bitmap getBitmapFromCache(java.lang.String) -> c
+    void addBitmapToCache(java.lang.String,android.graphics.Bitmap) -> a
+    void clearCache() -> b
+    java.util.concurrent.ConcurrentHashMap access$100() -> c
+com.applicake.beanstalkclient.utils.GravatarDowloader$1 -> com.applicake.beanstalkclient.e.e:
+    com.applicake.beanstalkclient.utils.GravatarDowloader this$0 -> a
+    boolean removeEldestEntry(java.util.Map$Entry) -> removeEldestEntry
+com.applicake.beanstalkclient.utils.GravatarDowloader$2 -> com.applicake.beanstalkclient.e.f:
+    com.applicake.beanstalkclient.utils.GravatarDowloader this$0 -> a
+    void run() -> run
+com.applicake.beanstalkclient.utils.GravatarDowloader$BitmapDownloaderTask -> com.applicake.beanstalkclient.e.d:
+    java.lang.String url -> a
+    java.lang.ref.WeakReference imageViewReference -> b
+    com.applicake.beanstalkclient.utils.GravatarDowloader this$0 -> c
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    java.lang.String access$000(com.applicake.beanstalkclient.utils.GravatarDowloader$BitmapDownloaderTask) -> a
+com.applicake.beanstalkclient.utils.GravatarDowloader$DownloadedDrawable -> com.applicake.beanstalkclient.e.j:
+    java.lang.ref.WeakReference bitmapDownloaderTaskReference -> a
+    com.applicake.beanstalkclient.utils.GravatarDowloader$BitmapDownloaderTask getBitmapDownloaderTask() -> a
+com.applicake.beanstalkclient.utils.GravatarDowloader$FlushedInputStream -> com.applicake.beanstalkclient.e.t:
+    long skip(long) -> skip
+com.applicake.beanstalkclient.utils.HttpRetriever -> com.applicake.beanstalkclient.e.q:
+    org.apache.http.client.HttpClient httpClient -> a
+    org.apache.http.client.HttpClient noRedirectionHttpClient -> b
+    org.apache.http.client.HttpClient getClient(boolean) -> a
+    java.lang.String checkCredentialsAccount(java.lang.String,java.lang.String,java.lang.String) -> a
+    java.lang.String checkCredentialsUser(java.lang.String,java.lang.String,java.lang.String) -> b
+    java.lang.String checkCredentialsPlan(java.lang.String,java.lang.String,java.lang.String) -> c
+    java.lang.String getAccountInfo(android.content.SharedPreferences) -> a
+    java.lang.String getUserListXML(android.content.SharedPreferences) -> b
+    java.lang.String getAvailablePlans(android.content.SharedPreferences) -> c
+    java.lang.String getActivityListXML(android.content.SharedPreferences,int) -> a
+    java.lang.String getChangesetForReposiotoryXML(android.content.SharedPreferences,java.lang.String) -> a
+    java.lang.String getSingleChangesetXml(android.content.SharedPreferences,java.lang.String,int) -> a
+    java.lang.String getRepositoryListXML(android.content.SharedPreferences) -> d
+    java.lang.String getRepositoryXML(android.content.SharedPreferences,int) -> b
+    java.lang.String getCommentsListForRevisionXML(android.content.SharedPreferences,java.lang.String,java.lang.String,int) -> a
+    java.lang.String getPermissionListForUserXML(android.content.SharedPreferences,java.lang.String) -> b
+    java.lang.String getPermissionsListForUserXML(java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
+    java.lang.String getPermissionsListForUserXML(org.apache.http.auth.UsernamePasswordCredentials,java.lang.String,java.lang.String) -> a
+    java.lang.String getReleasesListForRepositoryXML(android.content.SharedPreferences,int) -> c
+    java.lang.String getReleasesListForAllRepositories(android.content.SharedPreferences) -> e
+    java.lang.String getServerEnvironmentListForRepositoryXML(android.content.SharedPreferences,int) -> d
+    java.lang.String getServerEnvironmentListForRepositoryXML(android.content.SharedPreferences,java.lang.String) -> c
+    java.lang.String getServerListForEnviromentXML(android.content.SharedPreferences,int,int) -> a
+    java.lang.String executeRequest(org.apache.http.auth.UsernamePasswordCredentials,java.lang.String) -> a
+    org.apache.http.auth.UsernamePasswordCredentials getCredentialsFromPreferences(android.content.SharedPreferences) -> f
+    java.lang.String getAccountDomain(android.content.SharedPreferences) -> g
+com.applicake.beanstalkclient.utils.HttpRetriever$HttpConnectionErrorException -> com.applicake.beanstalkclient.e.b:
+com.applicake.beanstalkclient.utils.HttpRetriever$HttpImproperStatusCodeException -> com.applicake.beanstalkclient.e.a:
+    int statusCode -> a
+    int getStatusCode() -> a
+com.applicake.beanstalkclient.utils.HttpRetriever$UnsuccessfulServerResponseException -> com.applicake.beanstalkclient.e.c:
+com.applicake.beanstalkclient.utils.HttpSender -> com.applicake.beanstalkclient.e.g:
+    org.apache.http.impl.client.DefaultHttpClient httpClient -> a
+    java.lang.String sendCommentXML(android.content.SharedPreferences,java.lang.String,java.lang.String) -> a
+    int sendCreateNewRepostiroyXML(android.content.SharedPreferences,java.lang.String) -> a
+    int sendCreateNewServerEnvironmentXML(android.content.SharedPreferences,java.lang.String,int) -> a
+    int sendUpdateRepositoryXML(android.content.SharedPreferences,java.lang.String,java.lang.String) -> b
+    int sendUpdateUserXML(android.content.SharedPreferences,java.lang.String,java.lang.String) -> c
+    int sendCreateUserXML(android.content.SharedPreferences,java.lang.String) -> b
+    int sendPermissionXML(android.content.SharedPreferences,java.lang.String) -> c
+    int sendCreateServerXML(android.content.SharedPreferences,java.lang.String,int,int) -> a
+    int sendDeletePermissionRequest(android.content.SharedPreferences,java.lang.String) -> d
+    int sendDeleteUserRequest(android.content.SharedPreferences,java.lang.String) -> e
+    int sendUpdateAccountXML(android.content.SharedPreferences,java.lang.String) -> f
+    int sendModifyServerEnvironmentXML(android.content.SharedPreferences,java.lang.String,int,int) -> b
+    java.lang.Integer sendModifyServerXML(android.content.SharedPreferences,java.lang.String,int,int) -> c
+    java.lang.Integer sendCreateReleaseXML(android.content.SharedPreferences,java.lang.String,java.lang.String,int) -> a
+    java.lang.Integer sendDeleteServerRequest(android.content.SharedPreferences,int,int) -> a
+    int executeCreatePost(java.lang.String,org.apache.http.auth.UsernamePasswordCredentials,org.apache.http.client.methods.HttpPost) -> a
+    int executeDeletePost(org.apache.http.auth.UsernamePasswordCredentials,org.apache.http.client.methods.HttpPost) -> a
+    int executeModifyPutRequst(java.lang.String,org.apache.http.auth.UsernamePasswordCredentials,org.apache.http.client.methods.HttpPut) -> a
+    org.apache.http.auth.UsernamePasswordCredentials getCredentialsFromPreferences(android.content.SharedPreferences) -> a
+    java.lang.String getAccountDomain(android.content.SharedPreferences) -> b
+com.applicake.beanstalkclient.utils.HttpSender$HttpSenderException -> com.applicake.beanstalkclient.e.m:
+com.applicake.beanstalkclient.utils.HttpSender$HttpSenderServerErrorException -> com.applicake.beanstalkclient.e.v:
+com.applicake.beanstalkclient.utils.RailsTimezones -> com.applicake.beanstalkclient.e.n:
+    java.util.Map railsTZtoJavaTZ -> a
+    java.util.Map railsTZtoRailsWithGMT -> b
+    java.util.ArrayList getDetailedRailsTimezonesArrayList() -> a
+    java.util.TimeZone getJavaTz(java.lang.String) -> a
+    java.util.ArrayList listOfRailsTimezones() -> b
+com.applicake.beanstalkclient.utils.RailsTimezones$1 -> com.applicake.beanstalkclient.e.r:
+com.applicake.beanstalkclient.utils.RailsTimezones$2 -> com.applicake.beanstalkclient.e.s:
+com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder -> com.applicake.beanstalkclient.e.h:
+    android.app.AlertDialog dialog -> a
+    void displayDialog() -> b
+    void retryAction() -> a
+    void noRetryAction(android.content.DialogInterface) -> a
+com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder$1 -> com.applicake.beanstalkclient.e.p:
+    com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder$2 -> com.applicake.beanstalkclient.e.o:
+    com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.applicake.beanstalkclient.utils.XmlCreator -> com.applicake.beanstalkclient.e.i:
+    org.xmlpull.v1.XmlSerializer serializer -> a
+    java.io.StringWriter writer -> b
+    java.lang.String createCommentXML(java.lang.String,java.lang.String) -> a
+    java.lang.String createGitRepositoryCreationXML(java.lang.String,java.lang.String,java.lang.String) -> a
+    java.lang.String createSVNRepositoryCreationXML(java.lang.String,java.lang.String,java.lang.String,boolean) -> a
+    java.lang.String createRepositoryModifyXML(java.lang.String,java.lang.String) -> b
+    java.lang.String createPasswordChangeXML(java.lang.String) -> a
+    java.lang.String createUserPropertiesChangeXML(java.lang.String,java.lang.String,java.lang.String,java.lang.String,boolean) -> a
+    java.lang.String createNewUserXML(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String) -> a
+    java.lang.String createPermissionXML(java.lang.String,java.lang.String,boolean,boolean,boolean) -> a
+    java.lang.String createAccountPropertiesChangeXML(java.lang.String,java.lang.String) -> c
+    java.lang.String createNewServerEnvironmentXML(com.applicake.beanstalkclient.ServerEnvironment) -> a
+    java.lang.String createModifyServerEnvironmentXML(com.applicake.beanstalkclient.ServerEnvironment) -> b
+    java.lang.String createNewServerXML(com.applicake.beanstalkclient.Server) -> a
+    java.lang.String createModifyServerXML(com.applicake.beanstalkclient.Server) -> b
+    java.lang.String createNewReleaseXML(java.lang.String,java.lang.String,boolean,int) -> a
+    void addPostReleaseHook(java.lang.String) -> b
+    void addPreReleaseHook(java.lang.String) -> c
+    void addUseFeat(boolean) -> a
+    void addAuthenticateByKey(boolean) -> b
+    void addUseActiveMode(boolean) -> c
+    void addPort(int) -> a
+    void addProtocol(java.lang.String) -> d
+    void addRemoteAddr(java.lang.String) -> e
+    void addRemotePath(java.lang.String) -> f
+    void addLocalPath(java.lang.String) -> g
+    void addIsAutomatic(boolean) -> d
+    void addTimezone(java.lang.String) -> h
+    void addLogin(java.lang.String) -> i
+    void addAdmin(java.lang.String) -> j
+    void addEmail(java.lang.String) -> k
+    void addLastName(java.lang.String) -> l
+    void addFirstName(java.lang.String) -> m
+    void addPassword(java.lang.String) -> n
+    void addColorLabel(java.lang.String) -> o
+    void addTitle(java.lang.String) -> p
+    void addType(java.lang.String) -> q
+    void addRevision(java.lang.String) -> r
+    void addName(java.lang.String) -> s
+com.applicake.beanstalkclient.utils.XmlParser -> com.applicake.beanstalkclient.e.w:
+    org.xml.sax.XMLReader initializeReader() -> a
+    java.util.ArrayList parseChangesetList(java.lang.String) -> a
+    com.applicake.beanstalkclient.Changeset parseChangeset(java.lang.String) -> b
+    java.util.ArrayList parseUserList(java.lang.String) -> c
+    com.applicake.beanstalkclient.User parseCurrentUser(java.lang.String) -> d
+    java.util.HashMap parsePlan(java.lang.String) -> e
+    java.util.ArrayList parseReleasesList(java.lang.String) -> f
+    java.util.ArrayList parseRepositoryList(java.lang.String) -> g
+    com.applicake.beanstalkclient.Repository parseRepository(java.lang.String) -> h
+    java.util.HashMap parseRepositoryHashMap(java.lang.String) -> i
+    java.util.ArrayList parsePermissionList(java.lang.String) -> j
+    java.util.HashMap parseRepoIdToPermissionHashMap(java.lang.String) -> k
+    com.applicake.beanstalkclient.Account parseAccountInfo(java.lang.String) -> l
+    java.util.ArrayList parseCommentList(java.lang.String) -> m
+    com.applicake.beanstalkclient.Comment parseComment(java.lang.String) -> n
+    java.util.ArrayList parseErrors(java.lang.String) -> o
+    java.util.List parseServerEnvironmentsList(java.lang.String) -> p
+    java.util.ArrayList parseServerList(java.lang.String) -> q
+com.applicake.beanstalkclient.utils.XmlParser$XMLParserException -> com.applicake.beanstalkclient.e.x:
+    java.lang.Exception cause -> a
+com.applicake.beanstalkclient.widgets.AddNewObjectView -> com.applicake.beanstalkclient.widgets.a:
+    com.applicake.beanstalkclient.widgets.AddNewObjectViewController viewController -> a
+    android.widget.ImageView imageView -> b
+    android.widget.TextView availbilityInfoTextView -> c
+    android.widget.TextView mainTextView -> d
+    int available -> e
+    int max -> f
+    boolean currentState -> g
+    android.view.View$OnClickListener onClickListener -> h
+    android.view.View$OnClickListener disabledClickListener -> i
+    com.applicake.beanstalkclient.activities.BeanstalkActivity contextActivity -> j
+    void setAvailable(int,int) -> a
+    void setOnClickListener(android.view.View$OnClickListener) -> setOnClickListener
+    void refreshViewAccordingToViewData(com.applicake.beanstalkclient.widgets.AddNewObjectViewData) -> a
+    com.applicake.beanstalkclient.activities.BeanstalkActivity access$000(com.applicake.beanstalkclient.widgets.AddNewObjectView) -> a
+com.applicake.beanstalkclient.widgets.AddNewObjectView$1 -> com.applicake.beanstalkclient.widgets.c:
+    com.applicake.beanstalkclient.widgets.AddNewObjectView this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.applicake.beanstalkclient.widgets.AddNewObjectViewController -> com.applicake.beanstalkclient.widgets.f:
+    com.applicake.beanstalkclient.widgets.AddNewObjectViewData enabledData -> a
+    com.applicake.beanstalkclient.widgets.AddNewObjectViewData disabledData -> b
+    com.applicake.beanstalkclient.widgets.AddNewObjectViewData getEnabledData() -> a
+    void setEnabledData(com.applicake.beanstalkclient.widgets.AddNewObjectViewData) -> a
+    com.applicake.beanstalkclient.widgets.AddNewObjectViewData getDisabledData() -> b
+    void setDisabledData(com.applicake.beanstalkclient.widgets.AddNewObjectViewData) -> b
+com.applicake.beanstalkclient.widgets.AddNewObjectViewData -> com.applicake.beanstalkclient.widgets.e:
+    int imageResId -> a
+    int mainTextStringId -> b
+    int availbilityStringId -> c
+    int backgroundResId -> d
+    int getImageResId() -> a
+    void setImageResId(int) -> a
+    int getMainTextStringId() -> b
+    void setMainTextStringId(int) -> b
+    int getAvailbilityStringId() -> c
+    void setAvailbilityStringId(int) -> c
+    int getBackgroundResId() -> d
+    void setBackgroundResId(int) -> d
+com.applicake.beanstalkclient.widgets.AddNewRepositoryViewController -> com.applicake.beanstalkclient.widgets.d:
+com.applicake.beanstalkclient.widgets.AddNewUserViewController -> com.applicake.beanstalkclient.widgets.g:
+com.applicake.beanstalkclient.widgets.DetailsView -> com.applicake.beanstalkclient.widgets.DetailsView:
+    com.applicake.beanstalkclient.widgets.DetailsView$SinglePropertyViewHandler rowHandler -> a
+    void addProperty(java.lang.CharSequence,java.lang.CharSequence) -> a
+    void setPropertiesHolder(com.applicake.beanstalkclient.helpers.PropertiesHolder) -> a
+com.applicake.beanstalkclient.widgets.DetailsView$SinglePropertyViewHandler -> com.applicake.beanstalkclient.widgets.b:
+    int rowResId -> a
+    com.applicake.beanstalkclient.widgets.DetailsView this$0 -> b
+    android.view.View getView(java.lang.CharSequence,java.lang.CharSequence) -> a
