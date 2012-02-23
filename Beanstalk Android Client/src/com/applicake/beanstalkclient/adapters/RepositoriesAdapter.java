@@ -17,26 +17,24 @@ import com.applicake.beanstalkclient.Repository;
 public class RepositoriesAdapter extends ArrayAdapter<Repository> {
 
   private LayoutInflater mInflater;
-  private List<Repository> repositoriesArray;
   private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 
   public RepositoriesAdapter(Context context, int textViewResourceId,
       List<Repository> repositoriesArray) {
     super(context, textViewResourceId, repositoriesArray);
     mInflater = LayoutInflater.from(context);
-    this.repositoriesArray = repositoriesArray;
   }
 
   public View getView(int position, View convertView, ViewGroup parent) {
     View view = convertView;
 
-    if (view == null) {
-      view = mInflater.inflate(R.layout.repositories_entry, null);
-    }
-
-    Repository repository = repositoriesArray.get(position);
-
+    Repository repository = getItem(position);
+    
     if (repository != null) {
+
+      if (view == null) {
+        view = mInflater.inflate(R.layout.repositories_entry, null);
+      }
 
       TextView repositoryNameTextView = (TextView) view.findViewById(R.id.reposiotryName);
       repositoryNameTextView.setText(repository.getTitle());
@@ -68,4 +66,5 @@ public class RepositoriesAdapter extends ArrayAdapter<Repository> {
 
     return view;
   }
+
 }

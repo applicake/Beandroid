@@ -22,6 +22,8 @@ import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.Strings;
 import com.applicake.beanstalkclient.adapters.RepositoriesAdapter;
 import com.applicake.beanstalkclient.enums.UserType;
+import com.applicake.beanstalkclient.permissions.ObjectsFilter;
+import com.applicake.beanstalkclient.permissions.ObjectsFilterFactory;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
@@ -33,13 +35,15 @@ import com.applicake.beanstalkclient.widgets.AddNewObjectView;
 import com.applicake.beanstalkclient.widgets.AddNewRepositoryViewController;
 
 public class RepositoriesActivity extends BeanstalkActivity implements
-    OnItemClickListener, OnClickListener {
+    OnItemClickListener, OnClickListener, FilteredActivity<Repository> {
 
   public static final int RESULT_REPOSITORY = 91;
 
   private Context mContext;
   private boolean returnAfterClick = false;
   private AddNewObjectView addNewObjectView;
+  private ObjectsFilter<Repository> objectsFilter;
+  
   public ArrayList<Repository> repositoriesArray;
   public RepositoriesAdapter repositoriesAdapter;
   public ListView repositoriesList;
@@ -59,7 +63,7 @@ public class RepositoriesActivity extends BeanstalkActivity implements
       returnAfterClick = getIntent().getAction().equals(Intent.ACTION_PICK);
     }
 
-    repositoriesList = (ListView) findViewById(R.id.repositoriesList);
+    repositoriesList = (ListView) findViewById(android.R.id.list);
     /*
      * View footerView = ((LayoutInflater)
      * getApplicationContext().getSystemService(
@@ -79,6 +83,11 @@ public class RepositoriesActivity extends BeanstalkActivity implements
         R.layout.repositories_entry, repositoriesArray);
     repositoriesList.setAdapter(repositoriesAdapter);
     repositoriesList.setOnItemClickListener(this);
+    repositoriesList.setEmptyView(findViewById(android.R.id.empty));
+    
+    Class<?> filterClass = (Class<?>)getIntent().getSerializableExtra(Constants.FILTER_CLASS);
+    ObjectsFilterFactory<Repository> filterFactory = new ObjectsFilterFactory<Repository>();
+    objectsFilter = (ObjectsFilter<Repository>)filterFactory.generateFilter(this, filterClass);
     
     setVisible(false);
     
@@ -190,7 +199,13 @@ public class RepositoriesActivity extends BeanstalkActivity implements
       } else {
         repositoriesArray.clear();
         if (result != null) {
-          repositoriesArray.addAll(result);
+          
+          for(Repository repository : result) {
+            if(getObjectsFilter().fits(repository)) {
+              repositoriesArray.add(repository);
+            }
+          }
+          //repositoriesArray.addAll(result);
 
           repositoriesAdapter.notifyDataSetChanged();
 
@@ -218,6 +233,11 @@ public class RepositoriesActivity extends BeanstalkActivity implements
       }
     }
 
+  }
+
+  @Override
+  public ObjectsFilter<Repository> getObjectsFilter() {
+    return objectsFilter;
   }
 
 }

@@ -1,10 +1,16 @@
 package com.applicake.beanstalkclient;
 
+import java.io.Serializable;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Permission implements Parcelable {
+public class Permission implements Parcelable, Serializable {
 
+  private static final long serialVersionUID = 6948694031532629370L;
+
+  public static final int NO_ID_SET = -1;
+  
   public int describeContents() {
     // TODO Auto-generated method stub
     return 0;
@@ -49,7 +55,7 @@ public class Permission implements Parcelable {
   private boolean fullDeploymentAccess;
   private int id;
   private int repositoryId;
-  private int serverEnvironmentId;
+  private int serverEnvironmentId = NO_ID_SET;
   private int userId;
   private boolean readAccess;
   private boolean writeAccess;

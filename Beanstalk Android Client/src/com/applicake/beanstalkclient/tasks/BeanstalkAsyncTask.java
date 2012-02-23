@@ -47,13 +47,12 @@ public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends Async
   }
   
   protected void onPostExecute(Result result) {
+    dismissProgressDialog();
     if(th != null) {
       handleError(th);
+    } else {
+      trueOnPostExceute(result);
     }
-    if(progressDialog != null) {
-      progressDialog.dismiss();
-    }
-    trueOnPostExceute(result);
   }
   
   protected void trueOnPostExceute(Result result) {
@@ -72,11 +71,17 @@ public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends Async
       @Override
       public void noRetryAction(DialogInterface dialog) {
         super.noRetryAction(dialog);
-        mContext.finish();
+        if(finishActivityAfterError()) {
+          mContext.finish();
+        }
       }
 
     };
     builder.displayDialog();
+  }
+  
+  protected boolean finishActivityAfterError() {
+    return true;
   }
   
   private String getErrorMessage(Throwable th) {
@@ -91,6 +96,12 @@ public abstract class BeanstalkAsyncTask<Params, Progress, Result> extends Async
     th.printStackTrace();
     return message;
   }  
+  
+  private void dismissProgressDialog() {
+    if(progressDialog != null) {
+      progressDialog.dismiss();
+    }
+  }
   
   protected Activity getContext() {
     return mContext;

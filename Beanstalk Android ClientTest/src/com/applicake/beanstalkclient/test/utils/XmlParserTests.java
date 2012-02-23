@@ -181,7 +181,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     User user1 = userList.get(0);
     assertNotNull("user1 is null", user1);
     assertEquals(88998, user1.getAccountId());
-    assertEquals(UserType.OWNER, user1.getAdmin());
+    assertEquals(UserType.OWNER, user1.getUserType());
     // assertEquals("2011-04-26T09:29:27+02:00", user1.getCreatedAt());
     assertEquals(new Date(111, 3, 26, 7, 29, 27).getTime(), user1.getCreatedAt());
     assertEquals("bartek.f@applicake.com", user1.getEmail());
@@ -196,7 +196,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     User user2 = userList.get(1);
     assertNotNull("user2 is null", user2);
     assertEquals(88998, user2.getAccountId());
-    assertEquals(UserType.ADMIN, user2.getAdmin());
+    assertEquals(UserType.ADMIN, user2.getUserType());
     // assertEquals("2011-05-09T09:11:21+02:00", user2.getCreatedAt());
     assertEquals(new Date(111, 4, 9, 7, 11, 21).getTime(), user2.getCreatedAt());
     assertEquals("bartek.f+DarthVader@applicake.com", user2.getEmail());
@@ -211,7 +211,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     User user3 = userList.get(2);
     assertNotNull("user3 is null", user3);
     assertEquals(88998, user3.getAccountId());
-    assertEquals(UserType.USER, user3.getAdmin());
+    assertEquals(UserType.USER, user3.getUserType());
     // assertEquals("2011-05-04T12:34:31+02:00", user3.getCreatedAt());
     assertEquals(new Date(111, 4, 4, 10, 34, 31).getTime(), user3.getCreatedAt());
     assertEquals("bartek.f+HanSolo@applicake.com", user3.getEmail());
@@ -226,7 +226,7 @@ public class XmlParserTests extends InstrumentationTestCase {
     User user4 = userList.get(3);
     assertNotNull("user4 is null", user4);
     assertEquals(88998, user4.getAccountId());
-    assertEquals(UserType.USER, user4.getAdmin());
+    assertEquals(UserType.USER, user4.getUserType());
     // assertEquals("2011-05-09T09:10:46+02:00", user4.getCreatedAt());
     assertEquals(new Date(111, 4, 9, 7, 10, 46).getTime(), user4.getCreatedAt());
     assertEquals("bartek.f+LukeSkywalker@applicake.com", user4.getEmail());

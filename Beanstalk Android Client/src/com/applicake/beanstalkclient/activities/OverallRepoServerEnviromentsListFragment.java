@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.permissions.CanAddNewEnvironmentToRepositoryFilter;
 import com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.XmlParser;
@@ -52,6 +53,7 @@ public class OverallRepoServerEnviromentsListFragment extends SpecificRepoServer
   public void onClick(View view) {
     Intent intent = new Intent(getActivity(), RepositoriesActivity.class);
     intent.setAction(Intent.ACTION_PICK);
+    intent.putExtra(Constants.FILTER_CLASS, CanAddNewEnvironmentToRepositoryFilter.class);
     startActivityForResult(intent, REPOSITORY_ADD_ENVIROMENT);
   }
   

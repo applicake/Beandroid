@@ -30,14 +30,14 @@
 			android:layout_height="wrap_content"></TextView>
 
 		<EditText
-			android:text="bartosz-filipowicz"
 			android:id="@+id/accountdomain_edittext"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@id/account_domain_textview"
 			style="@style/edit_text"
 			android:layout_marginBottom="0px"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent"></EditText>
+			android:layout_width="fill_parent"
+			android:lines="1"></EditText>
 
 		<TextView
 			android:text=".beanstalkapp.com"
@@ -62,12 +62,12 @@
 
 		<EditText
 			style="@style/edit_text"
-			android:text="bartoszfilipowicz"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@id/login_text_view"
 			android:id="@+id/login_edittext"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"></EditText>
+			android:layout_height="wrap_content"
+			android:lines="1"></EditText>
 
 		<TextView
 			android:text="Password:"
@@ -81,13 +81,13 @@
 
 		<EditText
 			style="@style/edit_text"
-			android:text="applicake10"
 			android:id="@+id/password_edittext"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@id/password_textview"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:password="true"></EditText>
+			android:password="true"
+			android:lines="1"></EditText>
 
 		<CheckBox
 			android:text="Remeber me"

@@ -34,6 +34,7 @@ public class HomeActivity extends BeanstalkActivity {
       findViewById(R.id.account_settings_button).setVisibility(View.GONE);
     }
     if (currentUser.equals(UserType.USER.name())) {
+      hideUsersActionBarButton();
       findViewById(R.id.users_button).setVisibility(View.GONE);
     }
 
@@ -87,6 +88,16 @@ public class HomeActivity extends BeanstalkActivity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode != Constants.CLEAR_STACK_UP_TO_HOME)
       super.onActivityResult(requestCode, resultCode, data);
+  }
+  
+  protected void hideUsersActionBarButton() {
+    hideViews(R.id.ActionBarUsersButton, R.id.actionBarUsersSeparator);
+  }
+  
+  private void hideViews(int... resIds) {
+    for(int resId : resIds) {
+      findViewById(resId).setVisibility(View.GONE);
+    }
   }
 
 }

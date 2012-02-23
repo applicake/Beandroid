@@ -28,6 +28,7 @@
 		android:clickable="true"
 		android:onClick="onRepositoriesButtonClick"></ImageView>
 	<ImageView
+	    android:id="@+id/actionBarUsersSeparator"
 		style="@style/ActionBarSeparator"></ImageView>
 	<ImageView
 		android:id="@+id/ActionBarUsersButton"

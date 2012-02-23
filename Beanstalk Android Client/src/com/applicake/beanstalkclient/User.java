@@ -1,5 +1,6 @@
 package com.applicake.beanstalkclient;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -8,7 +9,10 @@ import android.os.Parcelable;
 
 import com.applicake.beanstalkclient.enums.UserType;
 
-public class User implements Parcelable {
+public class User implements Parcelable, Serializable {
+
+  private static final long serialVersionUID = -3901102839116620899L;
+
   static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
   // parcelable implementation
@@ -21,7 +25,7 @@ public class User implements Parcelable {
   @Override
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeInt(accountId);
-    dest.writeInt(admin.ordinal());
+    dest.writeInt(userType.ordinal());
     dest.writeLong(createdAt);
     dest.writeString(email);
     dest.writeString(firstName);
@@ -38,7 +42,7 @@ public class User implements Parcelable {
 
   public User(Parcel in) {
     this.accountId = in.readInt();
-    this.admin = UserType.values()[in.readInt()];
+    this.userType = UserType.values()[in.readInt()];
     this.createdAt = in.readLong();
     this.email = in.readString();
     this.firstName = in.readString();
@@ -61,7 +65,7 @@ public class User implements Parcelable {
   };
 
   private int accountId;
-  private UserType admin;
+  private UserType userType;
   private long createdAt;
   private String email;
   private String firstName;
@@ -79,12 +83,12 @@ public class User implements Parcelable {
     this.accountId = accountId;
   }
 
-  public UserType getAdmin() {
-    return admin;
+  public UserType getUserType() {
+    return userType;
   }
 
-  public void setAdmin(UserType type) {
-    this.admin = type;
+  public void setUserType(UserType type) {
+    this.userType = type;
   }
 
   public long getCreatedAt() {

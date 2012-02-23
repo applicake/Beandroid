@@ -8,6 +8,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.applicake.beanstalkclient.activities.LoginActivity;
+import com.applicake.beanstalkclient.activities.LoginActivity.AuthorizationData;
 import com.applicake.beanstalkclient.test.SecretData;
 import com.applicake.beanstalkclient.enums.UserType;
 
@@ -63,10 +64,10 @@ public class LoginActivityUserVerificationTests extends
 
   public void testOwnerUserTypeRecogintion() throws Throwable {
 
-    UserType userType;
-    userType = baseActivity.authenticateAndCheckUserType(ownerCorrect[0],
+    AuthorizationData authData;
+    authData = baseActivity.authenticateAndCheckUserType(ownerCorrect[0],
         ownerCorrect[1], ownerCorrect[2]);
-    assertEquals(UserType.OWNER, userType);
+    assertEquals(UserType.OWNER, authData.getUser().getUserType());
     
     try {
        baseActivity.authenticateAndCheckUserType(ownerIncorrect[0],
@@ -79,10 +80,10 @@ public class LoginActivityUserVerificationTests extends
   
   public void testAdminUserTypeRecogintion() throws Throwable {
     
-    UserType userType;
-    userType = baseActivity.authenticateAndCheckUserType(adminCorrect[0],
+    AuthorizationData authData;
+    authData = baseActivity.authenticateAndCheckUserType(adminCorrect[0],
         adminCorrect[1], adminCorrect[2]);
-    assertEquals(UserType.ADMIN, userType);
+    assertEquals(UserType.ADMIN, authData.getUser().getUserType());
     
     try {
       baseActivity.authenticateAndCheckUserType(adminIncorrect[0],
@@ -94,10 +95,10 @@ public class LoginActivityUserVerificationTests extends
   }
   public void testUserUserTypeRecogintion() throws Throwable {
     
-    UserType userType;
-    userType = baseActivity.authenticateAndCheckUserType(userCorrect[0],
+    AuthorizationData authData;
+    authData = baseActivity.authenticateAndCheckUserType(userCorrect[0],
         userCorrect[1], userCorrect[2]);
-    assertEquals(UserType.USER, userType);
+    assertEquals(UserType.USER, authData.getUser().getUserType());
     
     try {
       baseActivity.authenticateAndCheckUserType(userIncorrect[0],

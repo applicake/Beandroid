@@ -48,9 +48,9 @@ public class UserHandler extends DefaultHandler {
       }
       if (localName == "admin") {
         if (buffer.toString().equals("") || buffer.toString().equals("false"))
-          user.setAdmin(UserType.USER);
+          user.setUserType(UserType.USER);
         else if (buffer.toString().equals("true"))
-          user.setAdmin(UserType.ADMIN);
+          user.setUserType(UserType.ADMIN);
         else
           throw new SAXException("Error while parsing user type");
 
@@ -58,7 +58,7 @@ public class UserHandler extends DefaultHandler {
 
       if (localName == "owner") {
         if (buffer.toString().equals("true"))
-          user.setAdmin(UserType.OWNER);
+          user.setUserType(UserType.OWNER);
 
       }
 

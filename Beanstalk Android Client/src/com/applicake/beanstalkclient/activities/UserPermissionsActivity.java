@@ -10,6 +10,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -84,9 +85,9 @@ public class UserPermissionsActivity extends BeanstalkActivity implements
       Intent intent = new Intent(mContext, PermissionModifyActivity.class);
       Repository repository = repositoriesArray.get(itemNumber);
       intent.putExtra(Constants.REPOSITORY, repository);
-      intent.putExtra(Constants.USER, user);
+      intent.putExtra(Constants.USER, (Parcelable)user);
       if (repoIdToPermission.containsKey(repository.getId())) {
-        intent.putExtra(Constants.PERMISSION, repoIdToPermission.get(repository.getId()));
+        intent.putExtra(Constants.PERMISSION, (Parcelable)repoIdToPermission.get(repository.getId()));
       }
       startActivityForResult(intent, 0);
     }

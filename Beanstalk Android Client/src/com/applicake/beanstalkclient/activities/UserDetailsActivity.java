@@ -11,6 +11,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -43,7 +44,7 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
     mContext = this;
 
     user = getIntent().getParcelableExtra(Constants.USER);
-    UserType userType = user.getAdmin();
+    UserType userType = user.getUserType();
     ImageView userGravatar = (ImageView) findViewById(R.id.userGravatar);
 
     GravatarDowloader.getInstance().download(user.getEmail(), userGravatar);
@@ -101,12 +102,12 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
   public void onClick(View v) {
 
     if (v.getId() == R.id.buttonUserPermissions) {
-      if ((user.getAdmin() != UserType.USER)) {
+      if ((user.getUserType() != UserType.USER)) {
         GUI.displayMonit(mContext,
             "Owner and admins have full access to all repositories and deployment environments");
       } else {
         Intent intent = new Intent(getApplicationContext(), UserPermissionsActivity.class);
-        intent.putExtra(Constants.USER, user);
+        intent.putExtra(Constants.USER, (Parcelable)user);
         startActivityForResult(intent, 0);
       }
 
@@ -115,7 +116,7 @@ public class UserDetailsActivity extends BeanstalkActivity implements OnClickLis
     if (v.getId() == R.id.buttonModifyProperties) {
       Intent intent = new Intent(getApplicationContext(),
           UserModifyPropertiesActivity.class);
-      intent.putExtra(Constants.USER, user);
+      intent.putExtra(Constants.USER, (Parcelable)user);
       startActivityForResult(intent, 0);
     }
 

@@ -1,6 +1,11 @@
 package com.applicake.beanstalkclient.activities;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.http.HttpStatus;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -23,14 +28,19 @@ import android.widget.EditText;
 
 import com.applicake.beanstalkclient.Account;
 import com.applicake.beanstalkclient.Constants;
+import com.applicake.beanstalkclient.Permission;
 import com.applicake.beanstalkclient.Plan;
 import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Strings;
+import com.applicake.beanstalkclient.User;
 import com.applicake.beanstalkclient.enums.UserType;
+import com.applicake.beanstalkclient.permissions.PermissionsData;
+import com.applicake.beanstalkclient.permissions.PermissionsPersistenceUtil;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpImproperStatusCodeException;
+import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
 import com.applicake.beanstalkclient.utils.SimpleRetryDialogBuilder;
 import com.applicake.beanstalkclient.utils.XmlParser;
 import com.applicake.beanstalkclient.utils.XmlParser.XMLParserException;
@@ -43,10 +53,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
   private Context mContext;
   private SharedPreferences prefs;
-  private Account account;
-  private Plan currentPlan;
-  private HashMap<Integer, Plan> plansMap;
-
+  
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -120,51 +127,34 @@ public class LoginActivity extends Activity implements OnClickListener {
     editor.putString(Constants.USER_PASSWORD, "");
     editor.commit();
   }
+  
+  public AuthorizationData authenticateAndCheckUserType(String domain, String username, String password) 
+      throws HttpConnectionErrorException, XMLParserException, HttpImproperStatusCodeException, UnsuccessfulServerResponseException {
+    
+    AuthorizationData authData = new AuthorizationData();
+    
+    String userInfoXML = HttpRetriever.checkCredentialsUser(domain, username, password);
+    User currentUser = XmlParser.parseCurrentUser(userInfoXML);
+    
+    String permissionsXml = HttpRetriever.getPermissionsListForUserXML(domain, username, password, String.valueOf(currentUser.getId()));
+    List<Permission> permissions = XmlParser.parsePermissionList(permissionsXml);
+    
+    authData.setPermissions(permissions);
+    authData.setUser(currentUser);
 
-  // this method checks in user credentials are valid (if they are not ie. the
-  // status code equals 401, an HttpImproperStatusCodeException is thrown.
-  // Otherwise, the method goes through 3 levels of authentification:
-  // 1. If user has access to Account model he is an OWNER. In that case the
-  // method also checks account's plan to determine the number of available
-  // users and repositories.
-  // 2. If user doesn't have access to account, the method checks if he has
-  // access to user model. If so, the user is an ADMIN.
-  // 3. If user doesn't have access to neither account nor user models, his
-  // credentials are verified against plans model (available for all users).
-  // If user's credentails are valid, he is a USER.
-
-  public UserType authenticateAndCheckUserType(String domain, String username,
-      String password) throws HttpConnectionErrorException, XMLParserException,
-      HttpImproperStatusCodeException {
-
-    try {
+    if(currentUser.getUserType() == UserType.OWNER) {
       String accountInfoXML = HttpRetriever.checkCredentialsAccount(domain, username, password);
-      account = XmlParser.parseAccountInfo(accountInfoXML);
+      Account account = XmlParser.parseAccountInfo(accountInfoXML);
       String plansXML = HttpRetriever.checkCredentialsPlan(domain, username, password);
-      plansMap = XmlParser.parsePlan(plansXML);
-      currentPlan = plansMap.get(account.getPlanId());
-      
-      return UserType.OWNER;
-    } catch (HttpImproperStatusCodeException e) {
-      if (e.getStatusCode() != 401) {
-        throw e;
-      } else {
-        Log.w("Status code", String.valueOf(e.getStatusCode()));
-        try {
-          HttpRetriever.checkCredentialsUser(domain, username, password);
-          return UserType.ADMIN;
-        } catch (HttpImproperStatusCodeException e1) {
-          if (e1.getStatusCode() != 401) {
-            throw e1;
-          } else {
-            Log.w("Status code", String.valueOf(e1.getStatusCode()));
-            HttpRetriever.checkCredentialsPlan(domain, username, password);
-            return UserType.USER;
-          }
-        }
-      }
-    }
+      HashMap<Integer, Plan> plansMap = XmlParser.parsePlan(plansXML);
+      Plan currentPlan = plansMap.get(account.getPlanId());
+      authData.setPlan(currentPlan);
+      authData.setAccount(account);
+    } 
+    
+    return authData;
   }
+  
   public class VerifyLoginTask extends AsyncTask<String, Void, Integer> {
 
     private String domain;
@@ -176,8 +166,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     private boolean failed = false;;
     private String failMessage;
     private ProgressDialog progressDialog;
-    private UserType usertype;
-
+    private AuthorizationData authData;
+    
     @Override
     protected void onPreExecute() {
       progressDialog = ProgressDialog.show(mContext, "Checking login credentials",
@@ -200,17 +190,20 @@ public class LoginActivity extends Activity implements OnClickListener {
       login = params[1];
       password = params[2];
       try {
-        usertype = authenticateAndCheckUserType(domain, login, password);
-        Log.w("usertype", usertype.name());
-
+        authData = authenticateAndCheckUserType(domain, login, password);
+        PermissionsPersistenceUtil permissionsUtil = new PermissionsPersistenceUtil(LoginActivity.this);
+        permissionsUtil.savePermissionsDataToFile(authData.getPermissionsData());
         return 200;
-
       } catch (XMLParserException e) {
         failMessage = Strings.internalErrorMessage;
       } catch (HttpImproperStatusCodeException e) {
         return e.getStatusCode();
       } catch (HttpConnectionErrorException e) {
         failMessage = Strings.networkConnectionErrorMessage;
+      } catch(UnsuccessfulServerResponseException e) {
+        failMessage = Strings.networkConnectionErrorMessage; // TODO - refactor
+      } catch(IOException e) {
+        failMessage = Strings.internalErrorMessage;
       }
 
       failed = true;
@@ -236,16 +229,22 @@ public class LoginActivity extends Activity implements OnClickListener {
 
       } else {
 
-        if ((result == 200) && (usertype != null)) {
+        if ((result == HttpStatus.SC_OK) && (authData != null)) {
 
+          User user = authData.getUser();
+          UserType userType = user.getUserType();
+          
           GUI.displayMonit(mContext, "Access granted");
           Editor editor = prefs.edit();
           editor.putString(Constants.USER_ACCOUNT_DOMAIN, domain);
           editor.putString(Constants.USER_LOGIN, login);
           editor.putString(Constants.USER_PASSWORD, password);
           editor.putBoolean(Constants.CREDENTIALS_STORED, true);
-          editor.putString(Constants.USER_TYPE, usertype.name());
-          if (usertype == UserType.OWNER) {
+          editor.putString(Constants.USER_TYPE, userType.name());
+          if (userType == UserType.OWNER) {
+            Plan currentPlan = authData.getPlan();
+            Account account = authData.getAccount();
+            
             editor.putInt(Constants.PLAN_ID, currentPlan.getId());
             
             editor.putInt(Constants.NUMBER_OF_REPOS_AVAILABLE,
@@ -255,6 +254,9 @@ public class LoginActivity extends Activity implements OnClickListener {
             editor.putString(Constants.USER_TIMEZONE, account.getTimeZone());
           }
           editor.commit();
+          
+          //PermissionsHolder.getInstance().setPermissions(authData.getPermissions());
+          //PermissionsHolder.getInstance().setLoggedUser(authData.getUser());
 
           Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
           startActivityForResult(intent, 0);
@@ -274,7 +276,49 @@ public class LoginActivity extends Activity implements OnClickListener {
       }
 
     }
+  }
+  
+  public class AuthorizationData {
+    
+    private Plan plan;
+    private PermissionsData permissionsData = new PermissionsData();
+    private Account account;
+    
+    public User getUser() {
+      return permissionsData.getUser();
+    }
+    
+    public void setUser(User user) {
+      permissionsData.setUser(user);
+    }
+    
+    public void setPlan(Plan plan) {
+      this.plan = plan;
+    }
+    
+    public Plan getPlan() {
+      return plan;
+    }
 
+    public Account getAccount() {
+      return account;
+    }
+
+    public void setAccount(Account account) {
+      this.account = account;
+    }
+
+    public List<Permission> getPermissions() {
+      return permissionsData.getPermissions();
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+      permissionsData.setPermissions((ArrayList<Permission>)permissions);
+    }
+    
+    public PermissionsData getPermissionsData() {
+      return permissionsData;
+    }
   }
 
 }

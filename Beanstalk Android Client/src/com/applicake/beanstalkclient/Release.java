@@ -106,6 +106,10 @@ public class Release implements Parcelable {
       this.deployedAt = FORMATTER_ALTERNATIVE.parse(deployedAt.trim()).getTime();
     }
   }
+  
+  public void setDeployedAt(long time) {
+    this.deployedAt = time;
+  }
 
   public int getId() {
     return id;

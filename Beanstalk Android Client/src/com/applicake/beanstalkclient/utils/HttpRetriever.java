@@ -93,7 +93,7 @@ public class HttpRetriever {
 
   private static final String SERVERS_FOR_ENVIRONMENT_HTTP_MIDDLE = ".beanstalkapp.com/api/";
   private static final String SERVERS_FOR_ENVIRONMENT_FOR_REPOSITORY_HTTP_SUFFIX = "/release_servers.xml?environment_id=";
-
+  
   // checking credentials for Owner user
   public static String checkCredentialsAccount(String domain, String username,
       String password) throws HttpImproperStatusCodeException,
@@ -139,7 +139,7 @@ public class HttpRetriever {
         }
     }
   }
-
+  
   // checking credentials for Admins
   public static String checkCredentialsUser(String domain, String username,
       String password) throws HttpImproperStatusCodeException,
@@ -361,14 +361,26 @@ public class HttpRetriever {
 
     UsernamePasswordCredentials credentials = getCredentialsFromPreferences(prefs);
     String domain = getAccountDomain(prefs);
-
+    
+    return getPermissionsListForUserXML(credentials, domain, userId);
+  }
+  
+  public static String getPermissionsListForUserXML(String domain, String user, String password, String userId)
+    throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
+    
+    UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(user, password);
+    return getPermissionsListForUserXML(credentials, domain, userId);
+    
+  }
+  
+  private static String getPermissionsListForUserXML(UsernamePasswordCredentials credentials, String domain, String userId) 
+      throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
     String activity_http = HTTP_PREFIX + domain + PERMISSIONS_FOR_USER_HTTP_SUFFIX
         + String.valueOf(userId) + ".xml";
 
     return executeRequest(credentials, activity_http);
-
   }
-
+  
   public static String getReleasesListForRepositoryXML(SharedPreferences prefs, int repoId)
       throws HttpConnectionErrorException, UnsuccessfulServerResponseException {
 

@@ -64,5 +64,6 @@
   <string name="please_wait_label">Please wait...</string>
   <string name="downloading_available_plans_label">Downloading available plans...</string>
   <string name="current_plan_list_label">"Current plan: "</string>
+  <string name="no_repositories_to_display">No repositories to display</string>
   
 </resources>

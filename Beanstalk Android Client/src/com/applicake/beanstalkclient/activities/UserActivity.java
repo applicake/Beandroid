@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -82,7 +83,7 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
     //if(itemNumber < userArray.size()) {
       Intent intent = new Intent(mContext, UserDetailsActivity.class);
       User user = userArray.get(itemNumber);
-      intent.putExtra(Constants.USER, user);
+      intent.putExtra(Constants.USER, (Parcelable)user);
       startActivityForResult(intent, 0);
     //}
   }
@@ -169,9 +170,10 @@ public class UserActivity extends BeanstalkActivity implements OnItemClickListen
         } else if (errorMessage != null) {
           GUI.displayMonit(mContext, "Server error: " + errorMessage);
           finish();
-        } else
+        } else {
           GUI.displayMonit(mContext, "Unexpected error, please try again later");
           finish();
+        }
       }
     }
 

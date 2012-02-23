@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import com.applicake.beanstalkclient.Constants;
 import com.applicake.beanstalkclient.Release;
 import com.applicake.beanstalkclient.Repository;
+import com.applicake.beanstalkclient.permissions.CanReleaseFromRepositoryFilter;
 import com.applicake.beanstalkclient.tasks.BeanstalkAsyncTask;
 import com.applicake.beanstalkclient.tasks.ResponseHandler;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
@@ -36,6 +37,7 @@ public class OverallRepoReleaseFragment extends SpecifiedRepoReleasesListFragmen
   public void onClick(View v) {
     Intent intent = new Intent(getActivity(), RepositoriesActivity.class);
     intent.setAction(Intent.ACTION_PICK);
+    intent.putExtra(Constants.FILTER_CLASS, CanReleaseFromRepositoryFilter.class);
     startActivityForResult(intent, REPOSITORY_ADD_RELEASE);
   }
   
@@ -80,6 +82,11 @@ public class OverallRepoReleaseFragment extends SpecifiedRepoReleasesListFragmen
       String repositoryXML = HttpRetriever.getRepositoryXML(prefs, repositoryId);
       Repository repository = XmlParser.parseRepository(repositoryXML);
       return repository;
+    }
+    
+    @Override
+    protected boolean finishActivityAfterError() {
+      return false;
     }
 
     @Override

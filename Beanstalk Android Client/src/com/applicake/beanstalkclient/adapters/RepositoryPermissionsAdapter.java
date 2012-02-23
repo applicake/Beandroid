@@ -72,17 +72,17 @@ public class RepositoryPermissionsAdapter extends ArrayAdapter<User> {
       TextView userEmailTextView = (TextView) view.findViewById(R.id.userEmail);
       userEmailTextView.setText(email);
 
-      if (user.getAdmin() == UserType.USER) {
+      if (user.getUserType() == UserType.USER) {
         // making view unclickable while the data is being downloaded
         view.setTag(false);
 
         new DownloadPermissionsTask().execute(String.valueOf(user.getId()), view);
-      } else if (user.getAdmin() == UserType.ADMIN) {
+      } else if (user.getUserType() == UserType.ADMIN) {
 
         ((ProgressBar) view.findViewById(R.id.loadingBar)).setVisibility(View.GONE);
         ((TextView) view.findViewById(R.id.adminLabel)).setVisibility(View.VISIBLE);
 
-      } else if (user.getAdmin() == UserType.OWNER) {
+      } else if (user.getUserType() == UserType.OWNER) {
 
         ((ProgressBar) view.findViewById(R.id.loadingBar)).setVisibility(View.GONE);
         ((TextView) view.findViewById(R.id.ownerLabel)).setVisibility(View.VISIBLE);

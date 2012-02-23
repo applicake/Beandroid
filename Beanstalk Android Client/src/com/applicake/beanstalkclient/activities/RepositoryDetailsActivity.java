@@ -20,6 +20,7 @@ import com.applicake.beanstalkclient.R;
 import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.Strings;
 import com.applicake.beanstalkclient.enums.UserType;
+import com.applicake.beanstalkclient.permissions.ServerEnviromentsPermissions;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
@@ -68,7 +69,13 @@ public class RepositoryDetailsActivity extends BeanstalkActivity implements
       usersPermissionsButton.setVisibility(View.GONE);
       modifyPropertiesButton.setVisibility(View.GONE);
     }
-
+    
+    ServerEnviromentsPermissions permissions = new ServerEnviromentsPermissions(this);
+    
+    if(!permissions.hasDeploymentAccessForRepository(repository)) {
+      deploymentButton.setVisibility(View.GONE);
+    }
+    
     viewCommitsButton.setOnClickListener(this);
     usersPermissionsButton.setOnClickListener(this);
     deploymentButton.setOnClickListener(this);

@@ -95,7 +95,7 @@ public class UserModifyPropertiesActivity extends BeanstalkActivity implements
       emailEditText.setText(user.getEmail());
       timezoneSpinner.setSelection(spinnerValuesList.indexOf(user.getTimezone()));
       // timezoneSpinner.setSelection();
-      UserType userType = user.getAdmin();
+      UserType userType = user.getUserType();
       if (userType == UserType.ADMIN) {
         adminCheckBox.setChecked(true);
       } else if (userType == UserType.USER) {

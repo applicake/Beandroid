@@ -24,6 +24,8 @@ import com.applicake.beanstalkclient.Repository;
 import com.applicake.beanstalkclient.ServerEnvironment;
 import com.applicake.beanstalkclient.Strings;
 import com.applicake.beanstalkclient.adapters.ServersAdapter;
+import com.applicake.beanstalkclient.permissions.PermissionsData;
+import com.applicake.beanstalkclient.permissions.PermissionsPersistenceUtil;
 import com.applicake.beanstalkclient.utils.GUI;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
@@ -49,6 +51,13 @@ public class SpecificRepoServerEnviromentsFragment extends Fragment implements O
     this.repository = getActivity().getIntent().getParcelableExtra(Constants.REPOSITORY);
     this.prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
         .getApplicationContext());
+    PermissionsPersistenceUtil util = new PermissionsPersistenceUtil(getActivity());
+    try {
+      PermissionsData data = util.readStoredPermissionsData();
+      Log.w("aaaaa", data.getUser().toString());
+    } catch(Exception e) {
+      
+    }
     this.mAdapter = new ServersAdapter(getActivity(), R.layout.environments_list_entry, enviromentsList);
   }
 

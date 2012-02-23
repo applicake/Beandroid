@@ -71,5 +71,7 @@ public interface Constants {
   
   public static final String DEFAULT_CURRENCY_SYMBOL = "$";
   
+  public static final String FILTER_CLASS = "filter_class";
+    
 
 }

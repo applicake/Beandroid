@@ -54,7 +54,9 @@ public class ReleasesHandler extends DefaultHandler {
         }
       } else if (name == "deployed-at") {
         try {
-          release.setDeployedAt(value);
+          if(value != null && value.length() > 0) {
+            release.setDeployedAt(value);
+          }
         } catch (ParseException e) {
           throw new SAXException(e);
         }

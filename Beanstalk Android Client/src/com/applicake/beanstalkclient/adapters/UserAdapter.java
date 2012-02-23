@@ -44,7 +44,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
       ((TextView) view.findViewById(R.id.userName)).setText(userArray.get(position)
           .getFirstName() + " " + userArray.get(position).getLastName());
-      UserType userType = userArray.get(position).getAdmin();
+      UserType userType = userArray.get(position).getUserType();
 
       if (userType == UserType.ADMIN) {
         view.findViewById(R.id.adminLabel).setVisibility(View.VISIBLE);

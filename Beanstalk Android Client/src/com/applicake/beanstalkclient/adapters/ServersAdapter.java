@@ -23,6 +23,7 @@ import com.applicake.beanstalkclient.ServerEnvironment;
 import com.applicake.beanstalkclient.activities.CreateNewServerActivity;
 import com.applicake.beanstalkclient.activities.ModifyServerActivity;
 import com.applicake.beanstalkclient.activities.ModifyServerEnvironmentProperties;
+import com.applicake.beanstalkclient.permissions.ServerEnviromentsPermissions;
 import com.applicake.beanstalkclient.utils.HttpRetriever;
 import com.applicake.beanstalkclient.utils.HttpRetriever.HttpConnectionErrorException;
 import com.applicake.beanstalkclient.utils.HttpRetriever.UnsuccessfulServerResponseException;
@@ -35,12 +36,14 @@ public class ServersAdapter extends BaseExpandableListAdapter {
   private LayoutInflater mInflater;
   private SharedPreferences prefs;
   private Context mContext;
+  private ServerEnviromentsPermissions permissions;
 
   public ServersAdapter(Context context, int i, List<ServerEnvironment> serversArray) {
     this.mServersArray = serversArray;
     mContext = context;
     mInflater = LayoutInflater.from(context);
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    permissions = new ServerEnviromentsPermissions(context);
   }
 
   @Override
@@ -58,25 +61,30 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
     ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
 
+    int childrenCountToReturn = 0;
+    
     // the list is loaded
     if (serverEnvironment.isDownloaded()) {
       if (mServersArray != null && serverEnvironment.getServerList() != null) {
-        return serverEnvironment.getServerList().size() + 1;
-      } else
-        return 1;
+        childrenCountToReturn =  serverEnvironment.getServerList().size() ;
+      } else {
+        childrenCountToReturn = 0;
+      }
 
       // the list is being dowlnoaded
-      // displays 2 additional cells - loading cell and add new server cell
     } else if (serverEnvironment.isDownloading()) {
-
-      return 2;
-
+      childrenCountToReturn = 1;
       // the list has not been downloaded - start download
-      // displays 2 additional cells - loading cell and add new server cell
     } else {
       new DownloadServerListForEnvironmentTask(serverEnvironment).execute();
-      return 2;
+      childrenCountToReturn = 1;
     }
+    
+    if(permissions.hasFullDeploymentsAccessForRepository(serverEnvironment.getRepositoryId())) {
+      childrenCountToReturn++;
+    }
+    
+    return childrenCountToReturn;
 
   }
 
@@ -129,23 +137,30 @@ public class ServersAdapter extends BaseExpandableListAdapter {
       TextView automatic = (TextView) view.findViewById(R.id.automatic);
       TextView editServerEnvironmentButton = (TextView) view
           .findViewById(R.id.edit_server_environment_button);
-      editServerEnvironmentButton.setOnClickListener(new OnClickListener() {
 
-        @Override
-        public void onClick(View v) {
-          Log.d("xxx",
-              "Server environment in OnClickListener" + serverEnvironment.toString());
-          Intent intent = new Intent(mContext, ModifyServerEnvironmentProperties.class);
-          intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
-          ((Activity) mContext).startActivityForResult(intent, 0);
-        }
-      });
+      if (permissions != null && permissions.hasAccessForThisEnvironment(serverEnvironment)) {
+        editServerEnvironmentButton.setVisibility(View.VISIBLE);
+        editServerEnvironmentButton.setOnClickListener(new OnClickListener() {
+
+          @Override
+          public void onClick(View v) {
+            Log.d("xxx",
+                "Server environment in OnClickListener" + serverEnvironment.toString());
+            Intent intent = new Intent(mContext, ModifyServerEnvironmentProperties.class);
+            intent.putExtra(Constants.SERVER_ENVIRONMENT, serverEnvironment);
+            ((Activity) mContext).startActivityForResult(intent, 0);
+          }
+        });
+      } else {
+        editServerEnvironmentButton.setVisibility(View.GONE);
+      }
 
       environmentName.setText(serverEnvironment.getName());
       // branchName.setText(serverEnvironment.getBranchName());
       automatic
           .setText(mContext.getString(serverEnvironment.isAutomatic() ? R.string.automatic
               : R.string.manual));
+
     }
 
     return view;
@@ -157,9 +172,10 @@ public class ServersAdapter extends BaseExpandableListAdapter {
 
     View view;
 
-    if (isLastChild) {
+    final ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
+    
+    if (isLastChild && permissions.hasFullDeploymentsAccessForRepository(serverEnvironment.getRepositoryId())) {
       view = mInflater.inflate(R.layout.environments_add_server_footer, null);
-      final ServerEnvironment serverEnvironment = mServersArray.get(groupPosition);
       view.setOnClickListener(new OnClickListener() {
 
         @Override

@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -75,17 +76,17 @@ public class RepositoryUsersPermissionsActivity extends BeanstalkActivity implem
   @Override
   public void onItemClick(AdapterView<?> arg0, View view, int itemNumber, long arg3) {
     User user = usersArray.get(itemNumber - 1);
-    if (user.getAdmin() == UserType.USER && (Boolean) view.getTag()) {
+    if (user.getUserType() == UserType.USER && (Boolean) view.getTag()) {
       Permission permission = usersAdapter.getUserIdToPermissionMap().get(user.getId());
       Intent intent = new Intent(mContext, PermissionModifyActivity.class);
       intent.putExtra(Constants.REPOSITORY, repository);
-      intent.putExtra(Constants.USER, user);
+      intent.putExtra(Constants.USER, (Parcelable)user);
 
       if (permission != null) {
-        intent.putExtra(Constants.PERMISSION, permission);
+        intent.putExtra(Constants.PERMISSION, (Parcelable)permission);
       }
       startActivityForResult(intent, 0);
-    } else if (user.getAdmin() != UserType.USER) {
+    } else if (user.getUserType() != UserType.USER) {
       GUI.displayMonit(mContext, "Owner and Admins have full access to all repositories");
     } else {
       GUI.displayMonit(mContext, "Loading...");
