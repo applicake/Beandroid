@@ -90,7 +90,7 @@
 			android:lines="1"></EditText>
 
 		<CheckBox
-			android:text="Remeber me"
+			android:text="Remember me"
 			android:button="@drawable/custom_checkbox"
 			android:textColor="@color/ApplicationText"
 			android:layout_centerHorizontal="true"
