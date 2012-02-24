@@ -244,6 +244,14 @@ public class Release implements Parcelable {
     state = in.readInt();
     updatedAt = in.readLong();
   }
+  
+  public Date getDateToDisplay() {
+    long toDisplay = deployedAt;
+    if(toDisplay == 0) {
+      toDisplay = createdAt;
+    }
+    return new Date(toDisplay);
+  }
 
   public static final Parcelable.Creator<Release> CREATOR = new Creator<Release>() {
     @Override

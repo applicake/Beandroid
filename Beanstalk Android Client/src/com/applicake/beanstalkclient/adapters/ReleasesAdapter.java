@@ -54,7 +54,7 @@ public class ReleasesAdapter extends BaseAdapter {
     if (view == null) {
       view = mInflater.inflate(mLayoutId, null);
     }
-
+    
     TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
     TextView comment = (TextView) view.findViewById(R.id.comment);
     TextView state = (TextView) view.findViewById(R.id.state);
@@ -67,7 +67,7 @@ public class ReleasesAdapter extends BaseAdapter {
     state.setText(release.getStateLabel());
 //    revision.setText(String.valueOf(release.getRevision()));
     author.setText(release.getAuthor());
-    deployedAt.setText(mDf.format(release.getDeployedAt()));
+    deployedAt.setText(mDf.format(release.getDateToDisplay()));
 
     return view;
   }
