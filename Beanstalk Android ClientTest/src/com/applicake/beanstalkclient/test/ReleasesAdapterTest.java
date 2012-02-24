@@ -163,17 +163,12 @@ public class ReleasesAdapterTest extends AndroidTestCase {
 
       CharSequence environmentName = ((TextView) view.findViewById(R.id.environment_name))
           .getText();
-//      CharSequence comment = ((TextView) view.findViewById(R.id.comment)).getText();
       CharSequence state = ((TextView) view.findViewById(R.id.state)).getText();
-      CharSequence revision = ((TextView) view.findViewById(R.id.revision)).getText();
       CharSequence author = ((TextView) view.findViewById(R.id.author)).getText();
-      CharSequence deployedAt = ((TextView) view.findViewById(R.id.deployed_at))
-          .getText();
+      CharSequence deployedAt = ((TextView) view.findViewById(R.id.deployed_at)).getText();
 
       assertEquals("environmentName" + i, environmentName);
-//      assertEquals("comment" + i, comment);
       assertEquals("success", state);
-      assertEquals(("revision" + i), revision);
       assertEquals("author" + i, author);
       try {
         assertEquals(Release.FORMATTER.parse(MOCK_TIMESTAMP).toLocaleString(), deployedAt);

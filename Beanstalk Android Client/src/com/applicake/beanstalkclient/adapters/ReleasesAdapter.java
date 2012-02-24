@@ -58,14 +58,12 @@ public class ReleasesAdapter extends BaseAdapter {
     TextView environmentName = (TextView) view.findViewById(R.id.environment_name);
     TextView comment = (TextView) view.findViewById(R.id.comment);
     TextView state = (TextView) view.findViewById(R.id.state);
-//    TextView revision = (TextView) view.findViewById(R.id.revision);
     TextView author = (TextView) view.findViewById(R.id.author);
     TextView deployedAt = (TextView) view.findViewById(R.id.deployed_at);
 
     environmentName.setText(release.getEnvironmentName());
     comment.setText(release.getComment());
     state.setText(release.getStateLabel());
-//    revision.setText(String.valueOf(release.getRevision()));
     author.setText(release.getAuthor());
     deployedAt.setText(mDf.format(release.getDateToDisplay()));
 

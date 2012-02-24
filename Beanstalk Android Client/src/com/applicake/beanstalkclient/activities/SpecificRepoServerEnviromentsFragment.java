@@ -58,7 +58,7 @@ public class SpecificRepoServerEnviromentsFragment extends Fragment implements O
     } catch(Exception e) {
       
     }
-    this.mAdapter = new ServersAdapter(getActivity(), R.layout.environments_list_entry, enviromentsList);
+    this.mAdapter = new ServersAdapter(getActivity(), enviromentsList);
   }
 
   @Override

@@ -38,12 +38,16 @@ public class ServersAdapter extends BaseExpandableListAdapter {
   private Context mContext;
   private ServerEnviromentsPermissions permissions;
 
-  public ServersAdapter(Context context, int i, List<ServerEnvironment> serversArray) {
+  public ServersAdapter(Context context, List<ServerEnvironment> serversArray) {
+    this(context, serversArray, new ServerEnviromentsPermissions(context));
+  }
+  
+  public ServersAdapter(Context context, List<ServerEnvironment> serversArray, ServerEnviromentsPermissions permissions) {
     this.mServersArray = serversArray;
-    mContext = context;
-    mInflater = LayoutInflater.from(context);
-    prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    permissions = new ServerEnviromentsPermissions(context);
+    this.mContext = context;
+    this.mInflater = LayoutInflater.from(context);
+    this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    this.permissions = permissions;
   }
 
   @Override
