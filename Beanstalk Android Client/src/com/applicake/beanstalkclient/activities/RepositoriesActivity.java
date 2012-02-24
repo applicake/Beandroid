@@ -205,7 +205,6 @@ public class RepositoriesActivity extends BeanstalkActivity implements
               repositoriesArray.add(repository);
             }
           }
-          //repositoriesArray.addAll(result);
 
           repositoriesAdapter.notifyDataSetChanged();
 

@@ -2,17 +2,22 @@ package com.applicake.beanstalkclient.permissions;
 
 import java.io.IOException;
 
-import com.applicake.beanstalkclient.utils.GUI;
-
 import android.content.Context;
+
+import com.applicake.beanstalkclient.utils.GUI;
 
 public abstract class PermissionsInterpreter {
   
   private Context mContext;
   
-  public PermissionsInterpreter(Context context) {
-    this.mContext = context;
+  public PermissionsInterpreter() {
     initialize();
+  }
+  
+  public PermissionsInterpreter(Context context) {
+    this();
+    this.mContext = context;
+    
     PermissionsPersistenceUtil util = new PermissionsPersistenceUtil(context);
     
     try {
@@ -23,8 +28,20 @@ public abstract class PermissionsInterpreter {
     }
   }
   
+  public void setPermissionsData(PermissionsData data) {
+    if(isPermissionsDataValid(data)) {
+      parsePermissionsData(data);
+    } else {
+      throw new IllegalStateException("user or permissions list in PermissionData object passed to this method are null");
+    }
+  }
   
-  protected abstract void setPermissionsData(PermissionsData data);
+  protected boolean isPermissionsDataValid(PermissionsData data) {
+    return data != null && data.getUser() != null && data.getPermissions() != null;
+  }
+  
+  protected abstract void parsePermissionsData(PermissionsData data);
+  
   protected void initialize() { }
     
   protected Context getContext() {

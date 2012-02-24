@@ -19,6 +19,8 @@ public class ServerEnviromentsPermissions extends PermissionsInterpreter {
   private Set<Integer> fullDeploymentsAccessRepositoriesIds;
   private User loggedUser;
   
+  public ServerEnviromentsPermissions() { }
+  
   public ServerEnviromentsPermissions(Context context) {
     super(context);
   }
@@ -28,7 +30,9 @@ public class ServerEnviromentsPermissions extends PermissionsInterpreter {
     fullDeploymentsAccessRepositoriesIds = new HashSet<Integer>();
   }
   
-  public void setPermissionsData(PermissionsData data) {
+  protected void parsePermissionsData(PermissionsData data) {
+    fullDeploymentsAccessRepositoriesIds.clear();
+    parsedEnviromentPermissions.clear();
     loggedUser = data.getUser();
     for(Permission permission : data.getPermissions()) {
       if(permission.isFullDeploymentAccess()) {
