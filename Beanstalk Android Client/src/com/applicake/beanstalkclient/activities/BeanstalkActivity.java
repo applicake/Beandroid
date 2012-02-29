@@ -28,8 +28,10 @@ public abstract class BeanstalkActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    currentUser = prefs.getString(Constants.USER_TYPE, "");
-
+    currentUser = getIntent().getStringExtra(Constants.USER_TYPE);
+    if(currentUser == null) {
+      currentUser = prefs.getString(Constants.USER_TYPE, null);
+    }
   }
 
   // inflate menu
